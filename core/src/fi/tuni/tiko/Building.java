@@ -4,18 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class Building extends Farm {
-    private String name;
-    private Texture iconSource;     // Pääruudun kuvakkeen eri versiot (jos päivittyy)
-    private TextureRegion icons;    // kuvakkeet osina
-    private Sprite icon;            // Pääruudun nappi
+public class Building {
+    Texture background;
+    Texture iconSource;     // source texture for icon containing all versions
+    TextureRegion[] icons;  // different versions divided to regions
+    Sprite icon;
 
-    public Building(String name) {
-        this.name = name;
-    }
-
-    public void ActionResolver(String name) {   // Ottaa aliluokista toimintoja vastaan
-
+    public void dispose() {
+        background.dispose();
+        iconSource.dispose();
     }
 }
-
