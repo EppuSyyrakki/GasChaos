@@ -15,13 +15,15 @@ public class Garden extends Building {
     /**
      * Reduce this.weeds to 0.
      */
-    public void actionWeedGarden() {
+    public GameData actionWeedGarden(GameData data) {
         if (weedsAmount <= 0) {
             // TODO garden is already weeded UI message
         } else {
             weedsAmount = 0;
             // TODO garden has been weeded UI message
+            data.setActionsDone(data.getActionsDone() + 1);
         }
+        return data;
     }
 
     /**
@@ -32,10 +34,11 @@ public class Garden extends Building {
         if (gardenAmount > 30) {
             data.setGardenSold(gardenAmount);
             gardenAmount = 0;
+            // TODO garden produce sold UI message
+            data.setActionsDone(data.getActionsDone() + 1);
         } else {
             // TODO garden produce not ripe UI message
         }
-
         return data;
     }
 
@@ -52,5 +55,13 @@ public class Garden extends Building {
 
         gardenAmount += gardenGrowth;
         weedsAmount++;
+
+        if (gardenAmount > 50) {
+            gardenAmount = 50;
+        }
+
+        if (weedsAmount > 5) {
+            weedsAmount = 5;
+        }
     }
 }

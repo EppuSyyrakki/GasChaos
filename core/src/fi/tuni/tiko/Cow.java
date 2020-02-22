@@ -53,8 +53,9 @@ public class Cow {
         this.methaneAmountMax = methaneAmountMax;
     }
 
-    public void addMethane() {
-        methaneAmount += methane;
+    public void addMethane(int gasCollectorLevel) {
+        methaneAmount += methane * gasCollectorLevel;
+        methaneAmountMax *= gasCollectorLevel;
 
         if (methaneAmount > methaneAmountMax) {
             methaneAmount = methaneAmountMax;

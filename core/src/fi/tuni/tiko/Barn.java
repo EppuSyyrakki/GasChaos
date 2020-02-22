@@ -20,7 +20,7 @@ public class Barn extends Building {
     public GameData actionFeedCows(GameData data) {
         ArrayList<Cow> cowList = data.getCowList();
         Cow cow = cowList.get(0);
-        int addAmount = cowList.size() * cow.getFeed() * 2;
+        int addAmount = cowList.size() * cow.getFeed() * 2; // enough food for 2 days
 
         if (feedInBarn > 1.5 * addAmount) {
             // TODO action blocked, cows have enough food UI message
@@ -31,10 +31,12 @@ public class Barn extends Building {
                 feedInBarn += data.getFeed();
                 data.setFeed(0);
                 // TODO feed storage empty UI message
+                data.setActionsDone(data.getActionsDone() + 1);
             } else {
                 feedInBarn += addAmount;
                 data.setFeed(-addAmount);
                 // TODO cows fed UI message
+                data.setActionsDone(data.getActionsDone() + 1);
             }
         }
         return data;
@@ -50,10 +52,12 @@ public class Barn extends Building {
             data.setManure(data.getManure() + manureInBarn);
             manureInBarn = 0;
             // TODO barn is clean UI message
+            data.setActionsDone(data.getActionsDone() + 1);
         } else if (manureInBarn > manureShoveled) {
             data.setManure(data.getManure() + manureShoveled);
             manureInBarn -= manureShoveled;
-            // TODO barn still a bit dirty UI message
+            // TODO barn cleaned but still a bit dirty UI message
+            data.setActionsDone(data.getActionsDone() + 1);
         }
 
         if (data.getManure() > data.getManureMax()) {   // check if manure within limit
@@ -80,7 +84,8 @@ public class Barn extends Building {
 
         data.setCowList(tmpCowList);
         data.setMethane(data.getMethane() + methaneCollected);
-        // TODO cow methane tanks empty UI message
+        // TODO methane collector(s) empty UI message
+        data.setActionsDone(data.getActionsDone() + 1);
 
         if (data.getMethane() >= data.getMethaneMax()) {
             // TODO methane tank dangerously full UI message
@@ -90,7 +95,7 @@ public class Barn extends Building {
     }
 
     /**
-     * Update amount of this.manureInBarn from data.cowList
+     * Update amount of manureInBarn and feedInBarn from data.cowList
      */
     public void update(GameData data) {
         ArrayList<Cow> cowList = data.getCowList();
@@ -98,6 +103,10 @@ public class Barn extends Building {
         for (Cow cow : cowList) {
             manureInBarn += cow.getManure();
             feedInBarn -= cow.getFeed();
+        }
+
+        if (feedInBarn < 0) {
+
         }
     }
 }
