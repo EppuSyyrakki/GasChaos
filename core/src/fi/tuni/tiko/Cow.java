@@ -10,9 +10,9 @@ public class Cow {
     /**
      * Cow produces per turn.
      */
-    private int manure = 3;
-    private int milk = 3;
-    private int methane = 6;
+    private int manure = 55;
+    private int milk = 25;
+    private int methane = 300;
 
     /**
      * Cow eats per turn.
@@ -23,7 +23,7 @@ public class Cow {
      * Methane backpack storage.
      */
     private int methaneAmount = 0;
-    private int methaneAmountMax = 18;
+    private int methaneAmountMax = 900;
 
     public int getManure() {
         return manure;

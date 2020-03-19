@@ -65,7 +65,7 @@ public class Home extends Building {
      * Set data.feed to data.feed + 30. Reduce data.money by 30 * data.PRICE_OF_FEED. Block if not
      * enough money
      */
-    public GameData actionBuy30Feed(GameData data) {
+    public GameData action30Feed(GameData data) {
         int price = 30 * data.PRICE_OF_FEED;
 
         if (data.getFeed() + data.getFeedBought() < data.getFeedMax()) {
@@ -87,7 +87,7 @@ public class Home extends Building {
      * Set data.feed to data.feedMax and reduce data.money by data.PRICE_OF_FEED *
      * (data.feedMax - data.feed). Block if not enough money.
      */
-    public GameData actionBuyFullFeed(GameData data) {
+    public GameData actionFullFeed(GameData data) {
         int amount = data.getFeedMax() - (data.getFeed() + data.getFeedBought());
         int price = data.PRICE_OF_FEED * amount;
 
@@ -131,7 +131,7 @@ public class Home extends Building {
      * Set data.solarPanelAdvBought to true. Block if data.solarPanelLevel = 2 or 0 or if already
      * bought or not enough money.
      */
-    public GameData buySolarPanelAdvanced(GameData data) {
+    public GameData actionSolarPanelAdvanced(GameData data) {
         if ( (data.getSolarPanelLevel() == 0 && data.isSolarPanelBasicBought())
                 ||
                 (data.getSolarPanelLevel() == 1 && !data.isSolarPanelAdvBought()) ) {
@@ -157,7 +157,7 @@ public class Home extends Building {
     /**
      * Set data.gasCollectorAdvBought to true. Block if already owned, bought or not enough money.
      */
-    public GameData buyGasCollectorAdvanced(GameData data) {
+    public GameData actionGasCollectorAdvanced(GameData data) {
         if (data.getGasCollectorLevel() == 1 && !data.isGasCollectorAdvBought()) {
             if (data.getMoney() >= data.PRICE_OF_COLLECTOR) {
                 data.setMoney(data.getMoney() - data.PRICE_OF_COLLECTOR);
@@ -176,7 +176,7 @@ public class Home extends Building {
     /**
      * Set data.milkingMachineAdvBought to true. Block if already owned, bought or not enough money.
      */
-    public GameData buyMilkingMachineAdvanced(GameData data) {
+    public GameData actionMilkingMachineAdvanced(GameData data) {
         if (data.getMilkingMachineLevel() == 1 && !data.isMilkingMachineAdvBought()) {
             if (data.getMoney() >= data.PRICE_OF_MILKING) {
                 data.setMoney(data.getMoney() - data.PRICE_OF_MILKING);
@@ -195,7 +195,7 @@ public class Home extends Building {
     /**
      * Set data.tractorAdvBought to true. Block if already owned, bought or not enough money.
      */
-    public GameData buyTractorAdvanced(GameData data) {
+    public GameData actionTractorAdvanced(GameData data) {
         if (data.getTractorLevel() == 1 && !data.isTractorAdvBought()) {
             if (data.getMoney() >= data.PRICE_OF_TRACTOR) {
                 data.setMoney(data.getMoney() - data.PRICE_OF_TRACTOR);
@@ -215,7 +215,7 @@ public class Home extends Building {
      * Set data.tractorGasBought to true. Block if data.gasGeneratorLevel < 1 or
      * !data.gasGeneratorBought, or if data.tractorLevel < 2.
      */
-    public GameData buyTractorGasEngine(GameData data) {
+    public GameData actionTractorGasEngine(GameData data) {
          if (data.getGasGeneratorLevel() == 1 || data.isGasGeneratorBought()) {
 
              if ((data.getTractorLevel() == 1 && data.isTractorAdvBought())
@@ -242,7 +242,7 @@ public class Home extends Building {
     /**
      * Set data.gasGeneratorLevel to 1. Block if already 1 or if data.gasGeneratorBought.
      */
-    public GameData buyGasGenerator(GameData data) {
+    public GameData actionGasGenerator(GameData data) {
         if (data.getGasGeneratorLevel() == 0 && !data.isGasGeneratorBought()) {
             if (data.getMoney() >= data.PRICE_OF_SOLAR) {
                 data.setMoney(data.getMoney() - data.PRICE_OF_SOLAR);
@@ -261,7 +261,7 @@ public class Home extends Building {
     /**
      * Set next 0 element to 1 in data.fields array. Block if all fields[] > 0
      */
-    public GameData rentNewField(GameData data) {
+    public GameData actionRentNewField(GameData data) {
         int[] tmpFields = data.getFields();
         int fieldsRented = 2;
 
@@ -288,7 +288,7 @@ public class Home extends Building {
     /**
      * Set last index that is not 0 to 0 in data.fields array. Blocked if only indexes 0 and 1 != 0.
      */
-    public GameData stopRentingField(GameData data) {
+    public GameData actionStopRentingField(GameData data) {
         int[] tmpFields = data.getFields();
         boolean fieldGivenUp = false;
 
@@ -312,7 +312,7 @@ public class Home extends Building {
     /**
      * Reduce data.manure by 50 if possible and increase data.manureSold by same amount
      */
-    public GameData sellManure(GameData data) {
+    public GameData actionSellManure(GameData data) {
         if (data.getManure() >= 50) {
             data.setManure(data.getManure() - 50);
             data.setManureSold(data.getManureSold() + 50);

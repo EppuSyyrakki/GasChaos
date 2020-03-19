@@ -12,7 +12,7 @@ public class GameData {
     final int MONEY_FROM_METHANE = 2;
     final int MONEY_FROM_GARDEN = 8;
     final int PRICE_OF_COW = 800;
-    final int MAX_COWS = 8;
+    final int MAX_COWS = 6;
     final int PRICE_OF_FEED = 2;
     final int PRICE_OF_SOLAR = 1000;
     final int PRICE_OF_COLLECTOR = 1000;
@@ -32,7 +32,7 @@ public class GameData {
      */
     private int money = 2000;       // money available for purchases
     private int manure = 0;         // amount of manure in manure pit
-    private int manureMax = 100;    // size of manure pit
+    private int manureMax = 1000;   // size of manure pit
     private int methane = 0;        // amount of methane in gas tank
     private int methaneMax = 100;   // size of methane tank
     private int debt = 10000;       // total amount of debt, reduced by debtPayment
@@ -79,7 +79,8 @@ public class GameData {
      */
     private int[] fields = new int[MAX_FIELDS];
     private int[] fieldGrowth = new int[MAX_FIELDS];
-    private int[] fieldFertilizer = new int[MAX_FIELDS];
+    private int[] fieldFertilizerP = new int[MAX_FIELDS];
+    private int[] fieldFertilizerN = new int[MAX_FIELDS];
 
     /**
      * All cows in the barn.
@@ -128,9 +129,10 @@ public class GameData {
     }
 
     public GameData() {
-        for (int i = 0; i < fields.length; i++) {
+        for (int i = 0; i < fields.length; i++) {   // create field arrays
             fieldGrowth[i] = 1;
-            fieldFertilizer[i] = 0;
+            fieldFertilizerP[i] = 0;
+            fieldFertilizerN[i] = 0;
         }
     }
 
@@ -278,12 +280,20 @@ public class GameData {
         this.fieldGrowth = fieldGrowth;
     }
 
-    public int[] getFieldFertilizer() {
-        return fieldFertilizer;
+    public int[] getFieldFertilizerN() {
+        return fieldFertilizerN;
     }
 
-    public void setFieldFertilizer(int[] fieldFertilizer) {
-        this.fieldFertilizer = fieldFertilizer;
+    public void setFieldFertilizerN(int[] fieldFertilizerN) {
+        this.fieldFertilizerN = fieldFertilizerN;
+    }
+
+    public int[] getFieldFertilizerP() {
+        return fieldFertilizerP;
+    }
+
+    public void setFieldFertilizerP(int[] fieldFertilizerP) {
+        this.fieldFertilizerP = fieldFertilizerP;
     }
 
     public ArrayList<Cow> getCowList() {
