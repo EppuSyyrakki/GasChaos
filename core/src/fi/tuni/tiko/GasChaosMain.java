@@ -6,6 +6,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.I18NBundle;
+
+import java.util.Locale;
 
 public class GasChaosMain extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -28,12 +31,25 @@ public class GasChaosMain extends ApplicationAdapter {
 		gasTank = new GasTank();
 		gameData = new GameData();
 		debugger();
+
 	}
 
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		Locale locale = new Locale("fi", "Finland");
+		Locale defaultLocale = Locale.getDefault();
+		I18NBundle myBundle =
+				I18NBundle.createBundle(Gdx.files.internal("MyBundle"), locale);
+
+		//Localization example
+		String locTest1 = myBundle.get("buyCowComplete");
+		String locTest2 = myBundle.format("turnInfoExample", 3);
+		System.out.println(locTest1);
+		System.out.println(locTest2);
+		//End of example
 
 		batch.begin();
 
