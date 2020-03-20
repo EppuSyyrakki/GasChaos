@@ -10,14 +10,14 @@ public class Cow {
     /**
      * Cow produces per turn.
      */
-    private int manure = 55;
+    private int manure = 9;
     private int milk = 25;
     private int methane = 300;
 
     /**
      * Cow eats per turn.
      */
-    private int feed = 6;
+    private int feed = 10;
 
     /**
      * Methane backpack storage.

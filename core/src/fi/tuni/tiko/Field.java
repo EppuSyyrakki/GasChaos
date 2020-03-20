@@ -3,15 +3,15 @@ package fi.tuni.tiko;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Field extends Building {
-    private final int P_PER_FIELD = 50;
-    private final int N_NER_FIELD = 50;
+    private final int MAX_P_PER_FIELD = 8;
+    private final int MAX_N_NER_FIELD = 80;
 
     public Field() {
         background = new Texture("fieldBackground.png");
     }
 
     /**
-     * Increases field[n] from 1 to 2. Blocked if not 1.
+     * Increases field[n] from 1 to 2 (empty to sown). Blocked if not 1.
      */
     public GameData actionSowField(GameData data, int n) {
         int[] tmpFields = data.getFields();
@@ -29,12 +29,28 @@ public class Field extends Building {
     }
 
     /**
-     * TODO Typpeen ja fosforiin perustuva lannoitus
+     * Increases Nitrogen in data.fieldFertilizerN by amount. n is number of field.
      */
-    public GameData actionFertilizeField(GameData data, int n) {
+    public GameData actionFertilizeFieldN(GameData data, int n, int amount) {
+        int[] tmpFieldFertilizerN = data.getFieldFertilizerN();
+        tmpFieldFertilizerN[n] += amount;
+        data.setFieldFertilizerN(tmpFieldFertilizerN);
         return data;
     }
 
+    /**
+     * Increases Phosphorous in data.fieldFertilizerP[n] by amount. n is number of field.
+     */
+    public GameData actionFertilizeFieldP(GameData data, int n, int amount) {
+        int[] tmpFieldFertilizerP = data.getFieldFertilizerP();
+        tmpFieldFertilizerP[n] += amount;
+        data.setFieldFertilizerP(tmpFieldFertilizerP);
+        return data;
+    }
+
+    /**
+     * Reduce given field to 1 (owned but not sown) and increase
+     */
     public GameData actionReapField(GameData data, int n) {
         int[] tmpFields = data.getFields();
 
