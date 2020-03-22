@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
-public class Player {
+public class Player extends Sprite{
 
     private OrthographicCamera camera;
     Texture texture;
@@ -28,6 +28,7 @@ public class Player {
         float height = texture.getHeight()/200f;
         rectangle = new Rectangle(0.0f, 0.0f, width, height);
     }
+
 
     public OrthographicCamera getCamera() {
         return camera;
@@ -178,7 +179,6 @@ public class Player {
             setX(targetX);
 
         }
-
 
     }
 }
