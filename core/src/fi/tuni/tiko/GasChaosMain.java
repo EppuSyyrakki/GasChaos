@@ -2,10 +2,15 @@ package fi.tuni.tiko;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.I18NBundle;
+
+import java.util.Locale;
 
 public class GasChaosMain extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -16,6 +21,10 @@ public class GasChaosMain extends ApplicationAdapter {
 	GasTank gasTank;
 	Farm farm;
 	GameData gameData;
+	Player player;
+	Maps maps;
+	TiledMapRenderer tiledMapRenderer;
+	TiledMap tiledMap;
 	
 	@Override
 	public void create () {
@@ -27,17 +36,37 @@ public class GasChaosMain extends ApplicationAdapter {
 		garden = new Garden();
 		gasTank = new GasTank();
 		gameData = new GameData();
+		player = new Player();
+		maps = new Maps();
 		debugger();
+		// maps.MapField(player, tiledMap);
+		tiledMap = new TmxMapLoader().load("fields2.tmx");
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1 / 100f);
+
 	}
 
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//maps.checkCollisions(tiledMap);
+		tiledMapRenderer.render();
+
+		Locale locale = new Locale("fi", "Finland");
+		Locale defaultLocale = Locale.getDefault();
+		I18NBundle myBundle =
+				I18NBundle.createBundle(Gdx.files.internal("MyBundle"), locale);
+
+		//Localization example
+		String locTest1 = myBundle.get("buyCowComplete");
+		String locTest2 = myBundle.format("turnInfoExample", gameData.getCurrentTurn());
+		System.out.println(locTest1);
+		System.out.println(locTest2);
+		//End of example
 
 		batch.begin();
 
-		batch.draw(farm.background, 0, 0);
+		// batch.draw(farm.background, 0, 0);
 
 		batch.end();
 	}
