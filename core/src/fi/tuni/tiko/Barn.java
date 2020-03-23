@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import java.util.ArrayList;
 
 public class Barn extends Building {
-    private int manureShoveled = 30;    // how much removed from barn by shoveling action
-    private int feedInBarn;             // amount of food available to cows this turn
-    private int manureInBarn;           // amount of manure produced on previous turn
+    private int manureShoveled = 45;    // how much removed from barn by shoveling action
 
     public Barn() {
         background = new Texture("barnBackground.png");
@@ -22,18 +20,18 @@ public class Barn extends Building {
         Cow cow = cowList.get(0);
         int addAmount = cowList.size() * cow.getFeed() * 2; // enough food for 2 days
 
-        if (feedInBarn > 1.5 * addAmount) {
+        if (data.getFeedInBarn() > 1.5 * addAmount) {
             // TODO action blocked, cows have enough food UI message
         } else {
             if (data.getFeed() == 0) {
                 // TODO action blocked, feed storage empty UI message
             } else if (data.getFeed() < addAmount) {
-                feedInBarn += data.getFeed();
+                data.setFeedInBarn(data.getFeed());
                 data.setFeed(0);
                 // TODO feed storage empty UI message
                 data.setActionsDone(data.getActionsDone() + 1);
             } else {
-                feedInBarn += addAmount;
+                data.setFeedInBarn(data.getFeedInBarn() + addAmount);
                 data.setFeed(-addAmount);
                 // TODO cows fed UI message
                 data.setActionsDone(data.getActionsDone() + 1);
@@ -46,16 +44,16 @@ public class Barn extends Building {
      * Reduce manureInBarn and increase data.manure by same amount if less than data.manureMax
      */
     public GameData actionShovelManure(GameData data) {
-        if (manureInBarn == 0) {
+        if (data.getManureInBarn() == 0) {
             // TODO action blocked, no manure in barn UI message
-        } else if (manureInBarn < manureShoveled) {
-            data.setManure(data.getManure() + manureInBarn);
-            manureInBarn = 0;
+        } else if (data.getManureInBarn() < manureShoveled) {
+            data.setManure(data.getManure() + data.getManureInBarn());
+            data.setManureInBarn(0);
             // TODO barn is clean UI message
             data.setActionsDone(data.getActionsDone() + 1);
-        } else if (manureInBarn > manureShoveled) {
+        } else if (data.getManureInBarn() > manureShoveled) {
             data.setManure(data.getManure() + manureShoveled);
-            manureInBarn -= manureShoveled;
+            data.setManureInBarn(data.getManureInBarn() - manureShoveled);
             // TODO barn cleaned but still a bit dirty UI message
             data.setActionsDone(data.getActionsDone() + 1);
         }
@@ -93,21 +91,4 @@ public class Barn extends Building {
 
         return data;
     }
-
-    /**
-     * Update amount of manureInBarn and feedInBarn from data.cowList
-     */
-    public void update(GameData data) {
-        ArrayList<Cow> cowList = data.getCowList();
-
-        for (Cow cow : cowList) {
-            manureInBarn += cow.getManure();
-            feedInBarn -= cow.getFeed();
-        }
-
-        if (feedInBarn < 0) {
-
-        }
-    }
 }
-

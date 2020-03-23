@@ -15,9 +15,11 @@ public class Cow {
     private int methane = 300;
 
     /**
-     * Cow eats per turn.
+     * Cow eats per turn. If not eaten this turn (out of feed) no milk produced in getMilk().
      */
     private int feed = 10;
+
+    private boolean eatenThisTurn = false;
 
     /**
      * Methane backpack storage.
@@ -25,12 +27,36 @@ public class Cow {
     private int methaneAmount = 0;
     private int methaneAmountMax = 900;
 
-    public int getManure() {
+    /**
+     * Cow eats feed. If no feed left, no milk produced in GameData update. Returns the amount of
+     * feed minus what this cow ate.
+     */
+    public int eat(int totalFeed) {
+        if (totalFeed > 0) {
+            int newFeed = totalFeed - feed;
+            eatenThisTurn = true;
+            return newFeed;
+        } else {
+            return 0;
+        }
+    }
+
+    public int poop() {
+
         return manure;
     }
 
-    public int getMilk() {
-        return milk;
+    /**
+     * Calculate how much milk player gets depending on milkingMachineLevel.
+     */
+    public int getMilk(int milkingMachineLevel) {
+        if (milkingMachineLevel == 2) {
+            float floatMilk =  (float)milk * 1.5f;
+            int tmpMilk = (int)floatMilk;
+            return tmpMilk;
+        } else {
+            return milk;
+        }
     }
 
     public int getFeed() {
@@ -53,12 +79,26 @@ public class Cow {
         this.methaneAmountMax = methaneAmountMax;
     }
 
-    public void addMethane(int gasCollectorLevel) {
-        methaneAmount += methane * gasCollectorLevel;
-        methaneAmountMax *= gasCollectorLevel;
+    public void fart(int gasCollectorLevel) {
+        int methaneToAdd = methane;
+
+        if (gasCollectorLevel == 2) {
+            float tmpMethane = (float)methane * 1.5f;
+            methaneToAdd = (int)tmpMethane;
+        }
+
+        methaneAmount += methaneToAdd;
 
         if (methaneAmount > methaneAmountMax) {
             methaneAmount = methaneAmountMax;
         }
+    }
+
+    public boolean isEatenThisTurn() {
+        return eatenThisTurn;
+    }
+
+    public void setEatenThisTurn(boolean eatenThisTurn) {
+        this.eatenThisTurn = eatenThisTurn;
     }
 }

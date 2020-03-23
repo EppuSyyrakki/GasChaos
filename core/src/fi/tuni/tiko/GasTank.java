@@ -19,15 +19,17 @@ public class GasTank extends Building {
     }
 
     /**
-     * Increase data.methaneSold by data.methane and set data.methane to 0.
+     * Increase data.methaneSold by data.methane. data.methane reduction handled in GameData update.
      */
     public GameData actionSellGas(GameData data) {
-        if (data.getMethane() == 0) {
+        if (data.getMethane() > 0) {
             data.setMethaneSold(data.getMethane());
-            data.setMethane(0);
+            data.setActionsDone(data.getActionsDone() + 1);
+            // TODO methane sold UI message
+        } else {
+            // TODO no methane to sell UI message
         }
-        // TODO methane sold UI message
-        data.setActionsDone(data.getActionsDone() + 1);
+
         return data;
     }
 

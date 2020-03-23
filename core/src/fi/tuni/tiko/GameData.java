@@ -12,33 +12,37 @@ public class GameData {
     final int MONEY_FROM_METHANE = 2;
     final int MONEY_FROM_GARDEN = 8;
     final int PRICE_OF_COW = 800;
-    final int MAX_COWS = 6;
     final int PRICE_OF_FEED = 2;
     final int PRICE_OF_SOLAR = 1000;
     final int PRICE_OF_COLLECTOR = 1000;
     final int PRICE_OF_MILKING = 1000;
     final int PRICE_OF_TRACTOR = 1000;
     final int PRICE_OF_GENERATOR = 1000;
+    final int PRICE_OF_FIELD = 20;
 
     /**
      * Tracks game progression.
      */
     private int currentTurn = 1;
     private int actionsDone = 0;
-    final int MAX_ACTIONS = 3;
+    final int MAX_ACTIONS = 3;  // actions per turn
 
     /**
      * Resource amounts and limits
      */
     private int money = 2000;       // money available for purchases
     private int manure = 0;         // amount of manure in manure pit
-    private int manureMax = 1000;   // size of manure pit
+    private int manureInBarn = 0;   // amount of manure produced on previous turn
+    private int manureMax = 2500;   // size of manure pit
     private int methane = 0;        // amount of methane in gas tank
-    private int methaneMax = 100;   // size of methane tank
+    private int methaneMax = 15000; // size of methane tank
     private int debt = 10000;       // total amount of debt, reduced by debtPayment
-    private int feed = 20;          // amount of feed for cows
-    private int feedMax = 100;      // maximum amount of feed
+    private int feed = 0;           // total amount of feed
+    private int feedInBarn = 30;    // amount of feed for cows in barn
+    private int feedMax = 9000;     // maximum amount of feed
+    private float interest = 1.03f; // 5% interest rate to calculate debt payments
     final int MAX_FIELDS = 6;       // maximum number of fields
+    final int MAX_COWS = 6;         // maximum number of cows
 
     /**
      * Device levels. 0 = no device, Used in updateResource calculations and to draw correct
@@ -53,18 +57,19 @@ public class GameData {
     /**
      * Expenditures per turn
      */
-    private int debtPayment = -200; // debt and money reduced by this amount
-    private int electricity = -20;  // affected by solarPanelLevel and gasGeneratorLevel
-    private int petrol = -10;       // affected by tractorLevel
-    private int fieldsRent = 0;     // affected by number of elements over 0 in rentedFields array
+    private int debtPayment = 200;  // debt and money reduced by this amount (plus interest rate)
+    private int electricity = 100;  // affected by solarPanelLevel and gasGeneratorLevel
+    private int petrol = 20;        // affected by tractorLevel
+    // also rent of fields is an expense. Calculated by number of fields != 0 in updateResources.
 
     /**
-     * Income per turn. Touched only if sold this turn. Milk is sold every turn in updateResources.
+     * Income per turn. Touched only if sold this turn.
      */
     private int grainSold;
     private int methaneSold;
     private int manureSold;
     private int gardenSold;
+    // also milk is sold every turn in updateResources
 
     /**
      * Keep states of fields in game. First 2 should not cost anything.
@@ -88,7 +93,8 @@ public class GameData {
     private ArrayList<Cow> cowList;
 
     /**
-     * Things bought this turn that will come to farm on next turn. Touched in buying actions.
+     * Things bought this turn that will come to farm on next turn. Touched in buying actions. Will
+     * reset to default in updateResources at end of turn.
      */
     private ArrayList<Cow> cowsBought;
     private int feedBought;
@@ -102,30 +108,121 @@ public class GameData {
     private boolean gasGeneratorBought;
 
     /**
-     * Update variables. Use at end of turn. Resets xSold variables to 0 for next turn.
+     * Update variables. Use at end of turn.
      */
     private void updateResources() {
-        int grainSoldThisTurn = grainSold;
-        int manureSoldThisTurn = manureSold;
-        int gardenSoldThisTurn = gardenSold;
-        int methaneSoldThisTurn = methaneSold;
-        int milkSoldThisTurn = 0;
+        updateMoney();  // calculate new money based on device levels and sold resources, cows eat
+        updateThings(); // update device levels, bought resources and cows
+        resetBought();  // reset xSold to 0 and xBought to false, also reset eatenThisTurn in cows.
+    }
 
-        for (Cow cow : cowList) {
-            milkSoldThisTurn += cow.getMilk() * milkingMachineLevel;
-            cow.addMethane(gasCollectorLevel);
+    private void updateMoney() {
+        int milkSold = 0;
+        int moneyThisTurn = 0;
+        float floatPayment = debt * interest + debtPayment;
+        int fieldsRentThisTurn = 0;
+        int debtPaymentThisTurn = (int)floatPayment;
+        int petrolThisTurn = petrol;
+        int electricityThisTurn = electricity;                      // default total 100
+
+        if (solarPanelLevel == 1) {
+            electricityThisTurn = electricity - (electricity / 3);  // 67
+        } else if (solarPanelLevel == 2) {
+            electricityThisTurn = electricity / 3;                  // 33
+        }
+        if (gasGeneratorLevel == 1) {
+            electricityThisTurn = electricity - (electricity / 3);  // 0
         }
 
+        if (tractorLevel == 2) {
+            petrolThisTurn = petrol / 2;
+        } else if (tractorLevel == 3) {
+            petrolThisTurn = 0;
+        }
+
+        for (Cow cow : cowList) {
+            feed = cow.eat(feed);
+
+            if (cow.isEatenThisTurn()) {  // if cow not eaten, no milk, manure and methane produced
+                milkSold += cow.getMilk(milkingMachineLevel);
+                cow.fart(gasCollectorLevel);
+                manureInBarn += cow.poop();
+            }
+        }
+
+        for (int i = 2; i < MAX_FIELDS; i++) {  // start at 2 because 0 and 1 are owned, not rented
+            if (fields[i] != 0) {
+                fieldsRentThisTurn += PRICE_OF_FIELD;
+            }
+        }
+
+        moneyThisTurn += grainSold * MONEY_FROM_GRAIN;
+        moneyThisTurn += manureSold * MONEY_FROM_MANURE;
+        moneyThisTurn += gardenSold * MONEY_FROM_GARDEN;
+        moneyThisTurn += methaneSold * MONEY_FROM_METHANE;
+        moneyThisTurn += milkSold * MONEY_FROM_MILK;
+        moneyThisTurn -= debtPaymentThisTurn;
+        moneyThisTurn -= electricityThisTurn;
+        moneyThisTurn -= petrolThisTurn;
+        moneyThisTurn -= fieldsRentThisTurn;
+        money += moneyThisTurn;
+    }
+
+    private void updateThings() {
         cowList.addAll(cowsBought);
-        cowsBought.clear();
 
-        // TODO all calculations regarding money, depending on device levels
-        // TODO raise device levels and feed and reset bought variables
+        if (solarPanelBasicBought) {
+            solarPanelLevel = 1;
+            solarPanelBasicBought = false;
+        }
+        if (solarPanelAdvBought) {
+            solarPanelLevel = 2;
+            solarPanelAdvBought = false;
+        }
+        if (gasCollectorAdvBought) {
+            gasCollectorLevel = 2;
+            gasCollectorAdvBought = false;
+        }
+        if (milkingMachineAdvBought) {
+            milkingMachineLevel = 2;
+            milkingMachineAdvBought = false;
+        }
+        if (tractorAdvBought) {
+            tractorLevel = 2;
+            tractorAdvBought = false;
+        }
+        if (tractorGasBought) {
+            tractorLevel = 3;
+            tractorGasBought = false;
+        }
+        if (gasGeneratorBought) {
+            gasGeneratorLevel = 1;
+            gasGeneratorBought = false;
+        }
 
+        for (int i = 0; i < fieldsRented.length; i++) {
+            if (fieldsRented[i] == 1) {         // new field rented
+                fields[i + 2] = 1;              // + 2 because first 2 fields are owned, not rented
+            } else if (fieldsRented[i] == -1) { // stopped renting field
+                fields[i + 2] = 0;
+            }
+        }
+    }
+
+    private void resetBought() {
         grainSold = 0;
         manureSold = 0;
         gardenSold = 0;
         methaneSold = 0;
+        cowsBought.clear();
+
+        for (int i = 0; i < fieldsRented.length; i++) {
+            fieldsRented[i] = 0;
+        }
+
+        for (Cow cow : cowList) {
+            cow.setEatenThisTurn(false);
+        }
     }
 
     public GameData() {
@@ -381,7 +478,7 @@ public class GameData {
     }
 
     public void setTractorAdvBought(boolean tractorAdvBought) {
-        tractorAdvBought = tractorAdvBought;
+        this.tractorAdvBought = tractorAdvBought;
     }
 
     public boolean isTractorGasBought() {
@@ -389,7 +486,7 @@ public class GameData {
     }
 
     public void setTractorGasBought(boolean tractorGasBought) {
-        tractorGasBought = tractorGasBought;
+        this.tractorGasBought = tractorGasBought;
     }
 
     public boolean isGasGeneratorBought() {
@@ -398,5 +495,21 @@ public class GameData {
 
     public void setGasGeneratorBought(boolean gasGeneratorBought) {
         this.gasGeneratorBought = gasGeneratorBought;
+    }
+
+    public int getManureInBarn() {
+        return manureInBarn;
+    }
+
+    public void setManureInBarn(int manureInBarn) {
+        this.manureInBarn = manureInBarn;
+    }
+
+    public int getFeedInBarn() {
+        return feedInBarn;
+    }
+
+    public void setFeedInBarn(int feedInBarn) {
+        this.feedInBarn = feedInBarn;
     }
 }

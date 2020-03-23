@@ -244,9 +244,9 @@ public class Home extends Building {
      */
     public GameData actionGasGenerator(GameData data) {
         if (data.getGasGeneratorLevel() == 0 && !data.isGasGeneratorBought()) {
-            if (data.getMoney() >= data.PRICE_OF_SOLAR) {
-                data.setMoney(data.getMoney() - data.PRICE_OF_SOLAR);
-                data.setSolarPanelBasicBought(true);
+            if (data.getMoney() >= data.PRICE_OF_GENERATOR) {
+                data.setMoney(data.getMoney() - data.PRICE_OF_GENERATOR);
+                data.setGasGeneratorBought(true);
                 data.setActionsDone(data.getActionsDone() + 1);
                 // TODO basic solar panel bought UI message
             } else {
@@ -255,57 +255,6 @@ public class Home extends Building {
         } else if (data.getGasGeneratorLevel() == 1 || data.isGasGeneratorBought()){
             // TODO action blocked, already owned UI message
         }
-        return data;
-    }
-
-    /**
-     * Set next 0 element to 1 in data.fields array. Block if all fields[] > 0
-     */
-    public GameData actionRentNewField(GameData data) {
-        int[] tmpFields = data.getFields();
-        int fieldsRented = 2;
-
-        for (int i = 2; i < tmpFields.length; i++) {    // start at 2 because 0 and 1 are owned
-            if (tmpFields[i] > 0) {
-                fieldsRented++;
-            }
-
-            if (tmpFields[i] == 0) {
-                tmpFields[i] = 1;
-                data.setActionsDone(data.getActionsDone() + 1);
-                // TODO new field rented and ready to sow UI message
-                break;
-            }
-        }
-
-        if (fieldsRented >= data.MAX_FIELDS) {
-            // TODO no fields available to rent UI message
-        }
-        data.setFields(tmpFields);
-        return data;
-    }
-
-    /**
-     * Set last index that is not 0 to 0 in data.fields array. Blocked if only indexes 0 and 1 != 0.
-     */
-    public GameData actionStopRentingField(GameData data) {
-        int[] tmpFields = data.getFields();
-        boolean fieldGivenUp = false;
-
-        for (int i = tmpFields.length; i > 1; i--) {    // 0 and 1 are owned, so not touched here
-            if (tmpFields[i] != 0) {
-                tmpFields[i] = 0;
-                fieldGivenUp = true;
-                data.setActionsDone(data.getActionsDone() + 1);
-                // TODO last rented field given up UI message
-                break;
-            }
-        }
-
-        if (!fieldGivenUp) {
-            // TODO action blocked, no fields rented
-        }
-        data.setFields(tmpFields);
         return data;
     }
 
