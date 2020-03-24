@@ -3,6 +3,9 @@ package fi.tuni.tiko;
 import java.util.ArrayList;
 
 public class GameData {
+
+    int debugCounter = 0;
+
     /**
      * Prices of resources and upgrades. Money gained is per 1 unit.
      */
@@ -43,6 +46,9 @@ public class GameData {
     private float interest = 1.03f; // 5% interest rate to calculate debt payments
     final int MAX_FIELDS = 6;       // maximum number of fields
     final int MAX_COWS = 6;         // maximum number of cows
+    final int MANURE_SHOVELED = 45; // how much manure removed from barn in single remove action
+    final int MAX_P_PER_FIELD = 8;  // max phosphorous per field before penalty
+    final int MAX_N_NER_FIELD = 80; // max nitrogen per field before penalty
 
     /**
      * Device levels. 0 = no device, Used in updateResource calculations and to draw correct
@@ -88,6 +94,14 @@ public class GameData {
     private int[] fieldFertilizerN = new int[MAX_FIELDS];
 
     /**
+     * Keep state of garden.
+     */
+    private int weedsAmount = 0;    // bigger reduces gardenGrowth
+    private int gardenGrowth = 5;
+    private int gardenAmount = 0;   // increased by gardenGrowth every turn in less than gardenMax;
+    private int gardenMax = 50;
+
+    /**
      * All cows in the barn.
      */
     private ArrayList<Cow> cowList;
@@ -110,18 +124,20 @@ public class GameData {
     /**
      * Update variables. Use at end of turn.
      */
-    private void updateResources() {
+    public void updateResources() {
         updateMoney();  // calculate new money based on device levels and sold resources, cows eat
         updateThings(); // update device levels, bought resources and cows
-        resetBought();  // reset xSold to 0 and xBought to false, also reset eatenThisTurn in cows.
+        updateGarden(); // update garden vegetable growth
+        updateFields(); // update fields growth
+        resetVariables();  // reset xSold to 0 and xBought to false, also reset eatenThisTurn in cows.
     }
 
     private void updateMoney() {
         int milkSold = 0;
         int moneyThisTurn = 0;
         float floatPayment = debt * interest + debtPayment;
-        int fieldsRentThisTurn = 0;
         int debtPaymentThisTurn = (int)floatPayment;
+        int fieldsRentThisTurn = 0;
         int petrolThisTurn = petrol;
         int electricityThisTurn = electricity;                      // default total 100
 
@@ -209,7 +225,37 @@ public class GameData {
         }
     }
 
-    private void resetBought() {
+    /**
+     * Decrease gardenGrowth by weedsAmount, increase gardenAmount by gardenGrowth and increase
+     * weedsAmount by 1. Minimum gardenGrowth = 1. Maximum weeds amount = 5. No growth if garden
+     * is 0 (not planted).
+     */
+    public void updateGarden() {
+
+        if (gardenAmount > 0) {
+            gardenAmount += gardenGrowth;
+            gardenGrowth -= weedsAmount;
+
+            if (gardenGrowth < 1) {
+                gardenGrowth = 1;
+            }
+
+            if (gardenAmount > gardenMax) {
+                gardenAmount = gardenMax;
+            }
+        }
+        weedsAmount++;
+
+        if (weedsAmount > 5) {
+            weedsAmount = 5;
+        }
+    }
+
+    private void updateFields() {
+        // TODO growth through fertilization
+    }
+
+    private void resetVariables() {
         grainSold = 0;
         manureSold = 0;
         gardenSold = 0;
@@ -293,40 +339,20 @@ public class GameData {
         return solarPanelLevel;
     }
 
-    public void setSolarPanelLevel(int solarPanelLevel) {
-        this.solarPanelLevel = solarPanelLevel;
-    }
-
     public int getGasCollectorLevel() {
         return gasCollectorLevel;
-    }
-
-    public void setGasCollectorLevel(int gasCollectorLevel) {
-        this.gasCollectorLevel = gasCollectorLevel;
     }
 
     public int getMilkingMachineLevel() {
         return milkingMachineLevel;
     }
 
-    public void setMilkingMachineLevel(int milkingMachineLevel) {
-        this.milkingMachineLevel = milkingMachineLevel;
-    }
-
     public int getTractorLevel() {
         return tractorLevel;
     }
 
-    public void setTractorLevel(int tractorLevel) {
-        this.tractorLevel = tractorLevel;
-    }
-
     public int getGasGeneratorLevel() {
         return gasGeneratorLevel;
-    }
-
-    public void setGasGeneratorLevel(int gasGeneratorLevel) {
-        this.gasGeneratorLevel = gasGeneratorLevel;
     }
 
     public int getGrainSold() {
@@ -512,4 +538,24 @@ public class GameData {
     public void setFeedInBarn(int feedInBarn) {
         this.feedInBarn = feedInBarn;
     }
-}
+
+    public int getWeedsAmount() {
+        return weedsAmount;
+    }
+
+    public void setWeedsAmount(int weedsAmount) {
+        this.weedsAmount = weedsAmount;
+    }
+
+    public void setGardenGrowth(int gardenGrowth) {
+        this.gardenGrowth = gardenGrowth;
+    }
+
+    public int getGardenAmount() {
+        return gardenAmount;
+    }
+
+    public void setGardenAmount(int gardenAmount) {
+        this.gardenAmount = gardenAmount;
+    }
+    }

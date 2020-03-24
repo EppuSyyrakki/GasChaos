@@ -21,6 +21,7 @@ public class Player extends Sprite{
     float speedY;
     float targetX;
     float targetY;
+    boolean inputActive = false;    // not able to move player while fading screen
 
     public void player() {
         texture = new Texture("player.png");
