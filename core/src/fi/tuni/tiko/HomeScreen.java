@@ -53,13 +53,6 @@ public class HomeScreen extends Location implements Screen {
         }
     }
 
-    /**
-     * Enable tutorial menu
-     */
-    public void actionCallGrandMother() {
-
-    }
-
     @Override
     public void show() {
         blackness = 1;
