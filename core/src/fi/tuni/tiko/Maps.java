@@ -14,8 +14,8 @@ public class Maps {
 
     Player player;
 
-    int TILE_WIDTH = 53;
-    int TILE_HEIGHT = 53;
+    int TILE_WIDTH = 120;
+    int TILE_HEIGHT = 120;
 
     public void MapField(Player player, TiledMap tiledMap) {
 

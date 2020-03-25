@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -21,13 +22,23 @@ public class Player extends Sprite{
     float speedY;
     float targetX;
     float targetY;
-    boolean inputActive = false;    // not able to move player while fading screen
+    boolean inputActive = true;    // not able to move player while fading screen
+    boolean upleft;
+    boolean downleft;
+    boolean upright;
+    boolean downright;
 
     public void player() {
         texture = new Texture("player.png");
-        float width = texture.getWidth()/200f;
-        float height = texture.getHeight()/200f;
+        float width = texture.getWidth()/100f;
+        float height = texture.getHeight()/100f;
         rectangle = new Rectangle(0.0f, 0.0f, width, height);
+        setSize(width, height);
+        speedX = 0.1f;
+        speedY = 0.1f;
+        speed = 1.1f;
+        targetX = rectangle.x;
+        targetY = rectangle.y;
     }
 
 
@@ -142,15 +153,19 @@ public class Player extends Sprite{
         batch.draw(getTexture(), getX(), getY(), getWidth(), getHeight());
     }
 
-    public void playerTouch () {
+    public void playerTouch(SpriteBatch batch) {
+
 
         camera = new OrthographicCamera();
+        camera.setToOrtho(false, 9, 16);
+        batch.setProjectionMatrix(camera.combined);
 
         if(Gdx.input.isTouched()) {
 
+
             // move player on touch
-            int realX = Gdx.input.getX();
-            int realY = Gdx.input.getY();
+            float realX = Gdx.input.getX();
+            float realY = Gdx.input.getY();
 
             // pixels to world resolution
             Vector3 touchPos = new Vector3(realX, realY, 0);
@@ -169,17 +184,55 @@ public class Player extends Sprite{
 
         camera = new OrthographicCamera();
 
-        // X axis
-        if(targetX > rectangle.x + speed) {
-            rectangle.x = rectangle.x + speed * Gdx.graphics.getDeltaTime();
+        if (inputActive == true) {
+            // X axis
+            if (targetX == getX()) {
+                //System.out.println("same X");
+            } else if (targetX > getX()) {
+                if (targetX > (getX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setX(getX() + getSpeed() * Gdx.graphics.getDeltaTime());
+                } else if (targetX <= (getX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setX(getX());
+                }
+            } else if (targetX < getX()) {
+                if (targetX < (getX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setX(getX() - getSpeed() * Gdx.graphics.getDeltaTime());
+                } else if (targetX >= (getX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setX(getX());
+                }
+            }
 
-        } if(targetX < rectangle.x - speed) {
-            rectangle.x = rectangle.x - speed * Gdx.graphics.getDeltaTime();
-        } else if ((targetX > rectangle.x && targetX < rectangle.x + speed) ||
-                   (targetX < rectangle.x && targetX > rectangle.x - speed)) {
-            setX(targetX);
-
+            // Y axis
+            if (targetY == getY()) {
+                //System.out.println("same Y");
+            } else if (targetY > getY()) {
+                if (targetY > (getY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setY(getY() + getSpeed() * Gdx.graphics.getDeltaTime());
+                } else if (targetY <= (getY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setY(getY());
+                }
+            } else if (targetY < getY()) {
+                if (targetY < (getY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setY(getY() - getSpeed() * Gdx.graphics.getDeltaTime());
+                } else if (targetY >= (getY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setY(getY());
+                }
+            }
         }
 
+
+        boolean moveDebug = false;
+
+        if (moveDebug) {
+            Gdx.app.log("render", "x = " + rectangle.x);
+            Gdx.app.log("render", "y = " + rectangle.y);
+            Gdx.app.log("render", "x target = " + targetX);
+            Gdx.app.log("render", "y target = " + targetY);
+            Gdx.app.log("render", "x speed = " + speedX);
+            Gdx.app.log("render", "y speed = " + speedY);
+        }
     }
+
+
+
 }

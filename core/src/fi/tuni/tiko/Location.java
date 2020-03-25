@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Location {
     final float WORLD_WIDTH = 9f;
     final float WORLD_HEIGHT = 16f;
+    final float WORLD_SCALE = 1 / 120f;
     float blackness;
     float fadeSpeed = 2f;
     boolean fadeIn;
