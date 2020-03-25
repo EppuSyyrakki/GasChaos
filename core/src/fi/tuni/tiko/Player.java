@@ -6,9 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 
 public class Player extends Sprite{
 
@@ -36,7 +41,7 @@ public class Player extends Sprite{
         setSize(width, height);
         speedX = 0.1f;
         speedY = 0.1f;
-        speed = 1.1f;
+        speed = 1.6f;
         targetX = rectangle.x;
         targetY = rectangle.y;
     }
@@ -231,6 +236,36 @@ public class Player extends Sprite{
             Gdx.app.log("render", "x speed = " + speedX);
             Gdx.app.log("render", "y speed = " + speedY);
         }
+    }
+
+    public void checkCollisions(TiledMap tiledMap) {
+
+        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleCollision");
+
+        // all of the layer
+        MapObjects mapObjects = collisionObjectLayer.getObjects();
+
+        // add to array
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+
+        // Iterate rectangles
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, 120f);
+
+            if (getBoundingRectangle().overlaps(rectangle)) {
+                System.out.println("placeholder");
+            }
+        }
+    }
+
+    private Rectangle scaleRect(Rectangle r, float scale) {
+        Rectangle rectangle = new Rectangle();
+        rectangle.x      = r.x * scale;
+        rectangle.y      = r.y * scale;
+        rectangle.width  = r.width * scale;
+        rectangle.height = r.height * scale;
+        return rectangle;
     }
 
 

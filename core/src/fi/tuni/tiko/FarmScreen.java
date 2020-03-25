@@ -39,7 +39,6 @@ public class FarmScreen extends Location implements Screen {
     @Override
     public void render(float delta) {
         batch.setProjectionMatrix(camera.combined);
-        checkCollisions();
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tiledMapRenderer.setView(camera);
@@ -50,6 +49,7 @@ public class FarmScreen extends Location implements Screen {
         }
 
         //Player movement
+        player.checkCollisions(tiledMap);
 
         player.playerTouch(batch);
         player.playerMovement();
@@ -118,35 +118,7 @@ public class FarmScreen extends Location implements Screen {
         background.dispose();
     }
 
-    public void checkCollisions() {
 
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleCollision");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getBoundingRectangle().overlaps(rectangle)) {
-                System.out.println("placeholder");
-            }
-        }
-    }
-
-    private Rectangle scaleRect(Rectangle r, float scale) {
-        Rectangle rectangle = new Rectangle();
-        rectangle.x      = r.x * scale;
-        rectangle.y      = r.y * scale;
-        rectangle.width  = r.width * scale;
-        rectangle.height = r.height * scale;
-        return rectangle;
-    }
 
 
 }
