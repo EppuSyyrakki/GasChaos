@@ -35,13 +35,13 @@ public class Player extends Sprite{
 
     public void player() {
         texture = new Texture("player.png");
-        float width = texture.getWidth()/100f;
-        float height = texture.getHeight()/100f;
+        float width = texture.getWidth()/150f;
+        float height = texture.getHeight()/150f;
         rectangle = new Rectangle(0.0f, 0.0f, width, height);
         setSize(width, height);
         speedX = 0.1f;
         speedY = 0.1f;
-        speed = 1.6f;
+        speed = 1.45f;
         targetX = rectangle.x;
         targetY = rectangle.y;
     }
