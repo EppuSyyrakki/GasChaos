@@ -47,7 +47,7 @@ public class GasTankScreen extends Location implements Screen {
     }
 
     /**
-     * Decrease data.methane by half
+     * Decrease data.methane by half.
      */
     public GameData actionOpenEmergencyValve(GameData data) {
         data.setMethane(data.getMethane() / 2);
