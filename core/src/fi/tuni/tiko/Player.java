@@ -64,20 +64,20 @@ public class Player extends Sprite{
     }
 
     // Get X/Y
-    public float getX() {
+    public float getRX() {
         return rectangle.x;
     }
 
-    public float getY() {
+    public float getRY() {
         return rectangle.y;
     }
 
     // Set X/Y
-    public void setX(float x) {
+    public void setRX(float x) {
         this.rectangle.x = x;
     }
 
-    public void setY(float y) {
+    public void setRY(float y) {
         this.rectangle.y = y;
     }
 
@@ -155,7 +155,7 @@ public class Player extends Sprite{
     }
 
     public void draw(SpriteBatch batch) {
-        batch.draw(getTexture(), getX(), getY(), getWidth(), getHeight());
+        batch.draw(getTexture(), getRX(), getRY(), getWidth(), getHeight());
     }
 
     public void playerTouch(SpriteBatch batch) {
@@ -191,36 +191,36 @@ public class Player extends Sprite{
 
         if (inputActive == true) {
             // X axis
-            if (targetX == getX()) {
+            if (targetX == getRX()) {
                 //System.out.println("same X");
-            } else if (targetX > getX()) {
-                if (targetX > (getX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
-                    setX(getX() + getSpeed() * Gdx.graphics.getDeltaTime());
-                } else if (targetX <= (getX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
-                    setX(getX());
+            } else if (targetX > getRX()) {
+                if (targetX > (getRX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setRX(getRX() + getSpeed() * Gdx.graphics.getDeltaTime());
+                } else if (targetX <= (getRX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setRX(getRX());
                 }
-            } else if (targetX < getX()) {
-                if (targetX < (getX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
-                    setX(getX() - getSpeed() * Gdx.graphics.getDeltaTime());
-                } else if (targetX >= (getX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
-                    setX(getX());
+            } else if (targetX < getRX()) {
+                if (targetX < (getRX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setRX(getRX() - getSpeed() * Gdx.graphics.getDeltaTime());
+                } else if (targetX >= (getRX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setRX(getRX());
                 }
             }
 
             // Y axis
-            if (targetY == getY()) {
+            if (targetY == getRY()) {
                 //System.out.println("same Y");
-            } else if (targetY > getY()) {
-                if (targetY > (getY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
-                    setY(getY() + getSpeed() * Gdx.graphics.getDeltaTime());
-                } else if (targetY <= (getY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
-                    setY(getY());
+            } else if (targetY > getRY()) {
+                if (targetY > (getRY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setRY(getRY() + getSpeed() * Gdx.graphics.getDeltaTime());
+                } else if (targetY <= (getRY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setRY(getRY());
                 }
-            } else if (targetY < getY()) {
-                if (targetY < (getY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
-                    setY(getY() - getSpeed() * Gdx.graphics.getDeltaTime());
-                } else if (targetY >= (getY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
-                    setY(getY());
+            } else if (targetY < getRY()) {
+                if (targetY < (getRY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setRY(getRY() - getSpeed() * Gdx.graphics.getDeltaTime());
+                } else if (targetY >= (getRY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setRY(getRY());
                 }
             }
         }
@@ -240,6 +240,12 @@ public class Player extends Sprite{
 
     public void checkCollisions(TiledMap tiledMap) {
 
+        setX(getRY());
+        setY(getRY());
+
+        Rectangle bounding = getBoundingRectangle();
+        //System.out.println(bounding.x + "" + bounding.y);
+
         MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleCollision");
 
         // all of the layer
@@ -251,7 +257,7 @@ public class Player extends Sprite{
         // Iterate rectangles
         for (RectangleMapObject rectangleObject : rectangleObjects) {
             Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, 120f);
+            Rectangle rectangle = scaleRect(tmp, 1 / 120f);
 
             if (getBoundingRectangle().overlaps(rectangle)) {
                 System.out.println("placeholder");
@@ -260,14 +266,12 @@ public class Player extends Sprite{
     }
 
     private Rectangle scaleRect(Rectangle r, float scale) {
-        Rectangle rectangle = new Rectangle();
-        rectangle.x      = r.x * scale;
-        rectangle.y      = r.y * scale;
-        rectangle.width  = r.width * scale;
-        rectangle.height = r.height * scale;
-        return rectangle;
+        Rectangle rectangleScale = new Rectangle();
+        rectangleScale.x      = r.x * scale;
+        rectangleScale.y      = r.y * scale;
+        rectangleScale.width  = r.width * scale;
+        rectangleScale.height = r.height * scale;
+        return rectangleScale;
     }
-
-
 
 }
