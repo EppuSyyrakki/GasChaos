@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.ArrayList;
+
 public class FieldScreen extends Location implements Screen {
 
     public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game, Screen parent) {
@@ -39,112 +41,127 @@ public class FieldScreen extends Location implements Screen {
     }
 
     /**
-     * Increases field[n] from 1 to 2 (empty to sown). Blocked if not 1.
+     * Determine what actions are available for given field number.
+     * [0] = rent
+     * [1] = stop renting
+     * [2] = sow
+     * [3] = reap
+     * [4] = fertilize (both N and P actions)
      */
-    public GameData actionSowField(GameData data, int n) {
-        int[] tmpFields = data.getFields();
+    public boolean[] availableActions(GameData data, int number) {
+        boolean[] available = {false, false, false, false, false};
+        ArrayList<Field> tmpFields = data.getFields();
+        Field field = tmpFields.get(number);
 
-        if (tmpFields[n] == 1) {
-            tmpFields[n] = 2;
-            // TODO field has been sown UI message
-            data.setActionsDone(data.getActionsDone() + 1);
-        } else {
-            // TODO block action, can't sow that field UI message
+        if (!field.isOwned() && !field.isRented()) {
+            available[0] = true;
         }
+        if (field.isRented() && field.getAmount() == 0) {
+            available[1] = true;
+        }
+        if (field.getAmount() == 0) {
+            available[2] = true;
+        }
+        if (field.getAmount() > 20) {
+            available[3] = true;
+        }
+        if (field.isOwned() || field.isRented()) {
+            available[4] = true;
+        }
+        return available;
+    }
 
+    /**
+     * Increases amount to 1 in Fields[number]
+     */
+    public GameData actionSowField(GameData data, int number) {
+        ArrayList<Field> tmpFields = data.getFields();
+        Field field = tmpFields.get(number);
+        field.setAmount(1);
+        tmpFields.set(number, field);
+        data.setFields(tmpFields);
+
+        // TODO field sown UI message
+
+        return data;
+    }
+
+    /**
+     * Increases fertilizerN in Fields index number.
+     */
+    public GameData actionFertilizeFieldN(GameData data, int number, int amount) {
+        ArrayList<Field> tmpFields = data.getFields();
+        Field field = tmpFields.get(number);
+        field.setFertilizerN(field.getFertilizerN() + amount);
+        tmpFields.set(number, field);
+        data.setFields(tmpFields);
+
+        // TODO nitrogen added to field UI message
+
+        return data;
+    }
+
+    /**
+     * Increases fertilizerP in Fields index number.
+     */
+    public GameData actionFertilizeFieldP(GameData data, int number, int amount) {
+        ArrayList<Field> tmpFields = data.getFields();
+        Field field = tmpFields.get(number);
+        field.setFertilizerP(field.getFertilizerP() + amount);
+        tmpFields.set(number, field);
+        data.setFields(tmpFields);
+
+        // TODO phosphorous added to field UI message
+
+        return data;
+    }
+
+    /**
+     * Reduce given field to 0 and increase data.grainSold
+     */
+    public GameData actionReapField(GameData data, int number) {
+        ArrayList<Field> tmpFields = data.getFields();
+        Field field = tmpFields.get(number);
+        data.setGrainSold(data.getGrainSold() + field.getAmount());
+        field.setAmount(0);
+
+        // TODO grain reaped and sold UI message
+
+        data.setActionsDone(data.getActionsDone() + 1);
+        tmpFields.set(number, field);
         data.setFields(tmpFields);
         return data;
     }
 
     /**
-     * Increases Nitrogen in data.fieldFertilizerN by amount. n is number of field.
+     * Change field.isRented at index number to true.
      */
-    public GameData actionFertilizeFieldN(GameData data, int n, int amount) {
-        int[] tmpFieldFertilizerN = data.getFieldFertilizerN();
-        tmpFieldFertilizerN[n] += amount;
-        data.setFieldFertilizerN(tmpFieldFertilizerN);
+    public GameData actionRentNewField(GameData data, int number) {
+        ArrayList<Field> tmpFields = data.getFields();
+        Field field = tmpFields.get(number);
+        field.setRented(true);
+        data.setActionsDone(data.getActionsDone() + 1);
+
+        // TODO new field rented UI message
+
+        tmpFields.set(number, field);
+        data.setFields(tmpFields);
         return data;
     }
 
     /**
-     * Increases Phosphorous in data.fieldFertilizerP[n] by amount. n is number of field.
+     * Change field.isRented at index number to false.
      */
-    public GameData actionFertilizeFieldP(GameData data, int n, int amount) {
-        int[] tmpFieldFertilizerP = data.getFieldFertilizerP();
-        tmpFieldFertilizerP[n] += amount;
-        data.setFieldFertilizerP(tmpFieldFertilizerP);
-        return data;
-    }
+    public GameData actionStopRentingField(GameData data, int number) {
+        ArrayList<Field> tmpFields = data.getFields();
+        Field field = tmpFields.get(number);
+        field.setRented(false);
+        data.setActionsDone(data.getActionsDone() + 1);
 
-    /**
-     * Reduce given field to 1 (owned but not sown) and increase data.grainSold
-     */
-    public GameData actionReapField(GameData data, int n) {
-        int[] tmpFields = data.getFields();
+        // TODO stopped renting field UI message
 
-        if (tmpFields[n] < 2) {
-            // TODO block action, nothing to reap UI message
-        } else if (tmpFields[n] > 2 && tmpFields[n] < 21) {
-            // TODO block action, field not ripe yet UI message
-        } else {
-            data.setGrainSold(data.getGrainSold() + tmpFields[n]);
-            tmpFields[n] = 0;
-            // TODO grain reaped and sold UI message
-            data.setActionsDone(data.getActionsDone() + 1);
-        }
-        return data;
-    }
-
-    /**
-     * Set next 0 element to 1 in data.newFields array. Block if all fields rented.
-     */
-    public GameData actionRentNewField(GameData data) {
-        int[] tmpFields = data.getFields();
-        int[] tmpFieldsRented = data.getFieldsRented();
-        int hasFields = 2;
-
-        for (int i = 2; i < tmpFields.length; i++) {    // start at 2 because 0 and 1 are owned
-            if (tmpFields[i] > 0) {
-                hasFields++;
-            }
-
-            if (tmpFields[i] == 0) {
-                tmpFieldsRented[i] = 1;
-                data.setActionsDone(data.getActionsDone() + 1);
-                // TODO new field rented UI message
-                break;
-            }
-        }
-
-        if (hasFields >= data.MAX_FIELDS) {
-            // TODO no fields available to rent UI message
-        }
-        data.setFieldsRented(tmpFieldsRented);
-        return data;
-    }
-
-    /**
-     * Set last index that is not 0 to 0 in data.fields array. Blocked if only indexes 0 and 1 != 0.
-     */
-    public GameData actionStopRentingField(GameData data) {
-        int[] tmpFields = data.getFields();
-        int[] tmpFieldsRented = data.getFieldsRented();
-        boolean fieldGivenUp = false;
-
-        for (int i = tmpFields.length; i > 1; i--) {    // 0 and 1 are owned, so not touched here
-            if (tmpFields[i] != 0) {
-                tmpFieldsRented[i] = -1;
-                fieldGivenUp = true;
-                data.setActionsDone(data.getActionsDone() + 1);
-                // TODO last rented field given up UI message
-                break;
-            }
-        }
-
-        if (!fieldGivenUp) {
-            // TODO action blocked, no fields rented
-        }
-        data.setFieldsRented(tmpFieldsRented);
+        tmpFields.set(number, field);
+        data.setFields(tmpFields);
         return data;
     }
 

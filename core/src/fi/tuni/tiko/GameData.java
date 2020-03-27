@@ -78,20 +78,9 @@ public class GameData {
     // also milk is sold every turn in updateResources
 
     /**
-     * Keep states of fields in game. First 2 should not cost anything.
-     * 0 = not rented
-     * 1 = not sown
-     * 2-20 = sown & growing
-     * 21-29 = ripe & growing
-     * 30 ripe & not growing
-     * fieldGrowth is the rate of growth for fields. 1 = normal, 2 = fertilized
-     * fieldFertilizer is a turn counter from 5 to 0. When above 0, fieldGrowth is 2, when down to
-     * 0, fieldGrowth is 1.
+     * All fields in FieldScreen. All fields exist at start of game.
      */
-    private int[] fields = new int[MAX_FIELDS];
-    private int[] fieldGrowth = new int[MAX_FIELDS];
-    private int[] fieldFertilizerP = new int[MAX_FIELDS];
-    private int[] fieldFertilizerN = new int[MAX_FIELDS];
+    private ArrayList<Field> fields;
 
     /**
      * Keep state of garden.
@@ -112,7 +101,7 @@ public class GameData {
      */
     private ArrayList<Cow> cowsBought;
     private int feedBought;
-    private int[] fieldsRented = new int[MAX_FIELDS - 2];   // -2 since first 2 are owned, no rent
+    private int[] fieldsRented = new int[MAX_FIELDS - 2];   // -2 since first 2 owned, no rent
     private boolean solarPanelBasicBought;
     private boolean solarPanelAdvBought;
     private boolean gasCollectorAdvBought;
@@ -166,8 +155,8 @@ public class GameData {
             }
         }
 
-        for (int i = 2; i < MAX_FIELDS; i++) {  // start at 2 because 0 and 1 are owned, not rented
-            if (fields[i] != 0) {
+        for (Field field  : fields) {
+            if (field.isRented()) {
                 fieldsRentThisTurn += PRICE_OF_FIELD;
             }
         }
@@ -215,14 +204,6 @@ public class GameData {
             gasGeneratorLevel = 1;
             gasGeneratorBought = false;
         }
-
-        for (int i = 0; i < fieldsRented.length; i++) {
-            if (fieldsRented[i] == 1) {         // new field rented
-                fields[i + 2] = 1;              // + 2 because first 2 fields are owned, not rented
-            } else if (fieldsRented[i] == -1) { // stopped renting field
-                fields[i + 2] = 0;
-            }
-        }
     }
 
     /**
@@ -252,7 +233,9 @@ public class GameData {
     }
 
     private void updateFields() {
-        // TODO growth through fertilization
+        for (Field field : fields) {
+            field.grow();
+        }
     }
 
     private void resetVariables() {
@@ -272,11 +255,7 @@ public class GameData {
     }
 
     public GameData() {
-        for (int i = 0; i < fields.length; i++) {   // create field arrays
-            fieldGrowth[i] = 1;
-            fieldFertilizerP[i] = 0;
-            fieldFertilizerN[i] = 0;
-        }
+
     }
 
     public int getActionsDone() {
@@ -387,36 +366,12 @@ public class GameData {
         this.gardenSold = gardenSold;
     }
 
-    public int[] getFields() {
+    public ArrayList<Field> getFields() {
         return fields;
     }
 
-    public void setFields(int[] fields) {
+    public void setFields(ArrayList<Field> fields) {
         this.fields = fields;
-    }
-
-    public int[] getFieldGrowth() {
-        return fieldGrowth;
-    }
-
-    public void setFieldGrowth(int[] fieldGrowth) {
-        this.fieldGrowth = fieldGrowth;
-    }
-
-    public int[] getFieldFertilizerN() {
-        return fieldFertilizerN;
-    }
-
-    public void setFieldFertilizerN(int[] fieldFertilizerN) {
-        this.fieldFertilizerN = fieldFertilizerN;
-    }
-
-    public int[] getFieldFertilizerP() {
-        return fieldFertilizerP;
-    }
-
-    public void setFieldFertilizerP(int[] fieldFertilizerP) {
-        this.fieldFertilizerP = fieldFertilizerP;
     }
 
     public ArrayList<Cow> getCowList() {

@@ -2,31 +2,19 @@ package fi.tuni.tiko;
 
 import com.badlogic.gdx.Gdx;
 
+import java.util.ArrayList;
+
 public class GasChaosDebugger {
     public void debugger (GameData gameData) {
         Gdx.app.log("Other", "y = " + gameData.getActionsDone());
 
-        int[] field = gameData.getFields();
-        int[] fieldGrowth = gameData.getFields();
-        int[] fieldFertilizer = gameData.getFields();
-        int[] fieldRent = gameData.getFields();
+        ArrayList<Field> fields = gameData.getFields();
+
         String fieldLog = "";
         String fieldGrowthLog = "";
         String fieldFertilizerLog = "";
         String fieldRentLog = "";
 
-        for (int i = 0; i < field.length; i++) {
-            fieldLog = fieldLog + ", " + field[i];
-        }
-        for (int i = 0; i < fieldGrowth.length; i++) {
-            fieldGrowthLog = fieldGrowthLog + ", " + fieldGrowth[i];
-        }
-        for (int i = 0; i < fieldFertilizer.length; i++) {
-            fieldFertilizerLog = fieldFertilizerLog + ", " + fieldFertilizer[i];
-        }
-        for (int i = 0; i < fieldRent.length; i++) {
-            fieldRentLog = fieldRentLog + ", " + field[i];
-        }
 
         // Upgrades
         Gdx.app.log("Upgrade", "Solar level = " + gameData.getSolarPanelLevel());
