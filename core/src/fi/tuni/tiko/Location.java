@@ -30,4 +30,8 @@ public class Location {
             blackness = 0;
         }
     }
+
+    public float getWorldScale() {
+        return WORLD_SCALE;
+    }
 }

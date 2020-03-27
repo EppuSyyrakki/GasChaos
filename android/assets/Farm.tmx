@@ -27,12 +27,12 @@
   <object id="2" x="388" y="480" width="252" height="176"/>
  </objectgroup>
  <objectgroup id="4" name="RectangleCollision">
-  <object id="3" x="-94" y="-40" width="102" height="2078"/>
-  <object id="4" x="-4" y="1910" width="1138" height="130"/>
+  <object id="3" x="-94" y="-40" width="89.8788" height="2078"/>
+  <object id="4" x="-4" y="1925.15" width="1138" height="114.848"/>
   <object id="6" x="1072" y="-98" width="116" height="2144"/>
-  <object id="7" x="-144" y="-102" width="1334" height="580"/>
+  <object id="7" x="-144" y="-102" width="1334" height="625.455"/>
   <object id="8" x="-8" y="436" width="284" height="196"/>
-  <object id="15" x="-2" y="906" width="328" height="176"/>
+  <object id="15" x="-2" y="906" width="328" height="224.485"/>
  </objectgroup>
  <objectgroup id="5" name="RectangleField">
   <object id="10" x="838" y="870" width="244" height="350"/>

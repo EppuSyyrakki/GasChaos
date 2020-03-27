@@ -28,10 +28,10 @@ public class Player extends Sprite{
     float targetX;
     float targetY;
     boolean inputActive = true;    // not able to move player while fading screen
-    boolean upleft;
-    boolean downleft;
-    boolean upright;
-    boolean downright;
+    boolean up;
+    boolean down;
+    boolean left;
+    boolean right;
 
     public void player() {
         texture = new Texture("player.png");
@@ -154,6 +154,30 @@ public class Player extends Sprite{
         this.targetY = targetY;
     }
 
+    public Rectangle getRectangleUp() {
+        Rectangle recFuture = getRectangle();
+        recFuture.x = recFuture.x + speed * Gdx.graphics.getDeltaTime();
+        return recFuture;
+    }
+
+    public Rectangle getRectangleDown() {
+        Rectangle recFuture = getRectangle();
+        recFuture.x = recFuture.x - speed * Gdx.graphics.getDeltaTime();
+        return recFuture;
+    }
+
+    public Rectangle getRectangleLeft() {
+        Rectangle recFuture = getRectangle();
+        recFuture.y = recFuture.y - speed * Gdx.graphics.getDeltaTime();
+        return recFuture;
+    }
+
+    public Rectangle getRectangleRight() {
+        Rectangle recFuture = getRectangle();
+        recFuture.y = recFuture.y + speed * Gdx.graphics.getDeltaTime();
+        return recFuture;
+    }
+
     public void draw(SpriteBatch batch) {
         batch.draw(getTexture(), getRX(), getRY(), getWidth(), getHeight());
     }
@@ -193,13 +217,13 @@ public class Player extends Sprite{
             // X axis
             if (targetX == getRX()) {
                 //System.out.println("same X");
-            } else if (targetX > getRX()) {
+            } else if (targetX > getRX() && up == true) {
                 if (targetX > (getRX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setRX(getRX() + getSpeed() * Gdx.graphics.getDeltaTime());
                 } else if (targetX <= (getRX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setRX(getRX());
                 }
-            } else if (targetX < getRX()) {
+            } else if (targetX < getRX() && down == true) {
                 if (targetX < (getRX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setRX(getRX() - getSpeed() * Gdx.graphics.getDeltaTime());
                 } else if (targetX >= (getRX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
@@ -210,13 +234,13 @@ public class Player extends Sprite{
             // Y axis
             if (targetY == getRY()) {
                 //System.out.println("same Y");
-            } else if (targetY > getRY()) {
+            } else if (targetY > getRY() && right == true) {
                 if (targetY > (getRY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setRY(getRY() + getSpeed() * Gdx.graphics.getDeltaTime());
                 } else if (targetY <= (getRY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setRY(getRY());
                 }
-            } else if (targetY < getRY()) {
+            } else if (targetY < getRY() && left == true) {
                 if (targetY < (getRY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setRY(getRY() - getSpeed() * Gdx.graphics.getDeltaTime());
                 } else if (targetY >= (getRY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
@@ -263,6 +287,30 @@ public class Player extends Sprite{
                 System.out.println("placeholder");
             }
         }
+
+        up = true;
+        down = true;
+        left = true;
+        right = true;
+        // wallcheck going up
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, 1 / 120f);
+
+            if (getRectangleUp().overlaps(rectangle)) {
+                up = false;
+            }
+            if (getRectangleDown().overlaps(rectangle)) {
+                down = false;
+            }
+            if (getRectangleLeft().overlaps(rectangle)) {
+                left = false;
+            }
+            if (getRectangleRight().overlaps(rectangle)) {
+                right = false;
+            }
+
+        }
     }
 
     private Rectangle scaleRect(Rectangle r, float scale) {
@@ -273,5 +321,4 @@ public class Player extends Sprite{
         rectangleScale.height = r.height * scale;
         return rectangleScale;
     }
-
 }
