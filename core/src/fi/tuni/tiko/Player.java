@@ -259,7 +259,7 @@ public class Player extends Sprite{
             Rectangle tmp = rectangleObject.getRectangle();
             Rectangle rectangle = scaleRect(tmp, 1 / 120f);
 
-            if (getBoundingRectangle().overlaps(rectangle)) {
+            if (getRectangle().overlaps(rectangle)) {
                 System.out.println("placeholder");
             }
         }
