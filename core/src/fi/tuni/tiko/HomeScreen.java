@@ -7,9 +7,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class HomeScreen extends Location implements Screen {
     Player player;
+    TiledMap tiledMap;
+    TiledMapRenderer tiledMapRenderer;
 
     public HomeScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game, Screen parent) {
         background = new Texture("homeBackground.png");
@@ -19,6 +25,11 @@ public class HomeScreen extends Location implements Screen {
         this.parent = parent;
         this.game = game;
         player = new Player();
+        player.player();
+        player.setRX(1);
+        player.setRY(1);
+        tiledMap = new TmxMapLoader().load("Home.tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
     }
 
     @Override
@@ -26,14 +37,23 @@ public class HomeScreen extends Location implements Screen {
         batch.setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
 
         if (fadeIn) {
             fadeFromBlack();
         }
 
+        // Player movement
+        player.checkCollisions(tiledMap);
+
+        player.playerTouch(batch);
+        player.playerMovement();
+
         batch.begin();
-        batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
+        //batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
+        player.draw(batch);
         batch.end();
 
         if (false) {    // condition return to farm

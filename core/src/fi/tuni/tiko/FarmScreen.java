@@ -37,6 +37,7 @@ public class FarmScreen extends Location implements Screen {
         player.player();
         shapeRenderer = new ShapeRenderer();
 
+
     }
 
     @Override
@@ -140,7 +141,7 @@ public class FarmScreen extends Location implements Screen {
             Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
 
             if (player.getRectangle().overlaps(rectangle)) {
-                System.out.println("Home");
+                game.setScreen(new HomeScreen(batch, camera, game, this));
             }
         }
     }
