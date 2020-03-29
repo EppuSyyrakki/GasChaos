@@ -51,7 +51,7 @@ public class HomeScreen extends Location implements Screen {
 
         // Player movement
         player.checkCollisions(tiledMap);
-        fieldsRec();
+        exitRec();
 
         player.playerTouch(batch);
         player.playerMovement();
@@ -110,7 +110,7 @@ public class HomeScreen extends Location implements Screen {
         background.dispose();
     }
 
-    public void fieldsRec() {
+    public void exitRec() {
 
 
         MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleExit");
@@ -132,4 +132,74 @@ public class HomeScreen extends Location implements Screen {
             }
         }
     }
+
+    public void bedRec() {
+
+
+        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleBed");
+
+        // all of the layer
+        MapObjects mapObjects = collisionObjectLayer.getObjects();
+
+        // add to array
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+
+        // Iterate rectangles
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
+
+            if (player.getRectangle().overlaps(rectangle)) {
+                // Add transition back to the farm when MenuScreen is implemented
+                System.out.println("Bed");
+            }
+        }
+    }
+
+    public void phoneRec() {
+
+
+        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectanglePhone");
+
+        // all of the layer
+        MapObjects mapObjects = collisionObjectLayer.getObjects();
+
+        // add to array
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+
+        // Iterate rectangles
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
+
+            if (player.getRectangle().overlaps(rectangle)) {
+                // Add transition back to the farm when MenuScreen is implemented
+                System.out.println("Phone");
+            }
+        }
+    }
+
+    public void computerRec() {
+
+
+        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectanglePC");
+
+        // all of the layer
+        MapObjects mapObjects = collisionObjectLayer.getObjects();
+
+        // add to array
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+
+        // Iterate rectangles
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
+
+            if (player.getRectangle().overlaps(rectangle)) {
+                // Add transition back to the farm when MenuScreen is implemented
+                System.out.println("PC");
+            }
+        }
+    }
+
 }
