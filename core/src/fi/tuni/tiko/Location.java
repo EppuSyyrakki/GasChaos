@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Location {
     final float WORLD_WIDTH = 9f;
@@ -29,6 +30,15 @@ public class Location {
             fadeIn = false;
             blackness = 0;
         }
+    }
+
+    public Rectangle scaleRect(Rectangle r, float scale) {
+        Rectangle rectangleScale = new Rectangle();
+        rectangleScale.x      = r.x * scale;
+        rectangleScale.y      = r.y * scale;
+        rectangleScale.width  = r.width * scale;
+        rectangleScale.height = r.height * scale;
+        return rectangleScale;
     }
 
     public float getWorldScale() {

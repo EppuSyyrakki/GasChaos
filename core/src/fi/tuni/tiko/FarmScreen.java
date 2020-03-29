@@ -212,14 +212,6 @@ public class FarmScreen extends Location implements Screen {
         }
     }
 
-    private Rectangle scaleRect(Rectangle r, float scale) {
-        Rectangle rectangleScale = new Rectangle();
-        rectangleScale.x      = r.x * scale;
-        rectangleScale.y      = r.y * scale;
-        rectangleScale.width  = r.width * scale;
-        rectangleScale.height = r.height * scale;
-        return rectangleScale;
-    }
 
 }
 

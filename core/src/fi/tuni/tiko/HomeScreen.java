@@ -7,10 +7,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 public class HomeScreen extends Location implements Screen {
     Player player;
@@ -46,6 +51,7 @@ public class HomeScreen extends Location implements Screen {
 
         // Player movement
         player.checkCollisions(tiledMap);
+        fieldsRec();
 
         player.playerTouch(batch);
         player.playerMovement();
@@ -102,5 +108,28 @@ public class HomeScreen extends Location implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+    }
+
+    public void fieldsRec() {
+
+
+        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleExit");
+
+        // all of the layer
+        MapObjects mapObjects = collisionObjectLayer.getObjects();
+
+        // add to array
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+
+        // Iterate rectangles
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
+
+            if (player.getRectangle().overlaps(rectangle)) {
+                // Add transition back to the farm when MenuScreen is implemented
+                System.out.println("It's almost harvesting season");
+            }
+        }
     }
 }
