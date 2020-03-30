@@ -6,10 +6,22 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
 
 public class FieldScreen extends Location implements Screen {
+    Player player;
+    TiledMap tiledMap;
+    TiledMapRenderer tiledMapRenderer;
 
     public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game, Screen parent) {
         background = new Texture("fieldBackground.png");
@@ -18,6 +30,14 @@ public class FieldScreen extends Location implements Screen {
         this.camera = camera;
         this.parent = parent;
         this.game = game;
+        player = new Player();
+        player.player(150f);
+        player.setRX(5);
+        player.setRY(5);
+        player.setTargetX(player.getRX());
+        player.setTargetY(player.getRY());
+        tiledMap = new TmxMapLoader().load("Fields.tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
     }
 
     @Override
@@ -25,14 +45,25 @@ public class FieldScreen extends Location implements Screen {
         batch.setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
 
         if (fadeIn) {
             fadeFromBlack();
         }
 
+        // Player movement
+        player.checkCollisions(tiledMap);
+        exitRec();
+        fieldRecs();
+
+        player.playerTouch(batch);
+        player.playerMovement();
+
         batch.begin();
-        batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
+        //batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
+        player.draw(batch);
         batch.end();
 
         if (false) {    // condition return to farm
@@ -195,4 +226,180 @@ public class FieldScreen extends Location implements Screen {
     public void dispose() {
         background.dispose();
     }
+
+
+    public void exitRec() {
+
+
+        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleExit");
+
+        // all of the layer
+        MapObjects mapObjects = collisionObjectLayer.getObjects();
+
+        // add to array
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+
+        // Iterate rectangles
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
+
+            if (player.getRectangle().overlaps(rectangle)) {
+                // Add transition back to the farm when MenuScreen is implemented
+                System.out.println("Exit");
+            }
+        }
+    }
+
+    public void field1Rec() {
+
+
+        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleField1");
+
+        // all of the layer
+        MapObjects mapObjects = collisionObjectLayer.getObjects();
+
+        // add to array
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+
+        // Iterate rectangles
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
+
+            if (player.getRectangle().overlaps(rectangle)) {
+                // TODO FIELD UI
+                System.out.println("field1");
+            }
+        }
+    }
+
+    public void field2Rec() {
+
+
+        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleField2");
+
+        // all of the layer
+        MapObjects mapObjects = collisionObjectLayer.getObjects();
+
+        // add to array
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+
+        // Iterate rectangles
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
+
+            if (player.getRectangle().overlaps(rectangle)) {
+                // TODO FIELD UI
+                System.out.println("field2");
+            }
+        }
+    }
+
+    public void field3Rec() {
+
+
+        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleField3");
+
+        // all of the layer
+        MapObjects mapObjects = collisionObjectLayer.getObjects();
+
+        // add to array
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+
+        // Iterate rectangles
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
+
+            if (player.getRectangle().overlaps(rectangle)) {
+                // TODO FIELD UI
+                System.out.println("field3");
+            }
+        }
+    }
+
+    public void field4Rec() {
+
+
+        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleField4");
+
+        // all of the layer
+        MapObjects mapObjects = collisionObjectLayer.getObjects();
+
+        // add to array
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+
+        // Iterate rectangles
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
+
+            if (player.getRectangle().overlaps(rectangle)) {
+                // TODO FIELD UI
+                System.out.println("field4");
+            }
+        }
+    }
+
+    public void field5Rec() {
+
+
+        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleField5");
+
+        // all of the layer
+        MapObjects mapObjects = collisionObjectLayer.getObjects();
+
+        // add to array
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+
+        // Iterate rectangles
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
+
+            if (player.getRectangle().overlaps(rectangle)) {
+                // TODO FIELD UI
+                System.out.println("field5");
+            }
+        }
+    }
+
+    public void field6Rec() {
+
+
+        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleField6");
+
+        // all of the layer
+        MapObjects mapObjects = collisionObjectLayer.getObjects();
+
+        // add to array
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+
+        // Iterate rectangles
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
+
+            if (player.getRectangle().overlaps(rectangle)) {
+                // TODO FIELD UI
+                System.out.println("field6");
+            }
+        }
+    }
+
+    // Calls all fieldRec methods to de-clutter render method.
+    public void fieldRecs() {
+        field1Rec();
+        field2Rec();
+        field3Rec();
+        field4Rec();
+        field5Rec();
+        field6Rec();
+    }
+
+
+
+
 }

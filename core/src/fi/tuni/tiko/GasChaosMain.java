@@ -13,6 +13,7 @@ public class GasChaosMain extends Game {
 
 	GameData gameData;
 	FarmScreen farmScreen;
+	HomeScreen homeScreen;
 	MenuScreen menuScreen;
 
 	Player player;
@@ -29,7 +30,8 @@ public class GasChaosMain extends Game {
 
 		// move this to menuScreen eventually and setScreen(menuScreen) too.
 		farmScreen = new FarmScreen(batch, camera, this, menuScreen);
-		setScreen(farmScreen);
+		homeScreen = new HomeScreen(batch, camera, this, menuScreen);
+		setFarmScreen();
 
 		/*
 		debugger();
@@ -70,6 +72,14 @@ public class GasChaosMain extends Game {
 
 	}
 
+	public void setFarmScreen () {
+		setScreen(farmScreen);
+
+	}
+	public void setHomeScreen () {
+		setScreen(homeScreen);
+
+	}
 
 
 }

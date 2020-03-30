@@ -34,7 +34,7 @@ public class FarmScreen extends Location implements Screen {
         this.parent = parent;
         this.game = game;
         player = new Player();
-        player.player();
+        player.player(150f);
         shapeRenderer = new ShapeRenderer();
 
 
@@ -163,7 +163,7 @@ public class FarmScreen extends Location implements Screen {
             Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
 
             if (player.getRectangle().overlaps(rectangle)) {
-                System.out.println("Barn");
+                game.setScreen(new BarnScreen(batch, camera, game, this));
             }
         }
     }
@@ -207,7 +207,7 @@ public class FarmScreen extends Location implements Screen {
             Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
 
             if (player.getRectangle().overlaps(rectangle)) {
-                System.out.println("It's almost harvesting season");
+                game.setScreen(new FieldScreen(batch, camera, game, this));
             }
         }
     }

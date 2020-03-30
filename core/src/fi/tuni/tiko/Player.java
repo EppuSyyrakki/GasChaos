@@ -33,10 +33,10 @@ public class Player extends Sprite{
     boolean left;
     boolean right;
 
-    public void player() {
+    public void player(float size) {
         texture = new Texture("player.png");
-        float width = texture.getWidth()/150f;
-        float height = texture.getHeight()/150f;
+        float width = texture.getWidth()/size;
+        float height = texture.getHeight()/size;
         rectangle = new Rectangle(0.0f, 0.0f, width, height);
         setSize(width, height);
         speedX = 0.1f;
@@ -156,25 +156,25 @@ public class Player extends Sprite{
 
     public Rectangle getRectangleUp() {
         Rectangle recFuture = getRectangle();
-        recFuture.x = recFuture.x + speed * Gdx.graphics.getDeltaTime();
+        recFuture.x = recFuture.x + speed * (Gdx.graphics.getDeltaTime());
         return recFuture;
     }
 
     public Rectangle getRectangleDown() {
         Rectangle recFuture = getRectangle();
-        recFuture.x = recFuture.x - speed * Gdx.graphics.getDeltaTime();
+        recFuture.x = recFuture.x - speed * (Gdx.graphics.getDeltaTime());
         return recFuture;
     }
 
     public Rectangle getRectangleLeft() {
         Rectangle recFuture = getRectangle();
-        recFuture.y = recFuture.y - speed * Gdx.graphics.getDeltaTime();
+        recFuture.y = recFuture.y - speed * (Gdx.graphics.getDeltaTime());
         return recFuture;
     }
 
     public Rectangle getRectangleRight() {
         Rectangle recFuture = getRectangle();
-        recFuture.y = recFuture.y + speed * Gdx.graphics.getDeltaTime();
+        recFuture.y = recFuture.y + speed * (Gdx.graphics.getDeltaTime());
         return recFuture;
     }
 

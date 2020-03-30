@@ -30,9 +30,11 @@ public class HomeScreen extends Location implements Screen {
         this.parent = parent;
         this.game = game;
         player = new Player();
-        player.player();
-        player.setRX(1);
-        player.setRY(1);
+        player.player(100f);
+        player.setRX(5);
+        player.setRY(5);
+        player.setTargetX(player.getRX());
+        player.setTargetY(player.getRY());
         tiledMap = new TmxMapLoader().load("Home.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
     }
@@ -52,12 +54,14 @@ public class HomeScreen extends Location implements Screen {
         // Player movement
         player.checkCollisions(tiledMap);
         exitRec();
+        computerRec();
+        bedRec();
+        phoneRec();
 
         player.playerTouch(batch);
         player.playerMovement();
 
         batch.begin();
-        //batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
         player.draw(batch);
         batch.end();
@@ -128,7 +132,7 @@ public class HomeScreen extends Location implements Screen {
 
             if (player.getRectangle().overlaps(rectangle)) {
                 // Add transition back to the farm when MenuScreen is implemented
-                System.out.println("It's almost harvesting season");
+                System.out.println("Exit");
             }
         }
     }
