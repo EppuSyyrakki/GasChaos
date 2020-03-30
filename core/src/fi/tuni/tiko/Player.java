@@ -156,25 +156,25 @@ public class Player extends Sprite{
 
     public Rectangle getRectangleUp() {
         Rectangle recFuture = getRectangle();
-        recFuture.x = recFuture.x + speed * (Gdx.graphics.getDeltaTime());
+        recFuture.x = recFuture.x + speed * Gdx.graphics.getDeltaTime();
         return recFuture;
     }
 
     public Rectangle getRectangleDown() {
         Rectangle recFuture = getRectangle();
-        recFuture.x = recFuture.x - speed * (Gdx.graphics.getDeltaTime());
+        recFuture.x = recFuture.x - speed * Gdx.graphics.getDeltaTime();
         return recFuture;
     }
 
     public Rectangle getRectangleLeft() {
         Rectangle recFuture = getRectangle();
-        recFuture.y = recFuture.y - speed * (Gdx.graphics.getDeltaTime());
+        recFuture.y = recFuture.y - speed * Gdx.graphics.getDeltaTime();
         return recFuture;
     }
 
     public Rectangle getRectangleRight() {
         Rectangle recFuture = getRectangle();
-        recFuture.y = recFuture.y + speed * (Gdx.graphics.getDeltaTime());
+        recFuture.y = recFuture.y + speed * Gdx.graphics.getDeltaTime();
         return recFuture;
     }
 
