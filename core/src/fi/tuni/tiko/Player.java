@@ -262,6 +262,38 @@ public class Player extends Sprite{
         }
     }
 
+    public boolean playerAction(SpriteBatch batch, Rectangle rectangle) {
+
+        boolean touched = false;
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 9, 16);
+        batch.setProjectionMatrix(camera.combined);
+
+        if(Gdx.input.isTouched()) {
+
+
+            // move player on touch
+            float realX = Gdx.input.getX();
+            float realY = Gdx.input.getY();
+
+            // pixels to world resolution
+            Vector3 touchPos = new Vector3(realX, realY, 0);
+            camera.unproject(touchPos);
+
+            setTargetX(touchPos.x);
+            setTargetY(touchPos.y);
+
+            if (rectangle.contains(touchPos.x, touchPos.y)) {
+                touched = true;
+            } else {
+                touched = false;
+
+            }
+        }
+        return touched;
+
+    }
+
     public void checkCollisions(TiledMap tiledMap) {
 
         setX(getRY());
