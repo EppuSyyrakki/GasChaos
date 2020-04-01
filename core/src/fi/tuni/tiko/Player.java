@@ -3,6 +3,7 @@ package fi.tuni.tiko;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -32,6 +33,12 @@ public class Player extends Sprite{
     boolean down;
     boolean left;
     boolean right;
+    Animation<TextureRegion> walkUpAnimation;
+    Animation<TextureRegion> walkDownAnimation;
+    Animation<TextureRegion> walkLeftAnimation;
+    Animation<TextureRegion> walkRightAnimation;
+    int FRAME_COLS = 4;
+    int FRAME_ROWS = 2;
 
     public void player(float size) {
         texture = new Texture("player.png");
@@ -44,6 +51,19 @@ public class Player extends Sprite{
         speed = 1.45f;
         targetX = rectangle.x;
         targetY = rectangle.y;
+
+        // Animation
+        TextureRegion[][] tmp = TextureRegion.split(
+                texture,
+                texture.getWidth() / FRAME_COLS,
+                texture.getHeight() / FRAME_ROWS);
+
+        TextureRegion[] frames = transformTo1D(tmp, 2, 4);
+
+        walkUpAnimation = new Animation(6 / 60f, frames);
+        walkDownAnimation = new Animation(6 / 60f, frames);
+        walkLeftAnimation = new Animation(6 / 60f, frames);
+        walkRightAnimation = new Animation(6 / 60f, frames);
     }
 
 
@@ -154,25 +174,25 @@ public class Player extends Sprite{
         this.targetY = targetY;
     }
 
-    public Rectangle getRectangleUp() {
+    public Rectangle getRectangleRight() {
         Rectangle recFuture = getRectangle();
         recFuture.x = recFuture.x + speed * Gdx.graphics.getDeltaTime();
         return recFuture;
     }
 
-    public Rectangle getRectangleDown() {
+    public Rectangle getRectangleLeft() {
         Rectangle recFuture = getRectangle();
         recFuture.x = recFuture.x - speed * Gdx.graphics.getDeltaTime();
         return recFuture;
     }
 
-    public Rectangle getRectangleLeft() {
+    public Rectangle getRectangleDown() {
         Rectangle recFuture = getRectangle();
         recFuture.y = recFuture.y - speed * Gdx.graphics.getDeltaTime();
         return recFuture;
     }
 
-    public Rectangle getRectangleRight() {
+    public Rectangle getRectangleUp() {
         Rectangle recFuture = getRectangle();
         recFuture.y = recFuture.y + speed * Gdx.graphics.getDeltaTime();
         return recFuture;
@@ -212,18 +232,19 @@ public class Player extends Sprite{
     public void playerMovement () {
 
         camera = new OrthographicCamera();
+        camera.setToOrtho(false, 9, 16);
 
         if (inputActive == true) {
             // X axis
             if (targetX == getRX()) {
                 //System.out.println("same X");
-            } else if (targetX > getRX() && up == true) {
+            } else if (targetX > (getRX()) && right == true) {
                 if (targetX > (getRX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setRX(getRX() + getSpeed() * Gdx.graphics.getDeltaTime());
-                } else if (targetX <= (getRX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                } else if (targetX < (getRX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setRX(getRX());
                 }
-            } else if (targetX < getRX() && down == true) {
+            } else if (targetX < getRX() && left == true) {
                 if (targetX < (getRX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setRX(getRX() - getSpeed() * Gdx.graphics.getDeltaTime());
                 } else if (targetX >= (getRX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
@@ -234,16 +255,16 @@ public class Player extends Sprite{
             // Y axis
             if (targetY == getRY()) {
                 //System.out.println("same Y");
-            } else if (targetY > getRY() && right == true) {
+            } else if (targetY > getRY() && up == true) {
                 if (targetY > (getRY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setRY(getRY() + getSpeed() * Gdx.graphics.getDeltaTime());
                 } else if (targetY <= (getRY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setRY(getRY());
                 }
-            } else if (targetY < getRY() && left == true) {
+            } else if (targetY < getRY() && down == true) {
                 if (targetY < (getRY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setRY(getRY() - getSpeed() * Gdx.graphics.getDeltaTime());
-                } else if (targetY >= (getRY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                } else if (targetY > (getRY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setRY(getRY());
                 }
             }
@@ -255,10 +276,10 @@ public class Player extends Sprite{
         if (moveDebug) {
             Gdx.app.log("render", "x = " + rectangle.x);
             Gdx.app.log("render", "y = " + rectangle.y);
-            Gdx.app.log("render", "x target = " + targetX);
-            Gdx.app.log("render", "y target = " + targetY);
-            Gdx.app.log("render", "x speed = " + speedX);
-            Gdx.app.log("render", "y speed = " + speedY);
+            //Gdx.app.log("render", "x target = " + targetX);
+            //Gdx.app.log("render", "y target = " + targetY);
+            //Gdx.app.log("render", "x speed = " + speedX);
+            //Gdx.app.log("render", "y speed = " + speedY);
         }
     }
 
@@ -352,5 +373,17 @@ public class Player extends Sprite{
         rectangleScale.width  = r.width * scale;
         rectangleScale.height = r.height * scale;
         return rectangleScale;
+    }
+
+    private TextureRegion[] transformTo1D(TextureRegion[][] tmp, int rows, int cols) {
+        TextureRegion [] walkFrames
+                = new TextureRegion[cols * rows];
+        int index = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                walkFrames[index++] = tmp[i][j];
+            }
+        }
+        return walkFrames;
     }
 }
