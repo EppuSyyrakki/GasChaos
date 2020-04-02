@@ -21,7 +21,6 @@ public class HomeScreen extends Location implements Screen {
     private final GasChaosMain game;
 
     public HomeScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        super();
         background = new Texture("homeBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.game = game;
