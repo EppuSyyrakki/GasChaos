@@ -1,6 +1,7 @@
 package fi.tuni.tiko;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,6 +17,8 @@ public class GrandmotherScreen extends Location implements Screen {
         this.batch = batch;
         this.camera = camera;
         this.game = game;
+        Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
 
     @Override
@@ -33,7 +36,7 @@ public class GrandmotherScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
-        if (false) {    // condition return to home
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to home
             game.setHomeScreen();
         }
     }
