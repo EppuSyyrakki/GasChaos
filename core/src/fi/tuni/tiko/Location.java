@@ -1,6 +1,6 @@
 package fi.tuni.tiko;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,13 +9,13 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-public class Location {
+public class Location implements InputProcessor {
     final float WORLD_WIDTH = 9f;
     final float WORLD_HEIGHT = 16f;
     final float WORLD_SCALE = 1 / 120f;
-    final float WORLD_SCALE_NORM = 120f;
     float blackness;
     float fadeSpeed = 2f;
     boolean fadeIn;
@@ -56,7 +56,80 @@ public class Location {
         return rectangleScale;
     }
 
+    public boolean playerAction(Rectangle rectangle) {
+
+        boolean touched = false;
+
+        if(Gdx.input.isTouched()) {
+
+            // move player on touch
+            float realX = Gdx.input.getX();
+            float realY = Gdx.input.getY();
+
+            // pixels to world resolution
+            Vector3 touchPos = new Vector3(realX, realY, 0);
+            camera.unproject(touchPos);
+
+            if (rectangle.contains(touchPos.x, touchPos.y)) {
+                System.out.println("boat");
+                touched = true;
+            } else {
+                touched = false;
+
+            }
+        }
+        return touched;
+
+    }
+
+
+
     public float getWorldScale() {
         return WORLD_SCALE;
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.BACK) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean keyUp(int keycode) {
+        if (keycode == Input.Keys.BACK) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }

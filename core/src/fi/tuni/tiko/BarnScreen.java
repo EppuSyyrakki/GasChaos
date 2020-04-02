@@ -1,6 +1,7 @@
 package fi.tuni.tiko;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -38,6 +39,8 @@ public class BarnScreen extends Location implements Screen {
         player.setTargetY(player.getRY());
         tiledMap = new TmxMapLoader().load("Barn.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
+        Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
 
     @Override
@@ -67,7 +70,7 @@ public class BarnScreen extends Location implements Screen {
         topBar.update(game.gameData);
         topBar.stage.draw();
 
-        if (exitRec()) {    // condition return to farm
+        if (exitRec() || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
             game.setFarmScreen();
         }
 
@@ -198,7 +201,7 @@ public class BarnScreen extends Location implements Screen {
 
     public boolean exitRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleExit"));
-        boolean action = player.playerAction(batch, r);
+        boolean action = playerAction(r);
         if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {

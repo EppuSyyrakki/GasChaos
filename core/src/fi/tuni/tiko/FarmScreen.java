@@ -126,7 +126,7 @@ public class FarmScreen extends Location implements Screen {
 
     public boolean homeRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleHome"));
-        boolean action = player.playerAction(batch, r);
+        boolean action = playerAction(r);
         if (player.getRectangle().overlaps(r)  && action == true) {
             return true;
         } else {
@@ -136,7 +136,7 @@ public class FarmScreen extends Location implements Screen {
 
     public boolean barnRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleBarn"));
-        boolean action = player.playerAction(batch, r);
+        boolean action = playerAction(r);
         if (player.getRectangle().overlaps(r)  && action == true) {
             return true;
         } else {
@@ -146,7 +146,7 @@ public class FarmScreen extends Location implements Screen {
 
     public boolean gasTankRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleGasTank"));
-        boolean action = player.playerAction(batch, r);
+        boolean action = playerAction(r);
         if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
@@ -156,7 +156,7 @@ public class FarmScreen extends Location implements Screen {
 
     public boolean fieldsRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField"));
-        boolean action = player.playerAction(batch, r);
+        boolean action = playerAction(r);
         if (player.getRectangle().overlaps(r)  && action == true) {
             return true;
         } else {
@@ -166,7 +166,7 @@ public class FarmScreen extends Location implements Screen {
 
     public boolean gardenRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleGarden"));
-        boolean action = player.playerAction(batch, r);
+        boolean action = playerAction(r);
         if (player.getRectangle().overlaps(r)  && action == true) {
             return true;
         } else {

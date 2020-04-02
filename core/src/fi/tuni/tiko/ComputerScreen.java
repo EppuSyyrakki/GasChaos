@@ -1,6 +1,8 @@
 package fi.tuni.tiko;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,12 +15,13 @@ public class ComputerScreen extends Location implements Screen {
     private final GasChaosMain game;
 
     public ComputerScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        super();
         background = new Texture("computerBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
         this.game = game;
+        Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
 
     @Override
@@ -31,6 +34,10 @@ public class ComputerScreen extends Location implements Screen {
             fadeFromBlack();
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+            game.setHomeScreen();
+        }
+
         batch.begin();
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
@@ -38,10 +45,6 @@ public class ComputerScreen extends Location implements Screen {
 
         topBar.update(game.gameData);
         topBar.stage.draw();
-
-        if (false) {    // condition return to home
-            game.setHomeScreen();
-        }
     }
 
     /**

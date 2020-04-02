@@ -49,8 +49,8 @@ public class Player extends Sprite{
         speedX = 0.1f;
         speedY = 0.1f;
         speed = 1.45f;
-        targetX = rectangle.x;
-        targetY = rectangle.y;
+        targetX = getRX();
+        targetY = getRY();
 
         // Animation
         TextureRegion[][] tmp = TextureRegion.split(

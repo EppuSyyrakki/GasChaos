@@ -1,6 +1,7 @@
 package fi.tuni.tiko;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -35,6 +36,8 @@ public class HomeScreen extends Location implements Screen {
         player.setTargetY(player.getRY());
         tiledMap = new TmxMapLoader().load("Home.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
+        Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
 
     @Override
@@ -59,7 +62,7 @@ public class HomeScreen extends Location implements Screen {
         player.draw(batch);
         batch.end();
 
-        if (exitRec()) {    // condition return to farm
+        if (exitRec() || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
             game.setFarmScreen();
         }
 
