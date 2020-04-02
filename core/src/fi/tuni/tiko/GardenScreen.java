@@ -1,6 +1,5 @@
 package fi.tuni.tiko;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,13 +8,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GardenScreen extends Location implements Screen {
+    private final GasChaosMain game;
 
-    public GardenScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game, Screen parent) {
+    public GardenScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         background = new Texture("barnBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
-        this.parent = parent;
         this.game = game;
     }
 
@@ -35,7 +34,7 @@ public class GardenScreen extends Location implements Screen {
         batch.end();
 
         if (false) {    // condition return to farm
-            game.setScreen(parent);
+            game.setFarmScreen();
         }
 
         if (false) {    // condition weed garden

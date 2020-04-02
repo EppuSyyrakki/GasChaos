@@ -1,12 +1,17 @@
 package fi.tuni.tiko;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 public class Location {
     final float WORLD_WIDTH = 9f;
@@ -20,8 +25,6 @@ public class Location {
     Texture background;
     Texture blackTexture = new Texture("black.png");
     Sprite black = new Sprite(blackTexture);
-    GasChaosMain game;
-    Screen parent;
 
     public void fadeFromBlack() {
         blackness -= Gdx.graphics.getDeltaTime() * fadeSpeed;
@@ -30,6 +33,18 @@ public class Location {
             fadeIn = false;
             blackness = 0;
         }
+    }
+
+    /**
+     * Returns first found rectangle from a MapLayer object.
+     * @param layer MapLayer to get rectangle from
+     * @return rectangle with gameworld coordinates
+     */
+    public Rectangle getCheckRectangle(MapLayer layer) {
+        MapObjects mapObjects = layer.getObjects();
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+        Rectangle rectangle = scaleRect(rectangleObjects.get(0).getRectangle(), WORLD_SCALE);
+        return rectangle;
     }
 
     public Rectangle scaleRect(Rectangle r, float scale) {

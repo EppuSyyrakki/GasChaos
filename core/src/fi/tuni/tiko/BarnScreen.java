@@ -19,18 +19,16 @@ import com.badlogic.gdx.utils.Array;
 import java.util.ArrayList;
 
 public class BarnScreen extends Location implements Screen {
-    final float WORLD_WIDTH = 9f;
-    final float WORLD_HEIGHT = 16f;
     Player player;
     TiledMap tiledMap;
     TiledMapRenderer tiledMapRenderer;
+    private final GasChaosMain game;
 
-    public BarnScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game, Screen parent) {
+    public BarnScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         background = new Texture("barnBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
-        this.parent = parent;
         this.game = game;
         player = new Player();
         player.player(100f);
@@ -67,7 +65,7 @@ public class BarnScreen extends Location implements Screen {
         batch.end();
 
         if (false) {    // condition return to farm
-            game.setScreen(parent);
+            game.setFarmScreen();
         }
 
         if (false) {    // condition feed cows

@@ -6,9 +6,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -18,24 +20,29 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
+import static com.badlogic.gdx.math.Rectangle.tmp;
+
 public class FarmScreen extends Location implements Screen {
     Player player;
     TiledMap tiledMap;
     TiledMapRenderer tiledMapRenderer;
-    private ShapeRenderer shapeRenderer;
+    private final GasChaosMain game;
 
-    public FarmScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game, Screen parent) {
+    // private ShapeRenderer shapeRenderer;
+
+    public FarmScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         background = new Texture("farmBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         tiledMap = new TmxMapLoader().load("Farm.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
         this.batch = batch;
         this.camera = camera;
-        this.parent = parent;
+
         this.game = game;
         player = new Player();
         player.player(150f);
-        shapeRenderer = new ShapeRenderer();
+
+        // shapeRenderer = new ShapeRenderer();
 
 
     }
@@ -54,11 +61,6 @@ public class FarmScreen extends Location implements Screen {
 
         //Player movement
         player.checkCollisions(tiledMap);
-        homeRec();
-        barnRec();
-        fieldsRec();
-        gasTankRec();
-
         player.playerTouch(batch);
         player.playerMovement();
 
@@ -69,27 +71,28 @@ public class FarmScreen extends Location implements Screen {
         batch.end();
 
         if (false) {    // condition return to menu
-            game.setScreen(parent);
+            game.setMenuScreen();
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {    // condition enter home
-            game.setScreen(new HomeScreen(batch, camera, game, this));
+        if (homeRec()) {    // condition enter home
+            game.setHomeScreen();
+            // game.setScreen(new HomeScreen(batch, camera, game, this));
         }
 
-        if (false) {    // condition enter barn
-            game.setScreen(new BarnScreen(batch, camera, game, this));
+        if (barnRec()) {    // condition enter barn
+            game.setBarnScreen();
         }
 
         if (false) {    // condition enter garden
-            game.setScreen(new GardenScreen(batch, camera, game, this));
+            game.setGardenScreen();
         }
 
-        if (false) {    // condition enter fields
-            game.setScreen(new FieldScreen(batch, camera, game, this));
+        if (fieldsRec()) {    // condition enter fields
+            game.setFieldScreen();
         }
 
-        if (false) {    // condition enter gasTank
-            game.setScreen(new GasTankScreen(batch, camera, game, this));
+        if (gasTankRec()) {    // condition enter gasTank
+            game.setGasTankScreen();
         }
     }
 
@@ -124,93 +127,51 @@ public class FarmScreen extends Location implements Screen {
         background.dispose();
     }
 
-    public void homeRec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleHome");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                game.setScreen(new HomeScreen(batch, camera, game, this));
-            }
+    public boolean homeRec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleHome"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void barnRec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleBarn");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                game.setScreen(new BarnScreen(batch, camera, game, this));
-            }
+    public boolean barnRec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleBarn"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void gasTankRec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleGasTank");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                System.out.println("Gas, gas gas I'm gonna step on the gas");
-            }
+    public boolean gasTankRec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleGasTank"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void fieldsRec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleField");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                game.setScreen(new FieldScreen(batch, camera, game, this));
-            }
+    public boolean fieldsRec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
+
+    public boolean gardenRec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleGarden"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 
 }

@@ -1,38 +1,35 @@
 package fi.tuni.tiko;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 
 public class HomeScreen extends Location implements Screen {
     Player player;
     TiledMap tiledMap;
     TiledMapRenderer tiledMapRenderer;
+    private final GasChaosMain game;
 
-    public HomeScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game, Screen parent) {
+    public HomeScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         background = new Texture("homeBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
+        this.game = game;
         this.batch = batch;
         this.camera = camera;
-        this.parent = parent;
-        this.game = game;
+
         player = new Player();
         player.player(100f);
-        player.setRX(5);
-        player.setRY(5);
+        player.setRX(4);
+        player.setRY(4);
         player.setTargetX(player.getRX());
         player.setTargetY(player.getRY());
         tiledMap = new TmxMapLoader().load("Home.tmx");
@@ -53,11 +50,6 @@ public class HomeScreen extends Location implements Screen {
 
         // Player movement
         player.checkCollisions(tiledMap);
-        exitRec();
-        computerRec();
-        bedRec();
-        phoneRec();
-
         player.playerTouch(batch);
         player.playerMovement();
 
@@ -66,20 +58,20 @@ public class HomeScreen extends Location implements Screen {
         player.draw(batch);
         batch.end();
 
-        if (false) {    // condition return to farm
-            game.setScreen(parent);
+        if (exitRec()) {    // condition return to farm
+            game.setFarmScreen();
         }
 
-        if (false) {    // condition call to grandmother
-            game.setScreen(new GrandmotherScreen(batch, camera, game, this));
+        if (phoneRec()) {    // condition call to grandmother
+            game.setGrandmotherScreen();
         }
 
-        if (false) {    // condition go to computer
-            game.setScreen(new ComputerScreen(batch, camera, game, this));
+        if (computerRec()) {    // condition go to computer
+            game.setComputerScreen();
         }
 
-        if (game.gameData.getActionsDone() >= game.gameData.MAX_ACTIONS) {  // condition end turn
-            // end turn
+        if (bedRec()) {  // condition end turn
+            System.out.println("i hve the sleepy"); // end turn
         }
     }
 
@@ -114,95 +106,39 @@ public class HomeScreen extends Location implements Screen {
         background.dispose();
     }
 
-    public void exitRec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleExit");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                // Add transition back to the farm when MenuScreen is implemented
-                System.out.println("Exit");
-            }
+    public boolean exitRec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleExit"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void bedRec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleBed");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                // Add transition back to the farm when MenuScreen is implemented
-                System.out.println("Bed");
-            }
+    public boolean bedRec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleBed"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void phoneRec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectanglePhone");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                // Add transition back to the farm when MenuScreen is implemented
-                System.out.println("Phone");
-            }
+    public boolean phoneRec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectanglePhone"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void computerRec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectanglePC");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                // Add transition back to the farm when MenuScreen is implemented
-                System.out.println("PC");
-            }
+    public boolean computerRec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectanglePC"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 

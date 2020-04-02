@@ -22,13 +22,13 @@ public class FieldScreen extends Location implements Screen {
     Player player;
     TiledMap tiledMap;
     TiledMapRenderer tiledMapRenderer;
+    private final GasChaosMain game;
 
-    public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game, Screen parent) {
+    public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         background = new Texture("fieldBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
-        this.parent = parent;
         this.game = game;
         player = new Player();
         player.player(150f);
@@ -54,9 +54,6 @@ public class FieldScreen extends Location implements Screen {
 
         // Player movement
         player.checkCollisions(tiledMap);
-        exitRec();
-        fieldRecs();
-
         player.playerTouch(batch);
         player.playerMovement();
 
@@ -66,9 +63,15 @@ public class FieldScreen extends Location implements Screen {
         player.draw(batch);
         batch.end();
 
-        if (false) {    // condition return to farm
-            game.setScreen(parent);
+        if (exitRec()) {    // condition return to farm
+            game.setFarmScreen();
         }
+
+        if (fieldsRec()) {
+            boolean[] actions = availableActions(game.gameData, getFieldNumber());
+            // TODO UI available actions to this field
+        }
+
     }
 
     /**
@@ -227,179 +230,97 @@ public class FieldScreen extends Location implements Screen {
         background.dispose();
     }
 
-
-    public void exitRec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleExit");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                // Add transition back to the farm when MenuScreen is implemented
-                System.out.println("Exit");
-            }
+    public boolean exitRec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleExit"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void field1Rec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleField1");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                // TODO FIELD UI
-                System.out.println("field1");
-            }
+    public boolean fieldsRec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleFields"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void field2Rec() {
+    /**
+     * Index number for the field player touched
+     */
+    public int getFieldNumber() {
+        int fieldNumber = -1;
 
+        if (field1Rec()) {
+            fieldNumber = 0;
+        } else if (field2Rec()) {
+            fieldNumber = 1;
+        } else if (field3Rec()) {
+            fieldNumber = 2;
+        } else if (field4Rec()) {
+            fieldNumber = 3;
+        } else if (field5Rec()) {
+            fieldNumber = 4;
+        } else if (field6Rec()) {
+            fieldNumber = 5;
+        }
+        return fieldNumber;
+    }
 
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleField2");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                // TODO FIELD UI
-                System.out.println("field2");
-            }
+    public boolean field1Rec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField1"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void field3Rec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleField3");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                // TODO FIELD UI
-                System.out.println("field3");
-            }
+    public boolean field2Rec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField2"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void field4Rec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleField4");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                // TODO FIELD UI
-                System.out.println("field4");
-            }
+    public boolean field3Rec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField3"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void field5Rec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleField5");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                // TODO FIELD UI
-                System.out.println("field5");
-            }
+    public boolean field4Rec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField4"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void field6Rec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleField6");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                // TODO FIELD UI
-                System.out.println("field6");
-            }
+    public boolean field5Rec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField5"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    // Calls all fieldRec methods to de-clutter render method.
-    public void fieldRecs() {
-        field1Rec();
-        field2Rec();
-        field3Rec();
-        field4Rec();
-        field5Rec();
-        field6Rec();
+    public boolean field6Rec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField6"));
+        if (player.getRectangle().overlaps(r)) {
+            return true;
+        } else {
+            return false;
+        }
     }
-
-
-
-
 }
