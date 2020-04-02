@@ -193,26 +193,13 @@ public class BarnScreen extends Location implements Screen {
         background.dispose();
     }
 
-    public void exitRec() {
-
-
-        MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleExit");
-
-        // all of the layer
-        MapObjects mapObjects = collisionObjectLayer.getObjects();
-
-        // add to array
-        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-
-        // Iterate rectangles
-        for (RectangleMapObject rectangleObject : rectangleObjects) {
-            Rectangle tmp = rectangleObject.getRectangle();
-            Rectangle rectangle = scaleRect(tmp, WORLD_SCALE);
-
-            if (player.getRectangle().overlaps(rectangle)) {
-                // Add transition back to the farm when MenuScreen is implemented
-                System.out.println("Exit");
-            }
+    public boolean exitRec() {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleExit"));
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r) && action == true) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

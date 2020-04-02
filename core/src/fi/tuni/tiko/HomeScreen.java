@@ -108,6 +108,7 @@ public class HomeScreen extends Location implements Screen {
 
     public boolean exitRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleExit"));
+        boolean action = player.playerAction(batch, r);
         if (player.getRectangle().overlaps(r)) {
             return true;
         } else {
@@ -117,7 +118,8 @@ public class HomeScreen extends Location implements Screen {
 
     public boolean bedRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleBed"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;
@@ -126,7 +128,8 @@ public class HomeScreen extends Location implements Screen {
 
     public boolean phoneRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectanglePhone"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;
@@ -135,7 +138,8 @@ public class HomeScreen extends Location implements Screen {
 
     public boolean computerRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectanglePC"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;

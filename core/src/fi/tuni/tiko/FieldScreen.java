@@ -232,7 +232,8 @@ public class FieldScreen extends Location implements Screen {
 
     public boolean exitRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleExit"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;
@@ -241,7 +242,8 @@ public class FieldScreen extends Location implements Screen {
 
     public boolean fieldsRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleFields"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;
@@ -272,7 +274,8 @@ public class FieldScreen extends Location implements Screen {
 
     public boolean field1Rec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField1"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;
@@ -281,7 +284,8 @@ public class FieldScreen extends Location implements Screen {
 
     public boolean field2Rec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField2"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;
@@ -290,7 +294,8 @@ public class FieldScreen extends Location implements Screen {
 
     public boolean field3Rec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField3"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;
@@ -299,7 +304,8 @@ public class FieldScreen extends Location implements Screen {
 
     public boolean field4Rec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField4"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;
@@ -308,7 +314,8 @@ public class FieldScreen extends Location implements Screen {
 
     public boolean field5Rec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField5"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;
@@ -317,7 +324,8 @@ public class FieldScreen extends Location implements Screen {
 
     public boolean field6Rec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField6"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;

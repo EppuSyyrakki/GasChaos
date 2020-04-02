@@ -129,7 +129,8 @@ public class FarmScreen extends Location implements Screen {
 
     public boolean homeRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleHome"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r)  && action == true) {
             return true;
         } else {
             return false;
@@ -138,7 +139,8 @@ public class FarmScreen extends Location implements Screen {
 
     public boolean barnRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleBarn"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r)  && action == true) {
             return true;
         } else {
             return false;
@@ -147,7 +149,8 @@ public class FarmScreen extends Location implements Screen {
 
     public boolean gasTankRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleGasTank"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;
@@ -156,7 +159,8 @@ public class FarmScreen extends Location implements Screen {
 
     public boolean fieldsRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r)  && action == true) {
             return true;
         } else {
             return false;
@@ -165,7 +169,8 @@ public class FarmScreen extends Location implements Screen {
 
     public boolean gardenRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleGarden"));
-        if (player.getRectangle().overlaps(r)) {
+        boolean action = player.playerAction(batch, r);
+        if (player.getRectangle().overlaps(r)  && action == true) {
             return true;
         } else {
             return false;

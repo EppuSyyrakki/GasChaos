@@ -305,6 +305,7 @@ public class Player extends Sprite{
             setTargetY(touchPos.y);
 
             if (rectangle.contains(touchPos.x, touchPos.y)) {
+                System.out.println("boat");
                 touched = true;
             } else {
                 touched = false;
