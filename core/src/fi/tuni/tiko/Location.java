@@ -1,8 +1,6 @@
 package fi.tuni.tiko;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,6 +15,7 @@ public class Location {
     final float WORLD_WIDTH = 9f;
     final float WORLD_HEIGHT = 16f;
     final float WORLD_SCALE = 1 / 120f;
+    final float WORLD_SCALE_NORM = 120f;
     float blackness;
     float fadeSpeed = 2f;
     boolean fadeIn;
@@ -25,6 +24,7 @@ public class Location {
     Texture background;
     Texture blackTexture = new Texture("black.png");
     Sprite black = new Sprite(blackTexture);
+    TopBar topBar = new TopBar();
 
     public void fadeFromBlack() {
         blackness -= Gdx.graphics.getDeltaTime() * fadeSpeed;

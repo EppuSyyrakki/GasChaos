@@ -11,6 +11,7 @@ public class GardenScreen extends Location implements Screen {
     private final GasChaosMain game;
 
     public GardenScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
+        super();
         background = new Texture("barnBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;

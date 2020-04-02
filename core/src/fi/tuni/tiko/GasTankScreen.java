@@ -11,6 +11,7 @@ public class GasTankScreen extends Location implements Screen {
     private final GasChaosMain game;
 
     public GasTankScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
+        super();
         background = new Texture("gasTankBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;

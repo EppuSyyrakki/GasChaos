@@ -13,6 +13,7 @@ public class ComputerScreen extends Location implements Screen {
     private final GasChaosMain game;
 
     public ComputerScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
+        super();
         background = new Texture("computerBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
@@ -34,6 +35,9 @@ public class ComputerScreen extends Location implements Screen {
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
         batch.end();
+
+        topBar.update(game.gameData);
+        topBar.stage.draw();
 
         if (false) {    // condition return to home
             game.setHomeScreen();
