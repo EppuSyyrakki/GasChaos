@@ -256,6 +256,7 @@ public class GameData {
     }
 
     public GameData() {
+        fields = new ArrayList<Field>();
         for (int i = 0; i < MAX_FIELDS; i++) {
             if (i < OWNED_FIELDS) {
                 fields.add(new Field(true, false));
