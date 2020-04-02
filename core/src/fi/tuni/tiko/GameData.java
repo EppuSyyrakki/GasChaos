@@ -45,6 +45,7 @@ public class GameData {
     private int feedMax = 9000;     // maximum amount of feed
     private float interest = 1.03f; // 5% interest rate to calculate debt payments
     final int MAX_FIELDS = 6;       // maximum number of fields
+    final int OWNED_FIELDS = 2;
     final int MAX_COWS = 6;         // maximum number of cows
     final int MANURE_SHOVELED = 45; // how much manure removed from barn in single remove action
     final int MAX_P_PER_FIELD = 8;  // max phosphorous per field before penalty
@@ -101,7 +102,7 @@ public class GameData {
      */
     private ArrayList<Cow> cowsBought;
     private int feedBought;
-    private int[] fieldsRented = new int[MAX_FIELDS - 2];   // -2 since first 2 owned, no rent
+    private int[] fieldsRented = new int[MAX_FIELDS - OWNED_FIELDS];   // -2 since first 2 owned, no rent
     private boolean solarPanelBasicBought;
     private boolean solarPanelAdvBought;
     private boolean gasCollectorAdvBought;
@@ -255,7 +256,14 @@ public class GameData {
     }
 
     public GameData() {
-
+        fields = new ArrayList<Field>();
+        for (int i = 0; i < MAX_FIELDS; i++) {
+            if (i < OWNED_FIELDS) {
+                fields.add(new Field(true, false));
+            } else {
+                fields.add(new Field(false, false));
+            }
+        }
     }
 
     public int getActionsDone() {
