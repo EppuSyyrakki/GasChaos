@@ -68,10 +68,9 @@ public class FieldScreen extends Location implements Screen {
         }
 
         if (fieldsRec()) {
-            boolean[] actions = availableActions(game.gameData, getFieldNumber());
+            boolean[] actions = availableActions(getFieldNumber());
             // TODO UI available actions to this field
         }
-
     }
 
     /**
@@ -82,9 +81,9 @@ public class FieldScreen extends Location implements Screen {
      * [3] = reap
      * [4] = fertilize (both N and P actions)
      */
-    public boolean[] availableActions(GameData data, int number) {
+    public boolean[] availableActions(int number) {
         boolean[] available = {false, false, false, false, false};
-        ArrayList<Field> tmpFields = data.getFields();
+        ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
 
         if (!field.isOwned() && !field.isRented()) {
