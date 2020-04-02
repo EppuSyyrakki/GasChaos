@@ -109,7 +109,7 @@ public class HomeScreen extends Location implements Screen {
     public boolean exitRec() {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleExit"));
         boolean action = player.playerAction(batch, r);
-        if (player.getRectangle().overlaps(r)) {
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;

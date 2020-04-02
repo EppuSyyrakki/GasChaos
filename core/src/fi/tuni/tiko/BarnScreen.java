@@ -64,7 +64,7 @@ public class BarnScreen extends Location implements Screen {
         player.draw(batch);
         batch.end();
 
-        if (false) {    // condition return to farm
+        if (exitRec()) {    // condition return to farm
             game.setFarmScreen();
         }
 
