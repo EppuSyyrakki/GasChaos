@@ -24,9 +24,25 @@ public class BarnScreen extends Location implements Screen {
     TiledMap tiledMap;
     TiledMapRenderer tiledMapRenderer;
     private final GasChaosMain game;
+    Texture cow1;
+    Texture cow2;
+    Texture cow3;
+    Texture cowBrown1;
+    Texture cowBrown2;
+    Texture cowBrown3;
+    GameData gameData;
+    Rectangle spawn;
+    float cowSize;
 
     public BarnScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
+        cowSize = 150f;
         background = new Texture("barnBackground.png");
+        cow1 = new Texture("cow1.png");
+        cow2 = new Texture("cow2.png");
+        cow3 = new Texture("cow3.png");
+        cowBrown1 = new Texture("cowBrown1.png");
+        cowBrown2 = new Texture("cowBrown2.png");
+        cowBrown3 = new Texture("cowBrown3.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -65,6 +81,7 @@ public class BarnScreen extends Location implements Screen {
         batch.begin();
         black.draw(batch, blackness);
         player.draw(batch);
+        cowSpawn(6);
         batch.end();
 
         if (exitRec() || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
@@ -203,6 +220,62 @@ public class BarnScreen extends Location implements Screen {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void cowRender(Texture cow, Rectangle spawn) {
+        spawn.width = cow.getWidth()/cowSize;
+        spawn.height = cow.getHeight()/cowSize;
+        batch.draw(cow, spawn.x, spawn.y, spawn.width, spawn.height);
+
+    }
+
+    public int cowCount() {
+        ArrayList<Cow> cowList = game.gameData.getCowList();
+        int i = 0;
+        for (Cow cow : cowList) {
+            i++;
+        }
+
+        if (i > 6) {
+            i = 6;
+        }
+        return i;
+    }
+
+    public void cowSpawn(int cowCount) {
+        spawn = new Rectangle(0.0f, 0.0f, cowSize, cowSize);
+        spawn.x = 2.8f;
+        spawn.y = 8.1f;
+        if (cowCount == 6) {
+            cowRender(cow1, spawn);
+            spawn.y = spawn.y -1.5f;
+            cowCount--;
+        }
+        if (cowCount == 5) {
+            cowRender(cow2, spawn);
+            spawn.y = spawn.y -1.5f;
+            cowCount--;
+        }
+        if (cowCount == 4) {
+            cowRender(cow3, spawn);
+            spawn.y = spawn.y -1.5f;
+            cowCount--;
+        }
+        if (cowCount == 3) {
+            cowRender(cowBrown1, spawn);
+            spawn.y = spawn.y -1.5f;
+            cowCount--;
+        }
+        if (cowCount == 2) {
+            cowRender(cowBrown2, spawn);
+            spawn.y = spawn.y -1.5f;
+            cowCount--;
+        }
+        if (cowCount == 1) {
+            cowRender(cowBrown3, spawn);
+            spawn.y = spawn.y -1.5f;
+            cowCount--;
         }
     }
 }
