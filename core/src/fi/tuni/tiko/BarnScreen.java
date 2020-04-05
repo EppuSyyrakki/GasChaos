@@ -84,6 +84,9 @@ public class BarnScreen extends Location implements Screen {
         cowSpawn(6);
         batch.end();
 
+        topBar.update(game.gameData);
+        topBar.stage.draw();
+
         if (exitRec() || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
             game.setFarmScreen();
         }

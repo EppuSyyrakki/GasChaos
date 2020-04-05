@@ -22,8 +22,6 @@ public class ComputerScreen extends Location implements Screen {
         this.game = game;
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
-
-
     }
 
     @Override
@@ -40,15 +38,13 @@ public class ComputerScreen extends Location implements Screen {
             game.setHomeScreen();
         }
 
-
-
         batch.begin();
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
         batch.end();
 
-
-
+        topBar.update(game.gameData);
+        topBar.stage.draw();
     }
 
     /**

@@ -264,6 +264,8 @@ public class GameData {
                 fields.add(new Field(false, false));
             }
         }
+        cowList = new ArrayList<Cow>();
+        cowList.add(new Cow());
     }
 
     public int getActionsDone() {
@@ -521,4 +523,8 @@ public class GameData {
     public void setGardenAmount(int gardenAmount) {
         this.gardenAmount = gardenAmount;
     }
+
+    public int getCowAmount() {
+        return cowList.size();
     }
+}

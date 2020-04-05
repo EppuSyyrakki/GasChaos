@@ -66,6 +66,9 @@ public class FieldScreen extends Location implements Screen {
         player.draw(batch);
         batch.end();
 
+        topBar.update(game.gameData);
+        topBar.stage.draw();
+
         if (exitRec() || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
             game.setFarmScreen();
         }

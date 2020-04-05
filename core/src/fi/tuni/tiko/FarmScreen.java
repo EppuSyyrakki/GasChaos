@@ -18,6 +18,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 
 import static com.badlogic.gdx.math.Rectangle.tmp;
@@ -28,8 +29,6 @@ public class FarmScreen extends Location implements Screen {
     TiledMapRenderer tiledMapRenderer;
     private final GasChaosMain game;
 
-    // private ShapeRenderer shapeRenderer;
-
     public FarmScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         background = new Texture("farmBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
@@ -37,14 +36,9 @@ public class FarmScreen extends Location implements Screen {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
         this.batch = batch;
         this.camera = camera;
-
         this.game = game;
         player = new Player();
         player.player(150f);
-
-        // shapeRenderer = new ShapeRenderer();
-
-
     }
 
     @Override
@@ -69,6 +63,9 @@ public class FarmScreen extends Location implements Screen {
         black.draw(batch, blackness);
         player.draw(batch);
         batch.end();
+
+        topBar.update(game.gameData);
+        topBar.stage.draw();
 
         if (false) {    // condition return to menu
             game.setMenuScreen();

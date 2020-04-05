@@ -1,8 +1,12 @@
 package fi.tuni.tiko;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class GasChaosMain extends Game {
 	SpriteBatch batch;
@@ -18,6 +22,8 @@ public class GasChaosMain extends Game {
 	GasTankScreen gasTankScreen;
 	GrandmotherScreen grandmotherScreen;
 	ComputerScreen computerScreen;
+
+
 
 	@Override
 	public void create () {
