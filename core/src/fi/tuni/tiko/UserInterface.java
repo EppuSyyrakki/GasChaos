@@ -41,8 +41,6 @@ public class UserInterface {
         dialog.button(cancel);
         dialog.text(dialogLabel);
 
-        // testing why 3 commits
-
     }
 
     public void render(GameData data) {

@@ -65,11 +65,11 @@ public class FieldScreen extends Location implements Screen {
 
         userInterface.render(game.gameData);
 
-        if (exitRec() || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
+        if (getRec("RectangleExit") || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
             game.setFarmScreen();
         }
 
-        if (fieldsRec()) {
+        if (getRec("RectangleFields")) {
             // boolean[] actions = availableActions(getFieldNumber());
             // TODO UI available actions to this field
         }
@@ -230,20 +230,10 @@ public class FieldScreen extends Location implements Screen {
         background.dispose();
     }
 
-    public boolean exitRec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleExit"));
+    public boolean getRec(String name) {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r) && action == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean fieldsRec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleFields"));
-        boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r) && action == true) {
+        if (player.getRectangle().overlaps(r)  && action == true) {
             return true;
         } else {
             return false;
@@ -256,79 +246,19 @@ public class FieldScreen extends Location implements Screen {
     public int getFieldNumber() {
         int fieldNumber = -1;
 
-        if (field1Rec()) {
+        if (getRec("RectangleField1")) {
             fieldNumber = 0;
-        } else if (field2Rec()) {
+        } else if (getRec("RectangleField2")) {
             fieldNumber = 1;
-        } else if (field3Rec()) {
+        } else if (getRec("RectangleField3")) {
             fieldNumber = 2;
-        } else if (field4Rec()) {
+        } else if (getRec("RectangleField4")) {
             fieldNumber = 3;
-        } else if (field5Rec()) {
+        } else if (getRec("RectangleField5")) {
             fieldNumber = 4;
-        } else if (field6Rec()) {
+        } else if (getRec("RectangleField6")) {
             fieldNumber = 5;
         }
         return fieldNumber;
-    }
-
-    public boolean field1Rec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField1"));
-        boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r) && action == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean field2Rec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField2"));
-        boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r) && action == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean field3Rec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField3"));
-        boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r) && action == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean field4Rec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField4"));
-        boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r) && action == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean field5Rec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField5"));
-        boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r) && action == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean field6Rec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField6"));
-        boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r) && action == true) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }

@@ -64,12 +64,12 @@ public class FarmScreen extends Location implements Screen {
             game.setMenuScreen();
         }
 
-        if (homeRec()) {    // condition enter home
+        if (getRec("RectangleHome")) {    // condition enter home
             game.setHomeScreen();
             // game.setScreen(new HomeScreen(batch, camera, game, this));
         }
 
-        if (barnRec()) {    // condition enter barn
+        if (getRec("RectangleBarn")) {    // condition enter barn
             game.setBarnScreen();
         }
 
@@ -77,11 +77,11 @@ public class FarmScreen extends Location implements Screen {
             game.setGardenScreen();
         }
 
-        if (fieldsRec()) {    // condition enter fields
+        if (getRec("RectangleFields")) {    // condition enter fields
             game.setFieldScreen();
         }
 
-        if (gasTankRec()) {    // condition enter gasTank
+        if (getRec("RectangleGasTank")) {    // condition enter gasTank
             game.setGasTankScreen();
         }
     }
@@ -117,48 +117,8 @@ public class FarmScreen extends Location implements Screen {
         background.dispose();
     }
 
-    public boolean homeRec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleHome"));
-        boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r)  && action == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean barnRec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleBarn"));
-        boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r)  && action == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean gasTankRec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleGasTank"));
-        boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r) && action == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean fieldsRec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleField"));
-        boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r)  && action == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean gardenRec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleGarden"));
+    public boolean getRec(String name) {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
         if (player.getRectangle().overlaps(r)  && action == true) {
             return true;

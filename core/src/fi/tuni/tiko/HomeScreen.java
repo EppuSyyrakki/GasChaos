@@ -63,19 +63,19 @@ public class HomeScreen extends Location implements Screen {
 
         userInterface.render(game.gameData);
 
-        if (exitRec() || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
+        if (getRec("RectangleExit") || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
             game.setFarmScreen();
         }
 
-        if (phoneRec()) {    // condition call to grandmother
+        if (getRec("RectanglePhone")) {    // condition call to grandmother
             game.setGrandmotherScreen();
         }
 
-        if (computerRec()) {    // condition go to computer
+        if (getRec("RectanglePC")) {    // condition go to computer
             game.setComputerScreen();
         }
 
-        if (bedRec()) {  // condition end turn
+        if (getRec("RectangleBed")) {  // condition end turn
             System.out.println("i hve the sleepy"); // end turn
         }
     }
@@ -111,44 +111,13 @@ public class HomeScreen extends Location implements Screen {
         background.dispose();
     }
 
-    public boolean exitRec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleExit"));
-        boolean action = player.playerAction(batch, r);
-        if (player.getRectangle().overlaps(r) && action == true) {
+    public boolean getRec(String name) {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
+        boolean action = playerAction(r);
+        if (player.getRectangle().overlaps(r)  && action == true) {
             return true;
         } else {
             return false;
         }
     }
-
-    public boolean bedRec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleBed"));
-        boolean action = player.playerAction(batch, r);
-        if (player.getRectangle().overlaps(r) && action == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean phoneRec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectanglePhone"));
-        boolean action = player.playerAction(batch, r);
-        if (player.getRectangle().overlaps(r) && action == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean computerRec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectanglePC"));
-        boolean action = player.playerAction(batch, r);
-        if (player.getRectangle().overlaps(r) && action == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }

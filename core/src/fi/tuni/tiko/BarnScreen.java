@@ -70,7 +70,6 @@ public class BarnScreen extends Location implements Screen {
 
         // Player movement
         player.checkCollisions(tiledMap);
-        exitRec();
 
         player.playerTouch(batch);
         player.playerMovement();
@@ -83,7 +82,7 @@ public class BarnScreen extends Location implements Screen {
 
         userInterface.render(game.gameData);
 
-        if (exitRec() || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
+        if (getRec("RectangleExit") || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
             game.setFarmScreen();
         }
 
@@ -212,10 +211,10 @@ public class BarnScreen extends Location implements Screen {
         background.dispose();
     }
 
-    public boolean exitRec() {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get("RectangleExit"));
+    public boolean getRec(String name) {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r) && action == true) {
+        if (player.getRectangle().overlaps(r)  && action == true) {
             return true;
         } else {
             return false;
