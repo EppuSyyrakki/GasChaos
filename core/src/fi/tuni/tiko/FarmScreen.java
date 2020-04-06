@@ -77,7 +77,7 @@ public class FarmScreen extends Location implements Screen {
             game.setGardenScreen();
         }
 
-        if (getRec("RectangleFields")) {    // condition enter fields
+        if (getRec("RectangleField")) {    // condition enter fields
             game.setFieldScreen();
         }
 
