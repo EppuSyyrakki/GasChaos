@@ -24,7 +24,7 @@ public class Location implements InputProcessor {
     Texture background;
     Texture blackTexture = new Texture("black.png");
     Sprite black = new Sprite(blackTexture);
-    TopBar topBar = new TopBar();
+    UserInterface userInterface = new UserInterface();
 
     public void fadeFromBlack() {
         blackness -= Gdx.graphics.getDeltaTime() * fadeSpeed;

@@ -61,8 +61,7 @@ public class HomeScreen extends Location implements Screen {
         player.draw(batch);
         batch.end();
 
-        topBar.update(game.gameData);
-        topBar.stage.draw();
+        userInterface.render(game.gameData);
 
         if (exitRec() || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
             game.setFarmScreen();

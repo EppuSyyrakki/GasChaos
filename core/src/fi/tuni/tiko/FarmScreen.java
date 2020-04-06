@@ -1,27 +1,17 @@
 package fi.tuni.tiko;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Array;
-
-import static com.badlogic.gdx.math.Rectangle.tmp;
 
 public class FarmScreen extends Location implements Screen {
     Player player;
@@ -39,6 +29,10 @@ public class FarmScreen extends Location implements Screen {
         this.game = game;
         player = new Player();
         player.player(150f);
+        player.setRX(4.5f);
+        player.setRY(6f);
+        player.setTargetX(player.getRX());
+        player.setTargetY(player.getRY());
     }
 
     @Override
@@ -64,8 +58,7 @@ public class FarmScreen extends Location implements Screen {
         player.draw(batch);
         batch.end();
 
-        topBar.update(game.gameData);
-        topBar.stage.draw();
+        userInterface.render(game.gameData);
 
         if (false) {    // condition return to menu
             game.setMenuScreen();
@@ -173,9 +166,6 @@ public class FarmScreen extends Location implements Screen {
             return false;
         }
     }
-
-
-
 }
 
 

@@ -2,7 +2,6 @@ package fi.tuni.tiko;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -43,8 +42,7 @@ public class ComputerScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
-        topBar.update(game.gameData);
-        topBar.stage.draw();
+        userInterface.render(game.gameData);
     }
 
     /**

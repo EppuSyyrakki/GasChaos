@@ -36,8 +36,7 @@ public class GrandmotherScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
-        topBar.update(game.gameData);
-        topBar.stage.draw();
+        userInterface.render(game.gameData);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to home
             game.setHomeScreen();

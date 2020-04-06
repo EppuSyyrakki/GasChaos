@@ -8,14 +8,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
 
@@ -66,8 +63,7 @@ public class FieldScreen extends Location implements Screen {
         player.draw(batch);
         batch.end();
 
-        topBar.update(game.gameData);
-        topBar.stage.draw();
+        userInterface.render(game.gameData);
 
         if (exitRec() || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
             game.setFarmScreen();
