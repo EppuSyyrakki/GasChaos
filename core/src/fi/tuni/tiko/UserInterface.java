@@ -38,7 +38,6 @@ public class UserInterface {
         dialog.button(confirm);
         dialog.button(cancel);
         dialog.text(dialogLabel);
-
     }
 
     public void render(GameData data) {
