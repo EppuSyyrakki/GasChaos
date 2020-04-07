@@ -41,7 +41,6 @@ public class Player extends Sprite{
     Animation<TextureRegion> walkStandAnimation;
     Animation<TextureRegion> walkUpAnimation;
     Animation<TextureRegion> walkDownAnimation;
-    Animation<TextureRegion> walkLeftAnimation;
     Animation<TextureRegion> walkRightAnimation;
     int FRAME_STAND_COLS = 1;
     int FRAME_STAND_ROWS = 1;
@@ -62,12 +61,14 @@ public class Player extends Sprite{
         speed = 1.45f;
         targetX = getRX();
         targetY = getRY();
+        lastX = getRX();
+        lastY = getRY();
 
         // Animation
         TextureRegion[][] tmpStand = TextureRegion.split(
-                textureRight,
-                textureRight.getWidth() / FRAME_STAND_COLS,
-                textureRight.getHeight() / FRAME_STAND_ROWS);
+                textureStand,
+                textureStand.getWidth() / FRAME_STAND_COLS,
+                textureStand.getHeight() / FRAME_STAND_ROWS);
 
         TextureRegion[][] tmpRight = TextureRegion.split(
                 textureRight,
@@ -75,10 +76,10 @@ public class Player extends Sprite{
                 textureRight.getHeight() / FRAME_RIGHT_ROWS);
 
         TextureRegion[] framesRight = transformTo1D(tmpRight, 1, 9);
-        TextureRegion[] framesStand = transformTo1D(tmpRight, 1, 1);
+        TextureRegion[] framesStand = transformTo1D(tmpStand, 1, 1);
 
-        walkStandAnimation = new Animation(6 / 60f, framesStand);
-        walkRightAnimation = new Animation(10 / 60f, framesRight);
+        walkStandAnimation = new Animation(18 / 60f, framesStand);
+        walkRightAnimation = new Animation(6 / 60f, framesRight);
     }
 
     public int getFRAME_STAND_COLS() {
@@ -364,7 +365,7 @@ public class Player extends Sprite{
         if (inputActive == true) {
             // X axis
             if (targetX == getRX()) {
-                //System.out.println("same X");
+                setLastX(getRX());
             } else if (targetX > (getRX()) && right == true) {
                 if (targetX > (getRX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
@@ -385,7 +386,7 @@ public class Player extends Sprite{
 
             // Y axis
             if (targetY == getRY()) {
-                //System.out.println("same Y");
+                setLastY(getRY());
             } else if (targetY > getRY() && up == true) {
                 if (targetY > (getRY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
@@ -441,7 +442,7 @@ public class Player extends Sprite{
             setTargetY(touchPos.y);
 
             if (rectangle.contains(touchPos.x, touchPos.y)) {
-                System.out.println("boat");
+                //System.out.println("boat");
                 touched = true;
             } else {
                 touched = false;
@@ -474,7 +475,7 @@ public class Player extends Sprite{
             Rectangle rectangle = scaleRect(tmp, 1 / 120f);
 
             if (getRectangle().overlaps(rectangle)) {
-                System.out.println("placeholder");
+                System.out.println("collision detected");
             }
         }
 
@@ -527,11 +528,27 @@ public class Player extends Sprite{
     private void playerFrames() {
         stateTime += Gdx.graphics.getDeltaTime();
         if (getLastX() < getRX()) {
+            for (TextureRegion textureRegion : walkRightAnimation.getKeyFrames()) {
+                if (textureRegion.isFlipX()) textureRegion.flip(true, false);
+            }
+            for (TextureRegion textureRegion : walkStandAnimation.getKeyFrames()) {
+                if (textureRegion.isFlipX()) textureRegion.flip(true, false);
+            }
+            currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
+        } else if (getLastX() > getRX()) {
+            for (TextureRegion textureRegion : walkRightAnimation.getKeyFrames()) {
+                if (!textureRegion.isFlipX()) textureRegion.flip(true, false);
+            }
+            for (TextureRegion textureRegion : walkStandAnimation.getKeyFrames()) {
+                if (!textureRegion.isFlipX()) textureRegion.flip(true, false);
+            }
+            currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
+        } else if (getLastY() < getRY()) {
+            currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
+        } else if (getLastY() > getRY()) {
             currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
         } else {
             currentFrame = walkStandAnimation.getKeyFrame(stateTime, true);
         }
-
-
     }
 }
