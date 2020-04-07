@@ -364,43 +364,42 @@ public class Player extends Sprite{
 
         if (inputActive == true) {
             // X axis
-            if (targetX == (getRX() + getWidth() / 2)) {
+            if (targetX == (getRX() + getWidth() / 2f)) {
                 setLastX(getRX());
-            } else if (targetX > (getRX() + getWidth() / 2) && right == true) {
-                if (targetX > ((getRX() + getWidth() / 2) + getSpeed() * Gdx.graphics.getDeltaTime())) {
+            } else if (targetX > (getRX() + getWidth() / 2f) && right == true) {
+                if (targetX > ((getRX() + getWidth() / 2f) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX() + getSpeed() * Gdx.graphics.getDeltaTime());
                 } else if (targetX < ((getRX() + getWidth() / 2) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX());
                 }
-            } else if (targetX < (getRX() + getWidth() / 2) && left == true) {
-                if (targetX < ((getRX() + getWidth() / 2) - getSpeed() * Gdx.graphics.getDeltaTime())) {
+            } else if (targetX < (getRX() + getWidth() / 2f) && left == true) {
+                if (targetX < ((getRX() + getWidth() / 2f) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX() - getSpeed() * Gdx.graphics.getDeltaTime());
-                } else if (targetX >= ((getRX() + getWidth() / 2) - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                } else if (targetX >= ((getRX() + getWidth() / 2f) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX());
                 }
             }
 
             // Y axis
-            if (targetY == (getRY() + getHeight() / 2)) {
+            if (targetY == (getRY() + getHeight() / 2f)) {
                 setLastY(getRY());
-            } else if (targetY > (getRY() + getHeight() / 2)&& up == true) {
+            } else if (targetY > (getRY() + getHeight() / 2f)&& up == true) {
                 if (targetY > (getRY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY() + getSpeed() * Gdx.graphics.getDeltaTime());
-                } else if (targetY <= ((getRY() + getHeight() / 2) + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                } else if (targetY <= ((getRY() + getHeight() / 2f) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY());
-
                 }
-            } else if (targetY < (getRY() + getHeight() / 2) && down == true) {
-                if (targetY < ((getRY() + getHeight() / 2) - getSpeed() * Gdx.graphics.getDeltaTime())) {
+            } else if (targetY < (getRY() + getHeight() / 2f) && down == true) {
+                if (targetY < ((getRY() + getHeight() / 2f) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY() - getSpeed() * Gdx.graphics.getDeltaTime());
-                } else if (targetY > ((getRY() + getHeight() / 2) - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                } else if (targetY > ((getRY() + getHeight() / 2f) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY());
                 }
@@ -525,9 +524,10 @@ public class Player extends Sprite{
         return walkFrames;
     }
 
+    // Don't bother reading this, it's ugly but it works
     private void playerFrames() {
         stateTime += Gdx.graphics.getDeltaTime();
-        if (getLastX() < getRX()) {
+        if ((getRX() - getLastX()) > 0.003f) {
             for (TextureRegion textureRegion : walkRightAnimation.getKeyFrames()) {
                 if (textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
@@ -535,7 +535,7 @@ public class Player extends Sprite{
                 if (textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
             currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
-        } else if (getLastX() > getRX()) {
+        } else if ((getLastX() - getRX()) > 0.003f) {
             for (TextureRegion textureRegion : walkRightAnimation.getKeyFrames()) {
                 if (!textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
@@ -543,9 +543,9 @@ public class Player extends Sprite{
                 if (!textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
             currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
-        } else if (getLastY() < getRY()) {
+        } else if ((getRY() - getLastY()) > 0.003f) {
             currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
-        } else if (getLastY() > getRY()) {
+        } else if ((getLastY() - getRY()) > 0.003f) {
             currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
         } else {
             setLastX(getRX());
