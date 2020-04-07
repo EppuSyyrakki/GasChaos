@@ -364,43 +364,43 @@ public class Player extends Sprite{
 
         if (inputActive == true) {
             // X axis
-            if (targetX == getRX()) {
+            if (targetX == (getRX() + getWidth() / 2)) {
                 setLastX(getRX());
-            } else if (targetX > (getRX()) && right == true) {
-                if (targetX > (getRX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+            } else if (targetX > (getRX() + getWidth() / 2) && right == true) {
+                if (targetX > ((getRX() + getWidth() / 2) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX() + getSpeed() * Gdx.graphics.getDeltaTime());
-                } else if (targetX < (getRX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                } else if (targetX < ((getRX() + getWidth() / 2) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX());
                 }
-            } else if (targetX < getRX() && left == true) {
-                if (targetX < (getRX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+            } else if (targetX < (getRX() + getWidth() / 2) && left == true) {
+                if (targetX < ((getRX() + getWidth() / 2) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX() - getSpeed() * Gdx.graphics.getDeltaTime());
-                } else if (targetX >= (getRX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                } else if (targetX >= ((getRX() + getWidth() / 2) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX());
                 }
             }
 
             // Y axis
-            if (targetY == getRY()) {
+            if (targetY == (getRY() + getHeight() / 2)) {
                 setLastY(getRY());
-            } else if (targetY > getRY() && up == true) {
+            } else if (targetY > (getRY() + getHeight() / 2)&& up == true) {
                 if (targetY > (getRY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY() + getSpeed() * Gdx.graphics.getDeltaTime());
-                } else if (targetY <= (getRY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                } else if (targetY <= ((getRY() + getHeight() / 2) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY());
 
                 }
-            } else if (targetY < getRY() && down == true) {
-                if (targetY < (getRY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+            } else if (targetY < (getRY() + getHeight() / 2) && down == true) {
+                if (targetY < ((getRY() + getHeight() / 2) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY() - getSpeed() * Gdx.graphics.getDeltaTime());
-                } else if (targetY > (getRY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                } else if (targetY > ((getRY() + getHeight() / 2) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY());
                 }
@@ -548,6 +548,8 @@ public class Player extends Sprite{
         } else if (getLastY() > getRY()) {
             currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
         } else {
+            setLastX(getRX());
+            setLastY(getRY());
             currentFrame = walkStandAnimation.getKeyFrame(stateTime, true);
         }
     }
