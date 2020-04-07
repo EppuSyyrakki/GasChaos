@@ -19,6 +19,7 @@ public class Location implements InputProcessor {
     float blackness;
     float fadeSpeed = 2f;
     boolean fadeIn;
+    boolean actionInputActive = true;
     SpriteBatch batch;
     OrthographicCamera camera;
     Texture background;
@@ -61,22 +62,27 @@ public class Location implements InputProcessor {
 
         boolean touched = false;
 
-        if(Gdx.input.isTouched()) {
 
-            // move player on touch
-            float realX = Gdx.input.getX();
-            float realY = Gdx.input.getY();
+        // setActionInputActive() setter.
+        // isActionInputActive() getter.
+        if (actionInputActive == true) {
+            if (Gdx.input.justTouched()) {
 
-            // pixels to world resolution
-            Vector3 touchPos = new Vector3(realX, realY, 0);
-            camera.unproject(touchPos);
+                // move player on touch
+                float realX = Gdx.input.getX();
+                float realY = Gdx.input.getY();
 
-            if (rectangle.contains(touchPos.x, touchPos.y)) {
-                System.out.println("boat");
-                touched = true;
-            } else {
-                touched = false;
+                // pixels to world resolution
+                Vector3 touchPos = new Vector3(realX, realY, 0);
+                camera.unproject(touchPos);
 
+                if (rectangle.contains(touchPos.x, touchPos.y)) {
+                    System.out.println("boat");
+                    touched = true;
+                } else {
+                    touched = false;
+
+                }
             }
         }
         return touched;
@@ -84,6 +90,37 @@ public class Location implements InputProcessor {
     }
 
 
+    public float getBlackness() {
+        return blackness;
+    }
+
+    public void setBlackness(float blackness) {
+        this.blackness = blackness;
+    }
+
+    public float getFadeSpeed() {
+        return fadeSpeed;
+    }
+
+    public void setFadeSpeed(float fadeSpeed) {
+        this.fadeSpeed = fadeSpeed;
+    }
+
+    public boolean isFadeIn() {
+        return fadeIn;
+    }
+
+    public void setFadeIn(boolean fadeIn) {
+        this.fadeIn = fadeIn;
+    }
+
+    public boolean isActionInputActive() {
+        return actionInputActive;
+    }
+
+    public void setActionInputActive(boolean actionInputActive) {
+        this.actionInputActive = actionInputActive;
+    }
 
     public float getWorldScale() {
         return WORLD_SCALE;

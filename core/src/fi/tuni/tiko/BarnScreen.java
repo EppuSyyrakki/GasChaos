@@ -65,6 +65,11 @@ public class BarnScreen extends Location implements Screen {
 
         if (fadeIn) {
             fadeFromBlack();
+            player.setInputActive(false);
+        }
+
+        if (fadeIn == false) {
+            player.setInputActive(true);
         }
 
         // Player movement

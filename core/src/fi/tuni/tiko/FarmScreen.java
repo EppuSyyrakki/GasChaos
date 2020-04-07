@@ -46,7 +46,11 @@ public class FarmScreen extends Location implements Screen {
         tiledMapRenderer.render();
 
         if (fadeIn) {
+            player.setInputActive(false);
             fadeFromBlack();
+        }
+        if (fadeIn == false) {
+            player.setInputActive(true);
         }
 
         //Player movement

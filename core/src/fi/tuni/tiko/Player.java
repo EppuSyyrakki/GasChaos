@@ -337,23 +337,25 @@ public class Player extends Sprite{
         camera.setToOrtho(false, 9, 16);
         batch.setProjectionMatrix(camera.combined);
 
-        if(Gdx.input.isTouched()) {
+        if (inputActive == true) {
+            if (Gdx.input.isTouched()) {
 
 
-            // move player on touch
-            float realX = Gdx.input.getX();
-            float realY = Gdx.input.getY();
+                // move player on touch
+                float realX = Gdx.input.getX();
+                float realY = Gdx.input.getY();
 
-            // pixels to world resolution
-            Vector3 touchPos = new Vector3(realX, realY, 0);
-            camera.unproject(touchPos);
+                // pixels to world resolution
+                Vector3 touchPos = new Vector3(realX, realY, 0);
+                camera.unproject(touchPos);
 
-            setTargetX(touchPos.x);
-            setTargetY(touchPos.y);
+                setTargetX(touchPos.x);
+                setTargetY(touchPos.y);
 
-            // log
-            //Gdx.app.log("render", "x = " + touchPos.x);
-            //Gdx.app.log("render", "y = " + touchPos.y);
+                // log
+                //Gdx.app.log("render", "x = " + touchPos.x);
+                //Gdx.app.log("render", "y = " + touchPos.y);
+            }
         }
     }
 
