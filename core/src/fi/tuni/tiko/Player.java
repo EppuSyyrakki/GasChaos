@@ -19,7 +19,8 @@ import com.badlogic.gdx.utils.Array;
 public class Player extends Sprite{
 
     private OrthographicCamera camera;
-    Texture texture;
+    Texture textureStand;
+    Texture textureRight;
     Rectangle rectangle;
     float speed;
     float rotation;
@@ -28,22 +29,32 @@ public class Player extends Sprite{
     float speedY;
     float targetX;
     float targetY;
+    float lastX;
+    float lastY;
+    float stateTime = 1.0f;
     boolean inputActive = true;    // not able to move player while fading screen
     boolean up;
     boolean down;
     boolean left;
     boolean right;
+    TextureRegion currentFrame;
+    Animation<TextureRegion> walkStandAnimation;
     Animation<TextureRegion> walkUpAnimation;
     Animation<TextureRegion> walkDownAnimation;
     Animation<TextureRegion> walkLeftAnimation;
     Animation<TextureRegion> walkRightAnimation;
-    int FRAME_COLS = 4;
-    int FRAME_ROWS = 2;
+    int FRAME_STAND_COLS = 1;
+    int FRAME_STAND_ROWS = 1;
+    int FRAME_RIGHT_COLS = 9;
+    int FRAME_RIGHT_ROWS = 1;
 
     public void player(float size) {
-        texture = new Texture("player.png");
-        float width = texture.getWidth()/size;
-        float height = texture.getHeight()/size;
+        textureStand = new Texture("player.png");
+        textureRight = new Texture("playerRight.png");
+        float widthRight = textureRight.getWidth() / size;
+        float heightRight = textureRight.getHeight() / size;
+        float width = textureStand.getWidth() / FRAME_STAND_COLS /size;
+        float height = textureStand.getHeight() / FRAME_STAND_ROWS /size;
         rectangle = new Rectangle(0.0f, 0.0f, width, height);
         setSize(width, height);
         speedX = 0.1f;
@@ -53,19 +64,134 @@ public class Player extends Sprite{
         targetY = getRY();
 
         // Animation
-        TextureRegion[][] tmp = TextureRegion.split(
-                texture,
-                texture.getWidth() / FRAME_COLS,
-                texture.getHeight() / FRAME_ROWS);
+        TextureRegion[][] tmpStand = TextureRegion.split(
+                textureRight,
+                textureRight.getWidth() / FRAME_STAND_COLS,
+                textureRight.getHeight() / FRAME_STAND_ROWS);
 
-        TextureRegion[] frames = transformTo1D(tmp, 2, 4);
+        TextureRegion[][] tmpRight = TextureRegion.split(
+                textureRight,
+                textureRight.getWidth() / FRAME_RIGHT_COLS,
+                textureRight.getHeight() / FRAME_RIGHT_ROWS);
 
-        walkUpAnimation = new Animation(6 / 60f, frames);
-        walkDownAnimation = new Animation(6 / 60f, frames);
-        walkLeftAnimation = new Animation(6 / 60f, frames);
-        walkRightAnimation = new Animation(6 / 60f, frames);
+        TextureRegion[] framesRight = transformTo1D(tmpRight, 1, 9);
+        TextureRegion[] framesStand = transformTo1D(tmpRight, 1, 1);
+
+        walkStandAnimation = new Animation(6 / 60f, framesStand);
+        walkRightAnimation = new Animation(10 / 60f, framesRight);
     }
 
+    public int getFRAME_STAND_COLS() {
+        return FRAME_STAND_COLS;
+    }
+
+    public void setFRAME_STAND_COLS(int FRAME_STAND_COLS) {
+        this.FRAME_STAND_COLS = FRAME_STAND_COLS;
+    }
+
+    public int getFRAME_STAND_ROWS() {
+        return FRAME_STAND_ROWS;
+    }
+
+    public void setFRAME_STAND_ROWS(int FRAME_STAND_ROWS) {
+        this.FRAME_STAND_ROWS = FRAME_STAND_ROWS;
+    }
+
+    public Texture getTextureStand() {
+        return textureStand;
+    }
+
+    public void setTextureStand(Texture textureStand) {
+        this.textureStand = textureStand;
+    }
+
+    public Texture getTextureRight() {
+        return textureRight;
+    }
+
+    public void setTextureRight(Texture textureRight) {
+        this.textureRight = textureRight;
+    }
+
+    public float getLastX() {
+        return lastX;
+    }
+
+    public void setLastX(float lastX) {
+        this.lastX = lastX;
+    }
+
+    public float getLastY() {
+        return lastY;
+    }
+
+    public void setLastY(float lastY) {
+        this.lastY = lastY;
+    }
+
+    public float getStateTime() {
+        return stateTime;
+    }
+
+    public void setStateTime(float stateTime) {
+        this.stateTime = stateTime;
+    }
+
+    public boolean isInputActive() {
+        return inputActive;
+    }
+
+    public void setInputActive(boolean inputActive) {
+        this.inputActive = inputActive;
+    }
+
+    public boolean isUp() {
+        return up;
+    }
+
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
+
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+    public boolean isLeft() {
+        return left;
+    }
+
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+    public boolean isRight() {
+        return right;
+    }
+
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+    public int getFRAME_RIGHT_COLS() {
+        return FRAME_RIGHT_COLS;
+    }
+
+    public void setFRAME_RIGHT_COLS(int FRAME_RIGHT_COLS) {
+        this.FRAME_RIGHT_COLS = FRAME_RIGHT_COLS;
+    }
+
+    public int getFRAME_RIGHT_ROWS() {
+        return FRAME_RIGHT_ROWS;
+    }
+
+    public void setFRAME_RIGHT_ROWS(int FRAME_RIGHT_ROWS) {
+        this.FRAME_RIGHT_ROWS = FRAME_RIGHT_ROWS;
+    }
 
     public OrthographicCamera getCamera() {
         return camera;
@@ -76,11 +202,11 @@ public class Player extends Sprite{
     }
 
     public Texture getTexture() {
-        return texture;
+        return textureRight;
     }
 
     public void setTexture(Texture texture) {
-        this.texture = texture;
+        this.textureRight = texture;
     }
 
     // Get X/Y
@@ -199,7 +325,8 @@ public class Player extends Sprite{
     }
 
     public void draw(SpriteBatch batch) {
-        batch.draw(getTexture(), getRX(), getRY(), getWidth(), getHeight());
+        playerFrames();
+        batch.draw(currentFrame, getRX(), getRY(), getWidth(), getHeight());
     }
 
     public void playerTouch(SpriteBatch batch) {
@@ -240,14 +367,18 @@ public class Player extends Sprite{
                 //System.out.println("same X");
             } else if (targetX > (getRX()) && right == true) {
                 if (targetX > (getRX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setLastX(getRX());
                     setRX(getRX() + getSpeed() * Gdx.graphics.getDeltaTime());
                 } else if (targetX < (getRX() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setLastX(getRX());
                     setRX(getRX());
                 }
             } else if (targetX < getRX() && left == true) {
                 if (targetX < (getRX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setLastX(getRX());
                     setRX(getRX() - getSpeed() * Gdx.graphics.getDeltaTime());
                 } else if (targetX >= (getRX() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setLastX(getRX());
                     setRX(getRX());
                 }
             }
@@ -257,14 +388,19 @@ public class Player extends Sprite{
                 //System.out.println("same Y");
             } else if (targetY > getRY() && up == true) {
                 if (targetY > (getRY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setLastY(getRY());
                     setRY(getRY() + getSpeed() * Gdx.graphics.getDeltaTime());
                 } else if (targetY <= (getRY() + getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setLastY(getRY());
                     setRY(getRY());
+
                 }
             } else if (targetY < getRY() && down == true) {
                 if (targetY < (getRY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setLastY(getRY());
                     setRY(getRY() - getSpeed() * Gdx.graphics.getDeltaTime());
                 } else if (targetY > (getRY() - getSpeed() * Gdx.graphics.getDeltaTime())) {
+                    setLastY(getRY());
                     setRY(getRY());
                 }
             }
@@ -386,5 +522,16 @@ public class Player extends Sprite{
             }
         }
         return walkFrames;
+    }
+
+    private void playerFrames() {
+        stateTime += Gdx.graphics.getDeltaTime();
+        if (getLastX() < getRX()) {
+            currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
+        } else {
+            currentFrame = walkStandAnimation.getKeyFrame(stateTime, true);
+        }
+
+
     }
 }
