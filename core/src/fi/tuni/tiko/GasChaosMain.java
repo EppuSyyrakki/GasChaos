@@ -32,7 +32,7 @@ public class GasChaosMain extends Game {
 	public void create () {
 		locale = new Locale("fi", "Finland");
 		defaultLocale = Locale.getDefault();
-		myBundle = I18NBundle.createBundle(Gdx.files.internal("MyBundle"), defaultLocale);
+		myBundle = I18NBundle.createBundle(Gdx.files.internal("MyBundle"), locale);
 
 		/*
 		//Localization example

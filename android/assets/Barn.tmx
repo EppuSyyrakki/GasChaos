@@ -21,10 +21,10 @@
 </data>
  </layer>
  <imagelayer id="2" name="background">
-  <image source="barnBackground.png" width="1080" height="1920"/>
+  <image source="Barn.png" width="1080" height="1920"/>
  </imagelayer>
  <objectgroup id="3" name="RectangleExit">
-  <object id="2" x="472.073" y="280.532" width="411.904" height="405.141"/>
+  <object id="2" x="498.073" y="300.532" width="377.904" height="327.141"/>
  </objectgroup>
  <objectgroup id="4" name="RectangleCollision">
   <object id="3" x="-94" y="-40" width="102" height="2078"/>
@@ -33,7 +33,7 @@
   <object id="7" x="-144" y="-102" width="1334" height="523.951"/>
   <object id="16" x="-4.94548" y="853.945" width="626.427" height="1084.69"/>
  </objectgroup>
- <objectgroup id="9" name="ActionFeedCows">
+ <objectgroup id="9" name="ActionFeedCows" visible="0">
   <object id="20" x="58.1276" y="438.193" width="127.434" height="234.746"/>
  </objectgroup>
  <objectgroup id="10" name="ActionShovelManure">

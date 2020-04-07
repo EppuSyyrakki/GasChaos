@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class GameData {
 
-    int debugCounter = 0;
-
     /**
      * Prices of resources and upgrades. Money gained is per 1 unit.
      */
@@ -36,19 +34,20 @@ public class GameData {
     private int money = 2000;       // money available for purchases
     private int manure = 0;         // amount of manure in manure pit
     private int manureInBarn = 0;   // amount of manure produced on previous turn
+    private int manureInBarnMax = 300;  // maximum amount of manure on barn floor
     private int manureMax = 2500;   // size of manure pit
     private int methane = 0;        // amount of methane in gas tank
     private int methaneMax = 15000; // size of methane tank
     private int debt = 10000;       // total amount of debt, reduced by debtPayment
     private int feed = 0;           // total amount of feed
-    private int feedInBarn = 30;    // amount of feed for cows in barn
+    private int feedInBarn = 60;    // amount of feed for cows in barn
     private int feedMax = 9000;     // maximum amount of feed
     private float interest = 1.03f; // 5% interest rate to calculate debt payments
     final int MAX_FIELDS = 6;       // maximum number of fields
-    final int OWNED_FIELDS = 2;
+    final int OWNED_FIELDS = 2;     // owned fields at start (no rent)
     final int MAX_COWS = 6;         // maximum number of cows
-    final int MANURE_SHOVELED = 45; // how much manure removed from barn in single remove action
-    final int MAX_P_PER_FIELD = 8;  // max phosphorous per field before penalty
+    final int MANURE_SHOVELED = 100;// how much manure removed from barn in single remove action
+    final int MAX_P_PER_FIELD = 13; // max phosphorous per field before penalty
     final int MAX_N_NER_FIELD = 80; // max nitrogen per field before penalty
 
     /**
@@ -92,7 +91,7 @@ public class GameData {
     private int gardenMax = 50;
 
     /**
-     * All cows in the barn.
+     * All cows in the barn and chickens in the coop.
      */
     private ArrayList<Cow> cowList;
 
@@ -150,11 +149,21 @@ public class GameData {
             feed = cow.eat(feed);
 
             if (cow.isEatenThisTurn()) {  // if cow not eaten, no milk, manure and methane produced
-                milkSold += cow.getMilk(milkingMachineLevel);
+                int milkFromCow = cow.getMilk(milkingMachineLevel);
                 cow.fart(gasCollectorLevel);
                 manureInBarn += cow.poop();
+                if (manureInBarn > 200) {   // if barn is filthy, 33% less milk
+                    milkFromCow -= (milkFromCow / 3);
+                }
+                milkSold += milkFromCow;
             }
         }
+
+        if (manureInBarn > manureInBarnMax) {
+            manureInBarn = manureInBarnMax;
+        }
+
+
 
         for (Field field  : fields) {
             if (field.isRented()) {
@@ -235,7 +244,9 @@ public class GameData {
 
     private void updateFields() {
         for (Field field : fields) {
-            field.grow();
+            if (field.isOwned() || field.isRented()) {
+                field.grow();
+            }
         }
     }
 
@@ -282,6 +293,10 @@ public class GameData {
 
     public void setManure(int manure) {
         this.manure = manure;
+    }
+
+    public int getManureInBarnMax() {
+        return manureInBarnMax;
     }
 
     public int getManureMax() {

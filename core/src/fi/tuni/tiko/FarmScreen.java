@@ -90,6 +90,11 @@ public class FarmScreen extends Location implements Screen {
         }
     }
 
+    public GameData actionCheckChickens(GameData data) {
+
+        return data;
+    }
+
     @Override
     public void show() {
         blackness = 1;

@@ -21,25 +21,24 @@ public class BarnScreen extends Location implements Screen {
     TiledMap tiledMap;
     TiledMapRenderer tiledMapRenderer;
     private final GasChaosMain game;
-    Texture cow1;
-    Texture cow2;
-    Texture cow3;
-    Texture cowBrown1;
-    Texture cowBrown2;
-    Texture cowBrown3;
-    GameData gameData;
+    Texture cow1 = new Texture("cow1.png");
+    Texture cow2 = new Texture("cow2.png");
+    Texture cow3 = new Texture("cow3.png");
+    Texture cowBrown1 = new Texture("cowBrown1.png");
+    Texture cowBrown2 = new Texture("cowBrown2.png");
+    Texture cowBrown3 = new Texture("cowBrown3.png");
+    Texture manure = new Texture("manure.png");
+    Texture hay = new Texture("hay.png");
+    Texture barnFence = new Texture("barnFence.png");
     Rectangle spawn;
-    float cowSize;
+    float cowSize = 150f;
+    float[] manureX = {0.9f, 1.4f, 1f, 1.5f, 0.8f, 1.24f, 1.3f, 1f, 1.7f, 1.2f, 1.4f};
+    float[] manureY = {8f, 7.1f, 6.3f, 5.7f, 5.1f, 4.7f, 3.9f, 3.2f, 2.9f, 2.2f, 1.9f};
+    float[] hayX = {5.2f, 5.15f, 5.3f, 5.1f, 5.15f, 5.1f, 5.2f, 5.25f, 5.2f, 5.15f, 5f};
+    float[] hayY = {8f, 7.1f, 6.1f, 5.4f, 4.5f, 4.1f, 3.4f, 2.5f, 1.9f, 1.2f, 0.9f};
 
     public BarnScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        cowSize = 150f;
-        background = new Texture("barnBackground.png");
-        cow1 = new Texture("cow1.png");
-        cow2 = new Texture("cow2.png");
-        cow3 = new Texture("cow3.png");
-        cowBrown1 = new Texture("cowBrown1.png");
-        cowBrown2 = new Texture("cowBrown2.png");
-        cowBrown3 = new Texture("cowBrown3.png");
+        background = new Texture("Barn.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -76,9 +75,11 @@ public class BarnScreen extends Location implements Screen {
         }
 
         batch.begin();
-        black.draw(batch, blackness);
+        haySpawn(game.gameData.getFeedInBarn());
         player.draw(batch);
         cowSpawn(game.gameData.getCowAmount());
+        manureSpawn(game.gameData.getManureInBarn());
+        black.draw(batch, blackness);
         batch.end();
 
         userInterface.render(game.gameData);
@@ -146,7 +147,7 @@ public class BarnScreen extends Location implements Screen {
 
         if (data.getManureInBarn() == 0) {
             // action blocked, no manure in barn UI message
-            uiText = game.myBundle.get("feedInBarnComplete");
+            uiText = game.myBundle.get("shovelManureNoManure");
             super.userInterface.dialogLabel.setText(uiText);
         } else if (data.getManureInBarn() < data.MANURE_SHOVELED) {
             // barn is clean UI message
@@ -281,6 +282,25 @@ public class BarnScreen extends Location implements Screen {
             cowRender(cowBrown3, spawn);
             spawn.y = spawn.y -1.5f;
             cowCount--;
+        }
+    }
+
+    private void manureSpawn(int manureInBarn) {
+        int counter = manureInBarn / (game.gameData.getManureInBarnMax() / 10); // 0..10
+        for (int i = 0; i < counter; i++) {
+            batch.draw(manure, manureX[i], manureY[i], 0.8f, 0.4f);
+        }
+    }
+
+    private void haySpawn(int feedInBarn) {
+
+        int counter = feedInBarn / 54;
+
+        if (counter == 0 && feedInBarn > 0) {   // ensure feed is visible even if it's very low
+            counter = 1;
+        }
+        for (int i = 0; i < counter; i++) {
+            batch.draw(hay, hayX[i], hayY[i] + 0.4f, 1f, 0.5f);
         }
     }
 }
