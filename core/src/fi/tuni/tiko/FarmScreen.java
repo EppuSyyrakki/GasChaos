@@ -13,6 +13,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
+import javax.swing.JDialog;
+
 public class FarmScreen extends Location implements Screen {
     Player player;
     TiledMap tiledMap;
@@ -48,9 +50,11 @@ public class FarmScreen extends Location implements Screen {
         }
 
         //Player movement
-        player.checkCollisions(tiledMap);
-        player.playerTouch(batch);
-        player.playerMovement();
+        if (!super.userInterface.dialogFocus) {
+            player.checkCollisions(tiledMap);
+            player.playerTouch(batch);
+            player.playerMovement();
+        }
 
         batch.begin();
         //batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
@@ -84,6 +88,11 @@ public class FarmScreen extends Location implements Screen {
         if (getRec("RectangleGasTank")) {    // condition enter gasTank
             game.setGasTankScreen();
         }
+    }
+
+    public GameData actionCheckChickens(GameData data) {
+
+        return data;
     }
 
     @Override

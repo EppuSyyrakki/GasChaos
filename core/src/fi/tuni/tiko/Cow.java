@@ -1,23 +1,18 @@
 package fi.tuni.tiko;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-
 public class Cow {
-    Texture texture;
-    Sprite sprite;
 
     /**
      * Cow produces per turn.
      */
-    private int manure = 9;
+    private int manure = 15;
     private int milk = 25;
     private int methane = 300;
 
     /**
      * Cow eats per turn. If not eaten this turn (out of feed) no milk produced in getMilk().
      */
-    private int feed = 10;
+    private int feed = 30;
 
     private boolean eatenThisTurn = false;
 

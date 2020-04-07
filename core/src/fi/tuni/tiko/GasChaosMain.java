@@ -4,9 +4,10 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.I18NBundle;
+
+import java.util.Locale;
+
 
 public class GasChaosMain extends Game {
 	SpriteBatch batch;
@@ -22,11 +23,26 @@ public class GasChaosMain extends Game {
 	GasTankScreen gasTankScreen;
 	GrandmotherScreen grandmotherScreen;
 	ComputerScreen computerScreen;
-
+	Locale locale;
+	Locale defaultLocale;
+	I18NBundle myBundle;
 
 
 	@Override
 	public void create () {
+		locale = new Locale("fi", "Finland");
+		defaultLocale = Locale.getDefault();
+		myBundle = I18NBundle.createBundle(Gdx.files.internal("MyBundle"), locale);
+
+		/*
+		//Localization example
+		String locTest1 = myBundle.get("buyCowComplete");
+		String locTest2 = myBundle.format("turnInfoExample", gameData.getCurrentTurn());
+		System.out.println(locTest1);
+		System.out.println(locTest2);
+		//End of example
+		*/
+
 		gameData = new GameData();
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
@@ -47,27 +63,11 @@ public class GasChaosMain extends Game {
 	@Override
 	public void render () {
 		super.render();
-
-		/*
-
-		Locale locale = new Locale("fi", "Finland");
-		Locale defaultLocale = Locale.getDefault();
-		I18NBundle myBundle =
-				I18NBundle.createBundle(Gdx.files.internal("MyBundle"), locale);
-
-		//Localization example
-		String locTest1 = myBundle.get("buyCowComplete");
-		String locTest2 = myBundle.format("turnInfoExample", gameData.getCurrentTurn());
-		System.out.println(locTest1);
-		System.out.println(locTest2);
-		//End of example
-		*/
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-
 	}
 
 	public void setFarmScreen() {

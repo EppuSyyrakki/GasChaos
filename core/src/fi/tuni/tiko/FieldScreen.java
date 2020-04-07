@@ -70,7 +70,7 @@ public class FieldScreen extends Location implements Screen {
         }
 
         if (getRec("RectangleFields")) {
-            // boolean[] actions = availableActions(getFieldNumber());
+            boolean[] actions = availableActions(getFieldNumber());
             // TODO UI available actions to this field
         }
     }
@@ -85,7 +85,8 @@ public class FieldScreen extends Location implements Screen {
      */
     public boolean[] availableActions(int number) {
         boolean[] available = {false, false, false, false, false};
-        Field field = game.gameData.getFields().get(number);
+        ArrayList<Field> fields = game.gameData.getFields();
+        Field field = fields.get(number);
 
         if (!field.isOwned() && !field.isRented()) {
             available[0] = true;
@@ -96,7 +97,7 @@ public class FieldScreen extends Location implements Screen {
         if (field.getAmount() == 0) {
             available[2] = true;
         }
-        if (field.getAmount() > 20) {
+        if (field.getAmount() > 200) {
             available[3] = true;
         }
         if (field.isOwned() || field.isRented()) {
