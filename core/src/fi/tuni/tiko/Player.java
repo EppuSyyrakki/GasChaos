@@ -553,4 +553,86 @@ public class Player extends Sprite{
             currentFrame = walkStandAnimation.getKeyFrame(stateTime, true);
         }
     }
+
+    private boolean checkRight() {
+        boolean checkFloat;
+        int failCount = 0;
+
+        for (int i = 0; i < 5; i++) {
+            if (getLastX() < getRX()) {
+                failCount++;
+            }
+        }
+
+        if (failCount > 4) {
+            checkFloat = true;
+        } else {
+            checkFloat = false;
+        }
+        return checkFloat;
+    }
+
+    private boolean checkLeft() {
+        boolean checkFloat;
+        int failCount = 0;
+
+        for (int i = 0; i < 5; i++) {
+            if (getLastX() > getRX()) {
+                failCount++;
+            }
+        }
+
+        if (failCount > 4) {
+            checkFloat = true;
+        } else {
+            checkFloat = false;
+        }
+        return checkFloat;
+    }
+
+    private boolean checkUp() {
+        boolean checkFloat;
+        int failCount = 0;
+
+        for (int i = 0; i < 5; i++) {
+            if (getLastY() < getRY()) {
+                failCount++;
+            }
+        }
+
+        if (failCount > 4) {
+            checkFloat = true;
+        } else {
+            checkFloat = false;
+        }
+        return checkFloat;
+    }
+
+    private boolean checkDown() {
+        boolean checkFloat;
+        int failCount = 0;
+
+        for (int i = 0; i < 5; i++) {
+            if (getLastY() > getRY()) {
+                failCount++;
+            }
+        }
+
+        if (failCount > 4) {
+            checkFloat = true;
+        } else {
+            checkFloat = false;
+        }
+        return checkFloat;
+    }
+
+    private boolean areSame(float a, float b) {
+        boolean ret;
+        if ( Math.abs(a-b) < EPSILON) {
+            ret = false;
+        } else {
+            ret = true;
+        }
+        return ret;
+    }
 }
