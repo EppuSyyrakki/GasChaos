@@ -29,6 +29,7 @@ public class FarmScreen extends Location implements Screen {
         this.batch = batch;
         this.camera = camera;
         this.game = game;
+        userInterface = new UserInterface(game.myBundle);
         player = new Player();
         player.player(150f);
         player.setRX(4.5f);

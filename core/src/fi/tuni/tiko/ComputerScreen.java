@@ -23,6 +23,7 @@ public class ComputerScreen extends Location implements Screen {
         this.batch = batch;
         this.camera = camera;
         this.game = game;
+        userInterface = new UserInterface(game.myBundle);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }

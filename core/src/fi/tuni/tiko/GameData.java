@@ -39,8 +39,8 @@ public class GameData {
     private int methane = 0;        // amount of methane in gas tank
     private int methaneMax = 15000; // size of methane tank
     private int debt = 10000;       // total amount of debt, reduced by debtPayment
-    private int feed = 0;           // total amount of feed
-    private int feedInBarn = 60;    // amount of feed for cows in barn
+    private int feed = 100;           // total amount of feed
+    private int feedInBarn = 2;    // amount of feed for cows in barn
     private int feedMax = 9000;     // maximum amount of feed
     private float interest = 1.03f; // 5% interest rate to calculate debt payments
     final int MAX_FIELDS = 6;       // maximum number of fields

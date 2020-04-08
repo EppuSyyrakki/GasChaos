@@ -10,7 +10,9 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.I18NBundle;
 
 public class Location implements InputProcessor {
     final float WORLD_WIDTH = 9f;
@@ -25,8 +27,9 @@ public class Location implements InputProcessor {
     Texture background;
     Texture blackTexture = new Texture("black.png");
     Sprite black = new Sprite(blackTexture);
-    UserInterface userInterface = new UserInterface();
+    UserInterface userInterface;
     String uiText = "default";
+    I18NBundle myBundle;
 
     public void fadeFromBlack() {
         blackness -= Gdx.graphics.getDeltaTime() * fadeSpeed;

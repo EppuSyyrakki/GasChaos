@@ -26,7 +26,7 @@ public class HomeScreen extends Location implements Screen {
         this.game = game;
         this.batch = batch;
         this.camera = camera;
-
+        userInterface = new UserInterface(game.myBundle);
         player = new Player();
         player.player(60f);
         player.setRX(4);
