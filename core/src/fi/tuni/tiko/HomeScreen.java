@@ -28,7 +28,7 @@ public class HomeScreen extends Location implements Screen {
         this.camera = camera;
 
         player = new Player();
-        player.player(100f);
+        player.player(60f);
         player.setRX(4);
         player.setRY(4);
         player.setTargetX(player.getRX());

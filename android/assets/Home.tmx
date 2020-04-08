@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="9" height="16" tilewidth="120" tileheight="120" infinite="0" nextlayerid="10" nextobjectid="17">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="9" height="16" tilewidth="120" tileheight="120" infinite="0" nextlayerid="10" nextobjectid="25">
  <layer id="1" name="Tile Layer 1" width="9" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,
@@ -27,19 +27,21 @@
   <object id="3" x="-94" y="-40" width="102" height="2078"/>
   <object id="4" x="-4" y="1910" width="1138" height="130"/>
   <object id="6" x="1072" y="-98" width="116" height="2144"/>
-  <object id="7" x="-144" y="-102" width="1334" height="588.117"/>
-  <object id="15" x="-2" y="906" width="328" height="176"/>
+  <object id="7" x="-144" y="-102" width="1334" height="474.371"/>
+  <object id="15" x="14.4849" y="1088.98" width="328" height="204.024"/>
+  <object id="22" x="423.663" y="328.05" width="232.438" height="137.083"/>
+  <object id="24" x="789.347" y="1635.51" width="176.538" height="162.334"/>
  </objectgroup>
  <objectgroup id="9" name="RectangleExit">
-  <object id="16" x="6.08751" y="1582.75" width="1067.34" height="332.784"/>
+  <object id="16" x="11.033" y="308.465" width="374.973" height="558.628"/>
  </objectgroup>
  <objectgroup id="6" name="RectangleBed">
-  <object id="11" x="683.713" y="619.592" width="345.05" height="540.375"/>
+  <object id="11" x="719.98" y="598.162" width="345.05" height="540.375"/>
  </objectgroup>
  <objectgroup id="7" name="RectanglePhone">
-  <object id="12" x="126.637" y="428.367" width="284" height="445.15"/>
+  <object id="12" x="660.749" y="1466.92" width="415.879" height="445.15"/>
  </objectgroup>
  <objectgroup id="8" name="RectanglePC">
-  <object id="13" x="12.1167" y="838.558" width="255.125" height="487.938"/>
+  <object id="13" x="10.4682" y="1010" width="464.484" height="669.272"/>
  </objectgroup>
 </map>
