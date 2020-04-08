@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.I18NBundle;
 
 public class UserInterface {
@@ -25,12 +27,20 @@ public class UserInterface {
     Label topCowsLabel;
     Label topActionsLabel;
     I18NBundle myBundle;
+    TextButton confirmButton;
+    TextButton cancelButton;
+    TextButton emptyButton;
+    TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
 
     public UserInterface(I18NBundle myBundle) {
         this.myBundle = myBundle;
         fontTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         font = new BitmapFont(Gdx.files.internal("ui/alternative.fnt"),
                 new TextureRegion(fontTexture), false);
+        buttonStyle.font = font;
+        confirmButton = new TextButton(myBundle.get("confirm"), buttonStyle);
+        cancelButton = new TextButton(myBundle.get("cancel"), buttonStyle);
+        emptyButton = new TextButton("       ", buttonStyle);
         stage.addActor(topTable);
         // set labels to custom font
         topMoneyLabel = new Label("", new Label.LabelStyle(font, Color.WHITE));
@@ -46,7 +56,6 @@ public class UserInterface {
         topTable.add(topActionsLabel).width(width / 3);
         // set to true when dialog on screen, prevents player movement.
         dialogFocus = false;
-
     }
 
     public void render(GameData data) {
@@ -65,11 +74,13 @@ public class UserInterface {
         dialog.setSize(width * 0.75f, height * 0.3f);
         dialog.setPosition(width / 2 - dialog.getWidth() / 2, height / 2 - dialog.getHeight());
         dialog.getContentTable().add(label).width(dialog.getWidth() - 30f);
-        dialog.button(myBundle.get("confirm"), true); //sends "true" as the result
+        dialog.button(confirmButton, true);
+
         if (preDialog) {    // add cancel button only if the dialog is pre-action
-            dialog.button(myBundle.get("cancel"), false); //sends "false" as the result
+            dialog.button(emptyButton);
+            dialog.button(cancelButton, false);
         }
-        dialog.getButtonTable().pad(10f);
+        dialog.pad(20f, 20f, 20f, 20f);
         dialog.pack();
         dialog.show(stage);
     }
