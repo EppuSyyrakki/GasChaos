@@ -33,14 +33,14 @@ public class GameData {
      */
     private int money = 2000;       // money available for purchases
     private int manure = 0;         // amount of manure in manure pit
-    private int manureInBarn = 0;   // amount of manure produced on previous turn
+    private int manureInBarn = 90;   // amount of manure produced on previous turn
     private int manureInBarnMax = 300;  // maximum amount of manure on barn floor
     private int manureMax = 2500;   // size of manure pit
     private int methane = 0;        // amount of methane in gas tank
     private int methaneMax = 15000; // size of methane tank
     private int debt = 10000;       // total amount of debt, reduced by debtPayment
     private int feed = 100;           // total amount of feed
-    private int feedInBarn = 2;    // amount of feed for cows in barn
+    private int feedInBarn = 5;     // amount of feed for cows in barn
     private int feedMax = 9000;     // maximum amount of feed
     private float interest = 1.03f; // 5% interest rate to calculate debt payments
     final int MAX_FIELDS = 6;       // maximum number of fields
@@ -49,6 +49,7 @@ public class GameData {
     final int MANURE_SHOVELED = 100;// how much manure removed from barn in single remove action
     final int MAX_P_PER_FIELD = 13; // max phosphorous per field before penalty
     final int MAX_N_NER_FIELD = 80; // max nitrogen per field before penalty
+    final int MANURE_DANGER = 200;  // when amount of manure will affect milk production.
 
     /**
      * Device levels. 0 = no device, Used in updateResource calculations and to draw correct
@@ -152,7 +153,7 @@ public class GameData {
                 int milkFromCow = cow.getMilk(milkingMachineLevel);
                 cow.fart(gasCollectorLevel);
                 manureInBarn += cow.poop();
-                if (manureInBarn > 200) {   // if barn is filthy, 33% less milk
+                if (manureInBarn > MANURE_DANGER) {   // if barn is filthy, 33% less milk
                     milkFromCow -= (milkFromCow / 3);
                 }
                 milkSold += milkFromCow;
@@ -541,5 +542,21 @@ public class GameData {
 
     public int getCowAmount() {
         return cowList.size();
+    }
+
+    public int getTotalMethaneInCows() {
+        int totalMethane = 0;
+        for (Cow cow : cowList) {
+            totalMethane += cow.getMethaneAmount();
+        }
+        return totalMethane;
+    }
+
+    public int getTotalMaxMethaneInCows() {
+        int totalMaxMethane = 0;
+        for (Cow cow : cowList) {
+            totalMaxMethane += cow.getMethaneAmountMax();
+        }
+        return totalMaxMethane;
     }
 }

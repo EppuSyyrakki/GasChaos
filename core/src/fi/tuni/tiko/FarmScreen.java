@@ -13,8 +13,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
-import javax.swing.JDialog;
-
 public class FarmScreen extends Location implements Screen {
     Player player;
     TiledMap tiledMap;

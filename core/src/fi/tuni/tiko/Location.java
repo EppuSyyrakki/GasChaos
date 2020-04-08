@@ -62,9 +62,7 @@ public class Location implements InputProcessor {
     }
 
     public boolean playerAction(Rectangle rectangle) {
-
         boolean touched = false;
-
 
         // setActionInputActive() setter.
         // isActionInputActive() getter.
@@ -91,7 +89,6 @@ public class Location implements InputProcessor {
         return touched;
 
     }
-
 
     public float getBlackness() {
         return blackness;

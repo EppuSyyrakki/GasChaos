@@ -23,8 +23,8 @@ public class GasChaosMain extends Game {
 	GasTankScreen gasTankScreen;
 	GrandmotherScreen grandmotherScreen;
 	ComputerScreen computerScreen;
-	Locale locale;
-	Locale defaultLocale;
+	// Locale locale;
+	// Locale defaultLocale;
 	I18NBundle myBundle;
 
 
