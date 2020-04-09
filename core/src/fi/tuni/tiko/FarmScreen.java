@@ -34,6 +34,8 @@ public class FarmScreen extends Location implements Screen {
         player.setRY(6f);
         player.setTargetX(player.getRX());
         player.setTargetY(player.getRY());
+        game.gameData.saveGame();
+        game.gameData.loadGame();
     }
 
     @Override

@@ -1,6 +1,12 @@
 package fi.tuni.tiko;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.utils.Json;
+
 import java.util.ArrayList;
+
+import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 
 public class GameData {
 
@@ -111,6 +117,10 @@ public class GameData {
     private boolean tractorGasBought;
     private boolean gasGeneratorBought;
 
+    /**
+     * save game file My Preferences.xml.
+     */
+    Preferences prefs = Gdx.app.getPreferences("GasPreferences");
     /**
      * Update variables. Use at end of turn.
      */
@@ -324,6 +334,62 @@ public class GameData {
         this.methaneMax = methaneMax;
     }
 
+    public int getDebt() {
+        return debt;
+    }
+
+    public void setDebt(int debt) {
+        this.debt = debt;
+    }
+
+    public float getInterest() {
+        return interest;
+    }
+
+    public void setInterest(float interest) {
+        this.interest = interest;
+    }
+
+    public int getDebtPayment() {
+        return debtPayment;
+    }
+
+    public void setDebtPayment(int debtPayment) {
+        this.debtPayment = debtPayment;
+    }
+
+    public int getElectricity() {
+        return electricity;
+    }
+
+    public void setElectricity(int electricity) {
+        this.electricity = electricity;
+    }
+
+    public int getPetrol() {
+        return petrol;
+    }
+
+    public void setPetrol(int petrol) {
+        this.petrol = petrol;
+    }
+
+    public int getGardenGrowth() {
+        return gardenGrowth;
+    }
+
+    public int getGardenMax() {
+        return gardenMax;
+    }
+
+    public void setGardenMax(int gardenMax) {
+        this.gardenMax = gardenMax;
+    }
+
+    public void setManureInBarnMax(int manureInBarnMax) {
+        this.manureInBarnMax = manureInBarnMax;
+    }
+
     public int getFeed() {
         return feed;
     }
@@ -358,6 +424,26 @@ public class GameData {
 
     public int getGasGeneratorLevel() {
         return gasGeneratorLevel;
+    }
+
+    public void setSolarPanelLevel(int solarPanelLevel) {
+        this.solarPanelLevel = solarPanelLevel;
+    }
+
+    public void setGasCollectorLevel(int gasCollectorLevel) {
+        this.gasCollectorLevel = gasCollectorLevel;
+    }
+
+    public void setMilkingMachineLevel(int milkingMachineLevel) {
+        this.milkingMachineLevel = milkingMachineLevel;
+    }
+
+    public void setTractorLevel(int tractorLevel) {
+        this.tractorLevel = tractorLevel;
+    }
+
+    public void setGasGeneratorLevel(int gasGeneratorLevel) {
+        this.gasGeneratorLevel = gasGeneratorLevel;
     }
 
     public int getGrainSold() {
@@ -558,5 +644,146 @@ public class GameData {
             totalMaxMethane += cow.getMethaneAmountMax();
         }
         return totalMaxMethane;
+    }
+
+    public void saveGame() {
+
+        if (prefs == null) {
+            prefs = Gdx.app.getPreferences("GasPreferences");
+        }
+
+        /**
+         * Tracks game progression.
+         */
+        prefs.putInteger("currentTurn", getCurrentTurn());
+        prefs.putInteger("actionsDone", getActionsDone());
+
+        /**
+         * Resource amounts.
+         */
+        prefs.putInteger("money", getMoney());
+        prefs.putInteger("manure", getManure());
+        prefs.putInteger("manureInBarn", getManureInBarn());
+        prefs.putInteger("manureInBarnMax", getManureInBarnMax());
+        prefs.putInteger("manureMax", getManureMax());
+        prefs.putInteger("methane", getMethane());
+        prefs.putInteger("methaneMax", getMethaneMax());
+        prefs.putInteger("debt", getDebt());
+        prefs.putInteger("feed", getFeed());
+        prefs.putInteger("feedInBarn", getFeedInBarn());
+        prefs.putInteger("feedMax", getFeedMax());
+        prefs.putFloat("interest", getInterest());
+
+        /**
+         * Device levels. 0 = no device, Used in updateResource calculations and to draw correct
+         * graphics.
+         */
+        prefs.putInteger("solarPanelLevel", getSolarPanelLevel());
+        prefs.putInteger("gasCollectorLevel", getGasCollectorLevel());
+        prefs.putInteger("milkingMachineLevel", getMilkingMachineLevel());
+        prefs.putInteger("tractorLevel", getTractorLevel());
+        prefs.putInteger("gasGeneratorLevel", getGasGeneratorLevel());
+
+        /**
+         * Expenditures per turn
+         */
+        prefs.putInteger("debtPayment", getDebtPayment());
+        prefs.putInteger("electricity", getElectricity());
+        prefs.putInteger("petrol", getPetrol());
+
+        /**
+         * Keep state of garden.
+         */
+        prefs.putInteger("weedsAmount", getWeedsAmount());
+        prefs.putInteger("gardenGrowth", getGardenGrowth());
+        prefs.putInteger("gardenAmount", getGardenAmount());
+        prefs.putInteger("gardenMax", getGardenMax());
+
+        /**
+         * Array and arrayList accessories.
+         */
+
+        String jsonField = json.toJson(fields);
+        prefs.putString("fields", jsonField);
+        //System.out.println("json: " + jsonField);
+        String jsonCowList = json.toJson(cowList);
+        prefs.putString("cowList", jsonCowList);
+        //System.out.println("json: " + jsonCowList);
+
+
+
+        prefs.flush();
+        //int i = prefs.getInteger("currentTurn");
+        //System.out.println(i);
+
+        // bulk update your preferences
+
+    }
+
+    public void loadGame() {
+
+        if (prefs == null) {
+            prefs = Gdx.app.getPreferences("GasPreferences");
+        }
+
+        /**
+         * Tracks game progression.
+         */
+        setCurrentTurn(prefs.getInteger("currentTurn", getCurrentTurn()));
+        setActionsDone(prefs.getInteger("actionsDone", getActionsDone()));
+
+        /**
+         * Resource amounts.
+         */
+        setMoney(prefs.getInteger("money", getMoney()));
+        setManure(prefs.getInteger("manure", getManure()));
+        setManureInBarn(prefs.getInteger("manureInBarn", getManureInBarn()));
+        setManureInBarnMax(prefs.getInteger("manureInBarnMax", getManureInBarnMax()));
+        setManureMax(prefs.getInteger("manureMax", getManureMax()));
+        setMethane(prefs.getInteger("methane", getMethane()));
+        setMethaneMax(prefs.getInteger("methaneMax", getMethaneMax()));
+        setDebt(prefs.getInteger("debt", getDebt()));
+        setFeed(prefs.getInteger("feed", getFeed()));
+        setFeedInBarn(prefs.getInteger("feedInBarn", getFeedInBarn()));
+        setFeedMax(prefs.getInteger("feedMax", getFeedMax()));
+        setInterest(prefs.getFloat("interest", getInterest()));
+
+        /**
+         * Device levels. 0 = no device, Used in updateResource calculations and to draw correct
+         * graphics.
+         */
+        setSolarPanelLevel(prefs.getInteger("solarPanelLevel", getSolarPanelLevel()));
+        setGasCollectorLevel(prefs.getInteger("gasCollectorLevel", getGasCollectorLevel()));
+        setMilkingMachineLevel(prefs.getInteger("milkingMachineLevel", getMilkingMachineLevel()));
+        setTractorLevel(prefs.getInteger("tractorLevel", getTractorLevel()));
+        setGasGeneratorLevel(prefs.getInteger("gasGeneratorLevel", getGasGeneratorLevel()));
+
+        /**
+         * Expenditures per turn
+         */
+        setDebtPayment(prefs.getInteger("debtPayment", getDebtPayment()));
+        setElectricity(prefs.getInteger("electricity", getElectricity()));
+        setPetrol(prefs.getInteger("petrol", getPetrol()));
+
+        /**
+         * Keep state of garden.
+         */
+        setWeedsAmount(prefs.getInteger("weedsAmount", getWeedsAmount()));
+        setGardenGrowth(prefs.getInteger("gardenGrowth", getGardenGrowth()));
+        setGardenAmount(prefs.getInteger("gardenAmount", getGardenAmount()));
+        setGardenMax(prefs.getInteger("gardenMax", getGardenMax()));
+
+        /**
+         * Array and arrayList accessories.
+         */
+
+        String fieldString = prefs.getString("fields");
+        //System.out.println("fieldString: " + fieldString);
+        //fields = json.fromJson(ArrayList.class, fieldString);
+
+        //int i = prefs.getInteger("currentTurn");
+        //System.out.println(i);
+
+
     }
 }
