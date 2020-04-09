@@ -59,19 +59,15 @@ public class FieldScreen extends Location implements Screen {
         }
 
         // Player movement
-        player.checkCollisions(tiledMap);
-        player.playerTouch(batch);
-        player.playerMovement();
 
         batch.begin();
         //batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
-        player.draw(batch);
         batch.end();
 
         userInterface.render(game.gameData);
 
-        if (getRec("RectangleExit") || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
             game.setFarmScreen();
         }
 

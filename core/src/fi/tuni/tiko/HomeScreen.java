@@ -57,9 +57,9 @@ public class HomeScreen extends Location implements Screen {
         }
 
         // Player movement
-        player.checkCollisions(tiledMap);
+        //player.checkCollisions(tiledMap);
         player.playerTouch(batch);
-        player.playerMovement();
+        player.playerMovement(tiledMap);
 
         batch.begin();
         black.draw(batch, blackness);

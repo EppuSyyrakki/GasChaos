@@ -20,7 +20,7 @@ public class FarmScreen extends Location implements Screen {
     private final GasChaosMain game;
 
     public FarmScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        background = new Texture("farmBackground.png");
+        background = new Texture("farmForeground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         tiledMap = new TmxMapLoader().load("Farm.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
@@ -56,13 +56,14 @@ public class FarmScreen extends Location implements Screen {
         if (!super.userInterface.dialogFocus) {
             player.checkCollisions(tiledMap);
             player.playerTouch(batch);
-            player.playerMovement();
+            player.playerMovement(tiledMap);
         }
 
         batch.begin();
         //batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
         player.draw(batch);
+        batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         batch.end();
 
         userInterface.render(game.gameData);

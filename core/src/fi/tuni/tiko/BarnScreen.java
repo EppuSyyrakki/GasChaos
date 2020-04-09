@@ -74,9 +74,8 @@ public class BarnScreen extends Location implements Screen {
 
         // Player movement
         if (!userInterface.dialogFocus) {
-            player.checkCollisions(tiledMap);
             player.playerTouch(batch);
-            player.playerMovement();
+            player.playerMovement(tiledMap);
         }
 
         batch.begin();

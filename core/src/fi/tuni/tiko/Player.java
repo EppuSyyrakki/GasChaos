@@ -302,27 +302,29 @@ public class Player extends Sprite{
     }
 
     public Rectangle getRectangleRight() {
-        Rectangle recFuture = getRectangle();
-        recFuture.x = recFuture.x + speed * Gdx.graphics.getDeltaTime();
-        return recFuture;
+        Rectangle recFutureRight = getRectangle();
+        recFutureRight.x = recFutureRight.x + getSpeed() * Gdx.graphics.getDeltaTime();
+        return recFutureRight;
     }
 
     public Rectangle getRectangleLeft() {
-        Rectangle recFuture = getRectangle();
-        recFuture.x = recFuture.x - speed * Gdx.graphics.getDeltaTime();
-        return recFuture;
+        Rectangle recFutureLeft = getRectangle();
+        recFutureLeft.x = recFutureLeft.x - getSpeed() * Gdx.graphics.getDeltaTime();
+        return recFutureLeft;
     }
 
     public Rectangle getRectangleDown() {
-        Rectangle recFuture = getRectangle();
-        recFuture.y = recFuture.y - speed * Gdx.graphics.getDeltaTime();
-        return recFuture;
+        Rectangle recFutureDown = getRectangle();
+        recFutureDown.y = recFutureDown.y - getSpeed() * Gdx.graphics.getDeltaTime();
+        System.out.println("f y:" + recFutureDown.y);
+        System.out.println("r y:" + getY());
+        return recFutureDown;
     }
 
     public Rectangle getRectangleUp() {
-        Rectangle recFuture = getRectangle();
-        recFuture.y = recFuture.y + speed * Gdx.graphics.getDeltaTime();
-        return recFuture;
+        Rectangle recFutureUp = getRectangle();
+        recFutureUp.y = recFutureUp.y + getSpeed() * Gdx.graphics.getDeltaTime();
+        return recFutureUp;
     }
 
     public void draw(SpriteBatch batch) {
@@ -359,16 +361,17 @@ public class Player extends Sprite{
         }
     }
 
-    public void playerMovement () {
+    public void playerMovement (TiledMap tiledMap) {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 9, 16);
+        checkCollisions(tiledMap);
 
         if (inputActive == true) {
             // X axis
             if (targetX == (getRX() + getWidth() / 2f)) {
                 setLastX(getRX());
-            } else if (targetX > (getRX() + getWidth() / 2f) && right == true) {
+            } if (targetX > (getRX() + getWidth() / 2f) && right == true) {
                 if (targetX > ((getRX() + getWidth() / 2f) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX() + getSpeed() * Gdx.graphics.getDeltaTime());
@@ -376,7 +379,7 @@ public class Player extends Sprite{
                     setLastX(getRX());
                     setRX(getRX());
                 }
-            } else if (targetX < (getRX() + getWidth() / 2f) && left == true) {
+            } if (targetX < (getRX() + getWidth() / 2f) && left == true) {
                 if (targetX < ((getRX() + getWidth() / 2f) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX() - getSpeed() * Gdx.graphics.getDeltaTime());
@@ -389,7 +392,7 @@ public class Player extends Sprite{
             // Y axis
             if (targetY == (getRY() + getHeight() / 2f)) {
                 setLastY(getRY());
-            } else if (targetY > (getRY() + getHeight() / 2f)&& up == true) {
+            } if (targetY > (getRY() + getHeight() / 2f)&& up == true) {
                 if (targetY > ((getRY() + getHeight() / 2f) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY() + getSpeed() * Gdx.graphics.getDeltaTime());
@@ -397,7 +400,7 @@ public class Player extends Sprite{
                     setLastY(getRY());
                     setRY(getRY());
                 }
-            } else if (targetY < (getRY() + getHeight() / 2f) && down == true) {
+            } if (targetY < (getRY() + getHeight() / 2f) && down == true) {
                 if (targetY < ((getRY() + getHeight() / 2f) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY() - getSpeed() * Gdx.graphics.getDeltaTime());
@@ -501,8 +504,40 @@ public class Player extends Sprite{
             if (getRectangleRight().overlaps(rectangle)) {
                 right = false;
             }
-
         }
+        //System.out.println("up: " + up);
+        //System.out.println("down: " + down);
+        //System.out.println("left: " + left);
+        //System.out.println("right: " + right);
+    }
+
+    public boolean overlap(TiledMap tiledMap) {
+
+        boolean future = true;
+
+        Rectangle bounding = getBoundingRectangle();
+        //System.out.println(bounding.x + "" + bounding.y);
+
+        MapLayer collisionObjectLayer = (MapLayer) tiledMap.getLayers().get("RectangleCollision");
+
+        // all of the layer
+        MapObjects mapObjects = collisionObjectLayer.getObjects();
+
+        // add to array
+        Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
+
+        // Iterate rectangles
+        for (RectangleMapObject rectangleObject : rectangleObjects) {
+            Rectangle tmp = rectangleObject.getRectangle();
+            Rectangle rectangle = scaleRect(tmp, 1 / 120f);
+
+            if (getRectangle().overlaps(rectangle)) {
+                future = true;
+            } else {
+                future = false;
+            }
+        }
+        return future;
     }
 
     private Rectangle scaleRect(Rectangle r, float scale) {
