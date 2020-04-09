@@ -316,8 +316,8 @@ public class Player extends Sprite{
     public Rectangle getRectangleDown() {
         Rectangle recFutureDown = getRectangle();
         recFutureDown.y = recFutureDown.y - getSpeed() * Gdx.graphics.getDeltaTime();
-        System.out.println("f y:" + recFutureDown.y);
-        System.out.println("r y:" + getY());
+        //System.out.println("f y:" + recFutureDown.y);
+        //System.out.println("r y:" + getY());
         return recFutureDown;
     }
 
