@@ -45,7 +45,7 @@ public class GameData {
     private int methane = 0;        // amount of methane in gas tank
     private int methaneMax = 15000; // size of methane tank
     private int debt = 10000;       // total amount of debt, reduced by debtPayment
-    private int feed = 100;           // total amount of feed
+    private int feed = 100;         // total amount of feed
     private int feedInBarn = 5;     // amount of feed for cows in barn
     private int feedMax = 9000;     // maximum amount of feed
     private float interest = 1.03f; // 5% interest rate to calculate debt payments
@@ -53,6 +53,7 @@ public class GameData {
     final int OWNED_FIELDS = 2;     // owned fields at start (no rent)
     final int MAX_COWS = 6;         // maximum number of cows
     final int MANURE_SHOVELED = 100;// how much manure removed from barn in single remove action
+    final int MANURE_TO_SELL = 1000;
     final int MAX_P_PER_FIELD = 13; // max phosphorous per field before penalty
     final int MAX_N_NER_FIELD = 80; // max nitrogen per field before penalty
     final int MANURE_DANGER = 200;  // when amount of manure will affect milk production.
@@ -144,7 +145,7 @@ public class GameData {
         if (solarPanelLevel == 1) {
             electricityThisTurn = electricity - (electricity / 3);  // 67
         } else if (solarPanelLevel == 2) {
-            electricityThisTurn = electricity / 3;                  // 33
+            electricityThisTurn = electricity - (electricity / 3) - (electricity / 3);  // 33
         }
         if (gasGeneratorLevel == 1) {
             electricityThisTurn = electricity - (electricity / 3);  // 0
@@ -173,8 +174,6 @@ public class GameData {
         if (manureInBarn > manureInBarnMax) {
             manureInBarn = manureInBarnMax;
         }
-
-
 
         for (Field field  : fields) {
             if (field.isRented()) {
