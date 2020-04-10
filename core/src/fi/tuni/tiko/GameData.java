@@ -646,6 +646,62 @@ public class GameData {
         return totalMaxMethane;
     }
 
+    public int getMAX_ACTIONS() {
+        return MAX_ACTIONS;
+    }
+
+    public int getMAX_FIELDS() {
+        return MAX_FIELDS;
+    }
+
+    public int getOWNED_FIELDS() {
+        return OWNED_FIELDS;
+    }
+
+    public int getMAX_COWS() {
+        return MAX_COWS;
+    }
+
+    public int getMANURE_SHOVELED() {
+        return MANURE_SHOVELED;
+    }
+
+    public int getMAX_P_PER_FIELD() {
+        return MAX_P_PER_FIELD;
+    }
+
+    public int getMAX_N_NER_FIELD() {
+        return MAX_N_NER_FIELD;
+    }
+
+    public int getMANURE_DANGER() {
+        return MANURE_DANGER;
+    }
+
+    public Preferences getPrefs() {
+        return prefs;
+    }
+
+    public void setPrefs(Preferences prefs) {
+        this.prefs = prefs;
+    }
+
+    public int getMONEY_FROM_GRAIN() {
+        return MONEY_FROM_GRAIN;
+    }
+
+    public int getPRICE_OF_FIELD() {
+        return PRICE_OF_FIELD;
+    }
+
+    public GameData(ArrayList<Field> fields) {
+        this.fields = fields;
+    }
+
+
+
+
+
     public void saveGame() {
 
         if (prefs == null) {
@@ -700,6 +756,21 @@ public class GameData {
         prefs.putInteger("gardenMax", getGardenMax());
 
         /**
+         * Things bought this turn that will come to farm on next turn. Touched in buying actions. Will
+         * reset to default in updateResources at end of turn.
+         */
+
+        prefs.putInteger("feedBought", getFeedBought());
+        prefs.putBoolean("solarPanelBasicBought", isSolarPanelBasicBought());
+        prefs.putBoolean("solarPanelAdvBought", isSolarPanelAdvBought());
+        prefs.putBoolean("gasCollectorAdvBought", isGasCollectorAdvBought());
+        prefs.putBoolean("milkingMachineAdvBought", isMilkingMachineAdvBought());
+        prefs.putBoolean("tractorAdvBought", isTractorAdvBought());
+        prefs.putBoolean("tractorGasBought", isTractorGasBought());
+        prefs.putBoolean("gasGeneratorBought", isGasGeneratorBought());
+
+
+        /**
          * Array and arrayList accessories.
          */
 
@@ -709,6 +780,14 @@ public class GameData {
         String jsonCowList = json.toJson(cowList);
         prefs.putString("cowList", jsonCowList);
         //System.out.println("json: " + jsonCowList);
+
+        prefs.putInteger("fieldRent0", fieldsRented[0]);
+        prefs.putInteger("fieldRent1", fieldsRented[1]);
+        prefs.putInteger("fieldRent2", fieldsRented[2]);
+        prefs.putInteger("fieldRent3", fieldsRented[3]);
+        //String jsonFieldsRented = json.toJson(fieldsRented);
+        //prefs.putString("fieldsRented", jsonFieldsRented);
+        //System.out.println("json: " + jsonFieldsRented);
 
 
 
@@ -774,16 +853,49 @@ public class GameData {
         setGardenMax(prefs.getInteger("gardenMax", getGardenMax()));
 
         /**
-         * Array and arrayList accessories.
+         * Things bought this turn that will come to farm on next turn. Touched in buying actions. Will
+         * reset to default in updateResources at end of turn.
          */
 
+        setFeedBought(prefs.getInteger("feedBought", getFeedBought()));
+        setSolarPanelBasicBought(prefs.getBoolean("solarPanelBasicBought", isSolarPanelBasicBought()));
+        setSolarPanelAdvBought(prefs.getBoolean("solarPanelAdvBought", isSolarPanelAdvBought()));
+        setGasCollectorAdvBought(prefs.getBoolean("gasCollectorAdvBought", isGasCollectorAdvBought()));
+        setMilkingMachineAdvBought(prefs.getBoolean("milkingMachineAdvBought", isMilkingMachineAdvBought()));
+        setTractorAdvBought(prefs.getBoolean("tractorAdvBought", isTractorAdvBought()));
+        setTractorGasBought(prefs.getBoolean("tractorGasBought", isTractorGasBought()));
+        setGasGeneratorBought(prefs.getBoolean("gasGeneratorBought", isGasGeneratorBought()));
+
+
+        /**
+         * Array and arrayList accessories.
+         * Field ArrayList load
+         */
         String fieldString = prefs.getString("fields");
         //System.out.println("fieldString: " + fieldString);
-        //fields = json.fromJson(ArrayList.class, fieldString);
+        fields = json.fromJson(ArrayList.class, fieldString);
 
         //int i = prefs.getInteger("currentTurn");
         //System.out.println(i);
 
+        /**
+         * Cow ArrayList load
+         */
 
+        String cowString = prefs.getString("cowList");
+        //System.out.println("cowString: " + cowString);
+        cowList = json.fromJson(ArrayList.class, cowString);
+
+        /**
+         * int array fieldsRented.
+         */
+
+        fieldsRented[0] = prefs.getInteger("fieldRent0", fieldsRented[0]);
+        fieldsRented[1] = prefs.getInteger("fieldRent1", fieldsRented[1]);
+        fieldsRented[2] = prefs.getInteger("fieldRent2", fieldsRented[2]);
+        fieldsRented[3] = prefs.getInteger("fieldRent3", fieldsRented[3]);
+
+        //String fieldsRentedString = prefs.getString("fieldsRented");
+        //System.out.println("fieldsRentedString: " + fieldsRentedString);
     }
 }

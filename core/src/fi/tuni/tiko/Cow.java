@@ -96,4 +96,8 @@ public class Cow {
     public void setEatenThisTurn(boolean eatenThisTurn) {
         this.eatenThisTurn = eatenThisTurn;
     }
+
+    // Do not remove, crashes the game on loadGame()
+    public Cow() {
+    }
 }

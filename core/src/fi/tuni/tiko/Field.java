@@ -98,4 +98,30 @@ public class Field {
     public void setRented(boolean rented) {
         this.rented = rented;
     }
+
+    public int getReductionCounter() {
+        return reductionCounter;
+    }
+
+    public void setReductionCounter(int reductionCounter) {
+        this.reductionCounter = reductionCounter;
+    }
+
+    public int getMAX_GROWTH() {
+        return MAX_GROWTH;
+    }
+
+    public Field(int amount, int growth, int fertilizerP, int fertilizerN, int reductionCounter, boolean owned, boolean rented) {
+        this.amount = amount;
+        this.growth = growth;
+        this.fertilizerP = fertilizerP;
+        this.fertilizerN = fertilizerN;
+        this.reductionCounter = reductionCounter;
+        this.owned = owned;
+        this.rented = rented;
+    }
+
+    // Do not remove, crashes the game on loadGame()
+    public Field() {
+    }
 }
