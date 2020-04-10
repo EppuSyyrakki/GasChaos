@@ -316,8 +316,7 @@ public class ComputerScreen extends Location implements Screen {
     }
 
     /**
-     * Remove last Cow from cowList. Block if only 1 entry in list - must have at least 1 cow.
-     * Increase data.money by half of data.PRICE_OF_COW
+     * UNUSED
      */
     public GameData actionSellCow(GameData data) {
         ArrayList<Cow> tmpCowList = data.getCowList();
@@ -327,9 +326,9 @@ public class ComputerScreen extends Location implements Screen {
             data.setMoney(data.PRICE_OF_COW / 2 + data.getMoney());
             data.setCowList(tmpCowList);
             data.setActionsDone(data.getActionsDone() + 1);
-            // TODO cow sold UI message
+            // cow sold UI message
         } else if (tmpCowList.size() == 1) {
-            // TODO action blocked, can't sell last cow UI message
+            // action blocked, can't sell last cow UI message
         }
         return data;
     }
@@ -387,29 +386,6 @@ public class ComputerScreen extends Location implements Screen {
             };
             userInterface.createDialog(d, uiText, false);
         }
-    }
-
-    /**
-     * Set data.feed to data.feedMax and reduce data.money by data.PRICE_OF_FEED *
-     * (data.feedMax - data.feed). Block if not enough money.
-     */
-    public GameData actionFullFeed(GameData data) {
-        int amount = data.getFeedMax() - (data.getFeed() + data.getFeedBought());
-        int price = data.PRICE_OF_FEED * amount;
-
-        if (data.getFeed() + data.getFeedBought() < data.getFeedMax()) {
-            if (data.getMoney() >= price) {
-                data.setMoney(data.getMoney() - price);
-                data.setFeedBought(data.getFeedBought() + amount);
-                data.setActionsDone(data.getActionsDone() + 1);
-                // TODO amount of cow feed bought, storage will be full UI message
-            } else {
-                // TODO not enough money UI message
-            }
-        } else {
-            // TODO feed storage will already be full next turn UI message
-        }
-        return data;
     }
 
     /**
