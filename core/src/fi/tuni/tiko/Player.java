@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-@SuppressWarnings({"IntegerDivisionInFloatingPointContext", "RedundantCast", "rawtypes"})
+@SuppressWarnings({"IntegerDivisionInFloatingPointContext", "RedundantCast", "rawtypes", "unchecked"})
 public class Player extends Sprite{
 
     private OrthographicCamera camera;
