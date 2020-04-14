@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 
 public class Location implements InputProcessor {
     final float WORLD_WIDTH = 9f;
@@ -61,12 +62,18 @@ public class Location implements InputProcessor {
         return rectangleScale;
     }
 
+    @SuppressWarnings("RedundantCast")
+    public boolean getUIRec(String name, TiledMap tiledMap) {
+        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
+        return playerAction(r);
+    }
+
     public boolean playerAction(Rectangle rectangle) {
         boolean touched = false;
 
         // setActionInputActive() setter.
         // isActionInputActive() getter.
-        if (actionInputActive == true) {
+        if (actionInputActive) {
             if (Gdx.input.justTouched()) {
 
                 // move player on touch
@@ -77,13 +84,7 @@ public class Location implements InputProcessor {
                 Vector3 touchPos = new Vector3(realX, realY, 0);
                 camera.unproject(touchPos);
 
-                if (rectangle.contains(touchPos.x, touchPos.y)) {
-                    System.out.println("boat");
-                    touched = true;
-                } else {
-                    touched = false;
-
-                }
+                touched = rectangle.contains(touchPos.x, touchPos.y);
             }
         }
         return touched;
@@ -128,17 +129,11 @@ public class Location implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.BACK) {
-            return true;
-        }
-        return false;
+        return keycode == Input.Keys.BACK;
     }
 
     public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.BACK) {
-            return true;
-        }
-        return false;
+        return keycode == Input.Keys.BACK;
     }
 
     @Override
