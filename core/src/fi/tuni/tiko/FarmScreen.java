@@ -20,7 +20,16 @@ public class FarmScreen extends Location implements Screen {
     private final GasChaosMain game;
 
     public FarmScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        background = new Texture("farmForeground.png");
+
+        // Check what level of solar panels and set foreground accordingly.
+        if (game.gameData.getSolarPanelLevel() == 1) {
+            background = new Texture("farmForegroundSolar.png");
+        } else if (game.gameData.getSolarPanelLevel() == 2) {
+            background = new Texture("farmForegroundSolar2.png");
+        } else {
+            background = new Texture("farmForeground.png");
+        }
+
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         tiledMap = new TmxMapLoader().load("Farm.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
