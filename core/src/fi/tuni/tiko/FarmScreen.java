@@ -16,8 +16,6 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class FarmScreen extends Location implements Screen {
     Player player;
-    TiledMap tiledMap;
-    TiledMapRenderer tiledMapRenderer;
     private final GasChaosMain game;
 
     public FarmScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {

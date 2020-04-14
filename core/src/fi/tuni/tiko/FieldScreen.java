@@ -18,8 +18,6 @@ import java.util.ArrayList;
 
 public class FieldScreen extends Location implements Screen {
     Player player;
-    TiledMap tiledMap;
-    TiledMapRenderer tiledMapRenderer;
     private final GasChaosMain game;
 
     public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
