@@ -415,11 +415,7 @@ public class BarnScreen extends Location implements Screen {
     public boolean getRec(String name) {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r)  && action) {
-            return true;
-        } else {
-            return false;
-        }
+        return player.getRectangle().overlaps(r) && action;
     }
 
     public void cowRender(Texture cow, Rectangle spawn) {

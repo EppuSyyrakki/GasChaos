@@ -21,9 +21,30 @@ public class FieldScreen extends Location implements Screen {
     TiledMap tiledMap;
     TiledMapRenderer tiledMapRenderer;
     private final GasChaosMain game;
+    Texture growth1;
+    Texture growth2;
+    Texture growth3;
+    Texture growth4;
+    Texture river1;
+    Texture river2;
+    Texture river3;
+    float riverX1;
+    float riverX2;
+    float riverX3;
+    float riverSpeed;
 
     public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        background = new Texture("fieldBackground.png");
+        growth1 = new Texture("growth1.png");
+        growth2 = new Texture("growth2.png");
+        growth3 = new Texture("growth3.png");
+        growth4 = new Texture("growth4.png");
+        river1 = new Texture("river1.png");
+        river2 = new Texture("river1.png");
+        river3 = new Texture("river1.png");
+        riverX1 = 0f;
+        riverX2 = -8f;
+        riverX3 = 8f;
+        riverSpeed = 1f;
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -58,10 +79,20 @@ public class FieldScreen extends Location implements Screen {
             player.setInputActive(true);
         }
 
-        // Player movement
+        // River has 3 parts, each moves at river speed to the right.
+        // When river texture is at 10 (offscreen to the right)
+        // it moves to -8 (Mostly offscreen to the left)
+        riverX1 = riverX1 + riverSpeed * Gdx.graphics.getDeltaTime();
+        riverX2 = riverX2 + riverSpeed * Gdx.graphics.getDeltaTime();
+        riverX3 = riverX3 + riverSpeed * Gdx.graphics.getDeltaTime();
+        if (riverX1 > 10) {riverX1 = -8f;}
+        if (riverX2 > 10) {riverX2 = -8f;}
+        if (riverX3 > 10) {riverX3 = -8f;}
 
         batch.begin();
-        //batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
+        batch.draw(river1, riverX1,0, WORLD_WIDTH, WORLD_HEIGHT);
+        batch.draw(river2, riverX2,0, WORLD_WIDTH, WORLD_HEIGHT);
+        batch.draw(river3, riverX3,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
         batch.end();
 
@@ -243,11 +274,7 @@ public class FieldScreen extends Location implements Screen {
     public boolean getRec(String name) {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r) && action) {
-            return true;
-        } else {
-            return false;
-        }
+        return player.getRectangle().overlaps(r) && action;
     }
 
     /**

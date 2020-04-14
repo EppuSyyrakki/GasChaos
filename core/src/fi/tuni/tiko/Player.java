@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -362,7 +361,7 @@ public class Player extends Sprite{
         camera.setToOrtho(false, 9, 16);
         batch.setProjectionMatrix(camera.combined);
 
-        if (inputActive == true) {
+        if (inputActive) {
             if (Gdx.input.isTouched()) {
 
 
@@ -391,7 +390,7 @@ public class Player extends Sprite{
         checkCollisions(tiledMap);
 
         // It's a dumpster fire but a working one.
-        if (inputActive == true) {
+        if (inputActive) {
             // X axis
             if (targetX == (getRX() + getWidth() / 2f)) {
                 setLastX(getRX());
@@ -493,21 +492,13 @@ public class Player extends Sprite{
             setTargetX(touchPos.x);
             setTargetY(touchPos.y);
 
-            if (rectangle.contains(touchPos.x, touchPos.y)) {
-                //System.out.println("boat");
-                touched = true;
-            } else {
-                touched = false;
-
-            }
+            touched = rectangle.contains(touchPos.x, touchPos.y);
         }
         return touched;
 
     }
 
     public void checkCollisions(TiledMap tiledMap) {
-
-        Rectangle bounding = getBoundingRectangle();
 
         MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleCollision");
 
@@ -558,9 +549,6 @@ public class Player extends Sprite{
     public boolean overlap(TiledMap tiledMap, Rectangle fut) {
 
         boolean future = true;
-
-        Rectangle bounding = getBoundingRectangle();
-        //System.out.println(bounding.x + "" + bounding.y);
 
         MapLayer collisionObjectLayer = (MapLayer) tiledMap.getLayers().get("RectangleCollision");
 
