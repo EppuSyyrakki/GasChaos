@@ -88,6 +88,10 @@ public class BarnScreen extends Location implements Screen {
 
         userInterface.render(game.gameData);
 
+        checkActionRectangles();
+    }
+
+    public void checkActionRectangles() {
         if (getRec("RectangleExit") || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
             game.setFarmScreen();
         }
@@ -157,7 +161,6 @@ public class BarnScreen extends Location implements Screen {
             userInterface.createDialog(d, uiText, true);
         }
     }
-
     /**
      * Reduce data.feed by amount needed to feed all cows for 2 days.  If not enough in data.feed,
      * decrease to 0 and increase by same amount. Block if data.feed = 0, and if cows have enough.

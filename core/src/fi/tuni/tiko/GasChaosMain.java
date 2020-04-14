@@ -23,6 +23,8 @@ public class GasChaosMain extends Game {
 	GasTankScreen gasTankScreen;
 	GrandmotherScreen grandmotherScreen;
 	ComputerScreen computerScreen;
+	UpgradeScreen upgradeScreen;
+	BuySellScreen buySellScreen;
 	// Locale locale;
 	// Locale defaultLocale;
 	I18NBundle myBundle;
@@ -55,6 +57,8 @@ public class GasChaosMain extends Game {
 		gasTankScreen = new GasTankScreen(batch, camera, this);
 		grandmotherScreen = new GrandmotherScreen(batch, camera, this);
 		computerScreen = new ComputerScreen(batch, camera, this);
+		upgradeScreen = new UpgradeScreen(batch, camera, this);
+		buySellScreen = new BuySellScreen(batch, camera, this);
 
 		setFarmScreen();
 	}
@@ -103,5 +107,13 @@ public class GasChaosMain extends Game {
 
 	public void setGasTankScreen () {
 		setScreen(gasTankScreen);
+	}
+
+	public void setUpgradeScreen() {
+		setScreen(upgradeScreen);
+	}
+
+	public void setBuySellScreen() {
+		setScreen(buySellScreen);
 	}
 }
