@@ -21,6 +21,8 @@ public class Player extends Sprite{
     private OrthographicCamera camera;
     Texture textureStand;
     Texture textureRight;
+    Texture textureUp;
+    Texture textureDown;
     Rectangle rectangle;
     float speed;
     float rotation;
@@ -46,14 +48,20 @@ public class Player extends Sprite{
     int FRAME_STAND_ROWS = 1;
     int FRAME_RIGHT_COLS = 9;
     int FRAME_RIGHT_ROWS = 1;
+    int FRAME_UP_COLS = 4;
+    int FRAME_UP_ROWS = 1;
+    int FRAME_DOWN_COLS = 4;
+    int FRAME_DOWN_ROWS = 1;
 
     public void player(float size) {
         textureStand = new Texture("player.png");
         textureRight = new Texture("playerRight.png");
+        textureUp = new Texture("playerUp.png");
+        textureDown = new Texture("playerDown.png");
         float widthRight = textureRight.getWidth() / size;
         float heightRight = textureRight.getHeight() / size;
-        float width = textureStand.getWidth() / FRAME_STAND_COLS /size;
-        float height = textureStand.getHeight() / FRAME_STAND_ROWS /size;
+        float width = textureStand.getWidth() / FRAME_STAND_COLS / size;
+        float height = textureStand.getHeight() / FRAME_STAND_ROWS / size;
         rectangle = new Rectangle(0.0f, 0.0f, width, height);
         setSize(width, height);
         speedX = 0.1f;
@@ -75,11 +83,25 @@ public class Player extends Sprite{
                 textureRight.getWidth() / FRAME_RIGHT_COLS,
                 textureRight.getHeight() / FRAME_RIGHT_ROWS);
 
+        TextureRegion[][] tmpUp = TextureRegion.split(
+                textureUp,
+                textureUp.getWidth() / FRAME_UP_COLS,
+                textureUp.getHeight() / FRAME_UP_ROWS);
+
+        TextureRegion[][] tmpDown = TextureRegion.split(
+                textureDown,
+                textureDown.getWidth() / FRAME_DOWN_COLS,
+                textureDown.getHeight() / FRAME_DOWN_ROWS);
+
         TextureRegion[] framesRight = transformTo1D(tmpRight, 1, 9);
+        TextureRegion[] framesUp = transformTo1D(tmpUp, 1, 4);
+        TextureRegion[] framesDown = transformTo1D(tmpDown, 1, 4);
         TextureRegion[] framesStand = transformTo1D(tmpStand, 1, 1);
 
         walkStandAnimation = new Animation(18 / 60f, framesStand);
         walkRightAnimation = new Animation(6 / 60f, framesRight);
+        walkUpAnimation = new Animation(16 / 60f, framesUp);
+        walkDownAnimation = new Animation(16 / 60f, framesDown);
     }
 
     public int getFRAME_STAND_COLS() {
@@ -564,26 +586,32 @@ public class Player extends Sprite{
     // Don't bother reading this, it's ugly but it works
     private void playerFrames() {
         stateTime += Gdx.graphics.getDeltaTime();
-        if ((getRX() - getLastX()) > 0.003f) {
+        if ((getRX() - getLastX()) > 0.003f && inputActive) {
             for (TextureRegion textureRegion : walkRightAnimation.getKeyFrames()) {
                 if (textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
             for (TextureRegion textureRegion : walkStandAnimation.getKeyFrames()) {
                 if (textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
+            for (TextureRegion textureRegion : walkDownAnimation.getKeyFrames()) {
+                if (!textureRegion.isFlipX()) textureRegion.flip(true, false);
+            }
             currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
-        } else if ((getLastX() - getRX()) > 0.003f) {
+        } else if ((getLastX() - getRX()) > 0.003f  && inputActive) {
             for (TextureRegion textureRegion : walkRightAnimation.getKeyFrames()) {
                 if (!textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
             for (TextureRegion textureRegion : walkStandAnimation.getKeyFrames()) {
                 if (!textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
+            for (TextureRegion textureRegion : walkDownAnimation.getKeyFrames()) {
+                if (textureRegion.isFlipX()) textureRegion.flip(true, false);
+            }
             currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
-        } else if ((getRY() - getLastY()) > 0.003f) {
-            currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
-        } else if ((getLastY() - getRY()) > 0.003f) {
-            currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
+        } else if ((getRY() - getLastY()) > 0.003f  && inputActive) {
+            currentFrame = walkUpAnimation.getKeyFrame(stateTime, true);
+        } else if ((getLastY() - getRY()) > 0.003f  && inputActive) {
+            currentFrame = walkDownAnimation.getKeyFrame(stateTime, true);
         } else {
             setLastX(getRX());
             setLastY(getRY());
