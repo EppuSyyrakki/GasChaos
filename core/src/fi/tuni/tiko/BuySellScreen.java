@@ -61,13 +61,14 @@ public class BuySellScreen extends Location implements Screen {
     }
 
     public void checkActionRectangles() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK ) || getUIRec("RectangleExit")) {
+        if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK ) || getUIRec("RectangleExit"))
+                && !userInterface.dialogFocus) {
             game.setComputerScreen();
         }
 
         if (getUIRec("RectangleBuyCow") && !userInterface.dialogFocus) {    // buy cow
-            uiText = game.myBundle.format("askBuyCow", game.gameData.PRICE_OF_COW);
             userInterface.dialogFocus = true;
+            uiText = game.myBundle.format("askBuyCow", game.gameData.PRICE_OF_COW);
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -75,7 +76,6 @@ public class BuySellScreen extends Location implements Screen {
                         actionBuyCow();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -85,12 +85,12 @@ public class BuySellScreen extends Location implements Screen {
         }
 
         if (getUIRec("RectangleBuyGrain") && !userInterface.dialogFocus) {    // buy feed
+            userInterface.dialogFocus = true;
             final int amount = game.gameData.getCowList().get(0).getFeed() * 10;
             final int price = game.gameData.PRICE_OF_FEED * amount;
             uiText = game.myBundle.format("askBuyGrain", amount, price,
                     game.gameData.getGrain(),
                     game.gameData.getCowAmount() * game.gameData.getCowList().get(0).getFeed());
-            userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -98,7 +98,6 @@ public class BuySellScreen extends Location implements Screen {
                         actionBuyFeed(price, amount);
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -108,8 +107,8 @@ public class BuySellScreen extends Location implements Screen {
         }
 
         if (getUIRec("RectangleBuyN") && !userInterface.dialogFocus) {
-            uiText = game.myBundle.format("askBuyN");
             userInterface.dialogFocus = true;
+            uiText = game.myBundle.format("askBuyN");
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -117,7 +116,6 @@ public class BuySellScreen extends Location implements Screen {
                         // TODO implement actionBuyN();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -127,8 +125,8 @@ public class BuySellScreen extends Location implements Screen {
         }
 
         if (getUIRec("RectangleBuyP") && !userInterface.dialogFocus) {
-            uiText = game.myBundle.format("askBuyP");
             userInterface.dialogFocus = true;
+            uiText = game.myBundle.format("askBuyP");
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -136,7 +134,6 @@ public class BuySellScreen extends Location implements Screen {
                         // TODO implement actionBuyP();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -146,10 +143,10 @@ public class BuySellScreen extends Location implements Screen {
         }
 
         if (getUIRec("RectangleSellManure") && !userInterface.dialogFocus) {    // sell manure
+            userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askSellManure",
                     game.gameData.MANURE_TO_SELL,
                     game.gameData.MONEY_FROM_MANURE * game.gameData.MANURE_TO_SELL);
-            userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -157,7 +154,6 @@ public class BuySellScreen extends Location implements Screen {
                         actionSellManure();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -167,8 +163,8 @@ public class BuySellScreen extends Location implements Screen {
         }
 
         if (getUIRec("RectangleSellGrain") && !userInterface.dialogFocus) {
-            uiText = game.myBundle.format("askSellGrain");
             userInterface.dialogFocus = true;
+            uiText = game.myBundle.format("askSellGrain");
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -176,7 +172,6 @@ public class BuySellScreen extends Location implements Screen {
                         // TODO implement actionSellGrain();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -186,8 +181,8 @@ public class BuySellScreen extends Location implements Screen {
         }
 
         if (getUIRec("RectangleSellGas") && !userInterface.dialogFocus) {
-            uiText = game.myBundle.format("askSellGas");
             userInterface.dialogFocus = true;
+            uiText = game.myBundle.format("askSellGas");
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -195,7 +190,6 @@ public class BuySellScreen extends Location implements Screen {
                         // TODO implement actionSellGas();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -205,8 +199,8 @@ public class BuySellScreen extends Location implements Screen {
         }
 
         if (getUIRec("RectangleSellN") && !userInterface.dialogFocus) {
-            uiText = game.myBundle.format("askSellN");
             userInterface.dialogFocus = true;
+            uiText = game.myBundle.format("askSellN");
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -214,7 +208,6 @@ public class BuySellScreen extends Location implements Screen {
                         // TODO implement actionSellN();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -224,8 +217,8 @@ public class BuySellScreen extends Location implements Screen {
         }
 
         if (getUIRec("RectangleSellP") && !userInterface.dialogFocus) {
-            uiText = game.myBundle.format("askSellP");
             userInterface.dialogFocus = true;
+            uiText = game.myBundle.format("askSellP");
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -233,7 +226,6 @@ public class BuySellScreen extends Location implements Screen {
                         // TODO implement actionSellP();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -262,7 +254,6 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -276,7 +267,6 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -291,7 +281,6 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -335,7 +324,6 @@ public class BuySellScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
-                            userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
                         }
@@ -349,7 +337,6 @@ public class BuySellScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
-                            userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
                         }
@@ -364,7 +351,6 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -390,7 +376,6 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -404,7 +389,6 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -440,6 +424,7 @@ public class BuySellScreen extends Location implements Screen {
     }
 
     private void resetInputProcessor() {
+        userInterface.dialogFocus = false;
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }

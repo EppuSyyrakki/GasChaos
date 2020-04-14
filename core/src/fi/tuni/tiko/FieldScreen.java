@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import java.util.ArrayList;
 
 public class FieldScreen extends Location implements Screen {
-    Player player;
     private final GasChaosMain game;
     Texture growth1;
     Texture growth2;
@@ -88,11 +87,11 @@ public class FieldScreen extends Location implements Screen {
         }
 
         if (getTouchedFieldNumber() > -1 && !userInterface.dialogFocus) {
+            userInterface.dialogFocus = true;
             boolean[] actions = availableActions(getTouchedFieldNumber());
             // UI available actions to this field
-            player.setInputActive(false);
             uiText = game.myBundle.format("");
-            userInterface.dialogFocus = true;
+
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {  // TODO dialog window for different actions
                     boolean result = (boolean)object;
@@ -152,20 +151,19 @@ public class FieldScreen extends Location implements Screen {
         field.setAmount(1);
         tmpFields.set(number, field);
         game.gameData.setFields(tmpFields);
+
         // field sown UI message
         uiText = game.myBundle.get("sowFieldComplete");
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean)object;
                 if (result) {
-                    userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();
                 }
             }
         };
         userInterface.createDialog(d, uiText, false);
-
     }
 
     /**
@@ -178,13 +176,13 @@ public class FieldScreen extends Location implements Screen {
         field.setFertilizerN(field.getFertilizerN() + amount);
         tmpFields.set(number, field);
         game.gameData.setFields(tmpFields);
+
         // nitrogen added to field UI message
         uiText = game.myBundle.get("fertilizeFieldNitrogen");
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean)object;
                 if (result) {
-                    userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();
                 }
@@ -317,7 +315,7 @@ public class FieldScreen extends Location implements Screen {
     }
 
     private void resetInputProcessor() {
-        player.setInputActive(true);
+        userInterface.dialogFocus = false;
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }

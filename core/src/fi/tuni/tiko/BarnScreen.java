@@ -113,7 +113,6 @@ public class BarnScreen extends Location implements Screen {
                         actionFeedCows();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -135,7 +134,6 @@ public class BarnScreen extends Location implements Screen {
                         actionShovelManure();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -157,7 +155,6 @@ public class BarnScreen extends Location implements Screen {
                         actionCollectMethane();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -182,7 +179,6 @@ public class BarnScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -197,7 +193,6 @@ public class BarnScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean)object;
                         if (result) {
-                            userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
                         }
@@ -216,7 +211,6 @@ public class BarnScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean)object;
                         if (result) {
-                            userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
                         }
@@ -234,7 +228,6 @@ public class BarnScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean)object;
                         if (result) {
-                            userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
                         }
@@ -256,7 +249,6 @@ public class BarnScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -274,7 +266,6 @@ public class BarnScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -293,7 +284,6 @@ public class BarnScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -310,7 +300,6 @@ public class BarnScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -485,6 +474,7 @@ public class BarnScreen extends Location implements Screen {
     }
 
     private void resetInputProcessor() {
+        userInterface.dialogFocus = false;
         player.setInputActive(true);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);

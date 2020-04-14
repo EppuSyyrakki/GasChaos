@@ -55,14 +55,15 @@ public class UpgradeScreen extends Location implements Screen {
     }
 
     public void checkActionRectangles() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit")) {
+        if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
+                && !userInterface.dialogFocus) {
             game.setComputerScreen();
         }
 
-        if (getUIRec("RectangleSolarBasic")) {    // buy solar panel basic
+        if (getUIRec("RectangleSolarBasic") && !userInterface.dialogFocus) {    // buy solar panel basic
+            userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuySolarPanelBasic",
                     game.gameData.PRICE_OF_SOLAR);
-            userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -70,7 +71,6 @@ public class UpgradeScreen extends Location implements Screen {
                         actionSolarPanelBasic();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -79,10 +79,10 @@ public class UpgradeScreen extends Location implements Screen {
             userInterface.createDialog(d, uiText, true);
         }
 
-        if (getUIRec("RectangleSolarAdvanced")) {    // buy solar panel advanced
+        if (getUIRec("RectangleSolarAdvanced") && !userInterface.dialogFocus) {    // buy solar panel advanced
+            userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuySolarPanelAdvanced",
                     game.gameData.PRICE_OF_SOLAR);
-            userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -90,7 +90,6 @@ public class UpgradeScreen extends Location implements Screen {
                         actionSolarPanelAdvanced();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -99,10 +98,10 @@ public class UpgradeScreen extends Location implements Screen {
             userInterface.createDialog(d, uiText, true);
         }
 
-        if (getUIRec("RectangleGasCollector")) {     // buy advanced gas collector
+        if (getUIRec("RectangleGasCollector") && !userInterface.dialogFocus) {     // buy advanced gas collector
+            userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuyGasCollectorAdvanced",
                     game.gameData.PRICE_OF_COLLECTOR);
-            userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -110,7 +109,6 @@ public class UpgradeScreen extends Location implements Screen {
                         actionGasCollectorAdvanced();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -119,10 +117,10 @@ public class UpgradeScreen extends Location implements Screen {
             userInterface.createDialog(d, uiText, true);
         }
 
-        if (getUIRec("RectangleMilkingMachine")) {    // buy advanced milking machine
+        if (getUIRec("RectangleMilkingMachine") && !userInterface.dialogFocus) {    // buy advanced milking machine
+            userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuyMilkingMachineAdvanced",
                     game.gameData.PRICE_OF_MILKING);
-            userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -130,7 +128,6 @@ public class UpgradeScreen extends Location implements Screen {
                         actionMilkingMachineAdvanced();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -139,10 +136,10 @@ public class UpgradeScreen extends Location implements Screen {
             userInterface.createDialog(d, uiText, true);
         }
 
-        if (getUIRec("RectangleTractorAdvanced")) {
+        if (getUIRec("RectangleTractorAdvanced") && !userInterface.dialogFocus) {
+            userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuyTractorAdvanced",
                     game.gameData.PRICE_OF_TRACTOR);
-            userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -150,7 +147,6 @@ public class UpgradeScreen extends Location implements Screen {
                         actionTractorAdvanced();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -159,10 +155,10 @@ public class UpgradeScreen extends Location implements Screen {
             userInterface.createDialog(d, uiText, true);
         }
 
-        if (getUIRec("RectangleTractorGas")) {
+        if (getUIRec("RectangleTractorGas") && !userInterface.dialogFocus) {
+            userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuyTractorGas",
                     game.gameData.PRICE_OF_TRACTOR);
-            userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -170,7 +166,6 @@ public class UpgradeScreen extends Location implements Screen {
                         actionTractorGas();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -179,10 +174,10 @@ public class UpgradeScreen extends Location implements Screen {
             userInterface.createDialog(d, uiText, true);
         }
 
-        if (getUIRec("RectangleGasGenerator")) {    // buy gas generator
+        if (getUIRec("RectangleGasGenerator") && !userInterface.dialogFocus) {    // buy gas generator
+            userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuyGasGenerator",
                     game.gameData.PRICE_OF_GENERATOR);
-            userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -190,7 +185,6 @@ public class UpgradeScreen extends Location implements Screen {
                         actionGasGenerator();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     };
@@ -218,7 +212,6 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
-                            userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
                         }
@@ -232,7 +225,6 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
-                            userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
                         }
@@ -247,7 +239,6 @@ public class UpgradeScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -277,7 +268,6 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
-                            userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
                         }
@@ -350,7 +340,6 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
-                            userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
                         }
@@ -406,7 +395,6 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
-                            userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
                         }
@@ -461,7 +449,6 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
-                            userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
                         }
@@ -522,7 +509,6 @@ public class UpgradeScreen extends Location implements Screen {
                         protected void result(Object object) {
                             boolean result = (boolean) object;
                             if (result) {
-                                userInterface.dialogFocus = false;
                                 resetInputProcessor();
                                 remove();
                             }
@@ -593,7 +579,6 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
-                            userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
                         }
@@ -607,7 +592,6 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
-                            userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
                         }
@@ -623,7 +607,6 @@ public class UpgradeScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -659,6 +642,7 @@ public class UpgradeScreen extends Location implements Screen {
     }
 
     private void resetInputProcessor() {
+        userInterface.dialogFocus = false;
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
