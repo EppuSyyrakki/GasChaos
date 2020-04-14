@@ -48,13 +48,12 @@ public class Location implements InputProcessor {
     /**
      * Returns first found rectangle from a MapLayer object.
      * @param layer MapLayer to get rectangle from
-     * @return rectangle with gameworld coordinates
+     * @return rectangle with game world coordinates
      */
     public Rectangle getCheckRectangle(MapLayer layer) {
         MapObjects mapObjects = layer.getObjects();
         Array<RectangleMapObject> rectangleObjects = mapObjects.getByType(RectangleMapObject.class);
-        Rectangle rectangle = scaleRect(rectangleObjects.get(0).getRectangle(), WORLD_SCALE);
-        return rectangle;
+        return scaleRect(rectangleObjects.get(0).getRectangle(), WORLD_SCALE);
     }
 
     public Rectangle scaleRect(Rectangle r, float scale) {
