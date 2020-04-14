@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
+@SuppressWarnings("RedundantCast")
 public class HomeScreen extends Location implements Screen {
     Player player;
     TiledMap tiledMap;
@@ -117,6 +118,7 @@ public class HomeScreen extends Location implements Screen {
         background.dispose();
     }
 
+    @SuppressWarnings("RedundantCast")
     public boolean getRec(String name) {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);

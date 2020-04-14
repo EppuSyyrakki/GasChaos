@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+@SuppressWarnings({"IntegerDivisionInFloatingPointContext", "RedundantCast"})
 public class Player extends Sprite{
 
     private OrthographicCamera camera;
@@ -59,8 +60,6 @@ public class Player extends Sprite{
         textureRight = new Texture("playerRight.png");
         textureUp = new Texture("playerUp.png");
         textureDown = new Texture("playerDown.png");
-        float widthRight = textureRight.getWidth() / size;
-        float heightRight = textureRight.getHeight() / size;
         float width = textureStand.getWidth() / FRAME_STAND_COLS / size;
         float height = textureStand.getHeight() / FRAME_STAND_ROWS / size;
         rectangle = new Rectangle(0.0f, 0.0f, width, height);
@@ -74,7 +73,7 @@ public class Player extends Sprite{
         lastX = getRX();
         lastY = getRY();
 
-        // Animation
+        // Create texture regions.
         TextureRegion[][] tmpStand = TextureRegion.split(
                 textureStand,
                 textureStand.getWidth() / FRAME_STAND_COLS,
@@ -95,11 +94,13 @@ public class Player extends Sprite{
                 textureDown.getWidth() / FRAME_DOWN_COLS,
                 textureDown.getHeight() / FRAME_DOWN_ROWS);
 
-        TextureRegion[] framesRight = transformTo1D(tmpRight, 1, 9);
-        TextureRegion[] framesUp = transformTo1D(tmpUp, 1, 4);
-        TextureRegion[] framesDown = transformTo1D(tmpDown, 1, 4);
-        TextureRegion[] framesStand = transformTo1D(tmpStand, 1, 1);
+        // Texture regions part 2
+        TextureRegion[] framesRight = transformTo1D(tmpRight, FRAME_RIGHT_ROWS, FRAME_RIGHT_COLS);
+        TextureRegion[] framesUp = transformTo1D(tmpUp, FRAME_UP_ROWS, FRAME_UP_COLS);
+        TextureRegion[] framesDown = transformTo1D(tmpDown, FRAME_DOWN_ROWS, FRAME_DOWN_COLS);
+        TextureRegion[] framesStand = transformTo1D(tmpStand, FRAME_STAND_ROWS, FRAME_STAND_COLS);
 
+        // Sets animation frames to animations
         walkStandAnimation = new Animation(18 / 60f, framesStand);
         walkRightAnimation = new Animation(6 / 60f, framesRight);
         walkUpAnimation = new Animation(16 / 60f, framesUp);
@@ -340,8 +341,6 @@ public class Player extends Sprite{
     public Rectangle getRectangleDown() {
         Rectangle recFutureDown = getRectangle();
         recFutureDown.y = recFutureDown.y - getSpeed() * Gdx.graphics.getDeltaTime();
-        System.out.println("f y:" + recFutureDown.y);
-        System.out.println("r y:" + getY());
         return recFutureDown;
     }
 
@@ -391,6 +390,7 @@ public class Player extends Sprite{
         camera.setToOrtho(false, 9, 16);
         checkCollisions(tiledMap);
 
+        // It's a dumpster fire but a working one.
         if (inputActive == true) {
             // X axis
             if (targetX == (getRX() + getWidth() / 2f)) {
@@ -399,17 +399,29 @@ public class Player extends Sprite{
                 if (targetX > ((getRX() + getWidth() / 2f) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX() + getSpeed() * Gdx.graphics.getDeltaTime());
+                    if (overlap(tiledMap, getRectangle())) {
+                        setRX(getLastX());
+                    }
                 } else if (targetX <= ((getRX() + getWidth() / 2) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX());
+                    if (overlap(tiledMap, getRectangle())) {
+                        setRX(getLastX());
+                    }
                 }
             } if (targetX < (getRX() + getWidth() / 2f) && left) {
                 if (targetX < ((getRX() + getWidth() / 2f) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX() - getSpeed() * Gdx.graphics.getDeltaTime());
+                    if (overlap(tiledMap, getRectangle())) {
+                        setRY(getLastY());
+                    }
                 } else if (targetX >= ((getRX() + getWidth() / 2f) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX());
+                    if (overlap(tiledMap, getRectangle())) {
+                        setRX(getLastX());
+                    }
                 }
             }
 
@@ -420,17 +432,29 @@ public class Player extends Sprite{
                 if (targetY > ((getRY() + getHeight() / 2f) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY() + getSpeed() * Gdx.graphics.getDeltaTime());
+                    if (overlap(tiledMap, getRectangle())) {
+                        setRY(getLastY());
+                    }
                 } else if (targetY <= ((getRY() + getHeight() / 2f) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY());
+                    if (overlap(tiledMap, getRectangle())) {
+                        setRY(getLastY());
+                    }
                 }
             } if (targetY < (getRY() + getHeight() / 2f) && down) {
                 if (targetY < ((getRY() + getHeight() / 2f) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY() - getSpeed() * Gdx.graphics.getDeltaTime());
+                    if (overlap(tiledMap, getRectangle())) {
+                        setRY(getLastY());
+                    }
                 } else if (targetY >= ((getRY() + getHeight() / 2f) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY());
+                    if (overlap(tiledMap, getRectangle())) {
+                        setRY(getLastY());
+                    }
                 }
             }
         }
@@ -441,10 +465,10 @@ public class Player extends Sprite{
         if (moveDebug) {
             Gdx.app.log("render", "x = " + rectangle.x);
             Gdx.app.log("render", "y = " + rectangle.y);
-            //Gdx.app.log("render", "x target = " + targetX);
-            //Gdx.app.log("render", "y target = " + targetY);
-            //Gdx.app.log("render", "x speed = " + speedX);
-            //Gdx.app.log("render", "y speed = " + speedY);
+            Gdx.app.log("render", "x target = " + targetX);
+            Gdx.app.log("render", "y target = " + targetY);
+            Gdx.app.log("render", "x speed = " + speedX);
+            Gdx.app.log("render", "y speed = " + speedY);
         }
     }
 
@@ -483,11 +507,7 @@ public class Player extends Sprite{
 
     public void checkCollisions(TiledMap tiledMap) {
 
-        setX(getRY());
-        setY(getRY());
-
         Rectangle bounding = getBoundingRectangle();
-        //System.out.println(bounding.x + "" + bounding.y);
 
         MapLayer collisionObjectLayer = (MapLayer)tiledMap.getLayers().get("RectangleCollision");
 
@@ -511,32 +531,31 @@ public class Player extends Sprite{
         down = true;
         left = true;
         right = true;
-        float delta = Gdx.graphics.getDeltaTime();
-        // wallcheck going up
+
         for (RectangleMapObject rectangleObject : rectangleObjects) {
             Rectangle tmp = rectangleObject.getRectangle();
             Rectangle rectangle = scaleRect(tmp, 1 / 120f);
 
             if (getRectangleUp().overlaps(rectangle)) {
                 up = false;
+                //System.out.println("up false");
             }
             if (getRectangleDown().overlaps(rectangle)) {
                 down = false;
+                //System.out.println("down false");
             }
             if (getRectangleLeft().overlaps(rectangle)) {
                 left = false;
+                //System.out.println("left false");
             }
             if (getRectangleRight().overlaps(rectangle)) {
                 right = false;
+                //System.out.println("right false");
             }
         }
-        //System.out.println("up: " + up);
-        //System.out.println("down: " + down);
-        //System.out.println("left: " + left);
-        //System.out.println("right: " + right);
     }
 
-    public boolean overlap(TiledMap tiledMap) {
+    public boolean overlap(TiledMap tiledMap, Rectangle fut) {
 
         boolean future = true;
 
@@ -556,8 +575,9 @@ public class Player extends Sprite{
             Rectangle tmp = rectangleObject.getRectangle();
             Rectangle rectangle = scaleRect(tmp, 1 / 120f);
 
-            if (getRectangle().overlaps(rectangle)) {
+            if (fut.overlaps(rectangle)) {
                 future = true;
+                break;
             } else {
                 future = false;
             }
@@ -586,9 +606,11 @@ public class Player extends Sprite{
         return walkFrames;
     }
 
-    // Don't bother reading this, it's ugly but it works
+    // Sets and flips animation frames
     private void playerFrames() {
         stateTime += Gdx.graphics.getDeltaTime();
+        // If player is going left, flip textures and set walkRightAnimation.
+        // Also flips walk down and standing frames to make character direction more consistent visually.
         if ((getRX() - getLastX()) > 0.003f && inputActive) {
             for (TextureRegion textureRegion : walkRightAnimation.getKeyFrames()) {
                 if (textureRegion.isFlipX()) textureRegion.flip(true, false);
@@ -600,7 +622,7 @@ public class Player extends Sprite{
                 if (!textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
             currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
-        } else if ((getLastX() - getRX()) > 0.003f  && inputActive) {
+        } else if ((getLastX() - getRX()) > 0.003f  && inputActive) {   // Same as above but to the left
             for (TextureRegion textureRegion : walkRightAnimation.getKeyFrames()) {
                 if (!textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
@@ -611,11 +633,11 @@ public class Player extends Sprite{
                 if (textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
             currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
-        } else if ((getRY() - getLastY()) > 0.003f  && inputActive) {
+        } else if ((getRY() - getLastY()) > 0.003f  && inputActive) {   // Sets walk up animation.
             currentFrame = walkUpAnimation.getKeyFrame(stateTime, true);
-        } else if ((getLastY() - getRY()) > 0.003f  && inputActive) {
+        } else if ((getLastY() - getRY()) > 0.003f  && inputActive) {   // Sets walk down animation
             currentFrame = walkDownAnimation.getKeyFrame(stateTime, true);
-        } else {
+        } else {    // Sets idle frame if player isn't moving or inputActive is off.
             setLastX(getRX());
             setLastY(getRY());
             currentFrame = walkStandAnimation.getKeyFrame(stateTime, true);

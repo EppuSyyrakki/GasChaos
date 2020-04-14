@@ -26,6 +26,7 @@ public class Maps {
 
     }
 
+    @SuppressWarnings("RedundantCast")
     public void checkCollisions(TiledMap tiledMap) {
 
         MapLayer collisionLayer = (MapLayer)tiledMap.getLayers().get("exit");

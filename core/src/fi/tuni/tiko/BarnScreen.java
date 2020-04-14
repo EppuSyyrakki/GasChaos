@@ -408,6 +408,7 @@ public class BarnScreen extends Location implements Screen {
         background.dispose();
     }
 
+    @SuppressWarnings("RedundantCast")
     public boolean getRec(String name) {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
