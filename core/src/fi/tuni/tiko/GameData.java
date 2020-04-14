@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 
+@SuppressWarnings("DanglingJavadoc")
 public class GameData {
 
     /**
