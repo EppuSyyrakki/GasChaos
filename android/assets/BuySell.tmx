@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="9" height="16" tilewidth="120" tileheight="120" infinite="0" nextlayerid="21" nextobjectid="30">
+ <layer id="1" name="Tile Layer 1" width="9" height="16">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <imagelayer id="2" name="background">
+  <image source="buySellBackground.png" width="1080" height="1920"/>
+ </imagelayer>
+ <objectgroup id="10" name="RectangleBuyCow">
+  <object id="20" x="64.8347" y="295.109" width="353.237" height="167.676"/>
+ </objectgroup>
+ <objectgroup id="11" name="RectangleBuyN">
+  <object id="21" x="541.034" y="286.167" width="411.365" height="172.147"/>
+ </objectgroup>
+ <objectgroup id="13" name="RectangleBuyP">
+  <object id="22" x="549.977" y="532.091" width="402.422" height="174.383"/>
+ </objectgroup>
+ <objectgroup id="14" name="RectangleBuyFeed">
+  <object id="23" x="71.5417" y="529.856" width="344.294" height="192.268"/>
+ </objectgroup>
+ <objectgroup id="15" name="RectangleSellManure">
+  <object id="24" x="51.4206" y="813.787" width="377.83" height="187.797"/>
+ </objectgroup>
+ <objectgroup id="16" name="RectangleSellN">
+  <object id="25" x="545.505" y="809.315" width="413.6" height="190.033"/>
+ </objectgroup>
+ <objectgroup id="18" name="RectangleSellP">
+  <object id="26" x="552.212" y="1077.6" width="413.6" height="203.447"/>
+ </objectgroup>
+ <objectgroup id="19" name="RectangleSellGas">
+  <object id="27" x="53.6563" y="1070.89" width="375.594" height="201.211"/>
+ </objectgroup>
+ <objectgroup id="20" name="RectangleSellFeed">
+  <object id="28" x="46.9492" y="1298.93" width="384.537" height="196.74"/>
+ </objectgroup>
+</map>

@@ -17,8 +17,6 @@ import com.badlogic.gdx.math.Rectangle;
 @SuppressWarnings("RedundantCast")
 public class HomeScreen extends Location implements Screen {
     Player player;
-    TiledMap tiledMap;
-    TiledMapRenderer tiledMapRenderer;
     private final GasChaosMain game;
 
     public HomeScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {

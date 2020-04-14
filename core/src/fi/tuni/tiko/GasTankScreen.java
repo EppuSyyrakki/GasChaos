@@ -5,15 +5,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class GasTankScreen extends Location implements Screen {
     private final GasChaosMain game;
 
     public GasTankScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super();
-        background = new Texture("gasTankBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -21,6 +21,8 @@ public class GasTankScreen extends Location implements Screen {
         userInterface = new UserInterface(game.myBundle);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
+        tiledMap = new TmxMapLoader().load("GasTank.tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
     }
 
     @Override

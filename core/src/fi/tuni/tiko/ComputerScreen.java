@@ -5,14 +5,16 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 
 public class ComputerScreen extends Location implements Screen {
     private final GasChaosMain game;
 
     public ComputerScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        background = new Texture("computerBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -20,6 +22,8 @@ public class ComputerScreen extends Location implements Screen {
         userInterface = new UserInterface(game.myBundle);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
+        tiledMap = new TmxMapLoader().load("Computer.tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
     }
 
     @Override
