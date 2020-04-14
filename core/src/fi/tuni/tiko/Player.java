@@ -24,6 +24,7 @@ public class Player extends Sprite{
     Texture textureUp;
     Texture textureDown;
     Rectangle rectangle;
+    Rectangle recFuture;
     float speed;
     float rotation;
     float rotationRate;
@@ -63,6 +64,7 @@ public class Player extends Sprite{
         float width = textureStand.getWidth() / FRAME_STAND_COLS / size;
         float height = textureStand.getHeight() / FRAME_STAND_ROWS / size;
         rectangle = new Rectangle(0.0f, 0.0f, width, height);
+        recFuture = new Rectangle(0.0f, 0.0f, width, height);
         setSize(width, height);
         speedX = 0.1f;
         speedY = 0.1f;
@@ -338,8 +340,8 @@ public class Player extends Sprite{
     public Rectangle getRectangleDown() {
         Rectangle recFutureDown = getRectangle();
         recFutureDown.y = recFutureDown.y - getSpeed() * Gdx.graphics.getDeltaTime();
-        //System.out.println("f y:" + recFutureDown.y);
-        //System.out.println("r y:" + getY());
+        System.out.println("f y:" + recFutureDown.y);
+        System.out.println("r y:" + getY());
         return recFutureDown;
     }
 
@@ -393,7 +395,7 @@ public class Player extends Sprite{
             // X axis
             if (targetX == (getRX() + getWidth() / 2f)) {
                 setLastX(getRX());
-            } if (targetX > (getRX() + getWidth() / 2f) && right == true) {
+            } if (targetX > (getRX() + getWidth() / 2f) && right) {
                 if (targetX > ((getRX() + getWidth() / 2f) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX() + getSpeed() * Gdx.graphics.getDeltaTime());
@@ -401,7 +403,7 @@ public class Player extends Sprite{
                     setLastX(getRX());
                     setRX(getRX());
                 }
-            } if (targetX < (getRX() + getWidth() / 2f) && left == true) {
+            } if (targetX < (getRX() + getWidth() / 2f) && left) {
                 if (targetX < ((getRX() + getWidth() / 2f) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastX(getRX());
                     setRX(getRX() - getSpeed() * Gdx.graphics.getDeltaTime());
@@ -414,7 +416,7 @@ public class Player extends Sprite{
             // Y axis
             if (targetY == (getRY() + getHeight() / 2f)) {
                 setLastY(getRY());
-            } if (targetY > (getRY() + getHeight() / 2f)&& up == true) {
+            } if (targetY > (getRY() + getHeight() / 2f)&& up) {
                 if (targetY > ((getRY() + getHeight() / 2f) + getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY() + getSpeed() * Gdx.graphics.getDeltaTime());
@@ -422,7 +424,7 @@ public class Player extends Sprite{
                     setLastY(getRY());
                     setRY(getRY());
                 }
-            } if (targetY < (getRY() + getHeight() / 2f) && down == true) {
+            } if (targetY < (getRY() + getHeight() / 2f) && down) {
                 if (targetY < ((getRY() + getHeight() / 2f) - getSpeed() * Gdx.graphics.getDeltaTime())) {
                     setLastY(getRY());
                     setRY(getRY() - getSpeed() * Gdx.graphics.getDeltaTime());
@@ -509,6 +511,7 @@ public class Player extends Sprite{
         down = true;
         left = true;
         right = true;
+        float delta = Gdx.graphics.getDeltaTime();
         // wallcheck going up
         for (RectangleMapObject rectangleObject : rectangleObjects) {
             Rectangle tmp = rectangleObject.getRectangle();

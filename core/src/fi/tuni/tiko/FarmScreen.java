@@ -65,7 +65,6 @@ public class FarmScreen extends Location implements Screen {
 
         //Player movement
         if (!super.userInterface.dialogFocus) {
-            player.checkCollisions(tiledMap);
             player.playerTouch(batch);
             player.playerMovement(tiledMap);
         }

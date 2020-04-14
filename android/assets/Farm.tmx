@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="9" height="16" tilewidth="120" tileheight="120" infinite="0" nextlayerid="10" nextobjectid="20">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="9" height="16" tilewidth="120" tileheight="120" infinite="0" nextlayerid="10" nextobjectid="22">
  <layer id="1" name="Tile Layer 1" width="9" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,
@@ -24,31 +24,31 @@
   <image source="farmBackground.png" width="1080" height="1920"/>
  </imagelayer>
  <objectgroup id="3" name="RectangleBarn">
-  <object id="2" x="388" y="480" width="252" height="176"/>
+  <object id="2" x="388" y="532.5" width="252" height="176"/>
  </objectgroup>
  <objectgroup id="4" name="RectangleCollision">
   <object id="3" x="-94" y="-40" width="89.8788" height="2078"/>
   <object id="4" x="-4" y="1923.15" width="1138" height="116.848"/>
   <object id="6" x="1080" y="-98" width="108" height="2144"/>
-  <object id="7" x="-144" y="-102" width="1334" height="625.455"/>
-  <object id="8" x="-8" y="436" width="284" height="196"/>
+  <object id="7" x="-144" y="-102" width="1334" height="661.955"/>
+  <object id="8" x="3" y="397.5" width="283.5" height="196"/>
   <object id="15" x="-2" y="1058" width="334" height="70.485"/>
+  <object id="20" x="29" y="1556" width="139" height="9"/>
+  <object id="21" x="221.5" y="1763" width="276" height="2.5"/>
  </objectgroup>
  <objectgroup id="5" name="RectangleField">
-  <object id="10" x="710" y="1052" width="364" height="372"/>
+  <object id="10" x="750.5" y="1511" width="364" height="372"/>
  </objectgroup>
  <objectgroup id="6" name="RectangleTractor">
-  <object id="11" x="6" y="598" width="272" height="230"/>
+  <object id="11" x="67.5" y="692" width="272" height="230"/>
  </objectgroup>
  <objectgroup id="7" name="RectangleGasTank">
-  <object id="12" x="798" y="708" width="284" height="226"/>
+  <object id="12" x="759.5" y="1021" width="284" height="226"/>
  </objectgroup>
  <objectgroup id="8" name="RectangleHome">
   <object id="13" x="172" y="1078" width="148" height="214"/>
  </objectgroup>
  <objectgroup id="9" name="ActionChicken">
   <object id="16" x="225.46" y="1639.46" width="266.046" height="219.676"/>
-  <object id="17" x="210" y="1736" width="284" height="124"/>
-  <object id="18" x="30" y="1546" width="140" height="14"/>
  </objectgroup>
 </map>
