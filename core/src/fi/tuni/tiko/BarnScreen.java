@@ -81,8 +81,8 @@ public class BarnScreen extends Location implements Screen {
         haySpawn(game.gameData.getFeedInBarn());
         player.draw(batch);
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
-        cowSpawn(game.gameData.getCowAmount());
         manureSpawn(game.gameData.getManureInBarn());
+        cowSpawn(game.gameData.getCowAmount());
         black.draw(batch, blackness);
         batch.end();
 

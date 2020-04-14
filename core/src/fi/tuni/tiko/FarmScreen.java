@@ -63,9 +63,9 @@ public class FarmScreen extends Location implements Screen {
 
         batch.begin();
         //batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
-        black.draw(batch, blackness);
         player.draw(batch);
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
+        black.draw(batch, blackness);
         batch.end();
 
         userInterface.render(game.gameData);
@@ -135,7 +135,7 @@ public class FarmScreen extends Location implements Screen {
     public boolean getRec(String name) {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r) && action == true) {
+        if (player.getRectangle().overlaps(r) && action) {
             return true;
         } else {
             return false;
