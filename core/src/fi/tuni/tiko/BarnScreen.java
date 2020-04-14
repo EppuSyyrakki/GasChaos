@@ -31,7 +31,6 @@ public class BarnScreen extends Location implements Screen {
     Texture cowBrown3 = new Texture("cowBrown3.png");
     Texture manure = new Texture("manure.png");
     Texture hay = new Texture("hay.png");
-    Texture barnFence = new Texture("barnFence.png");
     Rectangle spawn;
     float cowSize = 150f;
     float[] manureX = {0.9f, 1.4f, 1f, 1.5f, 0.8f, 1.24f, 1.3f, 1f, 1.7f, 1.2f, 1.4f};
@@ -40,7 +39,7 @@ public class BarnScreen extends Location implements Screen {
     float[] hayY = {8f, 7.1f, 6.1f, 5.4f, 4.5f, 4.1f, 3.4f, 2.5f, 1.9f, 1.2f, 0.9f};
 
     public BarnScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        background = new Texture("Barn.png");
+        background = new Texture("barnForeground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -81,6 +80,7 @@ public class BarnScreen extends Location implements Screen {
         batch.begin();
         haySpawn(game.gameData.getFeedInBarn());
         player.draw(batch);
+        batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         cowSpawn(game.gameData.getCowAmount());
         manureSpawn(game.gameData.getManureInBarn());
         black.draw(batch, blackness);
@@ -109,7 +109,7 @@ public class BarnScreen extends Location implements Screen {
                         userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
-                    };
+                    }
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -130,7 +130,7 @@ public class BarnScreen extends Location implements Screen {
                         userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
-                    };
+                    }
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -151,7 +151,7 @@ public class BarnScreen extends Location implements Screen {
                         userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
-                    };
+                    }
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -411,7 +411,7 @@ public class BarnScreen extends Location implements Screen {
     public boolean getRec(String name) {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r)  && action == true) {
+        if (player.getRectangle().overlaps(r)  && action) {
             return true;
         } else {
             return false;
@@ -464,7 +464,7 @@ public class BarnScreen extends Location implements Screen {
     private void manureSpawn(int manureInBarn) {
         int counter = manureInBarn / (game.gameData.getManureInBarnMax() / 10); // 0..10
         for (int i = 0; i < counter; i++) {
-            batch.draw(manure, manureX[i], manureY[i], 0.8f, 0.4f);
+            batch.draw(manure, manureX[i], manureY[i], 2.0f, 1.0f);
         }
     }
 

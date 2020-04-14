@@ -54,7 +54,7 @@ public class FieldScreen extends Location implements Screen {
             player.setInputActive(false);
         }
 
-        if (fadeIn == false) {
+        if (!fadeIn) {
             player.setInputActive(true);
         }
 
@@ -238,7 +238,7 @@ public class FieldScreen extends Location implements Screen {
     public boolean getRec(String name) {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r)  && action == true) {
+        if (player.getRectangle().overlaps(r) && action) {
             return true;
         } else {
             return false;

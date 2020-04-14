@@ -50,7 +50,7 @@ public class FarmScreen extends Location implements Screen {
             player.setInputActive(false);
             fadeFromBlack();
         }
-        if (fadeIn == false) {
+        if (!fadeIn) {
             player.setInputActive(true);
         }
 
@@ -135,7 +135,7 @@ public class FarmScreen extends Location implements Screen {
     public boolean getRec(String name) {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
-        if (player.getRectangle().overlaps(r)  && action == true) {
+        if (player.getRectangle().overlaps(r) && action == true) {
             return true;
         } else {
             return false;
