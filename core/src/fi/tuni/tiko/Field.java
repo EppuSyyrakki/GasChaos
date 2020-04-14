@@ -9,7 +9,7 @@ public class Field {
     private int reductionCounter = 3;
     private boolean owned;
     private boolean rented;
-    final int MAX_GROWTH = 300; // with perfect growth this comes in 10 turns.
+    final int MAX_GROWTH = 200; // with perfect growth this comes in 10 turns.
 
     public Field(boolean owned, boolean rented) {
         this.owned = owned;
@@ -20,11 +20,11 @@ public class Field {
         if (amount == 1) {
             if (fertilizerN >= 50 && fertilizerP >= 7) {
                 // perfect growth N >= 50 and P >= 7
-                growth = 30;
+                growth = 20;
             } else if ((fertilizerN < 50 && fertilizerN >= 10)
                     && (fertilizerP < 7 && fertilizerP >= 3)) {
                 // average growth N 10-49 and P 3-6
-                growth = 20;
+                growth = 15;
             } else {
                 // poor growth N < 10 and P < 2
                 growth = 10;

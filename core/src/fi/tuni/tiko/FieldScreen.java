@@ -161,7 +161,11 @@ public class FieldScreen extends Location implements Screen {
     public GameData actionReapField(GameData data, int number) {
         ArrayList<Field> tmpFields = data.getFields();
         Field field = tmpFields.get(number);
-        data.setGrainSold(data.getGrainSold() + field.getAmount());
+        float amount = (float)field.getAmount();
+        if (data.getTractorLevel() == 2) {
+            amount *= 1.25f;
+        } else if (data.getTractorLevel() == 3)
+        data.setGrainSold(data.getGrainSold() + (int)amount);
         field.setAmount(0);
 
         // TODO grain reaped and sold UI message
