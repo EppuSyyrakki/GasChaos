@@ -1,6 +1,7 @@
 package fi.tuni.tiko;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -78,20 +79,23 @@ public class FarmScreen extends Location implements Screen {
 
         userInterface.render(game.gameData);
 
-        if (false) {    // condition return to menu
+        checkActionRectangles();
+    }
+
+    public void checkActionRectangles() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
             game.setMenuScreen();
         }
 
         if (getRec("RectangleHome")) {    // condition enter home
             game.setHomeScreen();
-            // game.setScreen(new HomeScreen(batch, camera, game, this));
         }
 
         if (getRec("RectangleBarn")) {    // condition enter barn
             game.setBarnScreen();
         }
 
-        if (false) {    // condition enter garden
+        if (getRec("RectangleGarden")) {    // condition enter garden
             game.setGardenScreen();
         }
 
@@ -104,9 +108,8 @@ public class FarmScreen extends Location implements Screen {
         }
     }
 
-    public GameData actionCheckChickens(GameData data) {
+    public void actionCheckChickens() {
 
-        return data;
     }
 
     @Override
