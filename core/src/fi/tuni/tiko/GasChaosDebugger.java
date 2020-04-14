@@ -38,8 +38,8 @@ public class GasChaosDebugger {
         // Cows
         Gdx.app.log("Resource", "Cow list = " + gameData.getCowList());
         Gdx.app.log("Resource", "Cows bought = " + gameData.getCowsBought());
-        Gdx.app.log("Resource", "feed = " + gameData.getFeed());
-        Gdx.app.log("Resource", "Feed max = " + gameData.getFeedMax());
+        Gdx.app.log("Resource", "feed = " + gameData.getGrain());
+        Gdx.app.log("Resource", "Feed max = " + gameData.getGrainMax());
 
         // Economy
         Gdx.app.log("Economy", "Grain sold = " + gameData.getGrainSold());

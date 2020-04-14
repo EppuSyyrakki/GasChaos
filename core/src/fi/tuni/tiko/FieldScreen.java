@@ -7,12 +7,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 import java.util.ArrayList;
 
@@ -48,12 +45,6 @@ public class FieldScreen extends Location implements Screen {
         this.camera = camera;
         this.game = game;
         userInterface = new UserInterface(game.myBundle);
-        player = new Player();
-        player.player(150f);
-        player.setRX(5);
-        player.setRY(5);
-        player.setTargetX(player.getRX());
-        player.setTargetY(player.getRY());
         tiledMap = new TmxMapLoader().load("Fields.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
         Gdx.input.setInputProcessor(this);
@@ -70,11 +61,6 @@ public class FieldScreen extends Location implements Screen {
 
         if (fadeIn) {
             fadeFromBlack();
-            player.setInputActive(false);
-        }
-
-        if (!fadeIn) {
-            player.setInputActive(true);
         }
 
         // River has 3 parts, each moves at river speed to the right.
@@ -96,14 +82,32 @@ public class FieldScreen extends Location implements Screen {
 
         userInterface.render(game.gameData);
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
+        if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
+                && !userInterface.dialogFocus) {
             game.setFarmScreen();
         }
 
-        if (getRec("RectangleFields")) {
-            System.out.println(getFieldNumber());
-            // boolean[] actions = availableActions(getFieldNumber());
-            // TODO UI available actions to this field
+        if (getTouchedFieldNumber() > -1 && !userInterface.dialogFocus) {
+            boolean[] actions = availableActions(getTouchedFieldNumber());
+            // UI available actions to this field
+            player.setInputActive(false);
+            uiText = game.myBundle.format("");
+            userInterface.dialogFocus = true;
+            Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {  // TODO dialog window for different actions
+                    boolean result = (boolean)object;
+                    if (result) {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    } else {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
         }
     }
 
@@ -130,7 +134,7 @@ public class FieldScreen extends Location implements Screen {
         if (field.getAmount() == 0) {
             available[2] = true;
         }
-        if (field.getAmount() > 200) {
+        if (field.getAmount() >= field.REAPABLE) {
             available[3] = true;
         }
         if (field.isOwned() || field.isRented()) {
@@ -142,67 +146,88 @@ public class FieldScreen extends Location implements Screen {
     /**
      * Increases amount to 1 in Fields[number]
      */
-    public GameData actionSowField(GameData data, int number) {
-        ArrayList<Field> tmpFields = data.getFields();
+    public void actionSowField(int number) {
+        ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
         field.setAmount(1);
         tmpFields.set(number, field);
-        data.setFields(tmpFields);
+        game.gameData.setFields(tmpFields);
+        // field sown UI message
+        uiText = game.myBundle.get("sowFieldComplete");
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean)object;
+                if (result) {
+                    userInterface.dialogFocus = false;
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.createDialog(d, uiText, false);
 
-        // TODO field sown UI message
-
-        return data;
     }
 
     /**
-     * Increases fertilizerN in Fields index number.
+     * Increases fertilizerN in Fields index number by half of maximum.
      */
-    public GameData actionFertilizeFieldN(GameData data, int number, int amount) {
-        ArrayList<Field> tmpFields = data.getFields();
+    public void actionFertilizeFieldN(int number) {
+        ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
+        int amount = game.gameData.MAX_N_NER_FIELD / 2;
         field.setFertilizerN(field.getFertilizerN() + amount);
         tmpFields.set(number, field);
-        data.setFields(tmpFields);
-
-        // TODO nitrogen added to field UI message
-
-        return data;
+        game.gameData.setFields(tmpFields);
+        // nitrogen added to field UI message
+        uiText = game.myBundle.get("fertilizeFieldNitrogen");
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean)object;
+                if (result) {
+                    userInterface.dialogFocus = false;
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.createDialog(d, uiText, false);
     }
 
     /**
-     * Increases fertilizerP in Fields index number.
+     * Increases fertilizerP in Fields index number by half of maximum.
      */
-    public GameData actionFertilizeFieldP(GameData data, int number, int amount) {
-        ArrayList<Field> tmpFields = data.getFields();
+    public void actionFertilizeFieldP(int number) {
+        ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
+        int amount = game.gameData.MAX_P_PER_FIELD / 2;
         field.setFertilizerP(field.getFertilizerP() + amount);
         tmpFields.set(number, field);
-        data.setFields(tmpFields);
+        game.gameData.setFields(tmpFields);
 
         // TODO phosphorous added to field UI message
 
-        return data;
     }
 
     /**
      * Reduce given field to 0 and increase data.grainSold
      */
-    public GameData actionReapField(GameData data, int number) {
-        ArrayList<Field> tmpFields = data.getFields();
+    public void actionReapField(int number) {
+        ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
         float amount = (float)field.getAmount();
-        if (data.getTractorLevel() == 2) {
+
+        if (game.gameData.getTractorLevel() == 2) {
             amount *= 1.25f;
-        } else if (data.getTractorLevel() == 3)
-        data.setGrainSold(data.getGrainSold() + (int)amount);
+        } else if (game.gameData.getTractorLevel() == 3) {
+            amount *= 1.5f;
+        }
+        game.gameData.setGrain(game.gameData.getGrain() + (int)amount);
         field.setAmount(0);
+        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
+        tmpFields.set(number, field);
+        game.gameData.setFields(tmpFields);
 
         // TODO grain reaped and sold UI message
-
-        data.setActionsDone(data.getActionsDone() + 1);
-        tmpFields.set(number, field);
-        data.setFields(tmpFields);
-        return data;
     }
 
     /**
@@ -268,32 +293,32 @@ public class FieldScreen extends Location implements Screen {
         background.dispose();
     }
 
-    @SuppressWarnings("RedundantCast")
-    public boolean getRec(String name) {
-        Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
-        boolean action = playerAction(r);
-        return player.getRectangle().overlaps(r) && action;
-    }
 
     /**
      * Index number for the field player touched
      */
-    public int getFieldNumber() {
+    public int getTouchedFieldNumber() {
         int fieldNumber = -1;
 
-        if (getRec("RectangleField1")) {
+        if (getUIRec("RectangleField1")) {
             fieldNumber = 0;
-        } else if (getRec("RectangleField2")) {
+        } else if (getUIRec("RectangleField2")) {
             fieldNumber = 1;
-        } else if (getRec("RectangleField3")) {
+        } else if (getUIRec("RectangleField3")) {
             fieldNumber = 2;
-        } else if (getRec("RectangleField4")) {
+        } else if (getUIRec("RectangleField4")) {
             fieldNumber = 3;
-        } else if (getRec("RectangleField5")) {
+        } else if (getUIRec("RectangleField5")) {
             fieldNumber = 4;
-        } else if (getRec("RectangleField6")) {
+        } else if (getUIRec("RectangleField6")) {
             fieldNumber = 5;
         }
         return fieldNumber;
+    }
+
+    private void resetInputProcessor() {
+        player.setInputActive(true);
+        Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
 }

@@ -29,10 +29,10 @@ public class BarnScreen extends Location implements Screen {
     Texture hay = new Texture("hay.png");
     Rectangle spawn;
     float cowSize = 150f;
-    float[] manureX = {0.9f, 1.4f, 1f, 1.5f, 0.8f, 1.24f, 1.3f, 1f, 1.7f, 1.2f, 1.4f};
-    float[] manureY = {8f, 7.1f, 6.3f, 5.7f, 5.1f, 4.7f, 3.9f, 3.2f, 2.9f, 2.2f, 1.9f};
-    float[] hayX = {5.2f, 5.15f, 5.3f, 5.1f, 5.15f, 5.1f, 5.2f, 5.25f, 5.2f, 5.15f, 5f};
-    float[] hayY = {8f, 7.1f, 6.1f, 5.4f, 4.5f, 4.1f, 3.4f, 2.5f, 1.9f, 1.2f, 0.9f};
+    float[] manureX = new float[11];
+    float[] manureY = new float[11];
+    float[] hayX = new float[11];
+    float[] hayY = new float[11];
 
     public BarnScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         background = new Texture("barnForeground.png");
@@ -50,6 +50,14 @@ public class BarnScreen extends Location implements Screen {
         tiledMap = new TmxMapLoader().load("Barn.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
         resetInputProcessor();
+        for (int i = 0; i < manureX.length; i++) {
+            manureX[i] = 0.4f + (float)Math.random();
+            manureY[i] = 7f - ((float)i * 0.8f) + (float)Math.random();
+        }
+        for (int i = 0; i < hayX.length; i++) {
+            hayX[i] = (float)Math.random() * 0.3f + 5f;
+            hayY[i] = 7f - ((float)i * 0.9f) + (float)Math.random();
+        }
     }
 
     @Override
@@ -62,9 +70,6 @@ public class BarnScreen extends Location implements Screen {
 
         if (fadeIn) {
             fadeFromBlack();
-            player.setInputActive(false);
-        } else {
-            player.setInputActive(true);
         }
 
         // Player movement
@@ -74,7 +79,7 @@ public class BarnScreen extends Location implements Screen {
         }
 
         batch.begin();
-        haySpawn(game.gameData.getFeedInBarn());
+        haySpawn(game.gameData.getGrainInBarn());
         player.draw(batch);
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         manureSpawn(game.gameData.getManureInBarn());
@@ -88,15 +93,17 @@ public class BarnScreen extends Location implements Screen {
     }
 
     public void checkActionRectangles() {
-        if (getRec("RectangleExit") || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+        if ((getRec("RectangleExit") || Gdx.input.isKeyJustPressed(Input.Keys.BACK))
+                && !userInterface.dialogFocus) {
             game.setFarmScreen();
         }
 
-        if (getRec("ActionFeedCows")) {
+        if (getRec("ActionFeedCows") && !userInterface.dialogFocus) {
+            player.setInputActive(false);
             int maxFeed = game.gameData.getCowList().size() *
                     game.gameData.getCowList().get(0).getFeed() * 3;
             uiText = game.myBundle.format("askFeedCows",
-                    game.gameData.getFeedInBarn(),
+                    game.gameData.getGrainInBarn(),
                     maxFeed);
             userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
@@ -115,7 +122,8 @@ public class BarnScreen extends Location implements Screen {
             userInterface.createDialog(d, uiText, true);
         }
 
-        if (getRec("ActionShovelManure")) {
+        if (getRec("ActionShovelManure") && !userInterface.dialogFocus) {
+            player.setInputActive(false);
             uiText = game.myBundle.format("askShovelManure",
                     game.gameData.getManureInBarn(),
                     game.gameData.MANURE_DANGER);
@@ -136,7 +144,8 @@ public class BarnScreen extends Location implements Screen {
             userInterface.createDialog(d, uiText, true);
         }
 
-        if (getRec("ActionCollectMethane")) {    // condition collect methane
+        if (getRec("ActionCollectMethane") && !userInterface.dialogFocus) {    // condition collect methane
+            player.setInputActive(false);
             uiText = game.myBundle.format("askCollectMethane",
                     game.gameData.getTotalMethaneInCows(),
                     game.gameData.getTotalMaxMethaneInCows());
@@ -166,9 +175,9 @@ public class BarnScreen extends Location implements Screen {
         int addAmount = cowList.size() * cowList.get(0).getFeed() * 2;  // enough food for 2 days
         int maxAmount = cowList.size() * cowList.get(0).getFeed() * 3;  // max amount of food
 
-        if (game.gameData.getFeedInBarn() > maxAmount) {
+        if (game.gameData.getGrainInBarn() > maxAmount) {
             // Action blocked, enough food already UI message
-            uiText = game.myBundle.get("feedInBarnFull");
+            uiText = game.myBundle.get("feedCowsFull");
             Dialog d = new Dialog(myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -181,9 +190,9 @@ public class BarnScreen extends Location implements Screen {
             };
             userInterface.createDialog(d, uiText, false);
         } else {
-            if (game.gameData.getFeed() == 0) {
+            if (game.gameData.getGrain() == 0) {
                 // action blocked, feed storage empty UI message
-                uiText = game.myBundle.get("feedInBarnNoFeed");
+                uiText = game.myBundle.get("feedCowsNoFeed");
                 Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                     protected void result(Object object) {
                         boolean result = (boolean)object;
@@ -195,14 +204,14 @@ public class BarnScreen extends Location implements Screen {
                     }
                 };
                 userInterface.createDialog(d, uiText, false);
-            } else if (game.gameData.getFeed() <= addAmount) {
+            } else if (game.gameData.getGrain() <= addAmount) {
                 // cows fed but feed storage empty
-                addAmount = game.gameData.getFeed();
-                game.gameData.setFeedInBarn(game.gameData.getFeedInBarn() + addAmount);
-                game.gameData.setFeed(0);
+                addAmount = game.gameData.getGrain();
+                game.gameData.setGrainInBarn(game.gameData.getGrainInBarn() + addAmount);
+                game.gameData.setGrain(0);
                 game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
 
-                uiText = game.myBundle.get("feedInBarnCompleteButEmpty");
+                uiText = game.myBundle.get("feedCowsCompleteButEmpty");
                 Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                     protected void result(Object object) {
                         boolean result = (boolean)object;
@@ -214,13 +223,13 @@ public class BarnScreen extends Location implements Screen {
                     }
                 };
                 userInterface.createDialog(d, uiText, false);
-            } else if (game.gameData.getFeed() >= addAmount){
+            } else if (game.gameData.getGrain() >= addAmount){
                 // cows fed UI message
-                game.gameData.setFeedInBarn(game.gameData.getFeedInBarn() + addAmount);
-                game.gameData.setFeed(game.gameData.getFeed()-addAmount);
+                game.gameData.setGrainInBarn(game.gameData.getGrainInBarn() + addAmount);
+                game.gameData.setGrain(game.gameData.getGrain()-addAmount);
                 game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
 
-                uiText = game.myBundle.format("feedInBarnComplete", game.gameData.getFeed());
+                uiText = game.myBundle.format("feedCowsComplete", game.gameData.getGrain());
                 Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                     protected void result(Object object) {
                         boolean result = (boolean)object;
@@ -254,7 +263,7 @@ public class BarnScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, false);
-        } else if (game.gameData.getManureInBarn() < game.gameData.MANURE_SHOVELED) {
+        } else if (game.gameData.getManureInBarn() <= game.gameData.MANURE_SHOVELED) {
             // barn is clean after shoveling
             game.gameData.setManure(game.gameData.getManure() + game.gameData.getManureInBarn());
             game.gameData.setManureInBarn(0);
@@ -476,6 +485,7 @@ public class BarnScreen extends Location implements Screen {
     }
 
     private void resetInputProcessor() {
+        player.setInputActive(true);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -24,6 +25,7 @@ public class ComputerScreen extends Location implements Screen {
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
         tiledMap = new TmxMapLoader().load("Computer.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
+        background = new Texture("computerBackground.png");
     }
 
     @Override
@@ -31,17 +33,18 @@ public class ComputerScreen extends Location implements Screen {
         batch.setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
 
         if (fadeIn) {
             fadeFromBlack();
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit")) {
             game.setHomeScreen();
         }
 
         batch.begin();
-        batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
         batch.end();
 
@@ -50,20 +53,19 @@ public class ComputerScreen extends Location implements Screen {
     }
 
     private void checkActionRectangles() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // move back to home
+        if (((Gdx.input.isKeyJustPressed(Input.Keys.BACK)) || getUIRec("RectangleExit"))
+             && !userInterface.dialogFocus) {    // move back to home
             game.setHomeScreen();
         }
 
-        if (false) {    // go to upgrades screen
+        if (getUIRec("RectangleUpgrades") && !userInterface.dialogFocus) {    // go to upgrades screen
             game.setUpgradeScreen();
         }
 
-        if (false) {    // go to buy/sell screen
+        if (getUIRec("RectangleBuySell") && !userInterface.dialogFocus) {    // go to buy/sell screen
             game.setBuySellScreen();
         }
     }
-
-
 
     @Override
     public void show() {

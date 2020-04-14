@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 public class GardenScreen extends Location implements Screen {
     private final GasChaosMain game;
@@ -29,77 +30,197 @@ public class GardenScreen extends Location implements Screen {
         batch.setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
 
         if (fadeIn) {
             fadeFromBlack();
         }
 
         batch.begin();
-        batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
         batch.end();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
+        checkActionRectangles();
+    }
+
+    public void checkActionRectangles() {
+        if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
+            && !userInterface.dialogFocus) {
             game.setFarmScreen();
         }
 
-        if (false) {    // condition weed garden
-            game.gameData = actionWeedGarden(game.gameData);
+        if (getUIRec("RectangleWeed") && !userInterface.dialogFocus) {    // condition weed garden
+            uiText = game.myBundle.format("askWeedGarden");
+            userInterface.dialogFocus = true;
+            Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        actionWeedGarden();
+                        remove();
+                    } else {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
         }
 
-        if (false) {    // condition sell garden
-            game.gameData = actionSellGarden(game.gameData);
+        if (getUIRec("RectangleSell") && !userInterface.dialogFocus) {    // condition sell garden
+            uiText = game.myBundle.format("askSellGarden");
+            userInterface.dialogFocus = true;
+            Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        actionSellGarden();
+                        remove();
+                    } else {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
         }
 
-        if (false) {    // condition plant garden
-            game.gameData = actionPlantGarden(game.gameData);
+        if (getUIRec("RectanglePlant") && !userInterface.dialogFocus) {    // condition plant garden
+            uiText = game.myBundle.format("askPlantGarden");
+            userInterface.dialogFocus = true;
+            Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        actionPlantGarden();
+                        remove();
+                    } else {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
         }
     }
 
     /**
      * Increase data.gardenAmount from 0 to 1.
      */
-    public GameData actionPlantGarden(GameData data) {
-        if (data.getGardenAmount() == 0) {
-            data.setGardenAmount(1);
-            data.setWeedsAmount(0);
-            // TODO garden planted and weeded UI message
-            data.setActionsDone(data.getActionsDone() + 1);
+    public void actionPlantGarden() {
+        if (game.gameData.getGardenAmount() == 0) {
+            game.gameData.setGardenAmount(1);
+            game.gameData.setWeedsAmount(0);
+            game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
+            // garden planted UI message
+            uiText = game.myBundle.get("plantGardenComplete");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
         } else {
-            // TODO garden is already growing UI message
+            // garden is already growing UI message
+            uiText = game.myBundle.get("plantGardenDoneAlready");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
         }
-        return data;
     }
 
     /**
      * Reduce data.weedsAmount to 0 and increase data.gardenGrowth to 5.
      */
-    public GameData actionWeedGarden(GameData data) {
-        if (data.getWeedsAmount() <= 0) {
-            // TODO garden is already weeded UI message
+    public void actionWeedGarden() {
+        if (game.gameData.getWeedsAmount() <= 0) {
+            // garden is already weeded UI message
+            uiText = game.myBundle.get("weedGardenNoWeed");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
         } else {
-            data.setWeedsAmount(0);
-            data.setGardenGrowth(5);
-            // TODO garden has been weeded UI message
-            data.setActionsDone(data.getActionsDone() + 1);
+            game.gameData.setWeedsAmount(0);
+            game.gameData.setGardenGrowth(5);
+            game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
+            // garden has been weeded UI message
+            uiText = game.myBundle.get("weedGardenComplete");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
         }
-        return data;
     }
 
     /**
      * Increase data.gardenSold by data.gardenAmount and reduce data. gardenAmount to 0.
      * Block if gardenAmount is not over 30 (garden is not ripe).
      */
-    public GameData actionSellGarden(GameData data) {
-        if (data.getGardenAmount() > 30) {
-            data.setGardenSold(data.getGardenAmount());
-            data.setGardenAmount(0);
-            // TODO garden produce sold UI message
-            data.setActionsDone(data.getActionsDone() + 1);
+    public void actionSellGarden() {
+        if (game.gameData.getGardenAmount() > 30) {
+            game.gameData.setGardenSold(game.gameData.getGardenAmount());
+            game.gameData.setGardenAmount(0);
+            game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
+            // garden produce sold UI message
+            uiText = game.myBundle.get("sellGardenComplete");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
         } else {
-            // TODO garden produce not ripe UI message
+            // garden produce not ripe UI message
+            uiText = game.myBundle.get("sellGardenNotRipe");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
         }
-        return data;
     }
 
 
@@ -132,5 +253,10 @@ public class GardenScreen extends Location implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+    }
+
+    private void resetInputProcessor() {
+        Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
 }

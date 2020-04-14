@@ -2,7 +2,6 @@ package fi.tuni.tiko;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.utils.Json;
 
 import java.util.ArrayList;
 
@@ -40,15 +39,21 @@ public class GameData {
      */
     private int money = 2000;       // money available for purchases
     private int manure = 0;         // amount of manure in manure pit
-    private int manureInBarn = 90;   // amount of manure produced on previous turn
+    private int manureInBarn = 0;   // amount of manure produced on previous turn
     private int manureInBarnMax = 300;  // maximum amount of manure on barn floor
     private int manureMax = 2500;   // size of manure pit
     private int methane = 0;        // amount of methane in gas tank
     private int methaneMax = 15000; // size of methane tank
     private int debt = 10000;       // total amount of debt, reduced by debtPayment
-    private int feed = 100;         // total amount of feed
-    private int feedInBarn = 5;     // amount of feed for cows in barn
-    private int feedMax = 9000;     // maximum amount of feed
+    private int grain = 100;        // total amount of grain on farm
+    private int grainInBarn = 30;   // amount of feed (grain) for cows in barn
+    private int grainMax = 9000;    // maximum amount of grain
+    private int fertilizerN = 0;    // Nitrogen fertilizer storage
+    private int fertilizerNMax = 500;
+    private int fertilizerP = 0;    // Phosphorous fertilizer storage
+    private int fertilizerPMax = 100;
+
+
     private float interest = 1.03f; // 5% interest rate to calculate debt payments
     final int MAX_FIELDS = 6;       // maximum number of fields
     final int OWNED_FIELDS = 2;     // owned fields at start (no rent)
@@ -159,7 +164,7 @@ public class GameData {
         }
 
         for (Cow cow : cowList) {
-            feed = cow.eat(feed);
+            grain = cow.eat(grain);
 
             if (cow.isEatenThisTurn()) {  // if cow not eaten, no milk, manure and methane produced
                 int milkFromCow = cow.getMilk(milkingMachineLevel);
@@ -390,20 +395,20 @@ public class GameData {
         this.manureInBarnMax = manureInBarnMax;
     }
 
-    public int getFeed() {
-        return feed;
+    public int getGrain() {
+        return grain;
     }
 
-    public void setFeed(int feed) {
-        this.feed = feed;
+    public void setGrain(int grain) {
+        this.grain = grain;
     }
 
-    public int getFeedMax() {
-        return feedMax;
+    public int getGrainMax() {
+        return grainMax;
     }
 
-    public void setFeedMax(int feedMax) {
-        this.feedMax = feedMax;
+    public void setGrainMax(int grainMax) {
+        this.grainMax = grainMax;
     }
 
     public int getSolarPanelLevel() {
@@ -598,12 +603,12 @@ public class GameData {
         this.manureInBarn = manureInBarn;
     }
 
-    public int getFeedInBarn() {
-        return feedInBarn;
+    public int getGrainInBarn() {
+        return grainInBarn;
     }
 
-    public void setFeedInBarn(int feedInBarn) {
-        this.feedInBarn = feedInBarn;
+    public void setGrainInBarn(int grainInBarn) {
+        this.grainInBarn = grainInBarn;
     }
 
     public int getWeedsAmount() {
@@ -694,6 +699,30 @@ public class GameData {
         return PRICE_OF_FIELD;
     }
 
+    public int getFertilizerN() {
+        return fertilizerN;
+    }
+
+    public void setFertilizerN(int fertilizerN) {
+        this.fertilizerN = fertilizerN;
+    }
+
+    public int getFertilizerNMax() {
+        return fertilizerNMax;
+    }
+
+    public int getFertilizerP() {
+        return fertilizerP;
+    }
+
+    public void setFertilizerP(int fertilizerP) {
+        this.fertilizerP = fertilizerP;
+    }
+
+    public int getFertilizerPMax() {
+        return fertilizerPMax;
+    }
+
     public GameData(ArrayList<Field> fields) {
         this.fields = fields;
     }
@@ -725,9 +754,9 @@ public class GameData {
         prefs.putInteger("methane", getMethane());
         prefs.putInteger("methaneMax", getMethaneMax());
         prefs.putInteger("debt", getDebt());
-        prefs.putInteger("feed", getFeed());
-        prefs.putInteger("feedInBarn", getFeedInBarn());
-        prefs.putInteger("feedMax", getFeedMax());
+        prefs.putInteger("feed", getGrain());
+        prefs.putInteger("feedInBarn", getGrainInBarn());
+        prefs.putInteger("feedMax", getGrainMax());
         prefs.putFloat("interest", getInterest());
 
         /**
@@ -822,9 +851,9 @@ public class GameData {
         setMethane(prefs.getInteger("methane", getMethane()));
         setMethaneMax(prefs.getInteger("methaneMax", getMethaneMax()));
         setDebt(prefs.getInteger("debt", getDebt()));
-        setFeed(prefs.getInteger("feed", getFeed()));
-        setFeedInBarn(prefs.getInteger("feedInBarn", getFeedInBarn()));
-        setFeedMax(prefs.getInteger("feedMax", getFeedMax()));
+        setGrain(prefs.getInteger("feed", getGrain()));
+        setGrainInBarn(prefs.getInteger("feedInBarn", getGrainInBarn()));
+        setGrainMax(prefs.getInteger("feedMax", getGrainMax()));
         setInterest(prefs.getFloat("interest", getInterest()));
 
         /**

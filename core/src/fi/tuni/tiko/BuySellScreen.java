@@ -41,6 +41,8 @@ public class BuySellScreen extends Location implements Screen {
         batch.setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
 
         if (fadeIn) {
             fadeFromBlack();
@@ -51,7 +53,6 @@ public class BuySellScreen extends Location implements Screen {
         }
 
         batch.begin();
-        batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
         batch.end();
 
@@ -60,11 +61,11 @@ public class BuySellScreen extends Location implements Screen {
     }
 
     public void checkActionRectangles() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // move back to computer main
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK ) || getUIRec("RectangleExit")) {
             game.setComputerScreen();
         }
 
-        if (false) {    // buy cow
+        if (getUIRec("RectangleBuyCow") && !userInterface.dialogFocus) {    // buy cow
             uiText = game.myBundle.format("askBuyCow", game.gameData.PRICE_OF_COW);
             userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
@@ -83,11 +84,11 @@ public class BuySellScreen extends Location implements Screen {
             userInterface.createDialog(d, uiText, true);
         }
 
-        if (false) {    // buy feed
+        if (getUIRec("RectangleBuyGrain") && !userInterface.dialogFocus) {    // buy feed
             final int amount = game.gameData.getCowList().get(0).getFeed() * 10;
             final int price = game.gameData.PRICE_OF_FEED * amount;
-            uiText = game.myBundle.format("askBuyFeed", amount, price,
-                    game.gameData.getFeed(),
+            uiText = game.myBundle.format("askBuyGrain", amount, price,
+                    game.gameData.getGrain(),
                     game.gameData.getCowAmount() * game.gameData.getCowList().get(0).getFeed());
             userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
@@ -106,7 +107,45 @@ public class BuySellScreen extends Location implements Screen {
             userInterface.createDialog(d, uiText, true);
         }
 
-        if (false) {    // sell manure
+        if (getUIRec("RectangleBuyN") && !userInterface.dialogFocus) {
+            uiText = game.myBundle.format("askBuyN");
+            userInterface.dialogFocus = true;
+            Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        // TODO implement actionBuyN();
+                        remove();
+                    } else {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    };
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
+        }
+
+        if (getUIRec("RectangleBuyP") && !userInterface.dialogFocus) {
+            uiText = game.myBundle.format("askBuyP");
+            userInterface.dialogFocus = true;
+            Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        // TODO implement actionBuyP();
+                        remove();
+                    } else {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    };
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
+        }
+
+        if (getUIRec("RectangleSellManure") && !userInterface.dialogFocus) {    // sell manure
             uiText = game.myBundle.format("askSellManure",
                     game.gameData.MANURE_TO_SELL,
                     game.gameData.MONEY_FROM_MANURE * game.gameData.MANURE_TO_SELL);
@@ -116,6 +155,82 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSellManure();
+                        remove();
+                    } else {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    };
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
+        }
+
+        if (getUIRec("RectangleSellGrain") && !userInterface.dialogFocus) {
+            uiText = game.myBundle.format("askSellGrain");
+            userInterface.dialogFocus = true;
+            Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        // TODO implement actionSellGrain();
+                        remove();
+                    } else {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    };
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
+        }
+
+        if (getUIRec("RectangleSellGas") && !userInterface.dialogFocus) {
+            uiText = game.myBundle.format("askSellGas");
+            userInterface.dialogFocus = true;
+            Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        // TODO implement actionSellGas();
+                        remove();
+                    } else {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    };
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
+        }
+
+        if (getUIRec("RectangleSellN") && !userInterface.dialogFocus) {
+            uiText = game.myBundle.format("askSellN");
+            userInterface.dialogFocus = true;
+            Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        // TODO implement actionSellN();
+                        remove();
+                    } else {
+                        userInterface.dialogFocus = false;
+                        resetInputProcessor();
+                        remove();
+                    };
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
+        }
+
+        if (getUIRec("RectangleSellP") && !userInterface.dialogFocus) {
+            uiText = game.myBundle.format("askSellP");
+            userInterface.dialogFocus = true;
+            Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        // TODO implement actionSellP();
                         remove();
                     } else {
                         userInterface.dialogFocus = false;
@@ -209,7 +324,7 @@ public class BuySellScreen extends Location implements Screen {
      * enough money
      */
     public void actionBuyFeed(int price, int amount) {
-        if (game.gameData.getFeed() + game.gameData.getFeedBought() < game.gameData.getFeedMax()) {
+        if (game.gameData.getGrain() + game.gameData.getFeedBought() < game.gameData.getGrainMax()) {
             if (game.gameData.getMoney() >= price) {
                 game.gameData.setMoney(game.gameData.getMoney() - price);
                 game.gameData.setFeedBought(game.gameData.getFeedBought() + amount);

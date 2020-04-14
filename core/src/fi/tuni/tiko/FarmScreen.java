@@ -69,7 +69,6 @@ public class FarmScreen extends Location implements Screen {
         }
 
         batch.begin();
-        //batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         player.draw(batch);
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
@@ -104,10 +103,6 @@ public class FarmScreen extends Location implements Screen {
         if (getRec("RectangleGasTank")) {    // condition enter gasTank
             game.setGasTankScreen();
         }
-    }
-
-    public void actionCheckChickens() {
-
     }
 
     @Override

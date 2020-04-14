@@ -66,7 +66,7 @@ public class Location implements InputProcessor {
     }
 
     @SuppressWarnings("RedundantCast")
-    public boolean getUIRec(String name, TiledMap tiledMap) {
+    public boolean getUIRec(String name) {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         return playerAction(r);
     }
