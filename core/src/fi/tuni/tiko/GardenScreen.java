@@ -55,11 +55,10 @@ public class GardenScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionWeedGarden();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
                     }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -71,11 +70,10 @@ public class GardenScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSellGarden();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
                     }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -87,11 +85,10 @@ public class GardenScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionPlantGarden();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
                     }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);

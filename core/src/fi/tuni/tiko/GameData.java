@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 
-@SuppressWarnings({"DanglingJavadoc", "unchecked"})
+@SuppressWarnings({"DanglingJavadoc", "unchecked", "FieldCanBeLocal"})
 public class GameData {
 
     /**

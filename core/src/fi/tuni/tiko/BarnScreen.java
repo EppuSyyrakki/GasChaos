@@ -111,11 +111,10 @@ public class BarnScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionFeedCows();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
                     }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -131,11 +130,10 @@ public class BarnScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionShovelManure();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
                     }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);

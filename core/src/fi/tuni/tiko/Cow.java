@@ -1,5 +1,6 @@
 package fi.tuni.tiko;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class Cow {
 
     /**

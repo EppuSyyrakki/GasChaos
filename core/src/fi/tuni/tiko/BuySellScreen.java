@@ -73,11 +73,10 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionBuyCow();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -94,11 +93,10 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionBuyFeed(price, amount);
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -115,11 +113,10 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionBuyN(amount, price);
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -136,11 +133,10 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionBuyP(amount, price);
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -155,11 +151,10 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSellManure(amount, price);
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -174,11 +169,10 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSellGrain(amount, price);
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -193,11 +187,10 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSellGas(amount, price);
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -212,11 +205,10 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSellN(amount, price);
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -231,11 +223,10 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSellP(amount, price);
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);

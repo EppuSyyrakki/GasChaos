@@ -68,11 +68,10 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSolarPanelBasic();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -86,11 +85,10 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSolarPanelAdvanced();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -104,11 +102,10 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionGasCollectorAdvanced();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -122,11 +119,10 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionMilkingMachineAdvanced();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -140,11 +136,10 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionTractorAdvanced();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -158,11 +153,10 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionTractorGas();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -176,11 +170,10 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionGasGenerator();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
-                    };
+                    }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
