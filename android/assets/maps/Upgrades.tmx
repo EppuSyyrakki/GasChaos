@@ -21,7 +21,7 @@
 </data>
  </layer>
  <imagelayer id="2" name="background">
-  <image source="upgradeBackground.png" width="1080" height="1920"/>
+  <image source="../ground/upgradeBackground.png" width="1080" height="1920"/>
  </imagelayer>
  <objectgroup id="12" name="RectangleGasCollector">
   <object id="22" x="44.7136" y="867.443" width="404.658" height="219.096"/>

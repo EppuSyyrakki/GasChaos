@@ -21,7 +21,7 @@
 </data>
  </layer>
  <imagelayer id="2" name="background">
-  <image source="farmBackground.png" width="1080" height="1920"/>
+  <image source="../ground/farmBackground.png" width="1080" height="1920"/>
  </imagelayer>
  <objectgroup id="3" name="RectangleBarn">
   <object id="2" x="388" y="532.5" width="252" height="176"/>

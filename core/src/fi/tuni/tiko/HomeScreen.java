@@ -19,7 +19,7 @@ public class HomeScreen extends Location implements Screen {
     private final GasChaosMain game;
 
     public HomeScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        background = new Texture("homeForeground.png");
+        background = new Texture("ground/homeForeground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.game = game;
         this.batch = batch;
@@ -31,7 +31,7 @@ public class HomeScreen extends Location implements Screen {
         player.setRY(4);
         player.setTargetX(player.getRX());
         player.setTargetY(player.getRY());
-        tiledMap = new TmxMapLoader().load("Home.tmx");
+        tiledMap = new TmxMapLoader().load("maps/Home.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);

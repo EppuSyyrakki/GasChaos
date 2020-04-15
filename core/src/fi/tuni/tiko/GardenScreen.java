@@ -20,7 +20,7 @@ public class GardenScreen extends Location implements Screen {
         this.game = game;
         userInterface = new UserInterface(game.myBundle);
         resetInputProcessor();
-        tiledMap = new TmxMapLoader().load("Garden.tmx");
+        tiledMap = new TmxMapLoader().load("maps/Garden.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
     }
 

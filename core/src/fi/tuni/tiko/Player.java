@@ -55,10 +55,10 @@ public class Player extends Sprite{
     final int FRAME_DOWN_ROWS = 1;
 
     public void player(float size) {
-        textureStand = new Texture("player.png");
-        textureRight = new Texture("playerRight.png");
-        textureUp = new Texture("playerUp.png");
-        textureDown = new Texture("playerDown.png");
+        textureStand = new Texture("player/player.png");
+        textureRight = new Texture("player/playerRight.png");
+        textureUp = new Texture("player/playerUp.png");
+        textureDown = new Texture("player/playerDown.png");
         float width = textureStand.getWidth() / FRAME_STAND_COLS / size;
         float height = textureStand.getHeight() / FRAME_STAND_ROWS / size;
         rectangle = new Rectangle(0.0f, 0.0f, width, height);

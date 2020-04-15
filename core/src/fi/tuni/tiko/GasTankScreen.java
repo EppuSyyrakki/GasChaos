@@ -20,7 +20,7 @@ public class GasTankScreen extends Location implements Screen {
         userInterface = new UserInterface(game.myBundle);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
-        tiledMap = new TmxMapLoader().load("GasTank.tmx");
+        tiledMap = new TmxMapLoader().load("maps/GasTank.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
     }
 

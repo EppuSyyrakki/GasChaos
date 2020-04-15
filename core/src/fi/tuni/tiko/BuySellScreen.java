@@ -17,7 +17,7 @@ public class BuySellScreen extends Location implements Screen {
     private final GasChaosMain game;
 
     public BuySellScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        background = new Texture("computerBackground.png");
+        background = new Texture("ground/computerBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -26,7 +26,7 @@ public class BuySellScreen extends Location implements Screen {
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
-        tiledMap = new TmxMapLoader().load("BuySell.tmx");
+        tiledMap = new TmxMapLoader().load("maps/BuySell.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
     }
 

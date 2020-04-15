@@ -21,7 +21,7 @@
 </data>
  </layer>
  <imagelayer id="2" name="background">
-  <image source="homeBackground.png" width="1080" height="1920"/>
+  <image source="../ground/homeBackground.png" width="1080" height="1920"/>
  </imagelayer>
  <objectgroup id="4" name="RectangleCollision">
   <object id="3" x="-94" y="-40" width="102" height="2078"/>

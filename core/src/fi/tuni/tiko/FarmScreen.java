@@ -21,15 +21,15 @@ public class FarmScreen extends Location implements Screen {
 
         // Check what level of solar panels and set foreground accordingly.
         if (game.gameData.getSolarPanelLevel() == 1) {
-            background = new Texture("farmForegroundSolar.png");
+            background = new Texture("ground/farmForegroundSolar.png");
         } else if (game.gameData.getSolarPanelLevel() == 2) {
-            background = new Texture("farmForegroundSolar2.png");
+            background = new Texture("ground/farmForegroundSolar2.png");
         } else {
-            background = new Texture("farmForeground.png");
+            background = new Texture("ground/farmForeground.png");
         }
 
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
-        tiledMap = new TmxMapLoader().load("Farm.tmx");
+        tiledMap = new TmxMapLoader().load("maps/Farm.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
         this.batch = batch;
         this.camera = camera;

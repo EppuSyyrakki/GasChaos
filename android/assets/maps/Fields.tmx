@@ -21,7 +21,7 @@
 </data>
  </layer>
  <imagelayer id="2" name="background">
-  <image source="Fields.png" width="1080" height="1920"/>
+  <image source="../ground/Fields.png" width="1080" height="1920"/>
  </imagelayer>
  <objectgroup id="10" name="RectangleExit">
   <object id="16" x="0" y="1737.51" width="1079.76" height="181.334"/>

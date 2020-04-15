@@ -46,7 +46,7 @@ public class FieldScreen extends Location implements Screen {
         this.camera = camera;
         this.game = game;
         userInterface = new UserInterface(game.myBundle);
-        tiledMap = new TmxMapLoader().load("Fields.tmx");
+        tiledMap = new TmxMapLoader().load("maps/Fields.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);

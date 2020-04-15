@@ -21,7 +21,7 @@ public class UpgradeScreen extends Location implements Screen {
         userInterface = new UserInterface(game.myBundle);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
-        tiledMap = new TmxMapLoader().load("Upgrades.tmx");
+        tiledMap = new TmxMapLoader().load("maps/Upgrades.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
     }
     @Override

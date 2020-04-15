@@ -21,7 +21,7 @@
 </data>
  </layer>
  <imagelayer id="2" name="background">
-  <image source="computerBackground.png" width="1080" height="1920"/>
+  <image source="../ground/computerBackground.png" width="1080" height="1920"/>
  </imagelayer>
  <objectgroup id="17" name="RectangleBuySell">
   <object id="28" x="138.612" y="695.296" width="368.887" height="476.199"/>

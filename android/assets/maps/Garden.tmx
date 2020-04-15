@@ -21,7 +21,7 @@
 </data>
  </layer>
  <imagelayer id="2" name="background">
-  <image source="garden.png" width="1080" height="1920"/>
+  <image source="../ground/garden.png" width="1080" height="1920"/>
  </imagelayer>
  <objectgroup id="17" name="RectangleWeed">
   <object id="28" x="735.538" y="1222.92" width="236.982" height="346.53"/>

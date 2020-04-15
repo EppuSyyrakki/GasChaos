@@ -12,7 +12,7 @@ public class GrandmotherScreen extends Location implements Screen {
     private final GasChaosMain game;
 
     public GrandmotherScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        background = new Texture("grandmotherBackground.png");
+        background = new Texture("ground/grandmotherBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -20,7 +20,7 @@ public class GrandmotherScreen extends Location implements Screen {
         userInterface = new UserInterface(game.myBundle);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
-        // tiledMap = new TmxMapLoader().load("Grandmother.tmx");
+        // tiledMap = new TmxMapLoader().load("maps/Grandmother.tmx");
         // tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
     }
 

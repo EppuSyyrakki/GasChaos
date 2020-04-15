@@ -21,9 +21,9 @@ public class ComputerScreen extends Location implements Screen {
         userInterface = new UserInterface(game.myBundle);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
-        tiledMap = new TmxMapLoader().load("Computer.tmx");
+        tiledMap = new TmxMapLoader().load("maps/Computer.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
-        background = new Texture("computerBackground.png");
+        background = new Texture("ground/computerBackground.png");
     }
 
     @Override

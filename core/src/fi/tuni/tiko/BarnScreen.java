@@ -37,7 +37,7 @@ public class BarnScreen extends Location implements Screen {
     float[] hayY = new float[11];
 
     public BarnScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        background = new Texture("barnForeground.png");
+        background = new Texture("ground/barnForeground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -49,7 +49,7 @@ public class BarnScreen extends Location implements Screen {
         player.setRY(10);
         player.setTargetX(player.getRX());
         player.setTargetY(player.getRY());
-        tiledMap = new TmxMapLoader().load("Barn.tmx");
+        tiledMap = new TmxMapLoader().load("maps/Barn.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
         resetInputProcessor();
         for (int i = 0; i < manureX.length; i++) {
