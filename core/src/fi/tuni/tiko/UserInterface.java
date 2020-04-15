@@ -77,7 +77,6 @@ public class UserInterface {
         dialog.button(confirmButton, true);
 
         if (preDialog) {    // add cancel button only if the dialog is pre-action
-            dialog.button(emptyButton);
             dialog.button(cancelButton, false);
         }
         dialog.pad(20f, 20f, 20f, 20f);

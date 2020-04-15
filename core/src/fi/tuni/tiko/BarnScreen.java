@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class BarnScreen extends Location implements Screen {
     Player player;
 
-    private final GasChaosMain game;
     final Texture cow1 = new Texture("cows/cow1.png");
     final Texture cow2 = new Texture("cows/cow2.png");
     final Texture cow3 = new Texture("cows/cow3.png");
@@ -37,11 +36,11 @@ public class BarnScreen extends Location implements Screen {
     float[] hayY = new float[11];
 
     public BarnScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
+        super(game);
         background = new Texture("ground/barnForeground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
-        this.game = game;
         userInterface = new UserInterface(game.myBundle);
         player = new Player();
         player.player(100f);
@@ -162,14 +161,14 @@ public class BarnScreen extends Location implements Screen {
                 getRec("ActionShovelManure") ||
                 getRec("ActionFeedCows"))) {
             userInterface.dialogFocus = true;
-            uiText = game.myBundle.get("noActions");
+            uiText = game.myBundle.get("askGoSleep");
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.setNewTurn();
                         resetInputProcessor();
                         remove();
-                        newTurn();
                     } else {
                         resetInputProcessor();
                         remove();
@@ -496,16 +495,6 @@ public class BarnScreen extends Location implements Screen {
         player.setInputActive(true);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
-    }
-
-    public void newTurn() {
-        game.gameData.sleep();
-        game.homeScreen.setNewTurn(true);
-        game.setHomeScreen();
-        game.farmScreen.player.setRX(2);
-        game.farmScreen.player.setRY(5);
-        game.farmScreen.player.matchX(2);
-        game.farmScreen.player.matchY(5);
     }
 }
 

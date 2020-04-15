@@ -11,13 +11,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 public class UpgradeScreen extends Location implements Screen {
-    private final GasChaosMain game;
 
     public UpgradeScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
+        super(game);
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
-        this.game = game;
         userInterface = new UserInterface(game.myBundle);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
@@ -185,13 +184,14 @@ public class UpgradeScreen extends Location implements Screen {
                 getUIRec("RectangleTractorAdvanced") ||
                 getUIRec("RectangleMilkingMachine") ||
                 getUIRec("RectangleGasCollector"))) {
-            uiText = game.myBundle.get("noActions");
+            userInterface.dialogFocus = true;
+            uiText = game.myBundle.get("askGoSleep");
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
-                        newTurn();
-                        resetInputProcessor();
+                        System.out.println("Trying to start new turn");
+                        game.setNewTurn();
                         remove();
                     } else {
                         resetInputProcessor();
@@ -656,13 +656,4 @@ public class UpgradeScreen extends Location implements Screen {
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
 
-    public void newTurn() {
-        game.gameData.sleep();
-        game.homeScreen.setNewTurn(true);
-        game.setHomeScreen();
-        game.farmScreen.player.setRX(2);
-        game.farmScreen.player.setRY(5);
-        game.farmScreen.player.matchX(2);
-        game.farmScreen.player.matchY(5);
-    }
 }

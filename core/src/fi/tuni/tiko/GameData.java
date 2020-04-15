@@ -54,9 +54,9 @@ public class GameData {
     private int grain = 100;        // total amount of grain on farm
     private int grainInBarn = 30;   // amount of feed (grain) for cows in barn
     private int grainMax = 9000;    // maximum amount of grain
-    private int fertilizerN = 0;    // Nitrogen fertilizer storage
+    private int fertilizerN = 400;    // Nitrogen fertilizer storage
     private int fertilizerNMax = 500;
-    private int fertilizerP = 0;    // Phosphorous fertilizer storage
+    private int fertilizerP = 90;    // Phosphorous fertilizer storage
     private int fertilizerPMax = 100;
 
     private float interest = 0.03f; // 3% interest rate to calculate debt payments
@@ -154,13 +154,6 @@ public class GameData {
         resetVariables();   // xSold to 0 and xBought to false, also reset eatenThisTurn in cows.
     }
 
-    public void sleep() {
-        actionsDone = 0;
-        updateResources();
-        currentTurn++;
-        actionsAvailable = actionsDone < MAX_ACTIONS;
-        saveGame();
-    }
 
     private void updateMoney() {
         int milkSold = 0;
@@ -309,6 +302,9 @@ public class GameData {
         cowsBought.clear();
         nBought = 0;
         pBought = 0;
+        actionsDone = 0;
+        currentTurn++;
+        actionsAvailable = true;
 
         // Old code in case the new optimized one doesn't work
         //for (int i = 0; i < fieldsRented.length; i++) {fieldsRented[i] = 0;}
@@ -317,6 +313,7 @@ public class GameData {
         for (Cow cow : cowList) {
             cow.setEatenThisTurn(false);
         }
+        saveGame();
     }
 
     public GameData() {

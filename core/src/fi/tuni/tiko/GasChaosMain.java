@@ -81,6 +81,18 @@ public class GasChaosMain extends Game {
 		setScreen(homeScreen);
 	}
 
+	public void setNewTurn() {
+		gameData.updateResources();
+		farmScreen.player.setRX(2);
+		farmScreen.player.setRY(5);
+		farmScreen.player.matchX(2);
+		farmScreen.player.matchY(5);
+		homeScreen.setNewTurn(true);
+		homeScreen.resetInputProcessor();
+		setScreen(homeScreen);
+
+	}
+
 	public void setComputerScreen() {
 		setScreen(computerScreen);
 	}
@@ -115,5 +127,9 @@ public class GasChaosMain extends Game {
 
 	public void setBuySellScreen() {
 		setScreen(buySellScreen);
+	}
+
+	public void setGameData(GameData data) {
+		this.gameData = data;
 	}
 }

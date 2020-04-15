@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import java.util.ArrayList;
 
 public class FieldScreen extends Location implements Screen {
-    private final GasChaosMain game;
     final Texture growth1;
     final Texture growth2;
     final Texture growth3;
@@ -29,6 +28,7 @@ public class FieldScreen extends Location implements Screen {
     float riverSpeed;
 
     public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
+        super(game);
         growth1 = new Texture("growth/growth1.png");
         growth2 = new Texture("growth/growth2.png");
         growth3 = new Texture("growth/growth3.png");
@@ -44,7 +44,6 @@ public class FieldScreen extends Location implements Screen {
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
-        this.game = game;
         userInterface = new UserInterface(game.myBundle);
         tiledMap = new TmxMapLoader().load("maps/Fields.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
@@ -103,7 +102,7 @@ public class FieldScreen extends Location implements Screen {
         } else if (fieldNumber > -1 && !game.gameData.isActionsAvailable()
                 && !userInterface.dialogFocus) {
             userInterface.dialogFocus = true;
-            uiText = game.myBundle.get("noActions");
+            uiText = game.myBundle.get("askGoSleep");
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
@@ -451,15 +450,5 @@ public class FieldScreen extends Location implements Screen {
         userInterface.dialogFocus = false;
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
-    }
-
-    public void newTurn() {
-        game.gameData.sleep();
-        game.homeScreen.setNewTurn(true);
-        game.setHomeScreen();
-        game.farmScreen.player.setRX(2);
-        game.farmScreen.player.setRY(5);
-        game.farmScreen.player.matchX(2);
-        game.farmScreen.player.matchY(5);
     }
 }

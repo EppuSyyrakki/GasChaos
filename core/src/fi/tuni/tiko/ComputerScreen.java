@@ -11,13 +11,12 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class ComputerScreen extends Location implements Screen {
-    private final GasChaosMain game;
 
     public ComputerScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
+        super(game);
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
-        this.game = game;
         userInterface = new UserInterface(game.myBundle);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
@@ -96,13 +95,4 @@ public class ComputerScreen extends Location implements Screen {
         background.dispose();
     }
 
-    public void newTurn() {
-        game.gameData.sleep();
-        game.homeScreen.setNewTurn(true);
-        game.setHomeScreen();
-        game.farmScreen.player.setRX(2);
-        game.farmScreen.player.setRY(5);
-        game.farmScreen.player.matchX(2);
-        game.farmScreen.player.matchY(5);
-    }
 }

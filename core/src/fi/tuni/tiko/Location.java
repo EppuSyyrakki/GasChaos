@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 
 public class Location implements InputProcessor {
+    final GasChaosMain game;
     final float WORLD_WIDTH = 9f;
     final float WORLD_HEIGHT = 16f;
     final float WORLD_SCALE = 1 / 120f;
@@ -35,6 +36,10 @@ public class Location implements InputProcessor {
     I18NBundle myBundle;
     TiledMap tiledMap;
     TiledMapRenderer tiledMapRenderer;
+
+    public Location(GasChaosMain game) {
+        this.game = game;
+    }
 
     public void fadeFromBlack() {
         blackness -= Gdx.graphics.getDeltaTime() * fadeSpeed;
@@ -168,4 +173,5 @@ public class Location implements InputProcessor {
     public boolean scrolled(int amount) {
         return false;
     }
+
 }

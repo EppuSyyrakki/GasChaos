@@ -15,7 +15,6 @@ import com.badlogic.gdx.math.Rectangle;
 public class FarmScreen extends Location implements Screen {
     @SuppressWarnings("CanBeFinal")
     Player player;
-    private final GasChaosMain game;
     Texture backgroundSolar;
     Texture backgroundSolar2;
     Texture sun;
@@ -23,6 +22,7 @@ public class FarmScreen extends Location implements Screen {
     float sunY;
 
     public FarmScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
+        super(game);
 
         // Check what level of solar panels and set foreground accordingly.
         backgroundSolar = new Texture("ground/farmForegroundSolar.png");
@@ -35,7 +35,6 @@ public class FarmScreen extends Location implements Screen {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
         this.batch = batch;
         this.camera = camera;
-        this.game = game;
         userInterface = new UserInterface(game.myBundle);
         player = new Player();
         player.player(150f);
@@ -149,16 +148,6 @@ public class FarmScreen extends Location implements Screen {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
         return player.getRectangle().overlaps(r) && action;
-    }
-
-    public void newTurn() {
-        game.gameData.sleep();
-        game.homeScreen.setNewTurn(true);
-        game.setHomeScreen();
-        game.farmScreen.player.setRX(2);
-        game.farmScreen.player.setRY(5);
-        game.farmScreen.player.matchX(2);
-        game.farmScreen.player.matchY(5);
     }
 }
 
