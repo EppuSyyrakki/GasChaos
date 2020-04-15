@@ -161,6 +161,7 @@ public class BarnScreen extends Location implements Screen {
                 getRec("ActionCollectMethane") ||
                 getRec("ActionShovelManure") ||
                 getRec("ActionFeedCows"))) {
+            userInterface.dialogFocus = true;
             uiText = game.myBundle.get("noActions");
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
