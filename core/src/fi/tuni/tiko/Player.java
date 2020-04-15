@@ -24,7 +24,6 @@ public class Player extends Sprite{
     Texture textureUp;
     Texture textureDown;
     Rectangle rectangle;
-    Rectangle recFuture;
     float speed;
     float rotation;
     float rotationRate;
@@ -62,7 +61,6 @@ public class Player extends Sprite{
         float width = textureStand.getWidth() / FRAME_STAND_COLS / size;
         float height = textureStand.getHeight() / FRAME_STAND_ROWS / size;
         rectangle = new Rectangle(0.0f, 0.0f, width, height);
-        recFuture = new Rectangle(0.0f, 0.0f, width, height);
         setSize(width, height);
         speedX = 0.1f;
         speedY = 0.1f;
@@ -106,30 +104,6 @@ public class Player extends Sprite{
         walkDownAnimation = new Animation(16 / 60f, framesDown);
     }
 
-    public int getFRAME_STAND_COLS() {
-        return FRAME_STAND_COLS;
-    }
-
-    public int getFRAME_STAND_ROWS() {
-        return FRAME_STAND_ROWS;
-    }
-
-    public Texture getTextureStand() {
-        return textureStand;
-    }
-
-    public void setTextureStand(Texture textureStand) {
-        this.textureStand = textureStand;
-    }
-
-    public Texture getTextureRight() {
-        return textureRight;
-    }
-
-    public void setTextureRight(Texture textureRight) {
-        this.textureRight = textureRight;
-    }
-
     public float getLastX() {
         return lastX;
     }
@@ -146,68 +120,12 @@ public class Player extends Sprite{
         this.lastY = lastY;
     }
 
-    public float getStateTime() {
-        return stateTime;
-    }
-
-    public void setStateTime(float stateTime) {
-        this.stateTime = stateTime;
-    }
-
-    public boolean isInputActive() {
-        return inputActive;
-    }
-
     public void setInputActive(boolean inputActive) {
         this.inputActive = inputActive;
     }
 
-    public boolean isUp() {
-        return up;
-    }
-
     public void setUp(boolean up) {
         this.up = up;
-    }
-
-    public boolean isDown() {
-        return down;
-    }
-
-    public void setDown(boolean down) {
-        this.down = down;
-    }
-
-    public boolean isLeft() {
-        return left;
-    }
-
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
-
-    public boolean isRight() {
-        return right;
-    }
-
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
-    public int getFRAME_RIGHT_COLS() {
-        return FRAME_RIGHT_COLS;
-    }
-
-    public int getFRAME_RIGHT_ROWS() {
-        return FRAME_RIGHT_ROWS;
-    }
-
-    public OrthographicCamera getCamera() {
-        return camera;
-    }
-
-    public void setCamera(OrthographicCamera camera) {
-        this.camera = camera;
     }
 
     public Texture getTexture() {
@@ -249,16 +167,8 @@ public class Player extends Sprite{
         return rectangle;
     }
 
-    public void setRectangle(Rectangle rectangle) {
-        this.rectangle = rectangle;
-    }
-
     public float getSpeed() {
         return speed;
-    }
-
-    public void setSpeed(float speed) {
-        this.speed = speed;
     }
 
     public float getRotation() {
@@ -269,40 +179,8 @@ public class Player extends Sprite{
         this.rotation = rotation;
     }
 
-    public float getRotationRate() {
-        return rotationRate;
-    }
-
-    public void setRotationRate(float rotationRate) {
-        this.rotationRate = rotationRate;
-    }
-
-    public float getSpeedX() {
-        return speedX;
-    }
-
-    public void setSpeedX(float speedX) {
-        this.speedX = speedX;
-    }
-
-    public float getSpeedY() {
-        return speedY;
-    }
-
-    public void setSpeedY(float speedY) {
-        this.speedY = speedY;
-    }
-
-    public float getTargetX() {
-        return targetX;
-    }
-
     public void setTargetX(float targetX) {
         this.targetX = targetX;
-    }
-
-    public float getTargetY() {
-        return targetY;
     }
 
     public void setTargetY(float targetY) {
@@ -454,33 +332,6 @@ public class Player extends Sprite{
             Gdx.app.log("render", "x speed = " + speedX);
             Gdx.app.log("render", "y speed = " + speedY);
         }
-    }
-
-    public boolean playerAction(SpriteBatch batch, Rectangle rectangle) {
-
-        boolean touched = false;
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 9, 16);
-        batch.setProjectionMatrix(camera.combined);
-
-        if(Gdx.input.isTouched()) {
-
-
-            // move player on touch
-            float realX = Gdx.input.getX();
-            float realY = Gdx.input.getY();
-
-            // pixels to world resolution
-            Vector3 touchPos = new Vector3(realX, realY, 0);
-            camera.unproject(touchPos);
-
-            setTargetX(touchPos.x);
-            setTargetY(touchPos.y);
-
-            touched = rectangle.contains(touchPos.x, touchPos.y);
-        }
-        return touched;
-
     }
 
     public void checkCollisions(TiledMap tiledMap) {
