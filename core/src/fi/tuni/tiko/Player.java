@@ -26,7 +26,6 @@ public class Player extends Sprite{
     Rectangle rectangle;
     float speed;
     float rotation;
-    float rotationRate;
     float speedX;
     float speedY;
     float targetX;
