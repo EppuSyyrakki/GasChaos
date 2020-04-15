@@ -40,6 +40,7 @@ public class GardenScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
+        userInterface.render(game.gameData);
         checkActionRectangles();
     }
 
@@ -47,9 +48,20 @@ public class GardenScreen extends Location implements Screen {
         if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
             && !userInterface.dialogFocus) {
             game.setFarmScreen();
-        } else if (getUIRec("RectangleWeed") && !userInterface.dialogFocus) {
+        } else if (getUIRec("RectangleWeed") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
-            uiText = game.myBundle.format("askWeedGarden");
+            String gardenInfo = "";
+            int weedsAmount = game.gameData.getWeedsAmount();
+
+            if (weedsAmount == 0) {
+                gardenInfo = game.myBundle.get("noWeeds");
+            } else if (weedsAmount > 0 && weedsAmount < 4) {
+                gardenInfo = game.myBundle.get("someWeeds");
+            } else if (weedsAmount >= 4) {
+                gardenInfo = game.myBundle.get("manyWeeds");
+            }
+            uiText = game.myBundle.format("askWeedGarden", gardenInfo);
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -62,9 +74,13 @@ public class GardenScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        } else if (getUIRec("RectangleSell") && !userInterface.dialogFocus) {
+        } else if (getUIRec("RectangleSell") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
-            uiText = game.myBundle.format("askSellGarden");
+            float price = (float)game.gameData.getGardenAmount()
+                    * (float)game.gameData.MONEY_FROM_GARDEN;
+            price *= (float)Math.random() * 0.2f + 1f;
+            uiText = game.myBundle.format("askSellGarden", price);
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -77,9 +93,10 @@ public class GardenScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        } else if (getUIRec("RectanglePlant") && !userInterface.dialogFocus) {
+        } else if (getUIRec("RectanglePlant") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
-            uiText = game.myBundle.format("askPlantGarden");
+            uiText = game.myBundle.get("askPlantGarden");
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -89,6 +106,26 @@ public class GardenScreen extends Location implements Screen {
                         resetInputProcessor();
                     }
                     remove();
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
+        } else if ((getUIRec("RectangleWeed") ||
+                getUIRec("RectangleSell") ||
+                getUIRec("RectanglePlant")) && !userInterface.dialogFocus
+                && !game.gameData.isActionsAvailable()) {
+            userInterface.dialogFocus = true;
+            uiText = game.myBundle.get("noActions");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        // TODO sleep
+                        resetInputProcessor();
+                        remove();
+                    } else {
+                        resetInputProcessor();
+                        remove();
+                    }
                 }
             };
             userInterface.createDialog(d, uiText, true);

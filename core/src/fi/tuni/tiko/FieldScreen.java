@@ -80,7 +80,8 @@ public class FieldScreen extends Location implements Screen {
         if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
                 && !userInterface.dialogFocus) {
             game.setFarmScreen();
-        } else if (fieldNumber > -1 && !userInterface.dialogFocus) {
+        } else if (fieldNumber > -1 && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
             boolean[] actions = availableActions(fieldNumber);
             Field field = game.gameData.getFields().get(fieldNumber);
@@ -99,6 +100,24 @@ public class FieldScreen extends Location implements Screen {
                 }
             };
             userInterface.createFieldDialog(d, uiText);
+        } else if (fieldNumber > -1 && !game.gameData.isActionsAvailable()
+                && !userInterface.dialogFocus) {
+            userInterface.dialogFocus = true;
+            uiText = game.myBundle.get("noActions");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        // TODO sleep
+                        resetInputProcessor();
+                        remove();
+                    } else {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
         }
     }
 
