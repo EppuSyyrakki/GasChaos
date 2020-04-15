@@ -1024,15 +1024,16 @@ public class GameData {
          * Array to represent manure slowly composting into fertilizerN and fertilizerP. Change is done
          * in updateResources. Full change takes 9+1 turns.
          */
-        compost[0] = prefs.getInteger("compost0", compost[0]);
-        compost[1] = prefs.getInteger("compost1", compost[1]);
-        compost[2] = prefs.getInteger("compost2", compost[2]);
-        compost[3] = prefs.getInteger("compost3", compost[3]);
-        compost[4] = prefs.getInteger("compost4", compost[4]);
-        compost[5] = prefs.getInteger("compost5", compost[5]);
-        compost[6] = prefs.getInteger("compost6", compost[6]);
-        compost[7] = prefs.getInteger("compost7", compost[7]);
-        compost[8] = prefs.getInteger("compost8", compost[8]);
-        compost[9] = prefs.getInteger("compost9", compost[9]);
+
+        //compost[0] = prefs.getInteger("compost0", compost[0]);
+        //compost[1] = prefs.getInteger("compost1", compost[1]);
+        //compost[2] = prefs.getInteger("compost2", compost[2]);
+        //compost[3] = prefs.getInteger("compost3", compost[3]);
+        //compost[4] = prefs.getInteger("compost4", compost[4]);
+        //compost[5] = prefs.getInteger("compost5", compost[5]);
+        //compost[6] = prefs.getInteger("compost6", compost[6]);
+        //compost[7] = prefs.getInteger("compost7", compost[7]);
+        //compost[8] = prefs.getInteger("compost8", compost[8]);
+        //compost[9] = prefs.getInteger("compost9", compost[9]);
     }
 }
