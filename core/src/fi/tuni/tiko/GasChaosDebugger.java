@@ -46,7 +46,7 @@ public class GasChaosDebugger {
         Gdx.app.log("Economy", "Methane sold = " + gameData.getMethaneSold());
         Gdx.app.log("Economy", "Manure sold = " + gameData.getManureSold());
         Gdx.app.log("Economy", "Garden sold = " + gameData.getGardenSold());
-        Gdx.app.log("Economy", "Feed bought = " + gameData.getFeedBought());
+        Gdx.app.log("Economy", "Feed bought = " + gameData.getGrainBought());
         Gdx.app.log("Economy", "Current turn = " + gameData.getCurrentTurn());
         Gdx.app.log("Economy", "Money = " + gameData.getMoney());
 

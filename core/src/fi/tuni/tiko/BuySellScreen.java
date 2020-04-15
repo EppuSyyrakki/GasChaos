@@ -336,10 +336,10 @@ public class BuySellScreen extends Location implements Screen {
      * enough money
      */
     public void actionBuyFeed(int price, int amount) {
-        if (game.gameData.getGrain() + game.gameData.getFeedBought() < game.gameData.getGrainMax()) {
+        if (game.gameData.getGrain() + game.gameData.getGrainBought() < game.gameData.getGrainMax()) {
             if (game.gameData.getMoney() >= price) {
                 game.gameData.setMoney(game.gameData.getMoney() - price);
-                game.gameData.setFeedBought(game.gameData.getFeedBought() + amount);
+                game.gameData.setGrainBought(game.gameData.getGrainBought() + amount);
                 game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
                 // cow feed bought UI message
                 uiText = game.myBundle.format("buyCowFeed", amount);

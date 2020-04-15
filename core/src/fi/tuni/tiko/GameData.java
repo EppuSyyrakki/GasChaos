@@ -59,7 +59,7 @@ public class GameData {
     private int fertilizerP = 0;    // Phosphorous fertilizer storage
     private int fertilizerPMax = 100;
 
-    private float interest = 1.03f; // 3% interest rate to calculate debt payments
+    private float interest = 0.03f; // 3% interest rate to calculate debt payments
     final int MAX_FIELDS = 6;       // maximum number of fields
     final int OWNED_FIELDS = 2;     // owned fields at start (no rent)
     final int MAX_COWS = 6;         // maximum number of cows
@@ -126,7 +126,9 @@ public class GameData {
      * reset to default in updateResources at end of turn.
      */
     private ArrayList<Cow> cowsBought;
-    private int feedBought;
+    private int grainBought;
+    private int nBought;
+    private int pBought;
     private int[] fieldsRented = new int[MAX_FIELDS - OWNED_FIELDS];   // -2 since first 2 owned, no rent
     private boolean solarPanelBasicBought;
     private boolean solarPanelAdvBought;
@@ -163,9 +165,8 @@ public class GameData {
     private void updateMoney() {
         int milkSold = 0;
         int moneyThisTurn = 0;
-        float floatPayment = debt * interest + debtPayment;
-        int debtPaymentThisTurn = (int)floatPayment;
         int fieldsRentThisTurn = 0;
+        int debtPaymentThisTurn = 0;
         int petrolThisTurn = petrol;
         int electricityThisTurn = electricity;                      // default total 100
 
@@ -202,10 +203,15 @@ public class GameData {
             manureInBarn = manureInBarnMax;
         }
 
-        for (Field field  : fields) {
+        for (Field field : fields) {
             if (field.isRented()) {
                 fieldsRentThisTurn += PRICE_OF_FIELD;
             }
+        }
+
+        if (currentTurn % 2 == 0) { // debt is paid on every other turn.
+            float floatPayment = (float)debt * interest + debtPayment;
+            debtPaymentThisTurn = (int)floatPayment;
         }
 
         moneyThisTurn += grainSold * MONEY_FROM_GRAIN;
@@ -224,6 +230,8 @@ public class GameData {
 
     private void updateThings() {
         cowList.addAll(cowsBought);
+        fertilizerN += nBought;
+        fertilizerP += pBought;
 
         if (solarPanelBasicBought) {
             solarPanelLevel = 1;
@@ -299,6 +307,8 @@ public class GameData {
         gardenSold = 0;
         methaneSold = 0;
         cowsBought.clear();
+        nBought = 0;
+        pBought = 0;
 
         // Old code in case the new optimized one doesn't work
         //for (int i = 0; i < fieldsRented.length; i++) {fieldsRented[i] = 0;}
@@ -556,12 +566,12 @@ public class GameData {
         this.money = money;
     }
 
-    public int getFeedBought() {
-        return feedBought;
+    public int getGrainBought() {
+        return grainBought;
     }
 
-    public void setFeedBought(int feedBought) {
-        this.feedBought = feedBought;
+    public void setGrainBought(int grainBought) {
+        this.grainBought = grainBought;
     }
 
     public int[] getFieldsRented() {
@@ -756,6 +766,14 @@ public class GameData {
         return fertilizerPMax;
     }
 
+    public void setFertilizerNMax(int fertilizerNMax) {
+        this.fertilizerNMax = fertilizerNMax;
+    }
+
+    public void setFertilizerPMax(int fertilizerPMax) {
+        this.fertilizerPMax = fertilizerPMax;
+    }
+
     public int getNSold() {
         return NSold;
     }
@@ -778,6 +796,22 @@ public class GameData {
 
     public void setActionsAvailable(boolean actionsAvailable) {
         this.actionsAvailable = actionsAvailable;
+    }
+
+    public int getnBought() {
+        return nBought;
+    }
+
+    public void setnBought(int nBought) {
+        this.nBought = nBought;
+    }
+
+    public int getpBought() {
+        return pBought;
+    }
+
+    public void setpBought(int pBought) {
+        this.pBought = pBought;
     }
 
     public GameData(ArrayList<Field> fields) {
@@ -812,7 +846,9 @@ public class GameData {
         prefs.putInteger("grainInBarn", getGrainInBarn());
         prefs.putInteger("grainMax", getGrainMax());
         prefs.putInteger("fertilizerN", getFertilizerN());
+        prefs.putInteger("fertilizerNMax", getFertilizerNMax());
         prefs.putInteger("fertilizerP", getFertilizerP());
+        prefs.putInteger("fertilizerPMax", getFertilizerPMax());
         prefs.putFloat("interest", getInterest());
 
         /**
@@ -845,7 +881,9 @@ public class GameData {
          * reset to default in updateResources at end of turn.
          */
 
-        prefs.putInteger("feedBought", getFeedBought());
+        prefs.putInteger("grainBought", getGrainBought());
+        prefs.putInteger("nBought", getnBought());
+        prefs.putInteger("pBought", getpBought());
         prefs.putBoolean("solarPanelBasicBought", isSolarPanelBasicBought());
         prefs.putBoolean("solarPanelAdvBought", isSolarPanelAdvBought());
         prefs.putBoolean("gasCollectorAdvBought", isGasCollectorAdvBought());
@@ -937,7 +975,9 @@ public class GameData {
         setGrainInBarn(prefs.getInteger("grainInBarn", getGrainInBarn()));
         setGrainMax(prefs.getInteger("grainMax", getGrainMax()));
         setFertilizerP(prefs.getInteger("fertilizerP", getFertilizerP()));
+        setFertilizerPMax(prefs.getInteger("fertilizerPMax", getFertilizerPMax()));
         setFertilizerN(prefs.getInteger("fertilizerN", getFertilizerN()));
+        setFertilizerPMax(prefs.getInteger("fertilizerNMax", getFertilizerNMax()));
         setInterest(prefs.getFloat("interest", getInterest()));
 
         /**
@@ -970,7 +1010,9 @@ public class GameData {
          * reset to default in updateResources at end of turn.
          */
 
-        setFeedBought(prefs.getInteger("feedBought", getFeedBought()));
+        setGrainBought(prefs.getInteger("grainBought", getGrainBought()));
+        setnBought(prefs.getInteger("nBought", getnBought()));
+        setpBought(prefs.getInteger("pBought", getpBought()));
         setSolarPanelBasicBought(prefs.getBoolean("solarPanelBasicBought", isSolarPanelBasicBought()));
         setSolarPanelAdvBought(prefs.getBoolean("solarPanelAdvBought", isSolarPanelAdvBought()));
         setGasCollectorAdvBought(prefs.getBoolean("gasCollectorAdvBought", isGasCollectorAdvBought()));
