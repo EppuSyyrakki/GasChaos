@@ -10,7 +10,7 @@ public class Field {
     private boolean owned;
     private boolean rented;
     final int MAX_GROWTH = 200; // with perfect growth this comes in 10 turns.
-    final int REAPABLE = 150;
+    final int REAPABLE_AMOUNT = 150;
 
     public Field(boolean owned, boolean rented) {
         this.owned = owned;

@@ -18,6 +18,8 @@ public class GameData {
     final int MONEY_FROM_GRAIN = 3;
     final int MONEY_FROM_METHANE = 2;
     final int MONEY_FROM_GARDEN = 8;
+    final int MONEY_FROM_N = 2;
+    final int MONEY_FROM_P = 6;
     final int PRICE_OF_COW = 800;
     final int PRICE_OF_FEED = 2;
     final int PRICE_OF_SOLAR = 1000;
@@ -26,6 +28,8 @@ public class GameData {
     final int PRICE_OF_TRACTOR = 1000;
     final int PRICE_OF_GENERATOR = 1000;
     final int PRICE_OF_FIELD = 20;
+    final int PRICE_OF_N = 3;
+    final int PRICE_OF_P = 8;
 
     /**
      * Tracks game progression.
@@ -33,6 +37,7 @@ public class GameData {
     private int currentTurn = 1;
     private int actionsDone = 0;
     final int MAX_ACTIONS = 3;  // actions per turn
+    private boolean actionsAvailable;
 
     /**
      * Resource amounts and limits
@@ -53,13 +58,11 @@ public class GameData {
     private int fertilizerP = 0;    // Phosphorous fertilizer storage
     private int fertilizerPMax = 100;
 
-
-    private float interest = 1.03f; // 5% interest rate to calculate debt payments
+    private float interest = 1.03f; // 3% interest rate to calculate debt payments
     final int MAX_FIELDS = 6;       // maximum number of fields
     final int OWNED_FIELDS = 2;     // owned fields at start (no rent)
     final int MAX_COWS = 6;         // maximum number of cows
     final int MANURE_SHOVELED = 100;// how much manure removed from barn in single remove action
-    final int MANURE_TO_SELL = 1000;
     final int MAX_P_PER_FIELD = 13; // max phosphorous per field before penalty
     final int MAX_N_NER_FIELD = 80; // max nitrogen per field before penalty
     final int MANURE_DANGER = 200;  // when amount of manure will affect milk production.
@@ -84,12 +87,22 @@ public class GameData {
 
     /**
      * Income per turn. Touched only if sold this turn.
+     * TODO add these to save game
      */
     private int grainSold;
     private int methaneSold;
     private int manureSold;
     private int gardenSold;
+    private int NSold;
+    private int PSold;
     // also milk is sold every turn in updateResources
+
+    /**
+     * Array to represent manure slowly composting into fertilizerN and fertilizerP. Change is done
+     * in updateResources. Full change takes 9+1 turns.
+     * TODO add this to save game
+     */
+    private int[] compost = new int[9];
 
     /**
      * All fields in FieldScreen. All fields exist at start of game.
@@ -136,7 +149,8 @@ public class GameData {
         updateThings(); // update device levels, bought resources and cows
         updateGarden(); // update garden vegetable growth
         updateFields(); // update fields growth
-        resetVariables();  // reset xSold to 0 and xBought to false, also reset eatenThisTurn in cows.
+        updateCompost();    // slowly turn manure into fertilizers
+        resetVariables();   // xSold to 0 and xBought to false, also reset eatenThisTurn in cows.
     }
 
     private void updateMoney() {
@@ -192,6 +206,8 @@ public class GameData {
         moneyThisTurn += gardenSold * MONEY_FROM_GARDEN;
         moneyThisTurn += methaneSold * MONEY_FROM_METHANE;
         moneyThisTurn += milkSold * MONEY_FROM_MILK;
+        moneyThisTurn += NSold * MONEY_FROM_N;
+        moneyThisTurn += PSold * MONEY_FROM_P;
         moneyThisTurn -= debtPaymentThisTurn;
         moneyThisTurn -= electricityThisTurn;
         moneyThisTurn -= petrolThisTurn;
@@ -266,6 +282,10 @@ public class GameData {
         }
     }
 
+    private void updateCompost() {
+        // TODO 10 turns of composting, each turn amount * 0.1 so ends up 1/100 of original
+    }
+
     private void resetVariables() {
         grainSold = 0;
         manureSold = 0;
@@ -293,6 +313,13 @@ public class GameData {
         }
         cowList = new ArrayList<Cow>();
         cowList.add(new Cow());
+        cowsBought = new ArrayList<Cow>();
+
+        if (actionsDone < MAX_ACTIONS) {
+            actionsAvailable = true;
+        } else {
+            actionsAvailable = false;
+        }
     }
 
     public int getActionsDone() {
@@ -301,6 +328,9 @@ public class GameData {
 
     public void setActionsDone(int actionsDone) {
         this.actionsDone = actionsDone;
+        if (getActionsDone() >= MAX_ACTIONS) {
+            setActionsAvailable(false);
+        }
     }
 
     public int getManure() {
@@ -723,13 +753,33 @@ public class GameData {
         return fertilizerPMax;
     }
 
+    public int getNSold() {
+        return NSold;
+    }
+
+    public void setNSold(int NSold) {
+        this.NSold = NSold;
+    }
+
+    public int getPSold() {
+        return PSold;
+    }
+
+    public void setPSold(int PSold) {
+        this.PSold = PSold;
+    }
+
+    public boolean isActionsAvailable() {
+        return actionsAvailable;
+    }
+
+    public void setActionsAvailable(boolean actionsAvailable) {
+        this.actionsAvailable = actionsAvailable;
+    }
+
     public GameData(ArrayList<Field> fields) {
         this.fields = fields;
     }
-
-
-
-
 
     public void saveGame() {
 
@@ -742,6 +792,7 @@ public class GameData {
          */
         prefs.putInteger("currentTurn", getCurrentTurn());
         prefs.putInteger("actionsDone", getActionsDone());
+        prefs.putBoolean("actionsAvailable", isActionsAvailable());
 
         /**
          * Resource amounts.
@@ -754,9 +805,11 @@ public class GameData {
         prefs.putInteger("methane", getMethane());
         prefs.putInteger("methaneMax", getMethaneMax());
         prefs.putInteger("debt", getDebt());
-        prefs.putInteger("feed", getGrain());
-        prefs.putInteger("feedInBarn", getGrainInBarn());
-        prefs.putInteger("feedMax", getGrainMax());
+        prefs.putInteger("grain", getGrain());
+        prefs.putInteger("grainInBarn", getGrainInBarn());
+        prefs.putInteger("grainMax", getGrainMax());
+        prefs.putInteger("fertilizerN", getFertilizerN());
+        prefs.putInteger("fertilizerP", getFertilizerP());
         prefs.putFloat("interest", getInterest());
 
         /**
@@ -839,6 +892,7 @@ public class GameData {
          */
         setCurrentTurn(prefs.getInteger("currentTurn", getCurrentTurn()));
         setActionsDone(prefs.getInteger("actionsDone", getActionsDone()));
+        setActionsAvailable(prefs.getBoolean("actionsAvailable"));
 
         /**
          * Resource amounts.
@@ -851,9 +905,11 @@ public class GameData {
         setMethane(prefs.getInteger("methane", getMethane()));
         setMethaneMax(prefs.getInteger("methaneMax", getMethaneMax()));
         setDebt(prefs.getInteger("debt", getDebt()));
-        setGrain(prefs.getInteger("feed", getGrain()));
-        setGrainInBarn(prefs.getInteger("feedInBarn", getGrainInBarn()));
-        setGrainMax(prefs.getInteger("feedMax", getGrainMax()));
+        setGrain(prefs.getInteger("grain", getGrain()));
+        setGrainInBarn(prefs.getInteger("grainInBarn", getGrainInBarn()));
+        setGrainMax(prefs.getInteger("grainMax", getGrainMax()));
+        setFertilizerP(prefs.getInteger("fertilizerP", getFertilizerP()));
+        setFertilizerN(prefs.getInteger("fertilizerN", getFertilizerN()));
         setInterest(prefs.getFloat("interest", getInterest()));
 
         /**

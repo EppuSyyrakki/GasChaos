@@ -78,25 +78,15 @@ public class FarmScreen extends Location implements Screen {
     public void checkActionRectangles() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
             game.setMenuScreen();
-        }
-
-        if (getRec("RectangleHome")) {    // condition enter home
+        } else if (getRec("RectangleHome")) {    // condition enter home
             game.setHomeScreen();
-        }
-
-        if (getRec("RectangleBarn")) {    // condition enter barn
+        } else if (getRec("RectangleBarn")) {    // condition enter barn
             game.setBarnScreen();
-        }
-
-        if (getRec("RectangleGarden")) {    // condition enter garden
+        } else if (getRec("RectangleGarden")) {    // condition enter garden
             game.setGardenScreen();
-        }
-
-        if (getRec("RectangleField")) {    // condition enter fields
+        } else if (getRec("RectangleField")) {    // condition enter fields
             game.setFieldScreen();
-        }
-
-        if (getRec("RectangleGasTank")) {    // condition enter gasTank
+        } else if (getRec("RectangleGasTank")) {    // condition enter gasTank
             game.setGasTankScreen();
         }
     }

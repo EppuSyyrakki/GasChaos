@@ -84,4 +84,18 @@ public class UserInterface {
         dialog.pack();
         dialog.show(stage);
     }
+
+    public void createFieldDialog(Dialog dialog, String text) { // TODO dialog with many buttons
+        Gdx.input.setInputProcessor(stage);
+        Label label = new Label(text, new Label.LabelStyle(font, Color.WHITE));
+        label.setWrap(true);
+        dialog.setMovable(false);
+        dialog.setSize(width * 0.75f, height * 0.3f);
+        dialog.setPosition(width / 2 - dialog.getWidth() / 2, height / 2 - dialog.getHeight());
+        dialog.getContentTable().add(label).width(dialog.getWidth() - 30f);
+        dialog.button(cancelButton, 0);
+        dialog.pad(20f, 20f, 20f, 20f);
+        dialog.pack();
+        dialog.show(stage);
+    }
 }

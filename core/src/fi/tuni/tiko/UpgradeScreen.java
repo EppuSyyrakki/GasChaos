@@ -58,9 +58,8 @@ public class UpgradeScreen extends Location implements Screen {
         if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
                 && !userInterface.dialogFocus) {
             game.setComputerScreen();
-        }
-
-        if (getUIRec("RectangleSolarBasic") && !userInterface.dialogFocus) {    // buy solar panel basic
+        } else if (getUIRec("RectangleSolarBasic") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {    // buy solar panel basic
             userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuySolarPanelBasic",
                     game.gameData.PRICE_OF_SOLAR);
@@ -77,9 +76,8 @@ public class UpgradeScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleSolarAdvanced") && !userInterface.dialogFocus) {    // buy solar panel advanced
+        } else if (getUIRec("RectangleSolarAdvanced") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {    // buy solar panel advanced
             userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuySolarPanelAdvanced",
                     game.gameData.PRICE_OF_SOLAR);
@@ -96,9 +94,8 @@ public class UpgradeScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleGasCollector") && !userInterface.dialogFocus) {     // buy advanced gas collector
+        } else if (getUIRec("RectangleGasCollector") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {     // buy advanced gas collector
             userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuyGasCollectorAdvanced",
                     game.gameData.PRICE_OF_COLLECTOR);
@@ -115,9 +112,8 @@ public class UpgradeScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleMilkingMachine") && !userInterface.dialogFocus) {    // buy advanced milking machine
+        } else if (getUIRec("RectangleMilkingMachine") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {    // buy advanced milking machine
             userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuyMilkingMachineAdvanced",
                     game.gameData.PRICE_OF_MILKING);
@@ -134,9 +130,8 @@ public class UpgradeScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleTractorAdvanced") && !userInterface.dialogFocus) {
+        } else if (getUIRec("RectangleTractorAdvanced") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuyTractorAdvanced",
                     game.gameData.PRICE_OF_TRACTOR);
@@ -153,9 +148,8 @@ public class UpgradeScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleTractorGas") && !userInterface.dialogFocus) {
+        } else if (getUIRec("RectangleTractorGas") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuyTractorGas",
                     game.gameData.PRICE_OF_TRACTOR);
@@ -172,9 +166,8 @@ public class UpgradeScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleGasGenerator") && !userInterface.dialogFocus) {    // buy gas generator
+        } else if (getUIRec("RectangleGasGenerator") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {    // buy gas generator
             userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuyGasGenerator",
                     game.gameData.PRICE_OF_GENERATOR);
@@ -191,6 +184,26 @@ public class UpgradeScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
+        } else if (!game.gameData.isActionsAvailable() && (
+                getUIRec("RectangleBuyCow") ||
+                getUIRec("RectangleSolarBasic") ||
+                getUIRec("RectangleSolarAdvanced") ||
+                getUIRec("RectangleGasGenerator") ||
+                getUIRec("RectangleTractorGas") ||
+                getUIRec("RectangleTractorAdvanced") ||
+                getUIRec("RectangleMilkingMachine") ||
+                getUIRec("RectangleGasCollector"))) {
+            uiText = game.myBundle.get("noActions");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
         }
     }
 

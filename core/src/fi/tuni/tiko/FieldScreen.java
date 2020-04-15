@@ -19,6 +19,7 @@ public class FieldScreen extends Location implements Screen {
     Texture growth2;
     Texture growth3;
     Texture growth4;
+    Texture growth5;
     Texture river1;
     Texture river2;
     Texture river3;
@@ -32,6 +33,7 @@ public class FieldScreen extends Location implements Screen {
         growth2 = new Texture("growth2.png");
         growth3 = new Texture("growth3.png");
         growth4 = new Texture("growth4.png");
+        growth5 = new Texture("growth5.png");
         river1 = new Texture("river1.png");
         river2 = new Texture("river1.png");
         river3 = new Texture("river1.png");
@@ -62,51 +64,119 @@ public class FieldScreen extends Location implements Screen {
             fadeFromBlack();
         }
 
-        // River has 3 parts, each moves at river speed to the right.
-        // When river texture is at 10 (offscreen to the right)
-        // it moves to -8 (Mostly offscreen to the left)
+        batch.begin();
+        drawRiver();
+        drawFields();
+        black.draw(batch, blackness);
+        batch.end();
+
+        userInterface.render(game.gameData);
+        checkActionRectangles();
+    }
+
+    private void checkActionRectangles() {
+        int fieldNumber = getTouchedFieldNumber();
+
+        if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
+                && !userInterface.dialogFocus) {
+            game.setFarmScreen();
+        } else if (fieldNumber > -1 && !userInterface.dialogFocus) {
+            userInterface.dialogFocus = true;
+            boolean[] actions = availableActions(fieldNumber);
+            Field field = game.gameData.getFields().get(fieldNumber);
+            uiText = getUIText(actions, field);
+
+            Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    int result = (int)object;
+                    if (result == 0) {
+                        resetInputProcessor();
+                        remove();
+                    } else {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createFieldDialog(d, uiText);
+        }
+    }
+
+    /**
+     * Picks and formats correct UI text for given field.
+     */
+    private String getUIText(boolean[] actions, Field field) {
+        String text = "";
+        if (actions[4] && field.getAmount() < field.REAPABLE_AMOUNT && field.getAmount() > 0) {
+            text = game.myBundle.format("fieldGrowingNotReady", field.getAmount());
+        } else if (actions[4] && field.getAmount() >= field.REAPABLE_AMOUNT
+                && field.getAmount() < field.MAX_GROWTH) {
+            text = game.myBundle.format("fieldGrowingReady", field.getAmount());
+        } else if (actions[4] && field.getAmount() >= field.MAX_GROWTH) {
+            text = game.myBundle.format("fieldReady", field.getAmount());
+        } else if (actions[4] && field.getAmount() == 0) {
+            text = game.myBundle.get("fieldNotSown");
+        } else if (!actions[4]) {
+            text = game.myBundle.get("fieldNotYours");
+        }
+
+        if (actions[4]) {
+            float reportedN = (float)field.getFertilizerN() * (float)Math.random() * 0.3f + 0.9f;
+            float reportedP = (float)field.getFertilizerP() * (float)Math.random() * 0.3f + 0.9f;
+            text = text + game.myBundle.format("fieldNP",
+                    (int)reportedN, game.gameData.MAX_N_NER_FIELD,
+                    (int)reportedP, game.gameData.MAX_P_PER_FIELD);
+        }
+        return text;
+    }
+
+    /**
+     * River has 3 parts, each moves at river speed to the right. When river texture is at 10
+     * (offscreen to the right) it moves to -8 (Mostly offscreen to the left)
+     */
+    private void drawRiver() {
         riverX1 = riverX1 + riverSpeed * Gdx.graphics.getDeltaTime();
         riverX2 = riverX2 + riverSpeed * Gdx.graphics.getDeltaTime();
         riverX3 = riverX3 + riverSpeed * Gdx.graphics.getDeltaTime();
         if (riverX1 > 10) {riverX1 = -8f;}
         if (riverX2 > 10) {riverX2 = -8f;}
         if (riverX3 > 10) {riverX3 = -8f;}
-
-        batch.begin();
         batch.draw(river1, riverX1,0, WORLD_WIDTH, WORLD_HEIGHT);
         batch.draw(river2, riverX2,0, WORLD_WIDTH, WORLD_HEIGHT);
         batch.draw(river3, riverX3,0, WORLD_WIDTH, WORLD_HEIGHT);
-        black.draw(batch, blackness);
-        batch.end();
+    }
 
-        userInterface.render(game.gameData);
+    private void drawFields() {
+        for (int i = 0; i < game.gameData.MAX_FIELDS; i++) {
+            int growth = game.gameData.getFields().get(i).getAmount();
 
-        if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
-                && !userInterface.dialogFocus) {
-            game.setFarmScreen();
+            if (i == 0 && growth > 0) {
+                batch.draw(getFieldTexture(growth), 0.75f, 7.2f, 3.5f, 2.2f);
+            } else if (i == 1 && growth > 0) {
+                batch.draw(getFieldTexture(growth), 4.75f, 7.2f, 3.5f, 2.2f);
+            } else if (i == 2 && growth > 0) {
+                batch.draw(getFieldTexture(growth), 0.75f, 4.5f, 3.5f, 2.2f);
+            } else if (i == 3 && growth > 0) {
+                batch.draw(getFieldTexture(growth), 4.75f, 4.5f, 3.5f, 2.2f);
+            } else if (i == 4 && growth > 0) {
+                batch.draw(getFieldTexture(growth), 0.75f, 1.8f, 3.5f, 2.2f);
+            } else if (i == 5 && growth > 0) {
+                batch.draw(getFieldTexture(growth), 4.75f, 1.8f, 3.5f, 2.2f);
+            }
         }
+    }
 
-        if (getTouchedFieldNumber() > -1 && !userInterface.dialogFocus) {
-            userInterface.dialogFocus = true;
-            boolean[] actions = availableActions(getTouchedFieldNumber());
-            // UI available actions to this field
-            uiText = game.myBundle.format("");
-
-            Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
-                protected void result(Object object) {  // TODO dialog window for different actions
-                    boolean result = (boolean)object;
-                    if (result) {
-                        userInterface.dialogFocus = false;
-                        resetInputProcessor();
-                        remove();
-                    } else {
-                        userInterface.dialogFocus = false;
-                        resetInputProcessor();
-                        remove();
-                    }
-                }
-            };
-            userInterface.createDialog(d, uiText, true);
+    private Texture getFieldTexture(int growth) {
+        if (growth > 20 && growth < 50) {
+            return growth2;
+        } else if (growth >= 51 && growth < 100) {
+            return growth3;
+        } else if (growth >= 100 && growth < 150) {
+            return growth4;
+        } else if (growth >= 150)  {
+            return growth5;
+        } else {
+            return growth1;
         }
     }
 
@@ -118,26 +188,27 @@ public class FieldScreen extends Location implements Screen {
      * [3] = reap
      * [4] = fertilize (both N and P actions)
      */
-    public boolean[] availableActions(int number) {
+    private boolean[] availableActions(int number) {
         boolean[] available = {false, false, false, false, false};
         ArrayList<Field> fields = game.gameData.getFields();
+        if (number > -1) {
+            Field field = fields.get(number);
 
-        Field field = fields.get(number);
-
-        if (!field.isOwned() && !field.isRented()) {
-            available[0] = true;
-        }
-        if (field.isRented() && field.getAmount() == 0) {
-            available[1] = true;
-        }
-        if (field.getAmount() == 0) {
-            available[2] = true;
-        }
-        if (field.getAmount() >= field.REAPABLE) {
-            available[3] = true;
-        }
-        if (field.isOwned() || field.isRented()) {
-            available[4] = true;
+            if (!field.isOwned() && !field.isRented()) {
+                available[0] = true;
+            }
+            if (field.isRented() && field.getAmount() == 0) {
+                available[1] = true;
+            }
+            if (field.getAmount() == 0) {
+                available[2] = true;
+            }
+            if (field.getAmount() >= field.REAPABLE_AMOUNT) {
+                available[3] = true;
+            }
+            if (field.isOwned() || field.isRented()) {
+                available[4] = true;
+            }
         }
         return available;
     }
@@ -151,7 +222,6 @@ public class FieldScreen extends Location implements Screen {
         field.setAmount(1);
         tmpFields.set(number, field);
         game.gameData.setFields(tmpFields);
-
         // field sown UI message
         uiText = game.myBundle.get("sowFieldComplete");
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
@@ -173,13 +243,13 @@ public class FieldScreen extends Location implements Screen {
         ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
         int amount = game.gameData.MAX_N_NER_FIELD / 2;
+        float reportAmount = (float)field.getFertilizerN() * ((float)Math.random() * 0.2f + 0.9f);
         field.setFertilizerN(field.getFertilizerN() + amount);
         tmpFields.set(number, field);
         game.gameData.setFields(tmpFields);
-
         // nitrogen added to field UI message
-        uiText = game.myBundle.get("fertilizeFieldNitrogen");
-        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+        uiText = game.myBundle.format("fertilizeFieldN", (int)reportAmount);
+        Dialog d = new Dialog(game.myBundle.format("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean)object;
                 if (result) {
@@ -198,12 +268,22 @@ public class FieldScreen extends Location implements Screen {
         ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
         int amount = game.gameData.MAX_P_PER_FIELD / 2;
+        float reportAmount = (float)field.getFertilizerN() * ((float)Math.random() * 0.2f + 0.9f);
         field.setFertilizerP(field.getFertilizerP() + amount);
         tmpFields.set(number, field);
         game.gameData.setFields(tmpFields);
-
-        // TODO phosphorous added to field UI message
-
+        // phosphorous added to field UI message
+        uiText = game.myBundle.format("fertilizeFieldP", reportAmount);
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean)object;
+                if (result) {
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.createDialog(d, uiText, false);
     }
 
     /**
@@ -224,40 +304,66 @@ public class FieldScreen extends Location implements Screen {
         game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
         tmpFields.set(number, field);
         game.gameData.setFields(tmpFields);
-
-        // TODO grain reaped and sold UI message
+        // grain reaped and stored UI message
+        uiText = game.myBundle.format("reapFieldComplete", (int)amount);
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean)object;
+                if (result) {
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.createDialog(d, uiText, false);
     }
 
     /**
      * Change field.isRented at index number to true.
      */
-    public GameData actionRentNewField(GameData data, int number) {
-        ArrayList<Field> tmpFields = data.getFields();
+    public void actionRentNewField(int number) {
+        ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
         field.setRented(true);
-        data.setActionsDone(data.getActionsDone() + 1);
-
-        // TODO new field rented UI message
-
+        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
         tmpFields.set(number, field);
-        data.setFields(tmpFields);
-        return data;
+        game.gameData.setFields(tmpFields);
+        // new field rented UI message
+        uiText = game.myBundle.get("rentNewFieldComplete");
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean)object;
+                if (result) {
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.createDialog(d, uiText, false);
     }
 
     /**
      * Change field.isRented at index number to false.
      */
-    public GameData actionStopRentingField(GameData data, int number) {
-        ArrayList<Field> tmpFields = data.getFields();
+    public void actionStopRentingField(int number) {
+        ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
         field.setRented(false);
-        data.setActionsDone(data.getActionsDone() + 1);
-
-        // TODO stopped renting field UI message
-
+        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
         tmpFields.set(number, field);
-        data.setFields(tmpFields);
-        return data;
+        game.gameData.setFields(tmpFields);
+        // stopped renting field UI message
+        uiText = game.myBundle.get("stopRentingFieldComplete");
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean)object;
+                if (result) {
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.createDialog(d, uiText, false);
     }
 
     @Override
@@ -289,8 +395,16 @@ public class FieldScreen extends Location implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+        growth1.dispose();
+        growth2.dispose();
+        growth3.dispose();
+        growth4.dispose();
+        growth5.dispose();
+        river1.dispose();
+        river2.dispose();
+        river3.dispose();
+        tiledMap.dispose();
     }
-
 
     /**
      * Index number for the field player touched
@@ -298,17 +412,17 @@ public class FieldScreen extends Location implements Screen {
     public int getTouchedFieldNumber() {
         int fieldNumber = -1;
 
-        if (getUIRec("RectangleField1")) {
+        if (getUIRec("RectangleField1") && !userInterface.dialogFocus) {
             fieldNumber = 0;
-        } else if (getUIRec("RectangleField2")) {
+        } else if (getUIRec("RectangleField2") && !userInterface.dialogFocus) {
             fieldNumber = 1;
-        } else if (getUIRec("RectangleField3")) {
+        } else if (getUIRec("RectangleField3") && !userInterface.dialogFocus) {
             fieldNumber = 2;
-        } else if (getUIRec("RectangleField4")) {
+        } else if (getUIRec("RectangleField4") && !userInterface.dialogFocus) {
             fieldNumber = 3;
-        } else if (getUIRec("RectangleField5")) {
+        } else if (getUIRec("RectangleField5") && !userInterface.dialogFocus) {
             fieldNumber = 4;
-        } else if (getUIRec("RectangleField6")) {
+        } else if (getUIRec("RectangleField6") && !userInterface.dialogFocus) {
             fieldNumber = 5;
         }
         return fieldNumber;

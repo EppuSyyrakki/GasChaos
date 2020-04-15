@@ -19,8 +19,7 @@ public class GardenScreen extends Location implements Screen {
         this.camera = camera;
         this.game = game;
         userInterface = new UserInterface(game.myBundle);
-        Gdx.input.setInputProcessor(this);
-        Gdx.input.setCatchKey(Input.Keys.BACK, true);
+        resetInputProcessor();
         tiledMap = new TmxMapLoader().load("Garden.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
     }
@@ -48,11 +47,9 @@ public class GardenScreen extends Location implements Screen {
         if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
             && !userInterface.dialogFocus) {
             game.setFarmScreen();
-        }
-
-        if (getUIRec("RectangleWeed") && !userInterface.dialogFocus) {    // condition weed garden
-            uiText = game.myBundle.format("askWeedGarden");
+        } else if (getUIRec("RectangleWeed") && !userInterface.dialogFocus) {
             userInterface.dialogFocus = true;
+            uiText = game.myBundle.format("askWeedGarden");
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -60,18 +57,15 @@ public class GardenScreen extends Location implements Screen {
                         actionWeedGarden();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleSell") && !userInterface.dialogFocus) {    // condition sell garden
-            uiText = game.myBundle.format("askSellGarden");
+        } else if (getUIRec("RectangleSell") && !userInterface.dialogFocus) {
             userInterface.dialogFocus = true;
+            uiText = game.myBundle.format("askSellGarden");
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -79,18 +73,15 @@ public class GardenScreen extends Location implements Screen {
                         actionSellGarden();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectanglePlant") && !userInterface.dialogFocus) {    // condition plant garden
-            uiText = game.myBundle.format("askPlantGarden");
+        } else if (getUIRec("RectanglePlant") && !userInterface.dialogFocus) {
             userInterface.dialogFocus = true;
+            uiText = game.myBundle.format("askPlantGarden");
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -98,7 +89,6 @@ public class GardenScreen extends Location implements Screen {
                         actionPlantGarden();
                         remove();
                     } else {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -122,7 +112,6 @@ public class GardenScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -136,7 +125,6 @@ public class GardenScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -157,7 +145,6 @@ public class GardenScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -174,7 +161,6 @@ public class GardenScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -199,7 +185,6 @@ public class GardenScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -213,7 +198,6 @@ public class GardenScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
                     }
@@ -256,6 +240,7 @@ public class GardenScreen extends Location implements Screen {
     }
 
     private void resetInputProcessor() {
+        userInterface.dialogFocus = false;
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }

@@ -13,7 +13,6 @@ public class GasTankScreen extends Location implements Screen {
     private final GasChaosMain game;
 
     public GasTankScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        super();
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -30,26 +29,26 @@ public class GasTankScreen extends Location implements Screen {
         batch.setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
 
         if (fadeIn) {
             fadeFromBlack();
         }
 
         batch.begin();
-        batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         black.draw(batch, blackness);
         batch.end();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
+        userInterface.render(game.gameData);
+
+        if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
+                && !userInterface.dialogFocus) {
             game.setFarmScreen();
         }
 
         if (false) {    // condition open emergency valve
             game.gameData = actionOpenEmergencyValve(game.gameData);
-        }
-
-        if (false) {    // condition sell gas
-            game.gameData = actionSellGas(game.gameData);
         }
     }
 
@@ -107,5 +106,11 @@ public class GasTankScreen extends Location implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+    }
+
+    private void resetInputProcessor() {
+        userInterface.dialogFocus = false;
+        Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
 }

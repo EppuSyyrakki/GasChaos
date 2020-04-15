@@ -64,9 +64,8 @@ public class BuySellScreen extends Location implements Screen {
         if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK ) || getUIRec("RectangleExit"))
                 && !userInterface.dialogFocus) {
             game.setComputerScreen();
-        }
-
-        if (getUIRec("RectangleBuyCow") && !userInterface.dialogFocus) {    // buy cow
+        } else if (getUIRec("RectangleBuyCow") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuyCow", game.gameData.PRICE_OF_COW);
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
@@ -82,9 +81,8 @@ public class BuySellScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleBuyGrain") && !userInterface.dialogFocus) {    // buy feed
+        } else if (getUIRec("RectangleBuyGrain") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
             final int amount = game.gameData.getCowList().get(0).getFeed() * 10;
             final int price = game.gameData.PRICE_OF_FEED * amount;
@@ -104,16 +102,19 @@ public class BuySellScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleBuyN") && !userInterface.dialogFocus) {
+        } else if (getUIRec("RectangleBuyN") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
-            uiText = game.myBundle.format("askBuyN");
+            final int amount = game.gameData.getFertilizerNMax() / 5;
+            final int price = amount * game.gameData.PRICE_OF_N;
+            uiText = game.myBundle.format("askBuyN", amount, price,
+                    game.gameData.getFertilizerN(),
+                    game.gameData.getFertilizerNMax());
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        // TODO implement actionBuyN();
+                        actionBuyN(amount, price);
                         remove();
                     } else {
                         resetInputProcessor();
@@ -122,16 +123,19 @@ public class BuySellScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleBuyP") && !userInterface.dialogFocus) {
+        } else if (getUIRec("RectangleBuyP") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
-            uiText = game.myBundle.format("askBuyP");
+            final int amount = game.gameData.getFertilizerPMax() / 5;
+            final int price = amount * game.gameData.PRICE_OF_P;
+            uiText = game.myBundle.format("askBuyP", amount, price,
+                    game.gameData.getFertilizerP(),
+                    game.gameData.getFertilizerPMax());
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        // TODO implement actionBuyP();
+                        actionBuyP(amount, price);
                         remove();
                     } else {
                         resetInputProcessor();
@@ -140,18 +144,17 @@ public class BuySellScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleSellManure") && !userInterface.dialogFocus) {    // sell manure
+        } else if (getUIRec("RectangleSellManure") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {    // sell manure
             userInterface.dialogFocus = true;
-            uiText = game.myBundle.format("askSellManure",
-                    game.gameData.MANURE_TO_SELL,
-                    game.gameData.MONEY_FROM_MANURE * game.gameData.MANURE_TO_SELL);
+            final int amount = game.gameData.getManure() / 2;
+            final int price = amount * game.gameData.MONEY_FROM_MANURE;
+            uiText = game.myBundle.format("askSellManure", amount, price);
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        actionSellManure();
+                        actionSellManure(amount, price);
                         remove();
                     } else {
                         resetInputProcessor();
@@ -160,16 +163,17 @@ public class BuySellScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleSellGrain") && !userInterface.dialogFocus) {
+        } else if (getUIRec("RectangleSellGrain") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
-            uiText = game.myBundle.format("askSellGrain");
+            final int amount = game.gameData.getGrain() / 2;
+            final int price = amount * game.gameData.MONEY_FROM_GRAIN;
+            uiText = game.myBundle.format("askSellGrain", amount, price);
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        // TODO implement actionSellGrain();
+                        actionSellGrain(amount, price);
                         remove();
                     } else {
                         resetInputProcessor();
@@ -178,16 +182,17 @@ public class BuySellScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleSellGas") && !userInterface.dialogFocus) {
+        } else if (getUIRec("RectangleSellGas") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
-            uiText = game.myBundle.format("askSellGas");
+            final int amount = game.gameData.getMethane() / 2;
+            final int price = amount * game.gameData.MONEY_FROM_METHANE;
+            uiText = game.myBundle.format("askSellGas", amount, price);
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        // TODO implement actionSellGas();
+                        actionSellGas(amount, price);
                         remove();
                     } else {
                         resetInputProcessor();
@@ -196,16 +201,17 @@ public class BuySellScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleSellN") && !userInterface.dialogFocus) {
+        } else if (getUIRec("RectangleSellN") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
+            final int amount = game.gameData.getFertilizerN() / 2;
+            final int price = amount * game.gameData.MONEY_FROM_N;
             uiText = game.myBundle.format("askSellN");
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        // TODO implement actionSellN();
+                        actionSellN(amount, price);
                         remove();
                     } else {
                         resetInputProcessor();
@@ -214,21 +220,47 @@ public class BuySellScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
-        }
-
-        if (getUIRec("RectangleSellP") && !userInterface.dialogFocus) {
+        } else if (getUIRec("RectangleSellP") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
+            final int amount = game.gameData.getFertilizerP() / 2;
+            final int price = amount * game.gameData.MONEY_FROM_P;
             uiText = game.myBundle.format("askSellP");
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
-                        // TODO implement actionSellP();
+                        actionSellP(amount, price);
                         remove();
                     } else {
                         resetInputProcessor();
                         remove();
                     };
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
+        } else if (!game.gameData.isActionsAvailable() && (
+                getUIRec("RectangleBuyCow") ||
+                getUIRec("RectangleBuyGrain") ||
+                getUIRec("RectangleBuyN") ||
+                getUIRec("RectangleBuyP") ||
+                getUIRec("RectangleSellManure") ||
+                getUIRec("RectangleSellGrain") ||
+                getUIRec("RectangleSellGas") ||
+                getUIRec("RectangleSellN") ||
+                getUIRec("RectangleSellP"))) {
+            uiText = game.myBundle.get("noActions");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        // TODO sleep
+                        resetInputProcessor();
+                        remove();
+                    } else {
+                        resetInputProcessor();
+                        remove();
+                    }
                 }
             };
             userInterface.createDialog(d, uiText, true);
@@ -318,7 +350,7 @@ public class BuySellScreen extends Location implements Screen {
                 game.gameData.setMoney(game.gameData.getMoney() - price);
                 game.gameData.setFeedBought(game.gameData.getFeedBought() + amount);
                 game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
-                // 300 cow feed bought UI message
+                // cow feed bought UI message
                 uiText = game.myBundle.format("buyCowFeed", amount);
                 Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                     protected void result(Object object) {
@@ -332,7 +364,7 @@ public class BuySellScreen extends Location implements Screen {
                 userInterface.createDialog(d, uiText, false);
             } else {
                 // not enough money UI message
-                uiText = game.myBundle.get("buyCowFeedNoMoney");
+                uiText = game.myBundle.format("buyCowFeedNoMoney", price, amount);
                 Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
@@ -361,17 +393,260 @@ public class BuySellScreen extends Location implements Screen {
     }
 
     /**
-     * Reduce data.manure by MANURE_TO_SELL if possible and increase data.manureSold by same amount
+     * Increase gameData.FertilizerN by a fifth of the maximum amount. Blocked if not enough money
+     * or if storage would go over the limit after addition.
      */
-    public void actionSellManure() {
-        if (game.gameData.getManure() >= game.gameData.MANURE_TO_SELL) {
-            game.gameData.setManure(game.gameData.getManure() -
-                    game.gameData.MANURE_TO_SELL);
-            game.gameData.setManureSold(game.gameData.getManureSold() +
-                    game.gameData.MANURE_TO_SELL);
+    public void actionBuyN(int amount, int price) {
+        if (game.gameData.getMoney() < price) {
+            // not enough money UI message
+            uiText = game.myBundle.format("buyNNoMoney", price);
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        } else if (game.gameData.getFertilizerN() + amount >= game.gameData.getFertilizerNMax()){
+            // N storage would be full UI message
+            uiText = game.myBundle.format("buyNFull", price);
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        } else {
+            game.gameData.setFertilizerN(game.gameData.getFertilizerN() + amount);
+            game.gameData.setMoney(game.gameData.getMoney() - price);
+            game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
+            // N bought UI message
+            uiText = game.myBundle.format("buyNComplete", amount);
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        }
+    }
+
+    /**
+     * Increase gameData.FertilizerP by a fifth of the maximum amount. Blocked if not enough money
+     * or if storage would go over the limit after addition.
+     */
+    public void actionBuyP(int amount, int price) {
+        if (game.gameData.getMoney() < price) {
+            // not enough money UI message
+            uiText = game.myBundle.format("buyPNoMoney", price);
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        } else if (game.gameData.getFertilizerP() + amount >= game.gameData.getFertilizerPMax()){
+            // N storage would be full UI message
+            uiText = game.myBundle.format("buyPFull", price);
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        } else {
+            game.gameData.setFertilizerP(game.gameData.getFertilizerP() + amount);
+            game.gameData.setMoney(game.gameData.getMoney() - price);
+            game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
+            // N bought UI message
+            uiText = game.myBundle.format("buyPComplete", amount);
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        }
+    }
+
+    /**
+     * Decrease data.grain by half and increase grainSold by same amount. Blocked if amount = 0.
+     */
+    public void actionSellGrain(int amount, int price) {
+        if (amount > 0) {
+            game.gameData.setGrain(game.gameData.getGrain() - amount);
+            game.gameData.setGrainSold(game.gameData.getGrainSold() + amount);
+            game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
+            // Grain sold UI message
+            uiText = game.myBundle.format("sellGrainComplete", amount, price);
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        } else {
+            // Not enough grain to sell UI message
+            uiText = game.myBundle.get("sellGrainNotEnough");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        }
+    }
+
+    /**
+     * Decrease data.methane by half and increase methaneSold by same amount. Blocked if amount = 0.
+     */
+    public void actionSellGas(int amount, int price) {
+        if (amount > 0) {
+            game.gameData.setMethane(game.gameData.getMethane() - amount);
+            game.gameData.setMethaneSold(game.gameData.getMethaneSold() + amount);
+            game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
+            // Methane sold UI message
+            uiText = game.myBundle.format("sellGasComplete", amount, price);
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        } else {
+            // Not enough methane to sell UI message
+            uiText = game.myBundle.get("sellGasNotEnough");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        }
+    }
+
+    /**
+     * Decrease data.fertilizerN by half and increase NSold by same amount. Blocked if amount = 0.
+     */
+    public void actionSellN(int amount, int price) {
+        if (amount > 0) {
+            game.gameData.setFertilizerN(game.gameData.getFertilizerN() - amount);
+            game.gameData.setNSold(game.gameData.getNSold() + amount);
+            game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
+            // Nitrogen fertilizer sold UI message
+            uiText = game.myBundle.format("sellNComplete", amount, price);
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        } else {
+            // Not enough Nitrogen fertilizer to sell UI message
+            uiText = game.myBundle.get("sellNNotEnough");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        }
+    }
+
+    /**
+     *
+     */
+    public void actionSellP(int amount, int price) {
+        if (amount > 0) {
+            game.gameData.setFertilizerP(game.gameData.getFertilizerP() - amount);
+            game.gameData.setPSold(game.gameData.getPSold() + amount);
+            game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
+            // Phosphorous fertilizer sold UI message
+            uiText = game.myBundle.format("sellPComplete", amount, price);
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        } else {
+            // Not enough Phosphorous fertilizer to sell UI message
+            uiText = game.myBundle.get("sellNNotEnough");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        }
+    }
+
+    /**
+     * Reduce data.manure by half, increase money by manure / 2 * MONEY_FROM_MANURE. Blocked if
+     * amount = 0.
+     */
+    public void actionSellManure(int amount, int price) {
+        if (amount > 0) {
+            game.gameData.setManure(game.gameData.getManure() - amount);
+            game.gameData.setManureSold(game.gameData.getManureSold() + amount);
             game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
             // manure sold UI message
-            uiText = game.myBundle.format("sellManureComplete", game.gameData.MANURE_TO_SELL);
+            uiText = game.myBundle.format("sellManureComplete", amount, price);
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
