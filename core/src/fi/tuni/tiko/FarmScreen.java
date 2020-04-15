@@ -16,17 +16,15 @@ public class FarmScreen extends Location implements Screen {
     @SuppressWarnings("CanBeFinal")
     Player player;
     private final GasChaosMain game;
+    Texture backgroundSolar;
+    Texture backgroundSolar2;
 
     public FarmScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
 
         // Check what level of solar panels and set foreground accordingly.
-        if (game.gameData.getSolarPanelLevel() == 1) {
-            background = new Texture("ground/farmForegroundSolar.png");
-        } else if (game.gameData.getSolarPanelLevel() == 2) {
-            background = new Texture("ground/farmForegroundSolar2.png");
-        } else {
-            background = new Texture("ground/farmForeground.png");
-        }
+        backgroundSolar = new Texture("ground/farmForegroundSolar.png");
+        backgroundSolar2 = new Texture("ground/farmForegroundSolar2.png");
+        background = new Texture("ground/farmForeground.png");
 
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         tiledMap = new TmxMapLoader().load("maps/Farm.tmx");
@@ -66,6 +64,12 @@ public class FarmScreen extends Location implements Screen {
         batch.begin();
         player.draw(batch);
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
+        // Check what level of solar panels and set foreground accordingly.
+        if (game.gameData.getSolarPanelLevel() == 1) {
+            batch.draw(backgroundSolar, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
+        } else if (game.gameData.getSolarPanelLevel() == 2) {
+            batch.draw(backgroundSolar2, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
+        }
         black.draw(batch, blackness);
         batch.end();
 
