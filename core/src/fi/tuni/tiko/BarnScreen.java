@@ -160,14 +160,14 @@ public class BarnScreen extends Location implements Screen {
                 getRec("ActionCollectMethane") ||
                 getRec("ActionShovelManure") ||
                 getRec("ActionFeedCows"))) {
+            player.setInputActive(false);
             userInterface.dialogFocus = true;
             uiText = game.myBundle.get("askGoSleep");
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
-                    boolean result = (boolean) object;
+                    boolean result = (boolean)object;
                     if (result) {
                         game.setNewTurn();
-                        resetInputProcessor();
                         remove();
                     } else {
                         resetInputProcessor();

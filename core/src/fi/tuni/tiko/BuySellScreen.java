@@ -241,7 +241,6 @@ public class BuySellScreen extends Location implements Screen {
                 getUIRec("RectangleSellGas") ||
                 getUIRec("RectangleSellN") ||
                 getUIRec("RectangleSellP"))) {
-
             userInterface.dialogFocus = true;
             uiText = game.myBundle.get("askGoSleep");
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {

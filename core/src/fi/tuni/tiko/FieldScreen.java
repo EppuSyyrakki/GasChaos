@@ -105,10 +105,9 @@ public class FieldScreen extends Location implements Screen {
             uiText = game.myBundle.get("askGoSleep");
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
-                    boolean result = (boolean) object;
+                    boolean result = (boolean)object;
                     if (result) {
-                        // TODO sleep
-                        resetInputProcessor();
+                        game.setNewTurn();
                         remove();
                     } else {
                         resetInputProcessor();
