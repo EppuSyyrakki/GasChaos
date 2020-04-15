@@ -18,6 +18,9 @@ public class FarmScreen extends Location implements Screen {
     private final GasChaosMain game;
     Texture backgroundSolar;
     Texture backgroundSolar2;
+    Texture sun;
+    float sunX;
+    float sunY;
 
     public FarmScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
 
@@ -25,6 +28,7 @@ public class FarmScreen extends Location implements Screen {
         backgroundSolar = new Texture("ground/farmForegroundSolar.png");
         backgroundSolar2 = new Texture("ground/farmForegroundSolar2.png");
         background = new Texture("ground/farmForeground.png");
+        sun = new Texture("props/sun.png");
 
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         tiledMap = new TmxMapLoader().load("maps/Farm.tmx");
@@ -61,6 +65,20 @@ public class FarmScreen extends Location implements Screen {
             player.playerMovement(tiledMap);
         }
 
+        if (game.gameData.getActionsDone() == 0) {
+            sunX = 0.7f;
+            sunY = 13.5f;
+        } else if (game.gameData.getActionsDone() == 1) {
+            sunX = 3f;
+            sunY = 13.8f;
+        } else if (game.gameData.getActionsDone() == 2) {
+            sunX = 5.5f;
+            sunY = 14.1f;
+        } else if (game.gameData.getActionsDone() == 3) {
+            sunX = 7.7f;
+            sunY = 13.1f;
+        }
+
         batch.begin();
         player.draw(batch);
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
@@ -70,6 +88,7 @@ public class FarmScreen extends Location implements Screen {
         } else if (game.gameData.getSolarPanelLevel() == 2) {
             batch.draw(backgroundSolar2, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         }
+        batch.draw(sun, sunX,sunY, 1, 1);
         black.draw(batch, blackness);
         batch.end();
 

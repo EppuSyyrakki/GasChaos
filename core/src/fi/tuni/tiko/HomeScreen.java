@@ -92,7 +92,7 @@ public class HomeScreen extends Location implements Screen {
         }
 
         if (getRec("RectangleBed")) {  // condition end turn
-            System.out.println("i hve the sleepy"); // end turn
+            newTurn(); // end turn
         }
         newTurn = false;
     }
@@ -135,10 +135,6 @@ public class HomeScreen extends Location implements Screen {
         return player.getRectangle().overlaps(r) && action;
     }
 
-    public boolean isNewTurn() {
-        return newTurn;
-    }
-
     public void setNewTurn(boolean newTurn) {
         this.newTurn = newTurn;
     }
@@ -146,7 +142,6 @@ public class HomeScreen extends Location implements Screen {
     public void newTurn() {
         game.gameData.sleep();
         game.homeScreen.setNewTurn(true);
-        game.setHomeScreen();
         game.farmScreen.player.setRX(2);
         game.farmScreen.player.setRY(5);
         game.farmScreen.player.matchX(2);
