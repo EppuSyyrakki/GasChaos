@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 @SuppressWarnings("RedundantCast")
 public class HomeScreen extends Location implements Screen {
@@ -135,6 +136,13 @@ public class HomeScreen extends Location implements Screen {
         return player.getRectangle().overlaps(r) && action;
     }
 
+    private void resetInputProcessor() {
+        userInterface.dialogFocus = false;
+        player.setInputActive(true);
+        Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
+    }
+
     public void setNewTurn(boolean newTurn) {
         this.newTurn = newTurn;
     }
@@ -146,5 +154,16 @@ public class HomeScreen extends Location implements Screen {
         game.farmScreen.player.setRY(5);
         game.farmScreen.player.matchX(2);
         game.farmScreen.player.matchY(5);
+        uiText = game.myBundle.get("newTurn");
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean) object;
+                if (result) {
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.createDialog(d, uiText, false);
     }
 }

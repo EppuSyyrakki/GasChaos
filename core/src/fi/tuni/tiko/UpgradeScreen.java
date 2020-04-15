@@ -190,12 +190,16 @@ public class UpgradeScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        newTurn();
+                        resetInputProcessor();
+                        remove();
+                    } else {
                         resetInputProcessor();
                         remove();
                     }
                 }
             };
-            userInterface.createDialog(d, uiText, false);
+            userInterface.createDialog(d, uiText, true);
         }
     }
 
