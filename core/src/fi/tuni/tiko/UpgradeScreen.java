@@ -178,7 +178,6 @@ public class UpgradeScreen extends Location implements Screen {
             };
             userInterface.createDialog(d, uiText, true);
         } else if (!game.gameData.isActionsAvailable() && (
-                getUIRec("RectangleBuyCow") ||
                 getUIRec("RectangleSolarBasic") ||
                 getUIRec("RectangleSolarAdvanced") ||
                 getUIRec("RectangleGasGenerator") ||
