@@ -34,9 +34,9 @@ public class FieldScreen extends Location implements Screen {
         growth3 = new Texture("growth/growth3.png");
         growth4 = new Texture("growth/growth4.png");
         growth5 = new Texture("growth/growth5.png");
-        river1 = new Texture("river1.png");
-        river2 = new Texture("river1.png");
-        river3 = new Texture("river1.png");
+        river1 = new Texture("props/river1.png");
+        river2 = new Texture("props/river1.png");
+        river3 = new Texture("props/river1.png");
         riverX1 = 0f;
         riverX2 = -8f;
         riverX3 = 8f;

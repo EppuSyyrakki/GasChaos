@@ -26,9 +26,9 @@ public class BarnScreen extends Location implements Screen {
     final Texture cowBrown1 = new Texture("cows/cowBrown1.png");
     final Texture cowBrown2 = new Texture("cows/cowBrown2.png");
     final Texture cowBrown3 = new Texture("cows/cowBrown3.png");
-    final Texture manure = new Texture("manure.png");
-    final Texture hay1 = new Texture("hay1.png");
-    final Texture hay2 = new Texture("hay2.png");
+    final Texture hay1 = new Texture("props/hay1.png");
+    final Texture hay2 = new Texture("props/hay2.png");
+    final Texture manure = new Texture("props/manure.png");
     Rectangle spawn;
     final float cowSize = 150f;
     float[] manureX = new float[11];
@@ -463,6 +463,7 @@ public class BarnScreen extends Location implements Screen {
         if (cowCount == 1) {
             cowRender(cowBrown3, spawn);
             spawn.y = spawn.y -1.5f;
+            //noinspection UnusedAssignment
             cowCount--;
         }
     }

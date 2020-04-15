@@ -28,7 +28,7 @@ public class Location implements InputProcessor {
     SpriteBatch batch;
     OrthographicCamera camera;
     Texture background;
-    final Texture blackTexture = new Texture("black.png");
+    final Texture blackTexture = new Texture("props/black.png");
     final Sprite black = new Sprite(blackTexture);
     UserInterface userInterface;
     String uiText = "default";
