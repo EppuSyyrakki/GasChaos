@@ -88,7 +88,6 @@ public class GameData {
 
     /**
      * Income per turn. Touched only if sold this turn.
-     * TODO add these to save game
      */
     private int grainSold;
     private int methaneSold;
@@ -101,7 +100,6 @@ public class GameData {
     /**
      * Array to represent manure slowly composting into fertilizerN and fertilizerP. Change is done
      * in updateResources. Full change takes 9+1 turns.
-     * TODO add this to save game
      */
     private int[] compost = new int[9];
 
@@ -856,6 +854,16 @@ public class GameData {
         prefs.putBoolean("tractorGasBought", isTractorGasBought());
         prefs.putBoolean("gasGeneratorBought", isGasGeneratorBought());
 
+        /**
+         * Income per turn. Touched only if sold this turn.
+         */
+        prefs.putInteger("grainSold", getGrainSold());
+        prefs.putInteger("methaneSold", getMethaneSold());
+        prefs.putInteger("manureSold", getManureSold());
+        prefs.putInteger("gardenSold", getGardenSold());
+        prefs.putInteger("NSold", getNSold());
+        prefs.putInteger("PSold", getPSold());
+
 
         /**
          * Array and arrayList accessories.
@@ -875,6 +883,21 @@ public class GameData {
         //String jsonFieldsRented = json.toJson(fieldsRented);
         //prefs.putString("fieldsRented", jsonFieldsRented);
         //System.out.println("json: " + jsonFieldsRented);
+
+        /**
+         * Array to represent manure slowly composting into fertilizerN and fertilizerP. Change is done
+         * in updateResources. Full change takes 9+1 turns.
+         */
+        prefs.putInteger("compost0", compost[0]);
+        prefs.putInteger("compost1", compost[1]);
+        prefs.putInteger("compost2", compost[2]);
+        prefs.putInteger("compost3", compost[3]);
+        prefs.putInteger("compost4", compost[4]);
+        prefs.putInteger("compost5", compost[5]);
+        prefs.putInteger("compost6", compost[6]);
+        prefs.putInteger("compost7", compost[7]);
+        prefs.putInteger("compost8", compost[8]);
+        prefs.putInteger("compost9", compost[9]);
 
 
 
@@ -956,6 +979,15 @@ public class GameData {
         setTractorGasBought(prefs.getBoolean("tractorGasBought", isTractorGasBought()));
         setGasGeneratorBought(prefs.getBoolean("gasGeneratorBought", isGasGeneratorBought()));
 
+        /**
+         * Income per turn. Touched only if sold this turn.
+         */
+        setGrainSold(prefs.getInteger("grainSold", getGrainSold()));
+        setMethaneSold(prefs.getInteger("methaneSold", getMethaneSold()));
+        setManureSold(prefs.getInteger("manureSold", getManureSold()));
+        setGardenSold(prefs.getInteger("gardenSold", getGardenSold()));
+        setNSold(prefs.getInteger("NSold", getNSold()));
+        setPSold(prefs.getInteger("PSold", getPSold()));
 
         /**
          * Array and arrayList accessories.
@@ -987,5 +1019,20 @@ public class GameData {
 
         //String fieldsRentedString = prefs.getString("fieldsRented");
         //System.out.println("fieldsRentedString: " + fieldsRentedString);
+
+        /**
+         * Array to represent manure slowly composting into fertilizerN and fertilizerP. Change is done
+         * in updateResources. Full change takes 9+1 turns.
+         */
+        compost[0] = prefs.getInteger("compost0", compost[0]);
+        compost[1] = prefs.getInteger("compost1", compost[1]);
+        compost[2] = prefs.getInteger("compost2", compost[2]);
+        compost[3] = prefs.getInteger("compost3", compost[3]);
+        compost[4] = prefs.getInteger("compost4", compost[4]);
+        compost[5] = prefs.getInteger("compost5", compost[5]);
+        compost[6] = prefs.getInteger("compost6", compost[6]);
+        compost[7] = prefs.getInteger("compost7", compost[7]);
+        compost[8] = prefs.getInteger("compost8", compost[8]);
+        compost[9] = prefs.getInteger("compost9", compost[9]);
     }
 }
