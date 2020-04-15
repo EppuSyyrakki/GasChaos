@@ -154,6 +154,14 @@ public class GameData {
         resetVariables();   // xSold to 0 and xBought to false, also reset eatenThisTurn in cows.
     }
 
+    public void sleep() {
+        actionsDone = 0;
+        updateResources();
+        currentTurn++;
+        actionsAvailable = actionsDone < MAX_ACTIONS;
+        saveGame();
+    }
+
     private void updateMoney() {
         int milkSold = 0;
         int moneyThisTurn = 0;

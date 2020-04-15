@@ -17,6 +17,7 @@ public class HomeScreen extends Location implements Screen {
     @SuppressWarnings("CanBeFinal")
     Player player;
     private final GasChaosMain game;
+    boolean newTurn;
 
     public HomeScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         background = new Texture("ground/homeForeground.png");
@@ -31,6 +32,7 @@ public class HomeScreen extends Location implements Screen {
         player.setRY(4);
         player.setTargetX(player.getRX());
         player.setTargetY(player.getRY());
+        newTurn = false;
         tiledMap = new TmxMapLoader().load("maps/Home.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, WORLD_SCALE);
         Gdx.input.setInputProcessor(this);
@@ -44,6 +46,16 @@ public class HomeScreen extends Location implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
+
+        if (newTurn) {
+            player.setRX(4);
+            player.setRY(6);
+            player.matchX(player.getRX());
+            player.matchY(player.getRY());
+            setFadeSpeed(1f);
+        } else {
+            setFadeSpeed(2f);
+        }
 
         if (fadeIn) {
             fadeFromBlack();
@@ -82,6 +94,7 @@ public class HomeScreen extends Location implements Screen {
         if (getRec("RectangleBed")) {  // condition end turn
             System.out.println("i hve the sleepy"); // end turn
         }
+        newTurn = false;
     }
 
     @Override
@@ -120,5 +133,23 @@ public class HomeScreen extends Location implements Screen {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
         return player.getRectangle().overlaps(r) && action;
+    }
+
+    public boolean isNewTurn() {
+        return newTurn;
+    }
+
+    public void setNewTurn(boolean newTurn) {
+        this.newTurn = newTurn;
+    }
+
+    public void newTurn() {
+        game.gameData.sleep();
+        game.homeScreen.setNewTurn(true);
+        game.setHomeScreen();
+        game.farmScreen.player.setRX(2);
+        game.farmScreen.player.setRY(5);
+        game.farmScreen.player.matchX(2);
+        game.farmScreen.player.matchY(5);
     }
 }

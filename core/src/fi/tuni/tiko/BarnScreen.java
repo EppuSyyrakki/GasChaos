@@ -166,9 +166,9 @@ public class BarnScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
-                        // TODO sleep
                         resetInputProcessor();
                         remove();
+                        newTurn();
                     } else {
                         resetInputProcessor();
                         remove();
@@ -495,6 +495,16 @@ public class BarnScreen extends Location implements Screen {
         player.setInputActive(true);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
+    }
+
+    public void newTurn() {
+        game.gameData.sleep();
+        game.homeScreen.setNewTurn(true);
+        game.setHomeScreen();
+        game.farmScreen.player.setRX(2);
+        game.farmScreen.player.setRY(5);
+        game.farmScreen.player.matchX(2);
+        game.farmScreen.player.matchY(5);
     }
 }
 

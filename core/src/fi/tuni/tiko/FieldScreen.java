@@ -433,4 +433,14 @@ public class FieldScreen extends Location implements Screen {
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
+
+    public void newTurn() {
+        game.gameData.sleep();
+        game.homeScreen.setNewTurn(true);
+        game.setHomeScreen();
+        game.farmScreen.player.setRX(2);
+        game.farmScreen.player.setRY(5);
+        game.farmScreen.player.matchX(2);
+        game.farmScreen.player.matchY(5);
+    }
 }

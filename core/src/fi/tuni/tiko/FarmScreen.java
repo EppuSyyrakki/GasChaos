@@ -39,8 +39,8 @@ public class FarmScreen extends Location implements Screen {
         player.player(150f);
         player.setRX(4.5f);
         player.setRY(6f);
-        player.setTargetX(player.getRX());
-        player.setTargetY(player.getRY());
+        player.matchX(player.getRX());
+        player.matchY(player.getRY());
         game.gameData.saveGame();
         game.gameData.loadGame();
     }
@@ -126,6 +126,16 @@ public class FarmScreen extends Location implements Screen {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
         return player.getRectangle().overlaps(r) && action;
+    }
+
+    public void newTurn() {
+        game.gameData.sleep();
+        game.homeScreen.setNewTurn(true);
+        game.setHomeScreen();
+        game.farmScreen.player.setRX(2);
+        game.farmScreen.player.setRY(5);
+        game.farmScreen.player.matchX(2);
+        game.farmScreen.player.matchY(5);
     }
 }
 

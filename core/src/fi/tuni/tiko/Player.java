@@ -64,8 +64,8 @@ public class Player extends Sprite{
         speedX = 0.1f;
         speedY = 0.1f;
         speed = 1.45f;
-        targetX = getRX();
-        targetY = getRY();
+        targetX = getRX() + getWidth() / 2;
+        targetY = getRY() + getHeight() / 2;
         lastX = getRX();
         lastY = getRY();
 
@@ -184,6 +184,13 @@ public class Player extends Sprite{
 
     public void setTargetY(float targetY) {
         this.targetY = targetY;
+    }
+
+    public void matchX(float targetX) {
+        this.targetX = targetX + getWidth() / 2;
+    }
+    public void matchY(float targetY) {
+        this.targetY = targetY + getHeight() / 2;
     }
 
     public Rectangle getRectangleRight() {

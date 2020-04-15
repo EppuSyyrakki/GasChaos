@@ -76,4 +76,14 @@ public class GrandmotherScreen extends Location implements Screen {
     public void dispose() {
         background.dispose();
     }
+
+    public void newTurn() {
+        game.gameData.sleep();
+        game.homeScreen.setNewTurn(true);
+        game.setHomeScreen();
+        game.farmScreen.player.setRX(2);
+        game.farmScreen.player.setRY(5);
+        game.farmScreen.player.matchX(2);
+        game.farmScreen.player.matchY(5);
+    }
 }
