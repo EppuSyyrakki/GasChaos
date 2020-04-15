@@ -48,8 +48,7 @@ public class Cow {
     public int getMilk(int milkingMachineLevel) {
         if (milkingMachineLevel == 2) {
             float floatMilk =  (float)milk * 1.5f;
-            int tmpMilk = (int)floatMilk;
-            return tmpMilk;
+            return (int)floatMilk;
         } else {
             return milk;
         }

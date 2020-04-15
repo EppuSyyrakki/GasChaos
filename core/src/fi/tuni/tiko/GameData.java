@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 
@@ -293,9 +294,9 @@ public class GameData {
         methaneSold = 0;
         cowsBought.clear();
 
-        for (int i = 0; i < fieldsRented.length; i++) {
-            fieldsRented[i] = 0;
-        }
+        // Old code in case the new optimized one doesn't work
+        //for (int i = 0; i < fieldsRented.length; i++) {fieldsRented[i] = 0;}
+        Arrays.fill(fieldsRented, 0);
 
         for (Cow cow : cowList) {
             cow.setEatenThisTurn(false);
@@ -315,11 +316,7 @@ public class GameData {
         cowList.add(new Cow());
         cowsBought = new ArrayList<Cow>();
 
-        if (actionsDone < MAX_ACTIONS) {
-            actionsAvailable = true;
-        } else {
-            actionsAvailable = false;
-        }
+        actionsAvailable = actionsDone < MAX_ACTIONS;
     }
 
     public int getActionsDone() {

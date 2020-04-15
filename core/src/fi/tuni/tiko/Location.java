@@ -28,8 +28,8 @@ public class Location implements InputProcessor {
     SpriteBatch batch;
     OrthographicCamera camera;
     Texture background;
-    Texture blackTexture = new Texture("black.png");
-    Sprite black = new Sprite(blackTexture);
+    final Texture blackTexture = new Texture("black.png");
+    final Sprite black = new Sprite(blackTexture);
     UserInterface userInterface;
     String uiText = "default";
     I18NBundle myBundle;

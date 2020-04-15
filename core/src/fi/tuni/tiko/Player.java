@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-@SuppressWarnings({"IntegerDivisionInFloatingPointContext", "RedundantCast", "rawtypes", "unchecked"})
+@SuppressWarnings({"IntegerDivisionInFloatingPointContext", "RedundantCast", "rawtypes", "unchecked", "SameParameterValue"})
 public class Player extends Sprite{
 
     private OrthographicCamera camera;
@@ -45,14 +45,14 @@ public class Player extends Sprite{
     Animation<TextureRegion> walkUpAnimation;
     Animation<TextureRegion> walkDownAnimation;
     Animation<TextureRegion> walkRightAnimation;
-    int FRAME_STAND_COLS = 1;
-    int FRAME_STAND_ROWS = 1;
-    int FRAME_RIGHT_COLS = 9;
-    int FRAME_RIGHT_ROWS = 1;
-    int FRAME_UP_COLS = 4;
-    int FRAME_UP_ROWS = 1;
-    int FRAME_DOWN_COLS = 4;
-    int FRAME_DOWN_ROWS = 1;
+    final int FRAME_STAND_COLS = 1;
+    final int FRAME_STAND_ROWS = 1;
+    final int FRAME_RIGHT_COLS = 9;
+    final int FRAME_RIGHT_ROWS = 1;
+    final int FRAME_UP_COLS = 4;
+    final int FRAME_UP_ROWS = 1;
+    final int FRAME_DOWN_COLS = 4;
+    final int FRAME_DOWN_ROWS = 1;
 
     public void player(float size) {
         textureStand = new Texture("player.png");
@@ -110,16 +110,8 @@ public class Player extends Sprite{
         return FRAME_STAND_COLS;
     }
 
-    public void setFRAME_STAND_COLS(int FRAME_STAND_COLS) {
-        this.FRAME_STAND_COLS = FRAME_STAND_COLS;
-    }
-
     public int getFRAME_STAND_ROWS() {
         return FRAME_STAND_ROWS;
-    }
-
-    public void setFRAME_STAND_ROWS(int FRAME_STAND_ROWS) {
-        this.FRAME_STAND_ROWS = FRAME_STAND_ROWS;
     }
 
     public Texture getTextureStand() {
@@ -206,16 +198,8 @@ public class Player extends Sprite{
         return FRAME_RIGHT_COLS;
     }
 
-    public void setFRAME_RIGHT_COLS(int FRAME_RIGHT_COLS) {
-        this.FRAME_RIGHT_COLS = FRAME_RIGHT_COLS;
-    }
-
     public int getFRAME_RIGHT_ROWS() {
         return FRAME_RIGHT_ROWS;
-    }
-
-    public void setFRAME_RIGHT_ROWS(int FRAME_RIGHT_ROWS) {
-        this.FRAME_RIGHT_ROWS = FRAME_RIGHT_ROWS;
     }
 
     public OrthographicCamera getCamera() {

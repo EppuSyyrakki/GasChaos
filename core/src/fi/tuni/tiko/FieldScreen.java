@@ -15,25 +15,25 @@ import java.util.ArrayList;
 
 public class FieldScreen extends Location implements Screen {
     private final GasChaosMain game;
-    Texture growth1;
-    Texture growth2;
-    Texture growth3;
-    Texture growth4;
-    Texture growth5;
-    Texture river1;
-    Texture river2;
-    Texture river3;
+    final Texture growth1;
+    final Texture growth2;
+    final Texture growth3;
+    final Texture growth4;
+    final Texture growth5;
+    final Texture river1;
+    final Texture river2;
+    final Texture river3;
     float riverX1;
     float riverX2;
     float riverX3;
     float riverSpeed;
 
     public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        growth1 = new Texture("growth1.png");
-        growth2 = new Texture("growth2.png");
-        growth3 = new Texture("growth3.png");
-        growth4 = new Texture("growth4.png");
-        growth5 = new Texture("growth5.png");
+        growth1 = new Texture("growth/growth1.png");
+        growth2 = new Texture("growth/growth2.png");
+        growth3 = new Texture("growth/growth3.png");
+        growth4 = new Texture("growth/growth4.png");
+        growth5 = new Texture("growth/growth5.png");
         river1 = new Texture("river1.png");
         river2 = new Texture("river1.png");
         river3 = new Texture("river1.png");

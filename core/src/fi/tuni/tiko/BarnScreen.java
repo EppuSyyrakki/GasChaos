@@ -15,21 +15,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("CanBeFinal")
 public class BarnScreen extends Location implements Screen {
     Player player;
 
     private final GasChaosMain game;
-    Texture cow1 = new Texture("cows/cow1.png");
-    Texture cow2 = new Texture("cows/cow2.png");
-    Texture cow3 = new Texture("cows/cow3.png");
-    Texture cowBrown1 = new Texture("cows/cowBrown1.png");
-    Texture cowBrown2 = new Texture("cows/cowBrown2.png");
-    Texture cowBrown3 = new Texture("cows/cowBrown3.png");
-    Texture manure = new Texture("manure.png");
-    Texture hay1 = new Texture("hay1.png");
-    Texture hay2 = new Texture("hay2.png");
+    final Texture cow1 = new Texture("cows/cow1.png");
+    final Texture cow2 = new Texture("cows/cow2.png");
+    final Texture cow3 = new Texture("cows/cow3.png");
+    final Texture cowBrown1 = new Texture("cows/cowBrown1.png");
+    final Texture cowBrown2 = new Texture("cows/cowBrown2.png");
+    final Texture cowBrown3 = new Texture("cows/cowBrown3.png");
+    final Texture manure = new Texture("manure.png");
+    final Texture hay1 = new Texture("hay1.png");
+    final Texture hay2 = new Texture("hay2.png");
     Rectangle spawn;
-    float cowSize = 150f;
+    final float cowSize = 150f;
     float[] manureX = new float[11];
     float[] manureY = new float[11];
     float[] hayX = new float[11];
@@ -149,11 +150,10 @@ public class BarnScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionCollectMethane();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
                     }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);
