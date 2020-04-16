@@ -24,28 +24,28 @@
   <image source="../ground/upgradeBackground.png" width="1080" height="1920"/>
  </imagelayer>
  <objectgroup id="12" name="RectangleGasCollector">
-  <object id="22" x="44.7136" y="867.443" width="404.658" height="219.096"/>
-  <object id="27" x="-722.124" y="424.779"/>
+  <object id="22" x="44.7136" y="867.443" width="443.219" height="219.096"/>
+  <object id="27" x="-216.861" y="1123.49" width="190.556" height="141.474"/>
  </objectgroup>
  <objectgroup id="13" name="RectangleMilkingMachine">
-  <object id="23" x="532.092" y="867.443" width="438.193" height="221.332"/>
+  <object id="23" x="532.092" y="867.443" width="501.705" height="221.332"/>
  </objectgroup>
  <objectgroup id="14" name="RectangleTractorAdvanced">
-  <object id="24" x="38.0065" y="1149.14" width="402.422" height="223.568"/>
+  <object id="24" x="49.348" y="1115.12" width="438.715" height="223.568"/>
  </objectgroup>
  <objectgroup id="15" name="RectangleTractorGas">
-  <object id="25" x="534.327" y="1155.85" width="451.607" height="214.625"/>
+  <object id="25" x="534.327" y="1115.02" width="499.241" height="228.235"/>
  </objectgroup>
  <objectgroup id="16" name="RectangleGasGenerator">
-  <object id="26" x="35.7708" y="1437.54" width="418.072" height="178.854"/>
+  <object id="26" x="47.1123" y="1360.42" width="440.755" height="178.854"/>
  </objectgroup>
  <objectgroup id="11" name="RectangleSolarAdvanced">
-  <object id="21" x="545.506" y="576.805" width="429.25" height="205.682"/>
+  <object id="21" x="529.628" y="624.439" width="501.836" height="219.292"/>
  </objectgroup>
  <objectgroup id="10" name="RectangleSolarBasic">
-  <object id="20" x="55.8919" y="581.276" width="375.594" height="194.504"/>
+  <object id="20" x="42.2821" y="626.642" width="445.911" height="217.187"/>
  </objectgroup>
  <objectgroup id="17" name="RectangleExit">
-  <object id="28" x="17.8854" y="288.403" width="1017.23" height="225.803"/>
+  <object id="28" x="4.27562" y="211.281" width="1071.67" height="364.169"/>
  </objectgroup>
 </map>

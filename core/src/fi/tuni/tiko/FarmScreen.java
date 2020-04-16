@@ -92,8 +92,8 @@ public class FarmScreen extends Location implements Screen {
         } else if (game.gameData.getSolarPanelLevel() == 2) {
             batch.draw(backgroundSolar2, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         }
-        batch.draw(sun, sunX,sunY, 1, 1);
         sunsetSky(sunset);
+        batch.draw(sun, sunX,sunY, 1, 1);
         sunsetRender();
         black.draw(batch, blackness);
         batch.end();
