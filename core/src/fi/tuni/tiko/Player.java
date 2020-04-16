@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-@SuppressWarnings({"IntegerDivisionInFloatingPointContext", "RedundantCast", "rawtypes", "unchecked", "SameParameterValue"})
+@SuppressWarnings({"IntegerDivisionInFloatingPointContext", "RedundantCast", "rawtypes", "unchecked"})
 public class Player extends Sprite{
 
     private OrthographicCamera camera;
@@ -98,10 +98,10 @@ public class Player extends Sprite{
         TextureRegion[] framesStand = transformTo1D(tmpStand, FRAME_STAND_ROWS, FRAME_STAND_COLS);
 
         // Sets animation frames to animations
-        walkStandAnimation = new Animation(18 / 60f, framesStand);
-        walkRightAnimation = new Animation(4 / 60f, framesRight);
-        walkUpAnimation = new Animation(12 / 60f, framesUp);
-        walkDownAnimation = new Animation(12 / 60f, framesDown);
+        walkStandAnimation = new Animation(18 / 60f, (Object[]) framesStand);
+        walkRightAnimation = new Animation(4 / 60f, (Object[]) framesRight);
+        walkUpAnimation = new Animation(12 / 60f, (Object[]) framesUp);
+        walkDownAnimation = new Animation(12 / 60f, (Object[]) framesDown);
     }
 
     public float getLastX() {
