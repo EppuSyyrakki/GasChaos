@@ -56,6 +56,9 @@ public class FarmScreen extends Location implements Screen {
 
         if (fadeIn) {
             fadeFromBlack();
+            player.setFadeActive(false);
+        } else {
+            player.setFadeActive(true);
         }
 
         //Player movement

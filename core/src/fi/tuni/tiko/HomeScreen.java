@@ -68,11 +68,9 @@ public class HomeScreen extends Location implements Screen {
 
         if (fadeIn) {
             fadeFromBlack();
-            player.setInputActive(false);
-        }
-
-        if (!fadeIn) {
-            player.setInputActive(true);
+            player.setFadeActive(false);
+        } else {
+            player.setFadeActive(true);
         }
 
         // Player movement

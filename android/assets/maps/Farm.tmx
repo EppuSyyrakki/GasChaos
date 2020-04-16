@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="9" height="16" tilewidth="120" tileheight="120" infinite="0" nextlayerid="10" nextobjectid="23">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="9" height="16" tilewidth="120" tileheight="120" infinite="0" nextlayerid="10" nextobjectid="24">
  <layer id="1" name="Tile Layer 1" width="9" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,
@@ -30,11 +30,12 @@
   <object id="3" x="-94" y="-40" width="89.8788" height="2078"/>
   <object id="4" x="-4" y="1923.15" width="1138" height="116.848"/>
   <object id="6" x="1080" y="-98" width="108" height="2144"/>
-  <object id="7" x="-144" y="-102" width="1334" height="661.955"/>
+  <object id="7" x="-144" y="-102" width="1334" height="685.034"/>
   <object id="8" x="3" y="397.5" width="283.5" height="196"/>
-  <object id="15" x="-2" y="1058" width="334" height="70.485"/>
+  <object id="15" x="-2" y="1058" width="334" height="101.806"/>
   <object id="20" x="29" y="1556" width="139" height="9"/>
   <object id="21" x="221.5" y="1763" width="276" height="2.5"/>
+  <object id="23" x="783.034" y="1050.09" width="235.735" height="34.6184"/>
  </objectgroup>
  <objectgroup id="5" name="RectangleField">
   <object id="10" x="52.5" y="646" width="283" height="257"/>

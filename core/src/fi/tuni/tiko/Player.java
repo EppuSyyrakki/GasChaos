@@ -33,7 +33,8 @@ public class Player extends Sprite{
     float lastX;
     float lastY;
     float stateTime = 1.0f;
-    boolean inputActive = true;    // not able to move player while fading screen
+    boolean inputActive = true;    // not able to move player while in dialog
+    boolean fadeActive = true;    // not able to move player while fadeIn is active
     boolean up;
     boolean down;
     boolean left;
@@ -189,8 +190,17 @@ public class Player extends Sprite{
     public void matchX(float targetX) {
         this.targetX = targetX + getWidth() / 2;
     }
+
     public void matchY(float targetY) {
         this.targetY = targetY + getHeight() / 2;
+    }
+
+    public boolean isFadeActive() {
+        return fadeActive;
+    }
+
+    public void setFadeActive(boolean fadeActive) {
+        this.fadeActive = fadeActive;
     }
 
     public Rectangle getRectangleRight() {
@@ -259,7 +269,7 @@ public class Player extends Sprite{
         checkCollisions(tiledMap);
 
         // It's a dumpster fire but a working one.
-        if (inputActive) {
+        if (inputActive && fadeActive) {
             // X axis
             if (targetX == (getRX() + getWidth() / 2f)) {
                 setLastX(getRX());
@@ -441,7 +451,7 @@ public class Player extends Sprite{
         stateTime += Gdx.graphics.getDeltaTime();
         // If player is going left, flip textures and set walkRightAnimation.
         // Also flips walk down and standing frames to make character direction more consistent visually.
-        if ((getRX() - getLastX()) > 0.003f && inputActive) {
+        if ((getRX() - getLastX()) > 0.003f && inputActive && fadeActive) {
             for (TextureRegion textureRegion : walkRightAnimation.getKeyFrames()) {
                 if (textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
@@ -452,7 +462,7 @@ public class Player extends Sprite{
                 if (!textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
             currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
-        } else if ((getLastX() - getRX()) > 0.003f  && inputActive) {   // Same as above but to the left
+        } else if ((getLastX() - getRX()) > 0.003f  && inputActive  && fadeActive) {   // Same as above but to the left
             for (TextureRegion textureRegion : walkRightAnimation.getKeyFrames()) {
                 if (!textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
@@ -463,9 +473,9 @@ public class Player extends Sprite{
                 if (textureRegion.isFlipX()) textureRegion.flip(true, false);
             }
             currentFrame = walkRightAnimation.getKeyFrame(stateTime, true);
-        } else if ((getRY() - getLastY()) > 0.003f  && inputActive) {   // Sets walk up animation.
+        } else if ((getRY() - getLastY()) > 0.003f  && inputActive  && fadeActive) {   // Sets walk up animation.
             currentFrame = walkUpAnimation.getKeyFrame(stateTime, true);
-        } else if ((getLastY() - getRY()) > 0.003f  && inputActive) {   // Sets walk down animation
+        } else if ((getLastY() - getRY()) > 0.003f  && inputActive  && fadeActive) {   // Sets walk down animation
             currentFrame = walkDownAnimation.getKeyFrame(stateTime, true);
         } else {    // Sets idle frame if player isn't moving or inputActive is off.
             setLastX(getRX());
