@@ -100,6 +100,7 @@ public class BarnScreen extends Location implements Screen {
         if ((getRec("RectangleExit") || Gdx.input.isKeyJustPressed(Input.Keys.BACK))
                 && !userInterface.dialogFocus) {
             game.setFarmScreen();
+            game.farmScreen.player.match();
         } else if (getRec("ActionFeedCows") && !userInterface.dialogFocus
                 && game.gameData.isActionsAvailable()) {
             player.setInputActive(false);

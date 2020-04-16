@@ -17,9 +17,14 @@ public class FarmScreen extends Location implements Screen {
     Player player;
     Texture backgroundSolar;
     Texture backgroundSolar2;
+    Texture tractor1;
+    Texture tractor2;
+    Texture tractor3;
     Texture sun;
     float sunX;
     float sunY;
+    float tractorX;
+    float tractorY;
 
     public FarmScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
@@ -28,7 +33,12 @@ public class FarmScreen extends Location implements Screen {
         backgroundSolar = new Texture("ground/farmForegroundSolar.png");
         backgroundSolar2 = new Texture("ground/farmForegroundSolar2.png");
         background = new Texture("ground/farmForeground.png");
+        tractor1 = new Texture("props/tractor1.png");
+        tractor2 = new Texture("props/tractor1.png");
+        tractor3 = new Texture("props/tractor1.png");
         sun = new Texture("props/sun.png");
+        tractorX = 0.45f;
+        tractorY = 8.3f;
 
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         tiledMap = new TmxMapLoader().load("maps/Farm.tmx");
@@ -67,23 +77,13 @@ public class FarmScreen extends Location implements Screen {
             player.playerMovement(tiledMap);
         }
 
-        if (game.gameData.getActionsDone() == 0) {
-            sunX = 0.7f;
-            sunY = 13.5f;
-        } else if (game.gameData.getActionsDone() == 1) {
-            sunX = 3f;
-            sunY = 13.8f;
-        } else if (game.gameData.getActionsDone() == 2) {
-            sunX = 5.5f;
-            sunY = 14.1f;
-        } else if (game.gameData.getActionsDone() == 3) {
-            sunX = 7.7f;
-            sunY = 13.1f;
-        }
+        sun();
+
 
         batch.begin();
         player.draw(batch);
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
+        batch.draw(tractorTex(), tractorX,tractorY, 1, 1);
         // Check what level of solar panels and set foreground accordingly.
         if (game.gameData.getSolarPanelLevel() == 1) {
             batch.draw(backgroundSolar, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
@@ -104,8 +104,10 @@ public class FarmScreen extends Location implements Screen {
             game.setMenuScreen();
         } else if (getRec("RectangleHome")) {    // condition enter home
             game.setHomeScreen();
+            game.homeScreen.player.match();
         } else if (getRec("RectangleBarn")) {    // condition enter barn
             game.setBarnScreen();
+            game.barnScreen.player.match();
         } else if (getRec("RectangleGarden")) {    // condition enter garden
             game.setGardenScreen();
         } else if (getRec("RectangleField")) {    // condition enter fields
@@ -151,6 +153,34 @@ public class FarmScreen extends Location implements Screen {
         Rectangle r = getCheckRectangle((MapLayer)tiledMap.getLayers().get(name));
         boolean action = playerAction(r);
         return player.getRectangle().overlaps(r) && action;
+    }
+
+    public void sun() {
+        if (game.gameData.getActionsDone() == 0) {
+            sunX = 0.7f;
+            sunY = 13.5f;
+        } else if (game.gameData.getActionsDone() == 1) {
+            sunX = 3f;
+            sunY = 13.8f;
+        } else if (game.gameData.getActionsDone() == 2) {
+            sunX = 5.5f;
+            sunY = 14.1f;
+        } else if (game.gameData.getActionsDone() == 3) {
+            sunX = 7.7f;
+            sunY = 13.1f;
+        }
+    }
+
+    public Texture tractorTex() {
+        if (game.gameData.getTractorLevel() == 1) {
+            return tractor1;
+        } else if (game.gameData.getTractorLevel() == 2) {
+            return tractor2;
+        } else if (game.gameData.getTractorLevel() == 3) {
+            return tractor3;
+        } else {
+            return tractor1;
+        }
     }
 }
 

@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 @SuppressWarnings("RedundantCast")
 public class HomeScreen extends Location implements Screen {
-    @SuppressWarnings("CanBeFinal")
+    @SuppressWarnings({"CanBeFinal"})
     Player player;
     boolean newTurn = false;
 
@@ -88,6 +88,7 @@ public class HomeScreen extends Location implements Screen {
 
         if (getRec("RectangleExit") || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
             game.setFarmScreen();
+            game.farmScreen.player.match();
         }
 
         if (getRec("RectanglePhone")) {    // condition call to grandmother

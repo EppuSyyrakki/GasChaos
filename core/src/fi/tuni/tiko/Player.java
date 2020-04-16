@@ -99,9 +99,9 @@ public class Player extends Sprite{
 
         // Sets animation frames to animations
         walkStandAnimation = new Animation(18 / 60f, framesStand);
-        walkRightAnimation = new Animation(6 / 60f, framesRight);
-        walkUpAnimation = new Animation(16 / 60f, framesUp);
-        walkDownAnimation = new Animation(16 / 60f, framesDown);
+        walkRightAnimation = new Animation(4 / 60f, framesRight);
+        walkUpAnimation = new Animation(12 / 60f, framesUp);
+        walkDownAnimation = new Animation(12 / 60f, framesDown);
     }
 
     public float getLastX() {
@@ -195,6 +195,11 @@ public class Player extends Sprite{
         this.targetY = targetY + getHeight() / 2;
     }
 
+    public void match() {
+        matchX(getRX());
+        matchY(getRY());
+    }
+
     public boolean isFadeActive() {
         return fadeActive;
     }
@@ -239,7 +244,7 @@ public class Player extends Sprite{
         camera.setToOrtho(false, 9, 16);
         batch.setProjectionMatrix(camera.combined);
 
-        if (inputActive) {
+        if (inputActive && fadeActive) {
             if (Gdx.input.isTouched()) {
 
 
