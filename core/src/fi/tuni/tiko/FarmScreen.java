@@ -37,8 +37,8 @@ public class FarmScreen extends Location implements Screen {
         tractor2 = new Texture("props/tractor1.png");
         tractor3 = new Texture("props/tractor1.png");
         sun = new Texture("props/sun.png");
-        tractorX = 0.45f;
-        tractorY = 8.3f;
+        tractorX = 0.75f;
+        tractorY = 8.6f;
 
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         tiledMap = new TmxMapLoader().load("maps/Farm.tmx");
@@ -83,7 +83,7 @@ public class FarmScreen extends Location implements Screen {
         batch.begin();
         player.draw(batch);
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
-        batch.draw(tractorTex(), tractorX,tractorY, 1, 1);
+        batch.draw(tractorTex(), tractorX,tractorY, 2f, 1.5f);
         // Check what level of solar panels and set foreground accordingly.
         if (game.gameData.getSolarPanelLevel() == 1) {
             batch.draw(backgroundSolar, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
