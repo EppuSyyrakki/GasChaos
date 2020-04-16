@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.I18NBundle;
 
-import java.util.Locale;
-
 
 public class GasChaosMain extends Game {
 	SpriteBatch batch;

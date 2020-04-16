@@ -25,7 +25,7 @@ public class FieldScreen extends Location implements Screen {
     float riverX1;
     float riverX2;
     float riverX3;
-    float riverSpeed;
+    final float riverSpeed;
 
     public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
@@ -108,11 +108,10 @@ public class FieldScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         game.setNewTurn();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
                     }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);

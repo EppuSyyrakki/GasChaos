@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 public class HomeScreen extends Location implements Screen {
     @SuppressWarnings({"CanBeFinal"})
     Player player;
+    @SuppressWarnings("UnusedAssignment")
     boolean newTurn = false;
 
     public HomeScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
@@ -113,11 +114,10 @@ public class HomeScreen extends Location implements Screen {
                     boolean result = (boolean) object;
                     if (result) {
                         game.setNewTurn();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
                     }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);

@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 
-@SuppressWarnings({"DanglingJavadoc", "unchecked", "FieldCanBeLocal"})
+@SuppressWarnings({"DanglingJavadoc", "unchecked"})
 public class GameData {
 
     /**
@@ -317,7 +317,7 @@ public class GameData {
     }
 
     public GameData() {
-        fields = new ArrayList<Field>();
+        fields = new ArrayList<>();
         for (int i = 0; i < MAX_FIELDS; i++) {
             if (i < OWNED_FIELDS) {
                 fields.add(new Field(true, false));
@@ -325,10 +325,11 @@ public class GameData {
                 fields.add(new Field(false, false));
             }
         }
-        cowList = new ArrayList<Cow>();
+        cowList = new ArrayList<>();
         cowList.add(new Cow());
-        cowsBought = new ArrayList<Cow>();
+        cowsBought = new ArrayList<>();
 
+        //noinspection ConstantConditions
         actionsAvailable = actionsDone < MAX_ACTIONS;
     }
 

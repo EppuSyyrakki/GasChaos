@@ -200,10 +200,6 @@ public class Player extends Sprite{
         matchY(getRY());
     }
 
-    public boolean isFadeActive() {
-        return fadeActive;
-    }
-
     public void setFadeActive(boolean fadeActive) {
         this.fadeActive = fadeActive;
     }

@@ -32,6 +32,7 @@ public class Field {
             }
             amount += growth;
 
+            //noinspection ConstantConditions
             if (amount > MAX_GROWTH) {
                 amount = MAX_GROWTH;
             }
@@ -123,6 +124,7 @@ public class Field {
     }
 
     // Do not remove, crashes the game on loadGame()
+    @SuppressWarnings("unused")
     public Field() {
     }
 }

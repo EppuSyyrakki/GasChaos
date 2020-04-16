@@ -248,11 +248,10 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         game.setNewTurn();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
                     }
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, true);

@@ -6,14 +6,14 @@ public class Cow {
     /**
      * Cow produces per turn.
      */
-    private int manure = 15;
-    private int milk = 25;
-    private int methane = 300;
+    private final int manure = 15;
+    private final int milk = 25;
+    private final int methane = 300;
 
     /**
      * Cow eats per turn. If not eaten this turn (out of feed) no milk produced in getMilk().
      */
-    private int feed = 30;
+    private final int feed = 30;
 
     private boolean eatenThisTurn = false;
 

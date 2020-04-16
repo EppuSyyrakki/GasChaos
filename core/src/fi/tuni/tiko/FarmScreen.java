@@ -15,16 +15,16 @@ import com.badlogic.gdx.math.Rectangle;
 public class FarmScreen extends Location implements Screen {
     @SuppressWarnings("CanBeFinal")
     Player player;
-    Texture backgroundSolar;
-    Texture backgroundSolar2;
-    Texture tractor1;
-    Texture tractor2;
-    Texture tractor3;
-    Texture sun;
+    final Texture backgroundSolar;
+    final Texture backgroundSolar2;
+    final Texture tractor1;
+    final Texture tractor2;
+    final Texture tractor3;
+    final Texture sun;
     float sunX;
     float sunY;
-    float tractorX;
-    float tractorY;
+    final float tractorX;
+    final float tractorY;
 
     public FarmScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
