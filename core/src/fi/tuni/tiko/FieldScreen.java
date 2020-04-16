@@ -91,11 +91,10 @@ public class FieldScreen extends Location implements Screen {
                     int result = (int)object;
                     if (result == 0) {
                         resetInputProcessor();
-                        remove();
                     } else {
                         resetInputProcessor();
-                        remove();
                     }
+                    remove();
                 }
             };
             userInterface.createFieldDialog(d, uiText);
