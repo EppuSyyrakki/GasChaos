@@ -5,14 +5,17 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class GasTankScreen extends Location implements Screen {
+    final Texture sunset;
 
     public GasTankScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
+        sunset = new Texture("ground/farmSunset.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -36,6 +39,8 @@ public class GasTankScreen extends Location implements Screen {
         }
 
         batch.begin();
+        sunsetSky(sunset);
+        sunsetRender();
         black.draw(batch, blackness);
         batch.end();
 

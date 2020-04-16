@@ -36,6 +36,7 @@ public class GardenScreen extends Location implements Screen {
         }
 
         batch.begin();
+        sunsetRender();
         black.draw(batch, blackness);
         batch.end();
 

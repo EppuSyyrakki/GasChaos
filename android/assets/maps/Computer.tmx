@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="9" height="16" tilewidth="120" tileheight="120" infinite="0" nextlayerid="20" nextobjectid="31">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="9" height="16" tilewidth="120" tileheight="120" infinite="0" nextlayerid="21" nextobjectid="32">
  <layer id="1" name="Tile Layer 1" width="9" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,
@@ -24,10 +24,13 @@
   <image source="../ground/computerBackground.png" width="1080" height="1920"/>
  </imagelayer>
  <objectgroup id="17" name="RectangleBuySell">
-  <object id="28" x="339.728" y="940.921" width="400.208" height="200.901"/>
+  <object id="28" x="339.728" y="727.921" width="400.208" height="200.901"/>
  </objectgroup>
  <objectgroup id="18" name="RectangleUpgrades">
-  <object id="29" x="339.061" y="727.678" width="401.043" height="198.779"/>
+  <object id="29" x="339.061" y="941.678" width="401.043" height="198.779"/>
+ </objectgroup>
+ <objectgroup id="20" name="RectangleFinances">
+  <object id="31" x="779" y="728" width="140" height="410"/>
  </objectgroup>
  <objectgroup id="19" name="RectangleExit">
   <object id="30" x="69.306" y="228.039" width="941.22" height="353.237"/>

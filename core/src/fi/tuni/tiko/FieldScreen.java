@@ -26,9 +26,11 @@ public class FieldScreen extends Location implements Screen {
     float riverX2;
     float riverX3;
     final float riverSpeed;
+    final Texture sunset;
 
     public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
+        sunset = new Texture("ground/farmSunset.png");
         growth1 = new Texture("growth/growth1.png");
         growth2 = new Texture("growth/growth2.png");
         growth3 = new Texture("growth/growth3.png");
@@ -66,6 +68,8 @@ public class FieldScreen extends Location implements Screen {
         batch.begin();
         drawRiver();
         drawFields();
+        sunsetSky(sunset);
+        sunsetRender();
         black.draw(batch, blackness);
         batch.end();
 

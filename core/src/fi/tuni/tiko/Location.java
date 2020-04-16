@@ -22,6 +22,7 @@ public class Location implements InputProcessor {
     final float WORLD_HEIGHT = 16f;
     final float WORLD_SCALE = 1 / 120f;
     float blackness;
+    float sunsetTransparency = 0.2f;
     float fadeSpeed = 2f;
     boolean fadeIn;
     boolean actionInputActive = true;
@@ -29,7 +30,9 @@ public class Location implements InputProcessor {
     OrthographicCamera camera;
     Texture background;
     final Texture blackTexture = new Texture("props/black.png");
+    final Texture sunsetTexture = new Texture("props/sunset.png");
     final Sprite black = new Sprite(blackTexture);
+    final Sprite sunset = new Sprite(sunsetTexture);
     UserInterface userInterface;
     String uiText = "default";
     I18NBundle myBundle;
@@ -172,5 +175,17 @@ public class Location implements InputProcessor {
     public boolean scrolled(int amount) {
         return false;
     }
+    public void sunsetRender() {
+        if (!game.gameData.isActionsAvailable()) {
+            sunset.draw(batch, sunsetTransparency);
+        }
+    }
+
+    public void sunsetSky(Texture sunsetForeground) {
+        if (!game.gameData.isActionsAvailable()) {
+            batch.draw(sunsetForeground, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
+        }
+    }
+
 
 }

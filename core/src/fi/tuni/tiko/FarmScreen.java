@@ -17,6 +17,7 @@ public class FarmScreen extends Location implements Screen {
     Player player;
     final Texture backgroundSolar;
     final Texture backgroundSolar2;
+    final Texture sunset;
     final Texture tractor1;
     final Texture tractor2;
     final Texture tractor3;
@@ -33,6 +34,7 @@ public class FarmScreen extends Location implements Screen {
         backgroundSolar = new Texture("ground/farmForegroundSolar.png");
         backgroundSolar2 = new Texture("ground/farmForegroundSolar2.png");
         background = new Texture("ground/farmForeground.png");
+        sunset = new Texture("ground/farmSunset.png");
         tractor1 = new Texture("props/tractor1.png");
         tractor2 = new Texture("props/tractor1.png");
         tractor3 = new Texture("props/tractor1.png");
@@ -91,6 +93,8 @@ public class FarmScreen extends Location implements Screen {
             batch.draw(backgroundSolar2, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         }
         batch.draw(sun, sunX,sunY, 1, 1);
+        sunsetSky(sunset);
+        sunsetRender();
         black.draw(batch, blackness);
         batch.end();
 
