@@ -83,9 +83,9 @@ public class FarmScreen extends Location implements Screen {
 
 
         batch.begin();
+        batch.draw(tractorTex(), tractorX,tractorY, 2f, 1.5f);
         player.draw(batch);
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
-        batch.draw(tractorTex(), tractorX,tractorY, 2f, 1.5f);
         // Check what level of solar panels and set foreground accordingly.
         if (game.gameData.getSolarPanelLevel() == 1) {
             batch.draw(backgroundSolar, 0,0, WORLD_WIDTH, WORLD_HEIGHT);

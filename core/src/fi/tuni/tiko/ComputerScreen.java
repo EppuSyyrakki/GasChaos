@@ -39,6 +39,7 @@ public class ComputerScreen extends Location implements Screen {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit")) {
             game.setHomeScreen();
+            game.homeScreen.player.match();
         }
 
         batch.begin();

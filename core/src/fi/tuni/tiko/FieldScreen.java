@@ -83,6 +83,7 @@ public class FieldScreen extends Location implements Screen {
         if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
                 && !userInterface.dialogFocus) {
             game.setFarmScreen();
+            game.farmScreen.player.match();
         } else if (fieldNumber > -1 && !userInterface.dialogFocus
                 && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;

@@ -49,6 +49,7 @@ public class GasTankScreen extends Location implements Screen {
         if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
                 && !userInterface.dialogFocus) {
             game.setFarmScreen();
+            game.farmScreen.player.match();
         }
 
         if (false) {    // condition open emergency valve
