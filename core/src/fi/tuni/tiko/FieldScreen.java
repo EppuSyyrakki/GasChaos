@@ -30,7 +30,7 @@ public class FieldScreen extends Location implements Screen {
 
     public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
-        sunset = new Texture("ground/farmSunset.png");
+        sunset = new Texture("ground/fieldSunset.png");
         growth1 = new Texture("growth/growth1.png");
         growth2 = new Texture("growth/growth2.png");
         growth3 = new Texture("growth/growth3.png");
