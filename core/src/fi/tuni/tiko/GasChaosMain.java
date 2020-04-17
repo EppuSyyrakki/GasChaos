@@ -23,6 +23,7 @@ public class GasChaosMain extends Game {
 	ComputerScreen computerScreen;
 	UpgradeScreen upgradeScreen;
 	BuySellScreen buySellScreen;
+	HighScore highScoreScreen;
 	// Locale locale;
 	// Locale defaultLocale;
 	I18NBundle myBundle;
@@ -57,8 +58,10 @@ public class GasChaosMain extends Game {
 		computerScreen = new ComputerScreen(batch, camera, this);
 		upgradeScreen = new UpgradeScreen(batch, camera, this);
 		buySellScreen = new BuySellScreen(batch, camera, this);
+		highScoreScreen = new HighScore(batch, camera, this);
 
-		setFarmScreen();
+		setHighScoreScreen();
+		//setFarmScreen();
 	}
 
 	@Override
@@ -125,6 +128,10 @@ public class GasChaosMain extends Game {
 
 	public void setBuySellScreen() {
 		setScreen(buySellScreen);
+	}
+
+	public void setHighScoreScreen() {
+		setScreen(highScoreScreen);
 	}
 
 	public void setGameData(GameData data) {

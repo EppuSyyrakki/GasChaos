@@ -3,7 +3,10 @@ package fi.tuni.tiko;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -19,11 +22,22 @@ import java.util.List;
 /**
  * MainClass is just for demo purposes in this project.
  */
-public class HighScore extends ApplicationAdapter implements HighScoreListener {
+public class HighScore extends ApplicationAdapter implements HighScoreListener, Screen {
     private Stage stage;
     private Skin skin;
+    final GasChaosMain game;
 
     private Table content;
+
+    public HighScore(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
+        System.out.println("ree");
+        this.game = game;
+        HighScoreServer.readConfig("highscore.config");
+        HighScoreServer.setVerbose(true);
+        HighScoreServer.fetchHighScores(this);
+
+        otherSetup();
+    }
 
     @Override
     public void create () {
@@ -32,6 +46,33 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener {
         HighScoreServer.fetchHighScores(this);
 
         otherSetup();
+    }
+
+    public void HighScore (SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
+        HighScoreServer.readConfig("highscore.config");
+        HighScoreServer.setVerbose(true);
+        HighScoreServer.fetchHighScores(this);
+
+        otherSetup();
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        stage.draw();
+
+    }
+
+    @Override
+    public void hide() {
+
     }
 
     @Override
@@ -67,6 +108,7 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener {
         content = new Table();
         createTable();
         stage.addActor(content);
+        System.out.println("test1");
     }
 
     private ArrayList<Label> scoreLabels;
@@ -152,5 +194,9 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener {
     @Override
     public void dispose () {
         skin.dispose();
+    }
+
+    public void exit () {
+        game.setHomeScreen();
     }
 }
