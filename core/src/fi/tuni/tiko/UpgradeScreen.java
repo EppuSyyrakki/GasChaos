@@ -191,9 +191,8 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         game.setNewTurn();
-                    } else {
-                        resetInputProcessor();
                     }
+                    resetInputProcessor();
                     remove();
                 }
             };

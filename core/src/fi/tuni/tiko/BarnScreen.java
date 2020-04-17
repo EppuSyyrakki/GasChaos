@@ -172,9 +172,11 @@ public class BarnScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         game.setNewTurn();
-                    } else {
-                        resetInputProcessor();
+                        player.setRX(6);
+                        player.setRY(10);
+                        player.match();
                     }
+                    resetInputProcessor();
                     remove();
                 }
             };
