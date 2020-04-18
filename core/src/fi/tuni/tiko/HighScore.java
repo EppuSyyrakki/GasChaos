@@ -30,7 +30,6 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
     private Table content;
 
     public HighScore(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
-        System.out.println("ree");
         this.game = game;
         HighScoreServer.readConfig("highscore.config");
         HighScoreServer.setVerbose(true);
@@ -108,7 +107,6 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         content = new Table();
         createTable();
         stage.addActor(content);
-        System.out.println("test1");
     }
 
     private ArrayList<Label> scoreLabels;
