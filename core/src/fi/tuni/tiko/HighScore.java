@@ -127,7 +127,7 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
 
     private void createTable() {
         content.setFillParent(true);
-        content.add(new Label("High Scores", skin)).colspan(2);
+        content.add(new Label((game.myBundle.format("highScoreTitle")), skin)).colspan(2);
 
         scoreLabels = new ArrayList<>();
 
@@ -139,7 +139,7 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
             scoreLabels.add(l);
         }
 
-        TextButton fetch = new TextButton("Fetch highscores", skin);
+        TextButton fetch = new TextButton((game.myBundle.format("fetchScore")), skin);
         fetch.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -147,7 +147,7 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
             }
         });
 
-        TextButton newHighScore = new TextButton("Add new highscore", skin);
+        TextButton newHighScore = new TextButton((game.myBundle.format("addScore")), skin);
         newHighScore.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -158,16 +158,20 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         content.row();
         content.add(fetch).colspan(2);
         content.row();
-        content.add(new Label("Name:", skin));
-        content.add(new Label("Score:", skin));
+        content.add(new Label("", skin)).colspan(2);
+        content.row();
+        content.add(new Label(game.myBundle.format("paidDebt",
+                game.gameData.getCurrentTurn()), skin)).colspan(2);
+        content.row();
+        content.add(new Label((game.myBundle.format("submitScoreText")), skin)).colspan(2);
         content.row();
 
         nameField = new TextField("", skin);
-        scoreField = new TextField("", skin);
 
-        content.add(nameField);
-        content.add(scoreField);
+        content.add(nameField).colspan(2);
 
+        content.row();
+        content.add(new Label("", skin)).colspan(2);
         content.row();
         content.add(newHighScore).colspan(2);
     }
@@ -178,7 +182,7 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
 
     private void createNewScore() {
         String name = nameField.getText();
-        int score = Integer.parseInt(scoreField.getText());
+        int score = game.gameData.getCurrentTurn();
         HighScoreEntry scoreEntry = new HighScoreEntry(name, score);
         HighScoreServer.sendNewHighScore(scoreEntry, this);
     }
