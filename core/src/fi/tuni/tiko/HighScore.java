@@ -174,6 +174,9 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         content.add(new Label("", skin)).colspan(2);
         content.row();
         content.add(newHighScore).colspan(2);
+        content.row();
+        content.add(new Label((game.myBundle.format("keepPlaying")), skin)).colspan(2);
+        content.row();
     }
 
     private void fetchHighScores() {
