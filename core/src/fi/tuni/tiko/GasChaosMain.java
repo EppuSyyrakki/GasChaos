@@ -60,8 +60,8 @@ public class GasChaosMain extends Game {
 		buySellScreen = new BuySellScreen(batch, camera, this);
 		highScoreScreen = new HighScore(batch, camera, this);
 
-		setHighScoreScreen();
-		//setFarmScreen();
+		//setHighScoreScreen();
+		setFarmScreen();
 	}
 
 	@Override
