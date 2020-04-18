@@ -199,7 +199,7 @@ public class BuySellScreen extends Location implements Screen {
             userInterface.dialogFocus = true;
             final int amount = game.gameData.getFertilizerN() / 2;
             final int price = amount * game.gameData.MONEY_FROM_N;
-            uiText = game.myBundle.format("askSellN");
+            uiText = game.myBundle.format("askSellN", amount, price);
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
@@ -218,7 +218,7 @@ public class BuySellScreen extends Location implements Screen {
             userInterface.dialogFocus = true;
             final int amount = game.gameData.getFertilizerP() / 2;
             final int price = amount * game.gameData.MONEY_FROM_P;
-            uiText = game.myBundle.format("askSellP");
+            uiText = game.myBundle.format("askSellP", amount, price);
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
