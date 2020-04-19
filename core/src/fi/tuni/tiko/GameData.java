@@ -66,6 +66,8 @@ public class GameData {
     final int MANURE_SHOVELED = 100;// how much manure removed from barn in single remove action
     final int MAX_P_PER_FIELD = 13; // max phosphorous per field before penalty
     final int MAX_N_NER_FIELD = 80; // max nitrogen per field before penalty
+    final int N_FERTILIZE = 35;
+    final int P_FERTILIZE = 6;
     final int MANURE_DANGER = 200;  // when amount of manure will affect milk production.
 
     /**

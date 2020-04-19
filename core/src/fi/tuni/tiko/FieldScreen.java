@@ -78,7 +78,7 @@ public class FieldScreen extends Location implements Screen {
     }
 
     private void checkActionRectangles() {
-        int fieldNumber = getTouchedFieldNumber();
+        final int fieldNumber = getTouchedFieldNumber();
 
         if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
                 && !userInterface.dialogFocus) {
@@ -95,14 +95,32 @@ public class FieldScreen extends Location implements Screen {
                 protected void result(Object object) {
                     int result = (int)object;
                     if (result == 0) {
+                        System.out.println("user cancel");
                         resetInputProcessor();
-                    } else {
-                        resetInputProcessor();
+                        remove();
+                    } else if (result == 1){
+                        actionFertilizeFieldN(fieldNumber);
+                        remove();
+                    } else if (result == 2) {
+                        actionFertilizeFieldP(fieldNumber);
+                        remove();
+                    } else if (result == 3) {
+                        actionRentNewField(fieldNumber);
+                        remove();
+                    } else if (result == 4) {
+                        actionStopRentingField(fieldNumber);
+                        remove();
+                    } else if (result == 5) {
+                        actionSowField(fieldNumber);
+                        remove();
+                    } else if (result == 6) {
+                        actionReapField(fieldNumber);
+                        remove();
                     }
-                    remove();
+
                 }
             };
-            userInterface.createFieldDialog(d, uiText);
+            userInterface.createFieldDialog(d, uiText, actions);
         } else if (fieldNumber > -1 && !game.gameData.isActionsAvailable()
                 && !userInterface.dialogFocus) {
             userInterface.dialogFocus = true;
@@ -219,7 +237,7 @@ public class FieldScreen extends Location implements Screen {
             if (field.isRented() && field.getAmount() == 0) {
                 available[1] = true;
             }
-            if (field.getAmount() == 0) {
+            if (field.getAmount() == 0 && (field.isOwned() || field.isRented())) {
                 available[2] = true;
             }
             if (field.getAmount() >= field.REAPABLE_AMOUNT) {
@@ -241,6 +259,7 @@ public class FieldScreen extends Location implements Screen {
         field.setAmount(1);
         tmpFields.set(number, field);
         game.gameData.setFields(tmpFields);
+        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
         // field sown UI message
         uiText = game.myBundle.get("sowFieldComplete");
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
@@ -262,10 +281,11 @@ public class FieldScreen extends Location implements Screen {
         ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
         int amount = game.gameData.MAX_N_NER_FIELD / 2;
-        float reportAmount = (float)field.getFertilizerN() * ((float)Math.random() * 0.2f + 0.9f);
         field.setFertilizerN(field.getFertilizerN() + amount);
         tmpFields.set(number, field);
         game.gameData.setFields(tmpFields);
+        float reportAmount = (float)field.getFertilizerN() * ((float)Math.random() * 0.2f + 0.9f);
+        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
         // nitrogen added to field UI message
         uiText = game.myBundle.format("fertilizeFieldN", (int)reportAmount);
         Dialog d = new Dialog(game.myBundle.format("postDialogTitle"), userInterface.skin) {
@@ -287,12 +307,13 @@ public class FieldScreen extends Location implements Screen {
         ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
         int amount = game.gameData.MAX_P_PER_FIELD / 2;
-        float reportAmount = (float)field.getFertilizerN() * ((float)Math.random() * 0.2f + 0.9f);
         field.setFertilizerP(field.getFertilizerP() + amount);
         tmpFields.set(number, field);
         game.gameData.setFields(tmpFields);
+        float reportAmount = (float)field.getFertilizerP() * ((float)Math.random() * 0.2f + 0.9f);
+        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
         // phosphorous added to field UI message
-        uiText = game.myBundle.format("fertilizeFieldP", reportAmount);
+        uiText = game.myBundle.format("fertilizeFieldP", (int)reportAmount);
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean)object;
@@ -320,9 +341,9 @@ public class FieldScreen extends Location implements Screen {
         }
         game.gameData.setGrain(game.gameData.getGrain() + (int)amount);
         field.setAmount(0);
-        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
         tmpFields.set(number, field);
         game.gameData.setFields(tmpFields);
+        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
         // grain reaped and stored UI message
         uiText = game.myBundle.format("reapFieldComplete", (int)amount);
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
@@ -344,9 +365,9 @@ public class FieldScreen extends Location implements Screen {
         ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
         field.setRented(true);
-        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
         tmpFields.set(number, field);
         game.gameData.setFields(tmpFields);
+        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
         // new field rented UI message
         uiText = game.myBundle.get("rentNewFieldComplete");
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
@@ -368,9 +389,9 @@ public class FieldScreen extends Location implements Screen {
         ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
         field.setRented(false);
-        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
         tmpFields.set(number, field);
         game.gameData.setFields(tmpFields);
+        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
         // stopped renting field UI message
         uiText = game.myBundle.get("stopRentingFieldComplete");
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
