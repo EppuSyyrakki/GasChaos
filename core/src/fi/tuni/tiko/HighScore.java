@@ -26,6 +26,7 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
     private Stage stage;
     private Skin skin;
     final GasChaosMain game;
+    UserInterface userInterface;
 
     private Table content;
 
@@ -34,6 +35,7 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         HighScoreServer.readConfig("highscore.config");
         HighScoreServer.setVerbose(true);
         HighScoreServer.fetchHighScores(this);
+        userInterface = new UserInterface(game.myBundle);
 
         otherSetup();
     }

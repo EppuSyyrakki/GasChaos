@@ -22,6 +22,9 @@ public class FarmScreen extends Location implements Screen {
     final Texture tractor2;
     final Texture tractor3;
     final Texture sun;
+    final Texture cloud1;
+    float cloudX1;
+    final float cloudSpeed;
     float sunX;
     float sunY;
     final float tractorX;
@@ -39,8 +42,11 @@ public class FarmScreen extends Location implements Screen {
         tractor2 = new Texture("props/tractor1.png");
         tractor3 = new Texture("props/tractor1.png");
         sun = new Texture("props/sun.png");
+        cloud1 = new Texture("props/cloud1.png");
         tractorX = 0.75f;
         tractorY = 8.6f;
+        cloudX1 = 1f;
+        cloudSpeed = 0.08f;
 
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         tiledMap = new TmxMapLoader().load("maps/Farm.tmx");
@@ -94,6 +100,7 @@ public class FarmScreen extends Location implements Screen {
         }
         sunsetSky(sunset);
         batch.draw(sun, sunX,sunY, 1, 1);
+        drawCloud();
         sunsetRender();
         black.draw(batch, blackness);
         batch.end();
@@ -101,6 +108,12 @@ public class FarmScreen extends Location implements Screen {
         userInterface.render(game.gameData);
 
         checkActionRectangles();
+    }
+
+    private void drawCloud() {
+        cloudX1 = cloudX1 + cloudSpeed * Gdx.graphics.getDeltaTime();
+        if (cloudX1 > 9.5f) {cloudX1 = -4.2f;}
+        batch.draw(cloud1, cloudX1,14.2f, 37f / 9f, 16f / 9f);
     }
 
     public void checkActionRectangles() {
@@ -162,13 +175,13 @@ public class FarmScreen extends Location implements Screen {
     public void sun() {
         if (game.gameData.getActionsDone() == 0) {
             sunX = 0.7f;
-            sunY = 13.5f;
+            sunY = 13.9f;
         } else if (game.gameData.getActionsDone() == 1) {
             sunX = 3f;
-            sunY = 13.8f;
+            sunY = 14.1f;
         } else if (game.gameData.getActionsDone() == 2) {
             sunX = 5.5f;
-            sunY = 14.1f;
+            sunY = 14.2f;
         } else if (game.gameData.getActionsDone() == 3) {
             sunX = 7.7f;
             sunY = 13.1f;

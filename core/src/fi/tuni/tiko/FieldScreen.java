@@ -22,9 +22,12 @@ public class FieldScreen extends Location implements Screen {
     final Texture river1;
     final Texture river2;
     final Texture river3;
+    final Texture cloud1;
+    float cloudX1;
     float riverX1;
     float riverX2;
     float riverX3;
+    final float cloudSpeed;
     final float riverSpeed;
     final Texture sunset;
 
@@ -39,10 +42,13 @@ public class FieldScreen extends Location implements Screen {
         river1 = new Texture("props/river1.png");
         river2 = new Texture("props/river1.png");
         river3 = new Texture("props/river1.png");
+        cloud1 = new Texture("props/cloud1.png");
         riverX1 = 0f;
         riverX2 = -8f;
         riverX3 = 8f;
+        cloudX1 = 1f;
         riverSpeed = 1f;
+        cloudSpeed = 0.08f;
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -69,12 +75,19 @@ public class FieldScreen extends Location implements Screen {
         drawRiver();
         drawFields();
         sunsetSky(sunset);
+        drawCloud();
         sunsetRender();
         black.draw(batch, blackness);
         batch.end();
 
         userInterface.render(game.gameData);
         checkActionRectangles();
+    }
+
+    private void drawCloud() {
+        cloudX1 = cloudX1 + cloudSpeed * Gdx.graphics.getDeltaTime();
+        if (cloudX1 > 9.5f) {cloudX1 = -4.2f;}
+        batch.draw(cloud1, cloudX1,13.9f, 37f / 9f, 16f / 9f);
     }
 
     private void checkActionRectangles() {

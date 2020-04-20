@@ -24,33 +24,33 @@
   <image source="../ground/buySellBackground.png" width="1080" height="1920"/>
  </imagelayer>
  <objectgroup id="18" name="RectangleSellP">
-  <object id="26" x="543.269" y="1272.1" width="413.6" height="185.562"/>
+  <object id="26" x="551.511" y="1272.1" width="413.6" height="147.647"/>
  </objectgroup>
  <objectgroup id="16" name="RectangleSellN">
-  <object id="25" x="538.798" y="1066.42" width="413.6" height="156.498"/>
+  <object id="25" x="551.986" y="1084.55" width="413.6" height="156.498"/>
  </objectgroup>
  <objectgroup id="19" name="RectangleSellGas">
-  <object id="27" x="51.4206" y="1274.34" width="375.594" height="167.676"/>
+  <object id="27" x="89.3359" y="1432.6" width="420.103" height="167.676"/>
  </objectgroup>
  <objectgroup id="20" name="RectangleSellGrain">
-  <object id="28" x="46.9492" y="1502.38" width="384.537" height="140.848"/>
+  <object id="28" x="93.107" y="1269.94" width="405.967" height="152.387"/>
  </objectgroup>
  <objectgroup id="15" name="RectangleSellManure">
-  <object id="24" x="46.9492" y="1059.71" width="377.83" height="172.147"/>
+  <object id="24" x="71.6766" y="1087.73" width="422.339" height="172.147"/>
  </objectgroup>
  <objectgroup id="13" name="RectangleBuyP">
-  <object id="22" x="525.385" y="820.493" width="402.422" height="174.383"/>
+  <object id="22" x="558.355" y="906.215" width="402.422" height="148.007"/>
  </objectgroup>
  <objectgroup id="11" name="RectangleBuyN">
-  <object id="21" x="523.149" y="572.334" width="411.365" height="172.147"/>
+  <object id="21" x="549.525" y="692.674" width="411.365" height="175.444"/>
  </objectgroup>
  <objectgroup id="14" name="RectangleBuyGrain">
-  <object id="23" x="55.892" y="833.908" width="344.294" height="160.969"/>
+  <object id="23" x="67.4315" y="908.09" width="434.961" height="160.969"/>
  </objectgroup>
  <objectgroup id="10" name="RectangleBuyCow">
-  <object id="20" x="60.3633" y="570.097" width="353.237" height="167.676"/>
+  <object id="20" x="62.0118" y="692.085" width="458.741" height="203.943"/>
  </objectgroup>
  <objectgroup id="21" name="RectangleExit">
-  <object id="30" x="26.8281" y="290.637" width="1017.23" height="223.568"/>
+  <object id="30" x="26.8281" y="260.964" width="1017.23" height="315.884"/>
  </objectgroup>
 </map>
