@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.I18NBundle;
 
+import java.util.Locale;
+
 
 public class GasChaosMain extends Game {
 	SpriteBatch batch;
@@ -27,21 +29,14 @@ public class GasChaosMain extends Game {
 	// Locale locale;
 	// Locale defaultLocale;
 	I18NBundle myBundle;
+	Locale locale;
 
 
 	@Override
 	public void create () {
-		// locale = new Locale("fi", "Finland");
-		myBundle = I18NBundle.createBundle(Gdx.files.internal("MyBundle"));
 
-		/*
-		//Localization example
-		String locTest1 = myBundle.get("buyCowComplete");
-		String locTest2 = myBundle.format("turnInfoExample", gameData.getCurrentTurn());
-		System.out.println(locTest1);
-		System.out.println(locTest2);
-		//End of example
-		*/
+		myBundle = I18NBundle.createBundle(Gdx.files.internal("MyBundle"),
+				langCheck(), "UTF-8");
 
 		gameData = new GameData();
 		batch = new SpriteBatch();
@@ -62,6 +57,20 @@ public class GasChaosMain extends Game {
 
 		//setHighScoreScreen();
 		setFarmScreen();
+	}
+
+	public Locale langCheck () {
+		String lang;
+		// Gets current language from android.
+		lang = java.util.Locale.getDefault().toString();
+		//lang = "fi_FI";
+
+		if (lang.equals("fi_FI")) {
+			locale = new Locale("fi", "FI");
+		} else {
+			locale = new Locale("en", "US");
+		}
+		return locale;
 	}
 
 	@Override

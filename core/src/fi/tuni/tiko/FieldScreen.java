@@ -90,6 +90,10 @@ public class FieldScreen extends Location implements Screen {
         batch.draw(cloud1, cloudX1,13.9f, 37f / 9f, 16f / 9f);
     }
 
+    /**
+     * asks riverQuality the condition of the river.
+     * returns a texture based on the response.
+     */
     private Texture getRiver() {
         if (riverQuality() == 0) {
             return river1;
@@ -106,9 +110,10 @@ public class FieldScreen extends Location implements Screen {
      * if both numbers are under soft cap return 0
      * if both are over soft cap return 2
      * if one is over soft cap return 1
+     * TODO use proper N and P values.
      */
     private int riverQuality() {
-        int riverQuality = 0;
+        int riverQuality;
         int placeholderP = 0;
         int placeholderN = 0;
         if (placeholderP < game.gameData.getMAX_P_PER_FIELD()
@@ -120,6 +125,8 @@ public class FieldScreen extends Location implements Screen {
         } else if (placeholderP >= game.gameData.getMAX_P_PER_FIELD()
                 || placeholderN >= game.gameData.getMAX_N_PER_FIELD()) {
             riverQuality = 1;
+        } else {
+            riverQuality = 0;
         }
 
         return riverQuality;
