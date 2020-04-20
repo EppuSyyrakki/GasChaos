@@ -40,8 +40,8 @@ public class FieldScreen extends Location implements Screen {
         growth4 = new Texture("growth/growth4.png");
         growth5 = new Texture("growth/growth5.png");
         river1 = new Texture("props/river1.png");
-        river2 = new Texture("props/river1.png");
-        river3 = new Texture("props/river1.png");
+        river2 = new Texture("props/river2.png");
+        river3 = new Texture("props/river3.png");
         cloud1 = new Texture("props/cloud1.png");
         riverX1 = 0f;
         riverX2 = -8f;
@@ -88,6 +88,42 @@ public class FieldScreen extends Location implements Screen {
         cloudX1 = cloudX1 + cloudSpeed * Gdx.graphics.getDeltaTime();
         if (cloudX1 > 9.5f) {cloudX1 = -4.2f;}
         batch.draw(cloud1, cloudX1,13.9f, 37f / 9f, 16f / 9f);
+    }
+
+    private Texture getRiver() {
+        if (riverQuality() == 0) {
+            return river1;
+        } else if (riverQuality() == 1) {
+            return river2;
+        } else if (riverQuality() == 2) {
+            return river3;
+        } else {
+            return river1;
+        }
+    }
+
+    /**
+     * if both numbers are under soft cap return 0
+     * if both are over soft cap return 2
+     * if one is over soft cap return 1
+     */
+    private int riverQuality() {
+        int riverQuality = 0;
+        int placeholderP = 0;
+        int placeholderN = 0;
+        if (placeholderP < game.gameData.getMAX_P_PER_FIELD()
+                && placeholderN < game.gameData.getMAX_N_PER_FIELD()) {
+            riverQuality = 0;
+        } else if (placeholderP >= game.gameData.getMAX_P_PER_FIELD()
+                && placeholderN >= game.gameData.getMAX_N_PER_FIELD()) {
+            riverQuality = 2;
+        } else if (placeholderP >= game.gameData.getMAX_P_PER_FIELD()
+                || placeholderN >= game.gameData.getMAX_N_PER_FIELD()) {
+            riverQuality = 1;
+        }
+
+        return riverQuality;
+
     }
 
     private void checkActionRectangles() {
@@ -174,7 +210,7 @@ public class FieldScreen extends Location implements Screen {
             float reportedN = (float)field.getFertilizerN() * (float)Math.random() * 0.3f + 0.9f;
             float reportedP = (float)field.getFertilizerP() * (float)Math.random() * 0.3f + 0.9f;
             text = text + game.myBundle.format("fieldNP",
-                    (int)reportedN, game.gameData.MAX_N_NER_FIELD,
+                    (int)reportedN, game.gameData.MAX_N_PER_FIELD,
                     (int)reportedP, game.gameData.MAX_P_PER_FIELD);
         }
         return text;
@@ -188,12 +224,12 @@ public class FieldScreen extends Location implements Screen {
         riverX1 = riverX1 + riverSpeed * Gdx.graphics.getDeltaTime();
         riverX2 = riverX2 + riverSpeed * Gdx.graphics.getDeltaTime();
         riverX3 = riverX3 + riverSpeed * Gdx.graphics.getDeltaTime();
-        if (riverX1 > 10) {riverX1 = -8f;}
-        if (riverX2 > 10) {riverX2 = -8f;}
-        if (riverX3 > 10) {riverX3 = -8f;}
-        batch.draw(river1, riverX1,0, WORLD_WIDTH, WORLD_HEIGHT);
-        batch.draw(river2, riverX2,0, WORLD_WIDTH, WORLD_HEIGHT);
-        batch.draw(river3, riverX3,0, WORLD_WIDTH, WORLD_HEIGHT);
+        if (riverX1 > 9.01) {riverX1 = -8.99f;}
+        if (riverX2 > 9.01) {riverX2 = -8.99f;}
+        if (riverX3 > 9.01) {riverX3 = -8.99f;}
+        batch.draw(getRiver(), riverX1,0, WORLD_WIDTH, WORLD_HEIGHT);
+        batch.draw(getRiver(), riverX2,0, WORLD_WIDTH, WORLD_HEIGHT);
+        batch.draw(getRiver(), riverX3,0, WORLD_WIDTH, WORLD_HEIGHT);
     }
 
     private void drawFields() {
@@ -293,7 +329,7 @@ public class FieldScreen extends Location implements Screen {
     public void actionFertilizeFieldN(int number) {
         ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
-        int amount = game.gameData.MAX_N_NER_FIELD / 2;
+        int amount = game.gameData.MAX_N_PER_FIELD / 2;
         field.setFertilizerN(field.getFertilizerN() + amount);
         tmpFields.set(number, field);
         game.gameData.setFields(tmpFields);
