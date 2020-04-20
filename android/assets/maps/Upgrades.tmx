@@ -25,10 +25,9 @@
  </imagelayer>
  <objectgroup id="12" name="RectangleGasCollector">
   <object id="22" x="44.7136" y="867.443" width="443.219" height="219.096"/>
-  <object id="27" x="-216.861" y="1123.49" width="190.556" height="141.474"/>
  </objectgroup>
  <objectgroup id="13" name="RectangleMilkingMachine">
-  <object id="23" x="532.092" y="867.443" width="501.705" height="221.332"/>
+  <object id="23" x="42.1398" y="1357.4" width="449.534" height="205.454"/>
  </objectgroup>
  <objectgroup id="14" name="RectangleTractorAdvanced">
   <object id="24" x="49.348" y="1115.12" width="438.715" height="223.568"/>
@@ -37,7 +36,7 @@
   <object id="25" x="534.327" y="1115.02" width="499.241" height="228.235"/>
  </objectgroup>
  <objectgroup id="16" name="RectangleGasGenerator">
-  <object id="26" x="47.1123" y="1360.42" width="440.755" height="178.854"/>
+  <object id="26" x="532.528" y="863.663" width="501.999" height="219.683"/>
  </objectgroup>
  <objectgroup id="11" name="RectangleSolarAdvanced">
   <object id="21" x="529.628" y="624.439" width="501.836" height="219.292"/>

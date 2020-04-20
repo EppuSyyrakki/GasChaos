@@ -12,10 +12,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class GasTankScreen extends Location implements Screen {
     final Texture sunset;
+    final Texture generatorBackground;
 
     public GasTankScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
         sunset = new Texture("ground/gasSunset.png");
+        generatorBackground = new Texture("ground/gasGenBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -39,6 +41,9 @@ public class GasTankScreen extends Location implements Screen {
         }
 
         batch.begin();
+        if (game.gameData.getGasGeneratorLevel() == 1) {
+            batch.draw(generatorBackground, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
+        }
         sunsetSky(sunset);
         sunsetRender();
         black.draw(batch, blackness);

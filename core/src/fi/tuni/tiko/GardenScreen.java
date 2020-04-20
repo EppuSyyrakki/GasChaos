@@ -16,17 +16,13 @@ public class GardenScreen extends Location implements Screen {
     final Texture growth1;
     final Texture growth2;
     final Texture growth3;
-    final Texture growth4;
-    final Texture growth5;
 
     public GardenScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
-        growth1 = new Texture("growth/growth1.png");
-        growth2 = new Texture("growth/growth2.png");
-        growth3 = new Texture("growth/growth3.png");
-        growth4 = new Texture("growth/growth4.png");
-        growth5 = new Texture("growth/growth5.png");
+        growth1 = new Texture("growth/potato1.png");
+        growth2 = new Texture("growth/potato2.png");
+        growth3 = new Texture("growth/potato3.png");
         this.batch = batch;
         this.camera = camera;
         userInterface = new UserInterface(game.myBundle);
@@ -48,7 +44,7 @@ public class GardenScreen extends Location implements Screen {
         }
 
         batch.begin();
-        batch.draw(growthRender(), 1f,5.6f, 7f, 7f);
+        batch.draw(growthRender(), 0f,0f, WORLD_WIDTH, WORLD_HEIGHT);
         sunsetRender();
         black.draw(batch, blackness);
         batch.end();
@@ -291,14 +287,12 @@ public class GardenScreen extends Location implements Screen {
     }
 
     public Texture growthRender() {
-        if (game.gameData.getGardenAmount() <= 16) {
+        if (game.gameData.getGardenAmount() < 25) {
             return growth1;
-        } else if (game.gameData.getGardenAmount() <= 32) {
-            return growth3;
-        } else if (game.gameData.getGardenAmount() <= 49) {
-            return growth4;
+        } else if (game.gameData.getGardenAmount() < 50) {
+            return growth2;
         } else if (game.gameData.getGardenAmount() >= 50) {
-            return growth5;
+            return growth3;
         } else {
             return growth1;
         }

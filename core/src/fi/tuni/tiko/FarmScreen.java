@@ -99,7 +99,7 @@ public class FarmScreen extends Location implements Screen {
             batch.draw(backgroundSolar2, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         }
         sunsetSky(sunset);
-        batch.draw(sun, sunX,sunY, 1, 1);
+        batch.draw(sun, sunX,sunY, 0.65f, 0.65f);
         drawCloud();
         sunsetRender();
         black.draw(batch, blackness);
@@ -113,7 +113,7 @@ public class FarmScreen extends Location implements Screen {
     private void drawCloud() {
         cloudX1 = cloudX1 + cloudSpeed * Gdx.graphics.getDeltaTime();
         if (cloudX1 > 9.5f) {cloudX1 = -4.2f;}
-        batch.draw(cloud1, cloudX1,14.2f, 37f / 9f, 16f / 9f);
+        batch.draw(cloud1, cloudX1,13.83f, 37f / 9f, 16f / 9f);
     }
 
     public void checkActionRectangles() {
