@@ -58,6 +58,10 @@ public class Cow {
         return feed;
     }
 
+    public int getManure() {
+        return manure;
+    }
+
     public int getMethaneAmount() {
         return methaneAmount;
     }
