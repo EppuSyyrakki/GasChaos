@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,7 +27,11 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
     private Stage stage;
     private Skin skin;
     final GasChaosMain game;
+    Label.LabelStyle labelStyle;
+    TextButton.TextButtonStyle buttonStyle;
+    TextField.TextFieldStyle textFieldStyle;
     UserInterface userInterface;
+    private TextField nameField;
 
     private Table content;
 
@@ -36,6 +41,11 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         HighScoreServer.setVerbose(true);
         HighScoreServer.fetchHighScores(this);
         userInterface = new UserInterface(game.myBundle);
+
+        labelStyle = new Label.LabelStyle(userInterface.font, Color.WHITE);
+        buttonStyle = new TextButton.TextButtonStyle();
+        buttonStyle.font = userInterface.font;
+
 
         otherSetup();
     }
@@ -122,24 +132,21 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         }
     }
 
-    private TextField nameField;
-    private TextField scoreField;
-
     private void createTable() {
         content.setFillParent(true);
-        content.add(new Label((game.myBundle.format("highScoreTitle")), skin)).colspan(2);
+        content.add(new Label((game.myBundle.format("highScoreTitle")), labelStyle)).colspan(2);
 
         scoreLabels = new ArrayList<>();
 
 
         for (int n = 0; n < 10; n++) {
             content.row();
-            Label l = new Label("", skin);
+            Label l = new Label("", labelStyle);
             content.add(l).colspan(2);
             scoreLabels.add(l);
         }
 
-        TextButton fetch = new TextButton((game.myBundle.format("fetchScore")), skin);
+        TextButton fetch = new TextButton((game.myBundle.format("fetchScore")), buttonStyle);
         fetch.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -147,7 +154,8 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
             }
         });
 
-        TextButton newHighScore = new TextButton((game.myBundle.format("addScore")), skin);
+        TextButton newHighScore = new TextButton((game.myBundle.format("addScore")),
+                buttonStyle);
         newHighScore.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -158,24 +166,37 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         content.row();
         content.add(fetch).colspan(2);
         content.row();
-        content.add(new Label("", skin)).colspan(2);
+        content.add(new Label("", labelStyle)).colspan(2);
         content.row();
         content.add(new Label(game.myBundle.format("paidDebt",
-                game.gameData.getCurrentTurn()), skin)).colspan(2);
+                game.gameData.getCurrentTurn()), labelStyle)).colspan(2);
         content.row();
-        content.add(new Label((game.myBundle.format("submitScoreText")), skin)).colspan(2);
+        content.add(new Label((game.myBundle.format("submitScoreText")), labelStyle)).colspan(2);
         content.row();
-
         nameField = new TextField("", skin);
-
         content.add(nameField).colspan(2);
-
         content.row();
-        content.add(new Label("", skin)).colspan(2);
+        content.add(new Label("", labelStyle)).colspan(2);
         content.row();
         content.add(newHighScore).colspan(2);
         content.row();
-        content.add(new Label((game.myBundle.format("keepPlaying")), skin)).colspan(2);
+        content.add(new Label("", labelStyle)).colspan(2);
+        content.row();
+        content.add(new Label((game.myBundle.format("keepPlaying")), labelStyle)).colspan(2);
+        content.row();
+        // Literally just the fastest way to pad the content up
+        // to prevent the text box from rendering under the phone keyboard.
+        content.add(new Label("", labelStyle)).colspan(2);
+        content.row();
+        content.add(new Label("", labelStyle)).colspan(2);
+        content.row();
+        content.add(new Label("", labelStyle)).colspan(2);
+        content.row();
+        content.add(new Label("", labelStyle)).colspan(2);
+        content.row();
+        content.add(new Label("", labelStyle)).colspan(2);
+        content.row();
+        content.add(new Label("", labelStyle)).colspan(2);
         content.row();
     }
 

@@ -26,8 +26,6 @@ public class GasChaosMain extends Game {
 	UpgradeScreen upgradeScreen;
 	BuySellScreen buySellScreen;
 	HighScore highScoreScreen;
-	// Locale locale;
-	// Locale defaultLocale;
 	I18NBundle myBundle;
 	Locale locale;
 
@@ -60,10 +58,12 @@ public class GasChaosMain extends Game {
 	}
 
 	public Locale langCheck () {
+		// for debugging purposes, will change locale argument to
+		// java.util.Locale.getDefault() at the end of development
 		String lang;
 		// Gets current language from android.
 		lang = java.util.Locale.getDefault().toString();
-		//lang = "fi_FI";
+		lang = "fi_FI";
 
 		if (lang.equals("fi_FI")) {
 			locale = new Locale("fi", "FI");
