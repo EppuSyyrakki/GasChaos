@@ -182,7 +182,7 @@ public class GameData {
         }
 
         for (Cow cow : cowList) {
-            grain = cow.eat(grain);
+            grainInBarn = cow.eat(grainInBarn);
 
             if (cow.isEatenThisTurn()) {  // if cow not eaten, no milk, manure and methane produced
                 int milkFromCow = cow.getMilk(milkingMachineLevel);
@@ -228,6 +228,7 @@ public class GameData {
         cowList.addAll(cowsBought);
         fertilizerN += nBought;
         fertilizerP += pBought;
+        grain += grainBought;
 
         if (solarPanelBasicBought) {
             solarPanelLevel = 1;
@@ -311,6 +312,7 @@ public class GameData {
         cowsBought.clear();
         nBought = 0;
         pBought = 0;
+        grainBought = 0;
         actionsDone = 0;
         currentTurn++;
         actionsAvailable = true;
