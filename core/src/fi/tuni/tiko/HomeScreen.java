@@ -177,11 +177,10 @@ public class HomeScreen extends Location implements Screen {
     }
 
     private String createMorningText() {
-        String text = "";
         boolean fieldReapable = false;
         boolean fieldSowable = false;
-
         ArrayList<Field> tmpFields = game.gameData.getFields();
+        String text = game.myBundle.get("newTurn") + "\n";
 
         for (Field field : tmpFields) {
             if (field.getAmount() == field.MAX_GROWTH) {

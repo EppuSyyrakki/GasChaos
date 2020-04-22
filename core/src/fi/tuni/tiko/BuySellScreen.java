@@ -240,7 +240,8 @@ public class BuySellScreen extends Location implements Screen {
                 getUIRec("RectangleSellGrain") ||
                 getUIRec("RectangleSellGas") ||
                 getUIRec("RectangleSellN") ||
-                getUIRec("RectangleSellP"))) {
+                getUIRec("RectangleSellP")) &&
+                !userInterface.dialogFocus) {
             userInterface.dialogFocus = true;
             uiText = game.myBundle.get("askGoSleep");
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
@@ -248,6 +249,7 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         remove();
+                        resetInputProcessor();
                         game.setNewTurn();
                     } else {
                         resetInputProcessor();
