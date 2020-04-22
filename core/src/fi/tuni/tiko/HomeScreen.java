@@ -177,11 +177,10 @@ public class HomeScreen extends Location implements Screen {
     }
 
     private String createMorningText() {
-        String text = "";
         boolean fieldReapable = false;
         boolean fieldSowable = false;
-
         ArrayList<Field> tmpFields = game.gameData.getFields();
+        String text = game.myBundle.get("newTurn") + "\n";
 
         for (Field field : tmpFields) {
             if (field.getAmount() == field.MAX_GROWTH) {
@@ -193,33 +192,33 @@ public class HomeScreen extends Location implements Screen {
         }
 
         if (game.gameData.getMoney() < 0) {
-            text += "+ " + myBundle.get("outOfMoney") + "\n";
+            text += "+ " + game.myBundle.get("outOfMoney") + "\n";
         }
 
         if (game.gameData.getGrainInBarn() <= 0) {
-            text += "+ " + myBundle.get("cowsStarving") + "\n";
+            text += "+ " + game.myBundle.get("cowsStarving") + "\n";
         }
 
         if (game.gameData.getManureInBarn() >= game.gameData.MANURE_DANGER) {
-            text += "+ " + myBundle.get("overrunByShit") + "\n";
+            text += "+ " + game.myBundle.get("overrunByShit") + "\n";
         }
 
         if (game.gameData.isFieldPenalty()) {
-            text += "+ " + myBundle.get("overFertilize") + "\n";
+            text += "+ " + game.myBundle.get("overFertilize") + "\n";
         }
 
         if (game.gameData.getGardenGrowth() == 1) {
-            text += "+ " + myBundle.get("needWeed") + "\n";
+            text += "+ " + game.myBundle.get("needWeed") + "\n";
         } else if (game.gameData.getGardenAmount() == game.gameData.getGardenMax()) {
-            text += "+ " + myBundle.get("gardenReady") + "\n";
+            text += "+ " + game.myBundle.get("gardenReady") + "\n";
         }
 
         if (fieldReapable) {
-            text += "+ " + myBundle.get("fieldReadyToReap") + "\n";
+            text += "+ " + game.myBundle.get("fieldReadyToReap") + "\n";
         }
 
         if (fieldSowable) {
-            text += "+ " + myBundle.get("fieldReadyToSow") + "\n";
+            text += "+ " + game.myBundle.get("fieldReadyToSow") + "\n";
         }
         return text;
     }
