@@ -15,14 +15,14 @@ public class GameData {
      * Prices of resources and upgrades. Money gained is per 1 unit.
      */
     final int MONEY_FROM_MILK = 4;
-    final int MONEY_FROM_MANURE = 2;
-    final int MONEY_FROM_GRAIN = 3;
+    final int MONEY_FROM_MANURE = 1;
+    final int MONEY_FROM_GRAIN = 2;
     final int MONEY_FROM_METHANE = 2;
     final int MONEY_FROM_GARDEN = 8;
     final int MONEY_FROM_N = 2;
     final int MONEY_FROM_P = 6;
     final int PRICE_OF_COW = 800;
-    final int PRICE_OF_FEED = 2;
+    final int PRICE_OF_GRAIN = 2;
     final int PRICE_OF_SOLAR = 1000;
     final int PRICE_OF_COLLECTOR = 1000;
     final int PRICE_OF_MILKING = 1000;
@@ -39,6 +39,7 @@ public class GameData {
     private int actionsDone = 0;
     final int MAX_ACTIONS = 3;  // actions per turn
     private boolean actionsAvailable;
+    private boolean fieldPenalty = false;
 
     /**
      * Resource amounts and limits
@@ -820,6 +821,14 @@ public class GameData {
         this.pBought = pBought;
     }
 
+    public boolean isFieldPenalty() {
+        return fieldPenalty;
+    }
+
+    public void setFieldPenalty(boolean fieldPenalty) {
+        this.fieldPenalty = fieldPenalty;
+    }
+
     public GameData(ArrayList<Field> fields) {
         this.fields = fields;
     }
@@ -836,6 +845,7 @@ public class GameData {
         prefs.putInteger("currentTurn", getCurrentTurn());
         prefs.putInteger("actionsDone", getActionsDone());
         prefs.putBoolean("actionsAvailable", isActionsAvailable());
+        prefs.putBoolean("fieldPenalty", isFieldPenalty());
 
         /**
          * Resource amounts.
@@ -957,6 +967,7 @@ public class GameData {
         setCurrentTurn(prefs.getInteger("currentTurn", getCurrentTurn()));
         setActionsDone(prefs.getInteger("actionsDone", getActionsDone()));
         setActionsAvailable(prefs.getBoolean("actionsAvailable"));
+        setFieldPenalty(prefs.getBoolean("fieldPenalty"));
 
         /**
          * Resource amounts.
