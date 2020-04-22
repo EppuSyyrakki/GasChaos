@@ -13,6 +13,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
+import java.util.ArrayList;
+
 @SuppressWarnings("RedundantCast")
 public class HomeScreen extends Location implements Screen {
     @SuppressWarnings({"CanBeFinal"})
@@ -53,7 +55,7 @@ public class HomeScreen extends Location implements Screen {
             player.setRY(6);
             player.matchX(player.getRX());
             player.matchY(player.getRY());
-            uiText = game.myBundle.get("newTurn");
+            uiText = createMorningText();
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
@@ -174,4 +176,51 @@ public class HomeScreen extends Location implements Screen {
         this.newTurn = newTurn;
     }
 
+    private String createMorningText() {
+        String text = "";
+        boolean fieldReapable = false;
+        boolean fieldSowable = false;
+
+        ArrayList<Field> tmpFields = game.gameData.getFields();
+
+        for (Field field : tmpFields) {
+            if (field.getAmount() == field.MAX_GROWTH) {
+                fieldReapable = true;
+            }
+            if ((field.isRented() || field.isOwned()) && field.getAmount() == 0) {
+                fieldSowable = true;
+            }
+        }
+
+        if (game.gameData.getMoney() < 0) {
+            text += "+ " + myBundle.get("outOfMoney") + "\n";
+        }
+
+        if (game.gameData.getGrainInBarn() <= 0) {
+            text += "+ " + myBundle.get("cowsStarving") + "\n";
+        }
+
+        if (game.gameData.getManureInBarn() >= game.gameData.MANURE_DANGER) {
+            text += "+ " + myBundle.get("overrunByShit") + "\n";
+        }
+
+        if (game.gameData.isFieldPenalty()) {
+            text += "+ " + myBundle.get("overFertilize") + "\n";
+        }
+
+        if (game.gameData.getGardenGrowth() == 1) {
+            text += "+ " + myBundle.get("needWeed") + "\n";
+        } else if (game.gameData.getGardenAmount() == game.gameData.getGardenMax()) {
+            text += "+ " + myBundle.get("gardenReady") + "\n";
+        }
+
+        if (fieldReapable) {
+            text += "+ " + myBundle.get("fieldReadyToReap") + "\n";
+        }
+
+        if (fieldSowable) {
+            text += "+ " + myBundle.get("fieldReadyToSow") + "\n";
+        }
+        return text;
+    }
 }

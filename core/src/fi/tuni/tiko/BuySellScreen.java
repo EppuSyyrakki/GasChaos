@@ -84,7 +84,7 @@ public class BuySellScreen extends Location implements Screen {
                 && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
             final int amount = game.gameData.getCowList().get(0).getFeed() * 10;
-            final int price = game.gameData.PRICE_OF_FEED * amount;
+            final int price = game.gameData.PRICE_OF_GRAIN * amount;
             uiText = game.myBundle.format("askBuyGrain", amount, price,
                     game.gameData.getGrain(),
                     game.gameData.getCowAmount() * game.gameData.getCowList().get(0).getFeed());

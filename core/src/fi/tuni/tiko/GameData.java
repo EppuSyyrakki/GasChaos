@@ -15,14 +15,14 @@ public class GameData {
      * Prices of resources and upgrades. Money gained is per 1 unit.
      */
     final int MONEY_FROM_MILK = 4;
-    final int MONEY_FROM_MANURE = 2;
-    final int MONEY_FROM_GRAIN = 3;
+    final int MONEY_FROM_MANURE = 1;
+    final int MONEY_FROM_GRAIN = 2;
     final int MONEY_FROM_METHANE = 2;
     final int MONEY_FROM_GARDEN = 8;
     final int MONEY_FROM_N = 2;
     final int MONEY_FROM_P = 6;
     final int PRICE_OF_COW = 800;
-    final int PRICE_OF_FEED = 2;
+    final int PRICE_OF_GRAIN = 2;
     final int PRICE_OF_SOLAR = 1000;
     final int PRICE_OF_COLLECTOR = 1000;
     final int PRICE_OF_MILKING = 1000;
@@ -39,6 +39,7 @@ public class GameData {
     private int actionsDone = 0;
     final int MAX_ACTIONS = 3;  // actions per turn
     private boolean actionsAvailable;
+    private boolean fieldPenalty = false;
 
     /**
      * Resource amounts and limits
@@ -54,9 +55,9 @@ public class GameData {
     private int grain = 100;        // total amount of grain on farm
     private int grainInBarn = 30;   // amount of feed (grain) for cows in barn
     private int grainMax = 9000;    // maximum amount of grain
-    private int fertilizerN = 400;    // Nitrogen fertilizer storage
+    private int fertilizerN = 35;   // Nitrogen fertilizer storage
     private int fertilizerNMax = 500;
-    private int fertilizerP = 90;    // Phosphorous fertilizer storage
+    private int fertilizerP = 6;    // Phosphorous fertilizer storage
     private int fertilizerPMax = 100;
 
     private float interest = 0.03f; // 3% interest rate to calculate debt payments
@@ -66,7 +67,7 @@ public class GameData {
     final int MANURE_SHOVELED = 100;// how much manure removed from barn in single remove action
     final int MAX_P_PER_FIELD = 13; // max phosphorous per field before penalty
     final int MAX_N_PER_FIELD = 80; // max nitrogen per field before penalty
-    final int N_FERTILIZE = 35;
+    final int N_FERTILIZE = 35;     // how much fertilizers go into field when fertilizing
     final int P_FERTILIZE = 6;
     final int MANURE_DANGER = 200;  // when amount of manure will affect milk production.
 
@@ -101,9 +102,9 @@ public class GameData {
 
     /**
      * Array to represent manure slowly composting into fertilizerN and fertilizerP. Change is done
-     * in updateResources. Full change takes 9+1 turns.
+     * in updateResources. Full change takes 3+1 turns.
      */
-    private int[] compost = new int[9];
+    private int[] compost = new int[3];
 
     /**
      * All fields in FieldScreen. All fields exist at start of game.
@@ -293,7 +294,13 @@ public class GameData {
     }
 
     private void updateCompost() {
-        // TODO 10 turns of composting, each turn amount * 0.1 so ends up 1/100 of original
+        int toCompost = (cowList.get(0).getManure() * cowList.size()) / 10;  // 1..9
+        fertilizerN += compost[2] * 5;
+        fertilizerP += compost[2];
+        compost[2] = compost[1];
+        compost[1] = compost[2];
+        compost[0] = toCompost;
+        manure -= toCompost;
     }
 
     private void resetVariables() {
@@ -814,6 +821,14 @@ public class GameData {
         this.pBought = pBought;
     }
 
+    public boolean isFieldPenalty() {
+        return fieldPenalty;
+    }
+
+    public void setFieldPenalty(boolean fieldPenalty) {
+        this.fieldPenalty = fieldPenalty;
+    }
+
     public GameData(ArrayList<Field> fields) {
         this.fields = fields;
     }
@@ -830,6 +845,7 @@ public class GameData {
         prefs.putInteger("currentTurn", getCurrentTurn());
         prefs.putInteger("actionsDone", getActionsDone());
         prefs.putBoolean("actionsAvailable", isActionsAvailable());
+        prefs.putBoolean("fieldPenalty", isFieldPenalty());
 
         /**
          * Resource amounts.
@@ -924,19 +940,11 @@ public class GameData {
 
         /**
          * Array to represent manure slowly composting into fertilizerN and fertilizerP. Change is done
-         * in updateResources. Full change takes 9+1 turns.
+         * in updateResources. Full change takes 3+1 turns.
          */
-        //prefs.putInteger("compost0", compost[0]);
-        //prefs.putInteger("compost1", compost[1]);
-        //prefs.putInteger("compost2", compost[2]);
-        //prefs.putInteger("compost3", compost[3]);
-        //prefs.putInteger("compost4", compost[4]);
-        //prefs.putInteger("compost5", compost[5]);
-        //prefs.putInteger("compost6", compost[6]);
-        //prefs.putInteger("compost7", compost[7]);
-        //prefs.putInteger("compost8", compost[8]);
-        //prefs.putInteger("compost9", compost[9]);
-
+        prefs.putInteger("compost0", compost[0]);
+        prefs.putInteger("compost1", compost[1]);
+        prefs.putInteger("compost2", compost[2]);
 
 
         prefs.flush();
@@ -959,6 +967,7 @@ public class GameData {
         setCurrentTurn(prefs.getInteger("currentTurn", getCurrentTurn()));
         setActionsDone(prefs.getInteger("actionsDone", getActionsDone()));
         setActionsAvailable(prefs.getBoolean("actionsAvailable"));
+        setFieldPenalty(prefs.getBoolean("fieldPenalty"));
 
         /**
          * Resource amounts.
@@ -1064,18 +1073,10 @@ public class GameData {
 
         /**
          * Array to represent manure slowly composting into fertilizerN and fertilizerP. Change is done
-         * in updateResources. Full change takes 9+1 turns.
-         */
+         * in updateResources. Full change takes 3+1 turns.*/
 
-        //compost[0] = prefs.getInteger("compost0", compost[0]);
-        //compost[1] = prefs.getInteger("compost1", compost[1]);
-        //compost[2] = prefs.getInteger("compost2", compost[2]);
-        //compost[3] = prefs.getInteger("compost3", compost[3]);
-        //compost[4] = prefs.getInteger("compost4", compost[4]);
-        //compost[5] = prefs.getInteger("compost5", compost[5]);
-        //compost[6] = prefs.getInteger("compost6", compost[6]);
-        //compost[7] = prefs.getInteger("compost7", compost[7]);
-        //compost[8] = prefs.getInteger("compost8", compost[8]);
-        //compost[9] = prefs.getInteger("compost9", compost[9]);
+        compost[0] = prefs.getInteger("compost0", compost[0]);
+        compost[1] = prefs.getInteger("compost1", compost[1]);
+        compost[2] = prefs.getInteger("compost2", compost[2]);
     }
 }
