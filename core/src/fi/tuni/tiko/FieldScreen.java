@@ -322,6 +322,7 @@ public class FieldScreen extends Location implements Screen {
             protected void result(Object object) {
                 boolean result = (boolean)object;
                 if (result) {
+                    game.gameData.saveGame();
                     resetInputProcessor();
                     remove();
                 }
@@ -348,6 +349,7 @@ public class FieldScreen extends Location implements Screen {
             protected void result(Object object) {
                 boolean result = (boolean)object;
                 if (result) {
+                    game.gameData.saveGame();
                     resetInputProcessor();
                     remove();
                 }
@@ -374,6 +376,7 @@ public class FieldScreen extends Location implements Screen {
             protected void result(Object object) {
                 boolean result = (boolean)object;
                 if (result) {
+                    game.gameData.saveGame();
                     resetInputProcessor();
                     remove();
                 }
@@ -406,6 +409,7 @@ public class FieldScreen extends Location implements Screen {
             protected void result(Object object) {
                 boolean result = (boolean)object;
                 if (result) {
+                    game.gameData.saveGame();
                     resetInputProcessor();
                     remove();
                 }
@@ -430,6 +434,7 @@ public class FieldScreen extends Location implements Screen {
             protected void result(Object object) {
                 boolean result = (boolean)object;
                 if (result) {
+                    game.gameData.saveGame();
                     resetInputProcessor();
                     remove();
                 }
@@ -454,6 +459,7 @@ public class FieldScreen extends Location implements Screen {
             protected void result(Object object) {
                 boolean result = (boolean)object;
                 if (result) {
+                    game.gameData.saveGame();
                     resetInputProcessor();
                     remove();
                 }

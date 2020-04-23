@@ -73,6 +73,7 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionBuyCow();
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -93,6 +94,7 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionBuyFeed(price, amount);
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -113,6 +115,7 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionBuyN(amount, price);
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -133,6 +136,7 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionBuyP(amount, price);
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -151,6 +155,7 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSellManure(amount, price);
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -169,6 +174,7 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSellGrain(amount, price);
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -187,6 +193,7 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSellGas(amount, price);
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -205,7 +212,7 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSellN(amount, price);
-                        System.out.println("selling shit");
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -224,6 +231,7 @@ public class BuySellScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSellP(amount, price);
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -280,6 +288,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -293,6 +302,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -307,6 +317,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -350,6 +361,7 @@ public class BuySellScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -363,6 +375,7 @@ public class BuySellScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -377,6 +390,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -398,6 +412,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -411,6 +426,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -427,6 +443,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -448,6 +465,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -461,6 +479,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -477,6 +496,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -500,6 +520,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -513,6 +534,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -536,6 +558,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -549,6 +572,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -572,6 +596,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -585,6 +610,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -608,6 +634,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -621,6 +648,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -645,6 +673,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -658,6 +687,7 @@ public class BuySellScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }

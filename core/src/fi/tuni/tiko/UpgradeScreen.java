@@ -67,6 +67,7 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSolarPanelBasic();
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -84,6 +85,7 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSolarPanelAdvanced();
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -101,6 +103,7 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionGasCollectorAdvanced();
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -118,6 +121,7 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionMilkingMachineAdvanced();
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -135,6 +139,7 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionTractorAdvanced();
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -152,6 +157,7 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionTractorGas();
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -169,6 +175,7 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionGasGenerator();
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -222,6 +229,7 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -235,6 +243,7 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -249,6 +258,7 @@ public class UpgradeScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -278,6 +288,7 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -291,6 +302,7 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
+                            game.gameData.saveGame();
                             userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
@@ -307,6 +319,7 @@ public class UpgradeScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         userInterface.dialogFocus = false;
                         resetInputProcessor();
                         remove();
@@ -326,6 +339,7 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean) object;
                     if (result) {
                         userInterface.dialogFocus = false;
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -350,6 +364,7 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -363,6 +378,7 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
+                            game.gameData.saveGame();
                             userInterface.dialogFocus = false;
                             resetInputProcessor();
                             remove();
@@ -380,6 +396,7 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean) object;
                     if (result) {
                         userInterface.dialogFocus = false;
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -405,6 +422,7 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -419,6 +437,7 @@ public class UpgradeScreen extends Location implements Screen {
                         boolean result = (boolean) object;
                         if (result) {
                             userInterface.dialogFocus = false;
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -435,6 +454,7 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean) object;
                     if (result) {
                         userInterface.dialogFocus = false;
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -459,6 +479,7 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -473,6 +494,7 @@ public class UpgradeScreen extends Location implements Screen {
                         boolean result = (boolean) object;
                         if (result) {
                             userInterface.dialogFocus = false;
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -488,6 +510,7 @@ public class UpgradeScreen extends Location implements Screen {
                     boolean result = (boolean) object;
                     if (result) {
                         userInterface.dialogFocus = false;
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -519,6 +542,7 @@ public class UpgradeScreen extends Location implements Screen {
                         protected void result(Object object) {
                             boolean result = (boolean) object;
                             if (result) {
+                                game.gameData.saveGame();
                                 resetInputProcessor();
                                 remove();
                             }
@@ -533,6 +557,7 @@ public class UpgradeScreen extends Location implements Screen {
                             boolean result = (boolean) object;
                             if (result) {
                                 userInterface.dialogFocus = false;
+                                game.gameData.saveGame();
                                 resetInputProcessor();
                                 remove();
                             }
@@ -549,6 +574,7 @@ public class UpgradeScreen extends Location implements Screen {
                         boolean result = (boolean) object;
                         if (result) {
                             userInterface.dialogFocus = false;
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -564,6 +590,7 @@ public class UpgradeScreen extends Location implements Screen {
                         boolean result = (boolean) object;
                         if (result) {
                             userInterface.dialogFocus = false;
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -589,6 +616,7 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -602,6 +630,7 @@ public class UpgradeScreen extends Location implements Screen {
                     protected void result(Object object) {
                         boolean result = (boolean) object;
                         if (result) {
+                            game.gameData.saveGame();
                             resetInputProcessor();
                             remove();
                         }
@@ -617,6 +646,7 @@ public class UpgradeScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }

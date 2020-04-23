@@ -110,6 +110,7 @@ public class GardenScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionWeedGarden();
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -129,6 +130,7 @@ public class GardenScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionSellGarden();
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -145,6 +147,7 @@ public class GardenScreen extends Location implements Screen {
                     boolean result = (boolean)object;
                     if (result) {
                         actionPlantGarden();
+                        game.gameData.saveGame();
                     } else {
                         resetInputProcessor();
                     }
@@ -187,6 +190,7 @@ public class GardenScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -200,6 +204,7 @@ public class GardenScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -220,6 +225,7 @@ public class GardenScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -236,6 +242,7 @@ public class GardenScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -260,6 +267,7 @@ public class GardenScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }
@@ -273,6 +281,7 @@ public class GardenScreen extends Location implements Screen {
                 protected void result(Object object) {
                     boolean result = (boolean)object;
                     if (result) {
+                        game.gameData.saveGame();
                         resetInputProcessor();
                         remove();
                     }

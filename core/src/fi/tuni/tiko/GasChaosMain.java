@@ -133,6 +133,7 @@ public class GasChaosMain extends Game {
 		homeScreen.setNewTurn(true);
 		homeScreen.resetInputProcessor();
 		setScreen(homeScreen);
+		gameData.saveGame();
 
 	}
 
