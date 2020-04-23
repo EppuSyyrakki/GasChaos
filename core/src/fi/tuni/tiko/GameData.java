@@ -222,6 +222,17 @@ public class GameData {
         moneyThisTurn -= petrolThisTurn;
         moneyThisTurn -= fieldsRentThisTurn;
         money += moneyThisTurn;
+        System.out.println("grain:" + grainSold * MONEY_FROM_GRAIN);
+        System.out.println("manure:" + manureSold * MONEY_FROM_MANURE);
+        System.out.println("garden:" + gardenSold * MONEY_FROM_GARDEN);
+        System.out.println("methane:" + methaneSold * MONEY_FROM_METHANE);
+        System.out.println("milk:" + milkSold * MONEY_FROM_MILK);
+        System.out.println("N:" + NSold * MONEY_FROM_N);
+        System.out.println("P:" + PSold * MONEY_FROM_P);
+        System.out.println("Debt payment:" + debtPaymentThisTurn);
+        System.out.println("electricity:" + electricityThisTurn);
+        System.out.println("petrol:" + petrolThisTurn);
+        System.out.println("fields rent:" + fieldsRentThisTurn);
     }
 
     private void updateThings() {
