@@ -75,35 +75,10 @@ public class GasChaosMain extends Game {
 
 	public void reset() {
 
-		/**
-		 * Sets every class to null, creates new classes in their place and saves.
-		 */
+		// Deletes save and exits the game, user has to re-open the game.
+		gameData.resetSave();
+		Gdx.app.exit();
 
-		farmScreen = null;
-		homeScreen = null;
-		fieldScreen = null;
-		barnScreen = null;
-		gardenScreen = null;
-		gasTankScreen = null;
-		grandmotherScreen = null;
-		computerScreen = null;
-		upgradeScreen = null;
-		buySellScreen = null;
-		highScoreScreen = null;
-
-		farmScreen = new FarmScreen(batch, camera, this);
-		homeScreen = new HomeScreen(batch, camera, this);
-		fieldScreen = new FieldScreen(batch, camera, this);
-		barnScreen = new BarnScreen(batch, camera, this);
-		gardenScreen = new GardenScreen(batch, camera, this);
-		gasTankScreen = new GasTankScreen(batch, camera, this);
-		grandmotherScreen = new GrandmotherScreen(batch, camera, this);
-		computerScreen = new ComputerScreen(batch, camera, this);
-		upgradeScreen = new UpgradeScreen(batch, camera, this);
-		buySellScreen = new BuySellScreen(batch, camera, this);
-		highScoreScreen = new HighScore(batch, camera, this);
-
-		gameData.saveGame();
 	}
 
 	@Override

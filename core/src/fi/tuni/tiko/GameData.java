@@ -1081,4 +1081,111 @@ public class GameData {
         compost[1] = prefs.getInteger("compost1", compost[1]);
         compost[2] = prefs.getInteger("compost2", compost[2]);
     }
+
+    public void resetSave() {
+
+        prefs.remove("currentTurn");
+        prefs.remove("actionsDone");
+        prefs.remove("actionsAvailable");
+        prefs.remove("fieldPenalty");
+
+        /**
+         * Resource amounts.
+         */
+        prefs.remove("money");
+        prefs.remove("manure");
+        prefs.remove("manureInBarn");
+        prefs.remove("manureInBarnMax");
+        prefs.remove("manureMax");
+        prefs.remove("methane");
+        prefs.remove("methaneMax");
+        prefs.remove("debt");
+        prefs.remove("grain");
+        prefs.remove("grainInBarn");
+        prefs.remove("grainMax");
+        prefs.remove("fertilizerN");
+        prefs.remove("fertilizerNMax");
+        prefs.remove("fertilizerP");
+        prefs.remove("fertilizerPMax");
+        prefs.remove("interest");
+
+        /**
+         * Device levels. 0 = no device, Used in updateResource calculations and to draw correct
+         * graphics.
+         */
+        prefs.remove("solarPanelLevel");
+        prefs.remove("gasCollectorLevel");
+        prefs.remove("milkingMachineLevel");
+        prefs.remove("tractorLevel");
+        prefs.remove("gasGeneratorLevel");
+
+        /**
+         * Expenditures per turn
+         */
+        prefs.remove("debtPayment");
+        prefs.remove("electricity");
+        prefs.remove("petrol");
+
+        /**
+         * Keep state of garden.
+         */
+        prefs.remove("weedsAmount");
+        prefs.remove("gardenGrowth");
+        prefs.remove("gardenAmount");
+        prefs.remove("gardenMax");
+
+        /**
+         * Things bought this turn that will come to farm on next turn. Touched in buying actions. Will
+         * reset to default in updateResources at end of turn.
+         */
+
+        prefs.remove("grainBought");
+        prefs.remove("nBought");
+        prefs.remove("pBought");
+        prefs.remove("solarPanelBasicBought");
+        prefs.remove("solarPanelAdvBought");
+        prefs.remove("gasCollectorAdvBought");
+        prefs.remove("milkingMachineAdvBought");
+        prefs.remove("tractorAdvBought");
+        prefs.remove("tractorGasBought");
+        prefs.remove("gasGeneratorBought");
+
+        /**
+         * Income per turn. Touched only if sold this turn.
+         */
+        prefs.remove("grainSold");
+        prefs.remove("methaneSold");
+        prefs.remove("manureSold");
+        prefs.remove("gardenSold");
+        prefs.remove("NSold");
+        prefs.remove("PSold");
+
+
+        /**
+         * Array and arrayList accessories.
+         */
+
+        String jsonField = json.toJson(fields);
+        prefs.remove("fields");
+        prefs.remove("cowList");
+
+        prefs.remove("fieldRent0");
+        prefs.remove("fieldRent1");
+        prefs.remove("fieldRent2");
+        prefs.remove("fieldRent3");
+        //String jsonFieldsRented = json.toJson(fieldsRented);
+        //prefs.putString("fieldsRented", jsonFieldsRented);
+        //System.out.println("json: " + jsonFieldsRented);
+
+        /**
+         * Array to represent manure slowly composting into fertilizerN and fertilizerP. Change is done
+         * in updateResources. Full change takes 3+1 turns.
+         */
+        prefs.remove("compost0");
+        prefs.remove("compost1");
+        prefs.remove("compost2");
+
+
+        prefs.flush();
+    }
 }
