@@ -193,6 +193,7 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 createNewScore();
+                exitScore();
             }
         });
 
@@ -259,7 +260,7 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         skin.dispose();
     }
 
-    public void exit () {
+    public void exitScore() {
         game.setHomeScreen();
     }
 }
