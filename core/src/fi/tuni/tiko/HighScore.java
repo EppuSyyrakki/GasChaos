@@ -39,22 +39,20 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
     UserInterface userInterface;
     private TextField nameField;
     final Texture textCursor;
-    final Texture textBoxBackground;
-    final Texture buttonUpBackground;
-    final Texture buttonDownBackground;
+    final Texture background;
+    SpriteBatch scoreBatch;
 
     private Table content;
 
     public HighScore(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         this.game = game;
+        SpriteBatch scoreBatch = batch;
         HighScoreServer.readConfig("highscore.config");
         HighScoreServer.setVerbose(true);
         HighScoreServer.fetchHighScores(this);
         userInterface = new UserInterface(game.myBundle);
-        textCursor = new Texture("props/sunset.png");
-        textBoxBackground = new Texture("props/textFieldBackground.png");
-        buttonUpBackground = new Texture("props/buttonUp.png");
-        buttonDownBackground = new Texture("props/buttonDown.png");
+        background = new Texture("ui/menu2.png");
+        textCursor = new Texture("props/cursor.png");
         NinePatch patchUp = new NinePatch(new Texture(Gdx.files.internal("props/buttonUp.png")),
                 5, 5, 5, 5);
         NinePatch patchDown = new NinePatch(new Texture(Gdx.files.internal("props/buttonDown.png")),
@@ -138,8 +136,11 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         textFieldStyle = new TextField.TextFieldStyle();
         textFieldStyle.font = userInterface.font;
         textFieldStyle.focusedFontColor = Color.WHITE;
+        NinePatch patchText = new NinePatch
+                (new Texture(Gdx.files.internal("props/textFieldBackground.png")),
+                1, 1, 1, 1);
         textFieldStyle.cursor = new TextureRegionDrawable(new TextureRegion(textCursor));
-        textFieldStyle.background = new TextureRegionDrawable(new TextureRegion(textBoxBackground));
+        textFieldStyle.background = new NinePatchDrawable(patchText);
         Gdx.input.setInputProcessor(stage);
         content = new Table();
         createTable();
@@ -162,7 +163,6 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         content.add(new Label((game.myBundle.format("highScoreTitle")), labelStyle)).colspan(2);
 
         scoreLabels = new ArrayList<>();
-
 
         for (int n = 0; n < 10; n++) {
             content.row();
