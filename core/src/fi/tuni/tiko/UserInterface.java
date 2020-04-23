@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 
@@ -48,9 +49,13 @@ public class UserInterface {
     TextButton pButton;
     TextButton rentButton;
     TextButton unrentButton;
+    final Texture buttonUpBackground;
+    final Texture buttonDownBackground;
 
     public UserInterface(I18NBundle myBundle) {
         this.myBundle = myBundle;
+        buttonUpBackground = new Texture("props/buttonUp.png");
+        buttonDownBackground = new Texture("props/buttonDown.png");
         fontTextureNormal.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         fontTextureLarge.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         if (height <= 1280) {
@@ -94,6 +99,8 @@ public class UserInterface {
         // set to true when dialog on screen, prevents player movement.
         dialogFocus = false;
 
+        buttonStyle.up = new TextureRegionDrawable(new TextureRegion(buttonUpBackground));
+        buttonStyle.down = new TextureRegionDrawable(new TextureRegion(buttonDownBackground));
         // set field dialog buttons
         reapButton = new TextButton("  " + myBundle.get("reap") + "  ", buttonStyle);
         sowButton = new TextButton("  " + myBundle.get("sow") + "  ", buttonStyle);

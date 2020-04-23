@@ -7,7 +7,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -16,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +36,10 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
     TextField.TextFieldStyle textFieldStyle;
     UserInterface userInterface;
     private TextField nameField;
+    final Texture textCursor;
+    final Texture textBoxBackground;
+    final Texture buttonUpBackground;
+    final Texture buttonDownBackground;
 
     private Table content;
 
@@ -41,10 +49,16 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         HighScoreServer.setVerbose(true);
         HighScoreServer.fetchHighScores(this);
         userInterface = new UserInterface(game.myBundle);
+        textCursor = new Texture("props/sunset.png");
+        textBoxBackground = new Texture("props/textFieldBackground.png");
+        buttonUpBackground = new Texture("props/buttonUp.png");
+        buttonDownBackground = new Texture("props/buttonDown.png");
 
         labelStyle = new Label.LabelStyle(userInterface.font, Color.WHITE);
         buttonStyle = new TextButton.TextButtonStyle();
         buttonStyle.font = userInterface.font;
+        buttonStyle.up = new TextureRegionDrawable(new TextureRegion(buttonUpBackground));
+        buttonStyle.down = new TextureRegionDrawable(new TextureRegion(buttonDownBackground));
 
 
         otherSetup();
@@ -115,6 +129,11 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         skin = new Skin();
         skin = new Skin (Gdx.files.internal("ui/uiskin.json"));
         stage = new Stage();
+        textFieldStyle = new TextField.TextFieldStyle();
+        textFieldStyle.font = userInterface.font;
+        textFieldStyle.focusedFontColor = Color.WHITE;
+        textFieldStyle.cursor = new TextureRegionDrawable(new TextureRegion(textCursor));
+        textFieldStyle.background = new TextureRegionDrawable(new TextureRegion(textBoxBackground));
         Gdx.input.setInputProcessor(stage);
         content = new Table();
         createTable();
@@ -174,6 +193,8 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         content.add(new Label((game.myBundle.format("submitScoreText")), labelStyle)).colspan(2);
         content.row();
         nameField = new TextField("", skin);
+        nameField.setWidth(800);
+        nameField.setStyle(textFieldStyle);
         content.add(nameField).colspan(2);
         content.row();
         content.add(new Label("", labelStyle)).colspan(2);

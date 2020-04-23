@@ -73,6 +73,14 @@ public class GasChaosMain extends Game {
 		return locale;
 	}
 
+	public void reset() {
+
+		// Deletes save and exits the game, user has to re-open the game.
+		gameData.resetSave();
+		Gdx.app.exit();
+
+	}
+
 	@Override
 	public void render () {
 		super.render();
@@ -100,6 +108,7 @@ public class GasChaosMain extends Game {
 		homeScreen.setNewTurn(true);
 		homeScreen.resetInputProcessor();
 		setScreen(homeScreen);
+		gameData.saveGame();
 
 	}
 
