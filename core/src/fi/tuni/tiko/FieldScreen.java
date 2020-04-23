@@ -110,20 +110,19 @@ public class FieldScreen extends Location implements Screen {
      * if both numbers are under soft cap return 0
      * if both are over soft cap return 2
      * if one is over soft cap return 1
-     * TODO use proper N and P values.
      */
     private int riverQuality() {
         int riverQuality;
-        int placeholderP = 0;
-        int placeholderN = 0;
-        if (placeholderP < game.gameData.getMAX_P_PER_FIELD()
-                && placeholderN < game.gameData.getMAX_N_PER_FIELD()) {
+        int p = game.gameData.highestFieldsP();
+        int n = game.gameData.highestFieldsN();
+        if (p < game.gameData.getMAX_P_PER_FIELD()
+                && n < game.gameData.getMAX_N_PER_FIELD()) {
             riverQuality = 0;
-        } else if (placeholderP >= game.gameData.getMAX_P_PER_FIELD()
-                && placeholderN >= game.gameData.getMAX_N_PER_FIELD()) {
+        } else if (p >= game.gameData.getMAX_P_PER_FIELD()
+                && n >= game.gameData.getMAX_N_PER_FIELD()) {
             riverQuality = 2;
-        } else if (placeholderP >= game.gameData.getMAX_P_PER_FIELD()
-                || placeholderN >= game.gameData.getMAX_N_PER_FIELD()) {
+        } else if (p >= game.gameData.getMAX_P_PER_FIELD()
+                || n >= game.gameData.getMAX_N_PER_FIELD()) {
             riverQuality = 1;
         } else {
             riverQuality = 0;
@@ -231,9 +230,9 @@ public class FieldScreen extends Location implements Screen {
         riverX1 = riverX1 + riverSpeed * Gdx.graphics.getDeltaTime();
         riverX2 = riverX2 + riverSpeed * Gdx.graphics.getDeltaTime();
         riverX3 = riverX3 + riverSpeed * Gdx.graphics.getDeltaTime();
-        if (riverX1 > 9.01) {riverX1 = -8.99f;}
-        if (riverX2 > 9.01) {riverX2 = -8.99f;}
-        if (riverX3 > 9.01) {riverX3 = -8.99f;}
+        if (riverX1 > 9) {riverX1 = -9f;}
+        if (riverX2 > 9) {riverX2 = -9f;}
+        if (riverX3 > 9) {riverX3 = -9f;}
         batch.draw(getRiver(), riverX1,0, WORLD_WIDTH, WORLD_HEIGHT);
         batch.draw(getRiver(), riverX2,0, WORLD_WIDTH, WORLD_HEIGHT);
         batch.draw(getRiver(), riverX3,0, WORLD_WIDTH, WORLD_HEIGHT);

@@ -294,6 +294,30 @@ public class GameData {
         }
     }
 
+    public int highestFieldsP() {
+        int highestP = 0;
+        for (Field field : fields) {
+            if (field.isOwned() || field.isRented()) {
+                if (field.getFertilizerP() > highestP) {
+                    highestP = field.getFertilizerP();
+                }
+            }
+        }
+        return highestP;
+    }
+
+    public int highestFieldsN() {
+        int highestN = 0;
+        for (Field field : fields) {
+            if (field.isOwned() || field.isRented()) {
+                if (field.getFertilizerN() > highestN) {
+                    highestN = field.getFertilizerN();
+                }
+            }
+        }
+        return highestN;
+    }
+
     private void updateCompost() {
         int toCompost = (cowList.get(0).getManure() * cowList.size()) / 10;  // 1..9
         fertilizerN += compost[2] * 5;
