@@ -15,7 +15,7 @@ public class Cow {
      */
     private final int feed = 30;
 
-    private boolean eatenThisTurn = false;
+    private boolean eatenThisTurn = true;
 
     /**
      * Methane backpack storage.

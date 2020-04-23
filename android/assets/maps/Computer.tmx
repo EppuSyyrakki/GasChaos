@@ -24,13 +24,13 @@
   <image source="../ground/computerBackground.png" width="1080" height="1920"/>
  </imagelayer>
  <objectgroup id="17" name="RectangleBuySell">
-  <object id="28" x="339.728" y="727.921" width="400.208" height="200.901"/>
+  <object id="28" x="206.206" y="727.921" width="311.194" height="200.901"/>
  </objectgroup>
  <objectgroup id="18" name="RectangleUpgrades">
-  <object id="29" x="339.061" y="941.678" width="401.043" height="198.779"/>
+  <object id="29" x="377.21" y="941.678" width="314.148" height="198.779"/>
  </objectgroup>
  <objectgroup id="20" name="RectangleFinances">
-  <object id="31" x="779" y="728" width="140" height="410"/>
+  <object id="31" x="556.464" y="728" width="313.79" height="198.061"/>
  </objectgroup>
  <objectgroup id="19" name="RectangleExit">
   <object id="30" x="69.306" y="228.039" width="941.22" height="353.237"/>
