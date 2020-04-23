@@ -19,7 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
@@ -30,6 +29,7 @@ import java.util.List;
  * MainClass is just for demo purposes in this project.
  */
 public class HighScore extends ApplicationAdapter implements HighScoreListener, Screen {
+    OrthographicCamera camera;
     private Stage stage;
     private Skin skin;
     final GasChaosMain game;
@@ -46,6 +46,8 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
 
     public HighScore(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         this.game = game;
+        camera.setToOrtho(false, 9, 16);
+        this.camera = camera;
         SpriteBatch scoreBatch = batch;
         HighScoreServer.readConfig("highscore.config");
         HighScoreServer.setVerbose(true);
@@ -94,7 +96,13 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        stage.getBatch().setProjectionMatrix(camera.combined);
+        // Enable if score background gets created
+        if (false) {
+            stage.getBatch().begin();
+            stage.getBatch().draw(background, 0, 0, 9f, 16f);
+            stage.getBatch().end();
+        }
         stage.draw();
 
     }
