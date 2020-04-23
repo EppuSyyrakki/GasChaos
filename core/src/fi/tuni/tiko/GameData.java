@@ -366,6 +366,7 @@ public class GameData {
 
         //noinspection ConstantConditions
         actionsAvailable = actionsDone < MAX_ACTIONS;
+        //loadGame();
     }
 
     public int getActionsDone() {
