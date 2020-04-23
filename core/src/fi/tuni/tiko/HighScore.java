@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import java.util.ArrayList;
@@ -53,12 +55,16 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         textBoxBackground = new Texture("props/textFieldBackground.png");
         buttonUpBackground = new Texture("props/buttonUp.png");
         buttonDownBackground = new Texture("props/buttonDown.png");
+        NinePatch patchUp = new NinePatch(new Texture(Gdx.files.internal("props/buttonUp.png")),
+                5, 5, 5, 5);
+        NinePatch patchDown = new NinePatch(new Texture(Gdx.files.internal("props/buttonDown.png")),
+                5, 5, 5, 5);
 
         labelStyle = new Label.LabelStyle(userInterface.font, Color.WHITE);
         buttonStyle = new TextButton.TextButtonStyle();
         buttonStyle.font = userInterface.font;
-        buttonStyle.up = new TextureRegionDrawable(new TextureRegion(buttonUpBackground));
-        buttonStyle.down = new TextureRegionDrawable(new TextureRegion(buttonDownBackground));
+        buttonStyle.up = new NinePatchDrawable(patchUp);
+        buttonStyle.down = new NinePatchDrawable(patchDown);
 
 
         otherSetup();
