@@ -69,6 +69,7 @@ public class UserInterface {
         stage.addActor(topTable);
         stage.addActor(topTable2);
 
+
         // set labels to custom font
         topMoneyLabel = new Label("", new Label.LabelStyle(font, Color.WHITE));
         topCowsLabel = new Label("", new Label.LabelStyle(font, Color.WHITE));

@@ -214,8 +214,8 @@ public class FieldScreen extends Location implements Screen {
         }
 
         if (actions[4]) {
-            float reportedN = (float)field.getFertilizerN() * (float)Math.random() * 0.3f + 0.9f;
-            float reportedP = (float)field.getFertilizerP() * (float)Math.random() * 0.3f + 0.9f;
+            float reportedN = (float)field.getFertilizerN() * ((float)Math.random() * 0.3f + 0.9f);
+            float reportedP = (float)field.getFertilizerP() * ((float)Math.random() * 0.3f + 0.9f);
             text = text + game.myBundle.format("fieldNP",
                     (int)reportedN, game.gameData.MAX_N_PER_FIELD,
                     (int)reportedP, game.gameData.MAX_P_PER_FIELD);
@@ -336,24 +336,42 @@ public class FieldScreen extends Location implements Screen {
     public void actionFertilizeFieldN(int number) {
         ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
-        int amount = game.gameData.MAX_N_PER_FIELD / 2;
-        field.setFertilizerN(field.getFertilizerN() + amount);
-        tmpFields.set(number, field);
-        game.gameData.setFields(tmpFields);
-        float reportAmount = (float)field.getFertilizerN() * ((float)Math.random() * 0.2f + 0.9f);
-        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
-        // nitrogen added to field UI message
-        uiText = game.myBundle.format("fertilizeFieldN", (int)reportAmount);
-        Dialog d = new Dialog(game.myBundle.format("postDialogTitle"), userInterface.skin) {
-            protected void result(Object object) {
-                boolean result = (boolean)object;
-                if (result) {
-                    resetInputProcessor();
-                    remove();
+        int amount = game.gameData.N_FERTILIZE;
+
+        if (game.gameData.getFertilizerN() >= amount) {
+            field.setFertilizerN(field.getFertilizerN() + amount);
+            tmpFields.set(number, field);
+            game.gameData.setFields(tmpFields);
+            game.gameData.setFertilizerN(game.gameData.getFertilizerN() - amount);
+            float reportAmount = (float) field.getFertilizerN() * ((float) Math.random() * 0.2f + 0.9f);
+            game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
+            // nitrogen added to field UI message
+            uiText = game.myBundle.format("fertilizeFieldN", (int) reportAmount);
+            Dialog d = new Dialog(game.myBundle.format("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
                 }
-            }
-        };
-        userInterface.createDialog(d, uiText, false);
+            };
+            userInterface.createDialog(d, uiText, false);
+        } else if (game.gameData.getFertilizerN() < amount) {
+            // not enough nitrogen fertilizer ui message
+            uiText = game.myBundle.format("fertilizeFieldNNotEnough",
+                    game.gameData.N_FERTILIZE);
+            Dialog d = new Dialog(game.myBundle.format("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        }
     }
 
     /**
@@ -362,24 +380,42 @@ public class FieldScreen extends Location implements Screen {
     public void actionFertilizeFieldP(int number) {
         ArrayList<Field> tmpFields = game.gameData.getFields();
         Field field = tmpFields.get(number);
-        int amount = game.gameData.MAX_P_PER_FIELD / 2;
-        field.setFertilizerP(field.getFertilizerP() + amount);
-        tmpFields.set(number, field);
-        game.gameData.setFields(tmpFields);
-        float reportAmount = (float)field.getFertilizerP() * ((float)Math.random() * 0.2f + 0.9f);
-        game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
-        // phosphorous added to field UI message
-        uiText = game.myBundle.format("fertilizeFieldP", (int)reportAmount);
-        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
-            protected void result(Object object) {
-                boolean result = (boolean)object;
-                if (result) {
-                    resetInputProcessor();
-                    remove();
+        int amount = game.gameData.P_FERTILIZE;
+
+        if (game.gameData.getFertilizerP() >= amount) {
+            field.setFertilizerP(field.getFertilizerP() + amount);
+            tmpFields.set(number, field);
+            game.gameData.setFields(tmpFields);
+            game.gameData.setFertilizerP(game.gameData.getFertilizerP() - amount);
+            float reportAmount = (float) field.getFertilizerP() * ((float) Math.random() * 0.2f + 0.9f);
+            game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
+            // phosphorous added to field UI message
+            uiText = game.myBundle.format("fertilizeFieldP", (int) reportAmount);
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
                 }
-            }
-        };
-        userInterface.createDialog(d, uiText, false);
+            };
+            userInterface.createDialog(d, uiText, false);
+        } else if (game.gameData.getFertilizerP() < amount) {
+            // not enough phosphorous fertilizer ui message
+            uiText = game.myBundle.format("fertilizeFieldPNotEnough",
+                    game.gameData.P_FERTILIZE);
+            Dialog d = new Dialog(game.myBundle.format("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        }
     }
 
     /**
