@@ -67,6 +67,10 @@ public class GardenScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
+        if (!game.gameData.isGardenVisited()) {
+            gardenTutorial();
+        }
+
         userInterface.render(game.gameData);
         checkActionRectangles();
     }
@@ -291,6 +295,21 @@ public class GardenScreen extends Location implements Screen {
         }
     }
 
+    private void gardenTutorial() {
+        // uiText = game.myBundle.get("tutorialGarden"); TODO add text to myBundle
+        uiText = "garden tutorial";
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean) object;
+                if (result) {
+                    userInterface.dialogFocus = false;
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.showTutorial(d, uiText);
+    }
 
     @Override
     public void show() {

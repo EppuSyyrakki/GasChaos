@@ -87,6 +87,10 @@ public class HomeScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
+        if (!game.gameData.isHomeVisited()) {
+            homeTutorial();
+        }
+
         userInterface.render(game.gameData);
 
         if (getRec("RectangleExit") || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {    // condition return to farm
@@ -125,6 +129,22 @@ public class HomeScreen extends Location implements Screen {
             userInterface.createDialog(d, uiText, true);
         }
         newTurn = false;
+    }
+
+    private void homeTutorial() {
+        // uiText = game.myBundle.get("tutorialHome"); TODO add text to myBundle
+        uiText = "home tutorial";
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean) object;
+                if (result) {
+                    userInterface.dialogFocus = false;
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.showTutorial(d, uiText);
     }
 
     @Override

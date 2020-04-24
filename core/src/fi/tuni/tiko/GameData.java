@@ -150,6 +150,7 @@ public class GameData {
     private boolean farmVisited;
     private boolean fieldVisited;
     private boolean gardenVisited;
+    private boolean gasTankVisited;
     private boolean homeVisited;
     private boolean upgradeVisited;
 
@@ -370,6 +371,7 @@ public class GameData {
         farmVisited = false;
         fieldVisited = false;
         gardenVisited = false;
+        gasTankVisited = false;
         homeVisited = false;
         upgradeVisited = false;
         fields = new ArrayList<>();
@@ -916,6 +918,14 @@ public class GameData {
         this.gardenVisited = gardenVisited;
     }
 
+    public boolean isGasTankVisited() {
+        return gasTankVisited;
+    }
+
+    public void setGasTankVisited(boolean gasTankVisited) {
+        this.gasTankVisited = gasTankVisited;
+    }
+
     public boolean isHomeVisited() {
         return homeVisited;
     }
@@ -1066,6 +1076,7 @@ public class GameData {
         prefs.putBoolean("farmVisited", farmVisited);
         prefs.putBoolean("fieldVisited", fieldVisited);
         prefs.putBoolean("gardenVisited", gardenVisited);
+        prefs.putBoolean("gasTankVisited", gasTankVisited);
         prefs.putBoolean("homeVisited", homeVisited);
         prefs.putBoolean("upgradeVisited", upgradeVisited);
 
@@ -1210,6 +1221,7 @@ public class GameData {
         setFarmVisited(prefs.getBoolean("farmVisited", isFarmVisited()));
         setFieldVisited(prefs.getBoolean("fieldVisited", isFieldVisited()));
         setGardenVisited(prefs.getBoolean("gardenVisited", isGardenVisited()));
+        setGasTankVisited(prefs.getBoolean("gasTankVisited", isGasTankVisited()));
         setHomeVisited(prefs.getBoolean("homeVisited", isHomeVisited()));
         setUpgradeVisited(prefs.getBoolean("upgradeVisited", isUpgradeVisited()));
     }
@@ -1326,6 +1338,7 @@ public class GameData {
         prefs.remove("farmVisited");
         prefs.remove("fieldVisited");
         prefs.remove("gardenVisited");
+        prefs.remove("gasTankVisited");
         prefs.remove("homeVisited");
         prefs.remove("upgradeVisited");
 

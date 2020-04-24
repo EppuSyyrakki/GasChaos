@@ -56,6 +56,10 @@ public class BuySellScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
+        if (!game.gameData.isBuySellVisited()) {
+            buySellTutorial();
+        }
+
         userInterface.render(game.gameData);
         checkActionRectangles();
     }
@@ -695,6 +699,22 @@ public class BuySellScreen extends Location implements Screen {
             };
             userInterface.createDialog(d, uiText, false);
         }
+    }
+
+    private void buySellTutorial() {
+        // uiText = game.myBundle.get("tutorialBuySell"); TODO add text to myBundle
+        uiText = "buy/sell tutorial";
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean) object;
+                if (result) {
+                    userInterface.dialogFocus = false;
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.showTutorial(d, uiText);
     }
 
     @Override

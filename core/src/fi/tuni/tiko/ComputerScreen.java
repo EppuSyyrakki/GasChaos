@@ -49,6 +49,10 @@ public class ComputerScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
+        if (!game.gameData.isComputerVisited()) {
+            computerTutorial();
+        }
+
         userInterface.render(game.gameData);
         checkActionRectangles();
     }
@@ -178,6 +182,22 @@ public class ComputerScreen extends Location implements Screen {
             petrolThisTurn = 0;
         }
         return petrolThisTurn;
+    }
+
+    private void computerTutorial() {
+        // uiText = game.myBundle.get("tutorialComputer"); TODO add text to myBundle
+        uiText = "computer tutorial";
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean) object;
+                if (result) {
+                    userInterface.dialogFocus = false;
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.showTutorial(d, uiText);
     }
 
     @Override

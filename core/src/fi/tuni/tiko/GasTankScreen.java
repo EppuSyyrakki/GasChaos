@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 public class GasTankScreen extends Location implements Screen {
     final Texture sunset;
@@ -51,6 +52,10 @@ public class GasTankScreen extends Location implements Screen {
 
         userInterface.render(game.gameData);
 
+        if (!game.gameData.isGasTankVisited()) {
+            gasTankTutorial();
+        }
+
         if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
                 && !userInterface.dialogFocus) {
             game.setFarmScreen();
@@ -85,6 +90,22 @@ public class GasTankScreen extends Location implements Screen {
         }
 
         return data;
+    }
+
+    private void gasTankTutorial() {
+        // uiText = game.myBundle.get("tutorialGasTank"); TODO add text to myBundle
+        uiText = "gasTank tutorial";
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean) object;
+                if (result) {
+                    userInterface.dialogFocus = false;
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.showTutorial(d, uiText);
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 public class FarmScreen extends Location implements Screen {
     @SuppressWarnings("CanBeFinal")
@@ -87,7 +88,6 @@ public class FarmScreen extends Location implements Screen {
 
         sun();
 
-
         batch.begin();
         batch.draw(tractorTex(), tractorX,tractorY, 2f, 1.5f);
         player.draw(batch);
@@ -105,8 +105,11 @@ public class FarmScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
-        userInterface.render(game.gameData);
+        if (!game.gameData.isFarmVisited()) {
+            farmTutorial();
+        }
 
+        userInterface.render(game.gameData);
         checkActionRectangles();
     }
 
@@ -132,6 +135,22 @@ public class FarmScreen extends Location implements Screen {
         } else if (getRec("RectangleGasTank")) {    // condition enter gasTank
             game.setGasTankScreen();
         }
+    }
+
+    private void farmTutorial() {
+        // uiText = game.myBundle.get("tutorialFarm"); TODO add text to myBundle
+        uiText = "farm tutorial";
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean) object;
+                if (result) {
+                    userInterface.dialogFocus = false;
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.showTutorial(d, uiText);
     }
 
     @Override
@@ -198,6 +217,13 @@ public class FarmScreen extends Location implements Screen {
         } else {
             return tractor1;
         }
+    }
+
+    private void resetInputProcessor() {
+        userInterface.dialogFocus = false;
+        player.setInputActive(true);
+        Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
 }
 

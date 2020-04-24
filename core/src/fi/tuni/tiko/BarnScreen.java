@@ -76,10 +76,6 @@ public class BarnScreen extends Location implements Screen {
             player.setFadeActive(true);
         }
 
-        if (!game.gameData.isBarnVisited()) {
-            barnTutorial();
-        }
-
         // Player movement
         if (!userInterface.dialogFocus) {
             player.playerTouch(batch);
@@ -95,8 +91,11 @@ public class BarnScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
-        userInterface.render(game.gameData);
+        if (!game.gameData.isBarnVisited()) {
+            barnTutorial();
+        }
 
+        userInterface.render(game.gameData);
         checkActionRectangles();
     }
 
@@ -396,7 +395,8 @@ public class BarnScreen extends Location implements Screen {
     }
 
     private void barnTutorial() {
-        uiText = game.myBundle.get("tutorialBarn");
+        // uiText = game.myBundle.get("tutorialBarn"); TODO add text to myBundle
+        uiText = "barn tutorial";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;
