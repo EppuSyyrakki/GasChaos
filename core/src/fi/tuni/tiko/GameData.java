@@ -141,7 +141,8 @@ public class GameData {
     private boolean tractorGasBought;
     private boolean gasGeneratorBought;
 
-    boolean menu = true;
+    public boolean menu = true;
+    public boolean audio = true;
 
     /**
      * Tutorial dialog triggers
@@ -954,6 +955,18 @@ public class GameData {
 
     public GameData(ArrayList<Field> fields) {
         this.fields = fields;
+    }
+
+    public boolean isAudio() {
+        return audio;
+    }
+
+    public void setAudio(boolean audio) {
+        this.audio = audio;
+    }
+
+    public void toggleAudio() {
+        audio=!audio;
     }
 
     public void saveGame() {

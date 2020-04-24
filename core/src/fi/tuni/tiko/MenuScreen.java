@@ -9,12 +9,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
@@ -30,12 +30,22 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
     Skin skin;
     Label.LabelStyle labelStyle;
     TextButton.TextButtonStyle buttonStyle;
+    ImageButton.ImageButtonStyle imgStyle;
+    Texture audioOn;
+    Texture audioOff;
+    Drawable audioOnDrawable;
+    Drawable audioOffDrawable;
 
     public MenuScreen(OrthographicCamera camera, GasChaosMain game) {
         this.game = game;
         camera.setToOrtho(false, 9, 16);
         this.camera = camera;
         userInterface = new UserInterface(game.myBundle);
+        audioOn = new Texture((Gdx.files.internal("ui/audioOn.png")));
+        audioOff = new Texture((Gdx.files.internal("ui/audioOff.png")));
+
+        audioOnDrawable = new TextureRegionDrawable(new TextureRegion(audioOn));
+        audioOffDrawable = new TextureRegionDrawable(new TextureRegion(audioOff));
 
         NinePatch patchUp = new NinePatch(new Texture(Gdx.files.internal("props/buttonUp.png")),
                 5, 5, 5, 5);
@@ -49,6 +59,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
         buttonStyle.up = new NinePatchDrawable(patchUp);
         buttonStyle.down = new NinePatchDrawable(patchDown);
 
+        updateAudioKey();
         otherSetup();
 
     }
@@ -122,6 +133,36 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
             }
         });
 
+        final ImageButton toggleAudioImg = new ImageButton(audioOnDrawable, audioOffDrawable, audioOffDrawable);
+        toggleAudioImg.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (game.gameData.menu) {
+                    toggleAudioImg.setChecked(!toggleAudioImg.isChecked());
+                    game.gameData.toggleAudio();
+                    if (toggleAudioImg.isChecked()) {
+                        game.gameData.audio = true;
+                    } else {
+                        game.gameData.audio = false;
+                    }
+                    toggleAudioImg.toggle();
+                    System.out.println("audio:" + game.gameData.audio);
+                }
+            }
+        });
+
+        content.row();
+        content.add(new Label("", labelStyle)).colspan(2);
+        content.row();
+        content.add(new Label("", labelStyle)).colspan(2);
+        content.row();
+        content.add(new Label("", labelStyle)).colspan(2);
+        content.row();
+        content.add(new Label("", labelStyle)).colspan(2);
+        content.row();
+        content.add(new Label("", labelStyle)).colspan(2);
+        content.row();
+        content.add(new Label("", labelStyle)).colspan(2);
         content.row();
         content.add(new Label("", labelStyle)).colspan(2);
         content.row();
@@ -136,7 +177,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
         content.add(new Label("", labelStyle)).colspan(2);
         content.row();
         content.add(newGame).colspan(2)
-                .prefHeight(Gdx.graphics.getHeight() / 18)
+                .prefHeight(Gdx.graphics.getHeight() / 18f)
                 .prefWidth(Gdx.graphics.getWidth() / 3.5f);
         content.row();
         content.add(new Label("", labelStyle)).colspan(2);
@@ -144,7 +185,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
         content.add(new Label("", labelStyle)).colspan(2);
         content.row();
         content.add(loadGame).colspan(2)
-                .prefHeight(Gdx.graphics.getHeight() / 18)
+                .prefHeight(Gdx.graphics.getHeight() / 18f)
                 .prefWidth(Gdx.graphics.getWidth() / 3.5f);
         content.row();
         content.add(new Label("", labelStyle)).colspan(2);
@@ -152,8 +193,28 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
         content.add(new Label("", labelStyle)).colspan(2);
         content.row();
         content.add(quitGame).colspan(2)
-                .prefHeight(Gdx.graphics.getHeight() / 18)
+                .prefHeight(Gdx.graphics.getHeight() / 18f)
                 .prefWidth(Gdx.graphics.getWidth() / 3.5f);
+        content.row();
+        content.add(new Label("", labelStyle)).colspan(2);
+        content.row();
+        content.add(new Label("", labelStyle)).colspan(2);
+        content.row();
+        content.add(toggleAudioImg).colspan(2)
+                .prefHeight(Gdx.graphics.getHeight() / 18f)
+                .prefWidth(Gdx.graphics.getWidth() / 3.5f);
+    }
+
+    private String updateAudioKey() {
+        String key;
+
+        if (game.gameData.audio) {
+            key = "audioOn";
+        } else {
+            key = "audioOff";
+        }
+
+        return key;
     }
 
     @Override
