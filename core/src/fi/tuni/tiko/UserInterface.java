@@ -46,6 +46,7 @@ public class UserInterface {
     I18NBundle myBundle;
     TextButton confirmButton;
     TextButton cancelButton;
+    TextButton skipButton;
     TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
 
     TextButton reapButton;
@@ -77,9 +78,9 @@ public class UserInterface {
             uiScale = 1.5f;
         }
         buttonStyle.font = font;
-        confirmButton = new TextButton(" " + myBundle.get("confirm") + " ", buttonStyle);
-        cancelButton = new TextButton(" " +myBundle.get("cancel") + " ", buttonStyle);
-
+        confirmButton = new TextButton(" " + myBundle.get("confirm") + "     ", buttonStyle);
+        cancelButton = new TextButton(" " + myBundle.get("cancel") + " ", buttonStyle);
+        skipButton = new TextButton(" " + myBundle.get("skip") + " ", buttonStyle);
         stage.addActor(topTable);
         stage.addActor(topTable2);
 
@@ -190,11 +191,11 @@ public class UserInterface {
         dialog.setSize(width * 0.75f, height * 0.3f* uiScale);
         dialog.setPosition(width / 2 - dialog.getWidth() / 2, height / 2 - dialog.getHeight());
         label.setWidth(dialog.getWidth() * 0.8f);
-        // TODO make grandmother image visible
-        dialog.getContentTable().addActor(grandmother);
+        dialog.getContentTable().add(grandmother);
         dialog.getContentTable().row();
         dialog.getContentTable().add(label).width(dialog.getWidth() - 30f);
         dialog.button(confirmButton, true);
+        dialog.button(skipButton, false);
         dialog.pad(20f, 20f, 20f, 20f);
         // dialog.pack();
         dialog.show(stage);
