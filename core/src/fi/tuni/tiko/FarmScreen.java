@@ -106,7 +106,7 @@ public class FarmScreen extends Location implements Screen {
         batch.end();
 
         if (!game.gameData.isFarmVisited() && !userInterface.dialogFocus) {
-            farmTutorial();
+            farmTutorial1();
         }
 
         userInterface.render(game.gameData);
@@ -137,19 +137,66 @@ public class FarmScreen extends Location implements Screen {
         }
     }
 
-    private void farmTutorial() {
+    private void farmTutorial1() {
         userInterface.dialogFocus = true;
-        // uiText = game.myBundle.get("tutorialFarm"); TODO add text to myBundle
-        uiText = "farm tutorial";
+        uiText = game.myBundle.get("G1");
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean) object;
+                if (result) {
+                    userInterface.dialogFocus = false;
+                    resetInputProcessor();
+                    remove();
+                    farmTutorial2();
+                } else {
+                    game.gameData.setAllVisited(true);
+                    userInterface.dialogFocus = false;
+                    resetInputProcessor();
+                    remove();
+                }
+
+            }
+        };
+        userInterface.showTutorial(d, uiText);
+    }
+
+    private void farmTutorial2() {
+        userInterface.dialogFocus = true;
+        uiText = game.myBundle.get("G2");
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean) object;
+                if (result) {
+                    userInterface.dialogFocus = false;
+                    resetInputProcessor();
+                    remove();
+                    farmTutorial3();
+                } else {
+                    game.gameData.setAllVisited(true);
+                    userInterface.dialogFocus = false;
+                    resetInputProcessor();
+                    remove();
+                }
+
+            }
+        };
+        userInterface.showTutorial(d, uiText);
+    }
+
+    private void farmTutorial3() {
+        userInterface.dialogFocus = true;
+        uiText = game.myBundle.get("G3");
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;
                 if (result) {
                     game.gameData.setFarmVisited(true);
-                    userInterface.dialogFocus = false;
-                    resetInputProcessor();
-                    remove();
+                } else {
+                    game.gameData.setAllVisited(true);
                 }
+                userInterface.dialogFocus = false;
+                resetInputProcessor();
+                remove();
             }
         };
         userInterface.showTutorial(d, uiText);

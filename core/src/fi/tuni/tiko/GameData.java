@@ -945,6 +945,18 @@ public class GameData {
         this.upgradeVisited = upgradeVisited;
     }
 
+    public void setAllVisited(Boolean visited) {
+        setBarnVisited(visited);
+        setBuySellVisited(visited);
+        setComputerVisited(visited);
+        setFarmVisited(visited);
+        setFieldVisited(visited);
+        setGardenVisited(visited);
+        setGasTankVisited(visited);
+        setHomeVisited(visited);
+        setUpgradeVisited(visited);
+    }
+
     public boolean isFieldPenalty() {
         return fieldPenalty;
     }
