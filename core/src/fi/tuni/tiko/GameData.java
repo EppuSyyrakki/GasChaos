@@ -142,6 +142,18 @@ public class GameData {
     private boolean gasGeneratorBought;
 
     /**
+     * Tutorial dialog triggers
+     */
+    private boolean barnVisited;
+    private boolean buySellVisited;
+    private boolean computerVisited;
+    private boolean farmVisited;
+    private boolean fieldVisited;
+    private boolean gardenVisited;
+    private boolean homeVisited;
+    private boolean upgradeVisited;
+
+    /**
      * save game file My Preferences.xml.
      */
     Preferences prefs = Gdx.app.getPreferences("GasPreferences");
@@ -222,17 +234,6 @@ public class GameData {
         moneyThisTurn -= petrolThisTurn;
         moneyThisTurn -= fieldsRentThisTurn;
         money += moneyThisTurn;
-        System.out.println("grain:" + grainSold * MONEY_FROM_GRAIN);
-        System.out.println("manure:" + manureSold * MONEY_FROM_MANURE);
-        System.out.println("garden:" + gardenSold * MONEY_FROM_GARDEN);
-        System.out.println("methane:" + methaneSold * MONEY_FROM_METHANE);
-        System.out.println("milk:" + milkSold * MONEY_FROM_MILK);
-        System.out.println("N:" + NSold * MONEY_FROM_N);
-        System.out.println("P:" + PSold * MONEY_FROM_P);
-        System.out.println("Debt payment:" + debtPaymentThisTurn);
-        System.out.println("electricity:" + electricityThisTurn);
-        System.out.println("petrol:" + petrolThisTurn);
-        System.out.println("fields rent:" + fieldsRentThisTurn);
     }
 
     private void updateThings() {
@@ -363,6 +364,14 @@ public class GameData {
     }
 
     public GameData() {
+        barnVisited = false;
+        buySellVisited = false;
+        computerVisited = false;
+        farmVisited = false;
+        fieldVisited = false;
+        gardenVisited = false;
+        homeVisited = false;
+        upgradeVisited = false;
         fields = new ArrayList<>();
         for (int i = 0; i < MAX_FIELDS; i++) {
             if (i < OWNED_FIELDS) {
@@ -859,6 +868,70 @@ public class GameData {
         this.pBought = pBought;
     }
 
+    public boolean isBarnVisited() {
+        return barnVisited;
+    }
+
+    public void setBarnVisited(boolean barnVisited) {
+        this.barnVisited = barnVisited;
+    }
+
+    public boolean isBuySellVisited() {
+        return buySellVisited;
+    }
+
+    public void setBuySellVisited(boolean buySellVisited) {
+        this.buySellVisited = buySellVisited;
+    }
+
+    public boolean isComputerVisited() {
+        return computerVisited;
+    }
+
+    public void setComputerVisited(boolean computerVisited) {
+        this.computerVisited = computerVisited;
+    }
+
+    public boolean isFarmVisited() {
+        return farmVisited;
+    }
+
+    public void setFarmVisited(boolean farmVisited) {
+        this.farmVisited = farmVisited;
+    }
+
+    public boolean isFieldVisited() {
+        return fieldVisited;
+    }
+
+    public void setFieldVisited(boolean fieldVisited) {
+        this.fieldVisited = fieldVisited;
+    }
+
+    public boolean isGardenVisited() {
+        return gardenVisited;
+    }
+
+    public void setGardenVisited(boolean gardenVisited) {
+        this.gardenVisited = gardenVisited;
+    }
+
+    public boolean isHomeVisited() {
+        return homeVisited;
+    }
+
+    public void setHomeVisited(boolean homeVisited) {
+        this.homeVisited = homeVisited;
+    }
+
+    public boolean isUpgradeVisited() {
+        return upgradeVisited;
+    }
+
+    public void setUpgradeVisited(boolean upgradeVisited) {
+        this.upgradeVisited = upgradeVisited;
+    }
+
     public boolean isFieldPenalty() {
         return fieldPenalty;
     }
@@ -984,6 +1057,17 @@ public class GameData {
         prefs.putInteger("compost1", compost[1]);
         prefs.putInteger("compost2", compost[2]);
 
+        /**
+         * Tutorial dialog triggers
+         */
+        prefs.putBoolean("barnVisited", barnVisited);
+        prefs.putBoolean("buySellVisited", buySellVisited);
+        prefs.putBoolean("computerVisited", computerVisited);
+        prefs.putBoolean("farmVisited", farmVisited);
+        prefs.putBoolean("fieldVisited", fieldVisited);
+        prefs.putBoolean("gardenVisited", gardenVisited);
+        prefs.putBoolean("homeVisited", homeVisited);
+        prefs.putBoolean("upgradeVisited", upgradeVisited);
 
         prefs.flush();
         //int i = prefs.getInteger("currentTurn");
@@ -1116,6 +1200,18 @@ public class GameData {
         compost[0] = prefs.getInteger("compost0", compost[0]);
         compost[1] = prefs.getInteger("compost1", compost[1]);
         compost[2] = prefs.getInteger("compost2", compost[2]);
+
+        /**
+         * Tutorial dialog triggers
+         */
+        setBarnVisited(prefs.getBoolean("barnVisited", isBarnVisited()));
+        setBuySellVisited(prefs.getBoolean("buySellVisited", isBuySellVisited()));
+        setComputerVisited(prefs.getBoolean("computerVisited", isComputerVisited()));
+        setFarmVisited(prefs.getBoolean("farmVisited", isFarmVisited()));
+        setFieldVisited(prefs.getBoolean("fieldVisited", isFieldVisited()));
+        setGardenVisited(prefs.getBoolean("gardenVisited", isGardenVisited()));
+        setHomeVisited(prefs.getBoolean("homeVisited", isHomeVisited()));
+        setUpgradeVisited(prefs.getBoolean("upgradeVisited", isUpgradeVisited()));
     }
 
     public void resetSave() {
@@ -1221,6 +1317,17 @@ public class GameData {
         prefs.remove("compost1");
         prefs.remove("compost2");
 
+        /**
+         * Tutorial dialog triggers
+         */
+        prefs.remove("barnVisited");
+        prefs.remove("buySellVisited");
+        prefs.remove("computerVisited");
+        prefs.remove("farmVisited");
+        prefs.remove("fieldVisited");
+        prefs.remove("gardenVisited");
+        prefs.remove("homeVisited");
+        prefs.remove("upgradeVisited");
 
         prefs.flush();
     }

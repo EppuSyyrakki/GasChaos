@@ -76,6 +76,10 @@ public class BarnScreen extends Location implements Screen {
             player.setFadeActive(true);
         }
 
+        if (!game.gameData.isBarnVisited()) {
+            barnTutorial();
+        }
+
         // Player movement
         if (!userInterface.dialogFocus) {
             player.playerTouch(batch);
@@ -389,6 +393,21 @@ public class BarnScreen extends Location implements Screen {
             };
             userInterface.createDialog(d, uiText, false);
         }
+    }
+
+    private void barnTutorial() {
+        uiText = game.myBundle.get("tutorialBarn");
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                boolean result = (boolean) object;
+                if (result) {
+                    userInterface.dialogFocus = false;
+                    resetInputProcessor();
+                    remove();
+                }
+            }
+        };
+        userInterface.showTutorial(d, uiText);
     }
 
     @Override

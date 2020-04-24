@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -27,6 +28,8 @@ public class UserInterface {
     Texture fontTextureNormal = new Texture(Gdx.files.internal("ui/normal.png"));
     Texture fontTextureLarge = new Texture(Gdx.files.internal("ui/large.png"));
     Texture barBgTexture = new Texture(Gdx.files.internal("ui/uiBarBg.png"));
+    Texture grandmotherTexture = new Texture(Gdx.files.internal("props/grandma.png"));
+    Image grandmother = new Image(grandmotherTexture);
     Sprite barBGSprite = new Sprite(barBgTexture);
     SpriteDrawable bgDrawable = new SpriteDrawable(barBGSprite);
     BitmapFont font;
@@ -168,6 +171,23 @@ public class UserInterface {
         }
 
         dialog.button(cancelButton, 0);
+        dialog.pad(20f, 20f, 20f, 20f);
+        dialog.pack();
+        dialog.show(stage);
+    }
+
+    public void showTutorial(Dialog dialog, String text) {
+        Gdx.input.setInputProcessor(stage);
+        Label label = new Label(text, new Label.LabelStyle(font, Color.WHITE));
+        label.setWrap(true);
+        dialog.setMovable(false);
+        dialog.setSize(width * 0.75f, height * 0.3f* uiScale);
+        dialog.setPosition(width / 2 - dialog.getWidth() / 2, height / 2 - dialog.getHeight());
+        label.setWidth(dialog.getWidth() * 0.8f);
+        dialog.getContentTable().addActor(grandmother);
+        dialog.getContentTable().row();
+        dialog.getContentTable().add(label).width(dialog.getWidth() - 30f);
+        dialog.button(confirmButton, true);
         dialog.pad(20f, 20f, 20f, 20f);
         dialog.pack();
         dialog.show(stage);
