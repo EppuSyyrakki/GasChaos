@@ -40,7 +40,6 @@ public class GasChaosMain extends Game {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 
-		menuScreen = new MenuScreen();
 		farmScreen = new FarmScreen(batch, camera, this);
 		homeScreen = new HomeScreen(batch, camera, this);
 		fieldScreen = new FieldScreen(batch, camera, this);
@@ -51,10 +50,12 @@ public class GasChaosMain extends Game {
 		computerScreen = new ComputerScreen(batch, camera, this);
 		upgradeScreen = new UpgradeScreen(batch, camera, this);
 		buySellScreen = new BuySellScreen(batch, camera, this);
-		highScoreScreen = new HighScore(batch, camera, this);
+		highScoreScreen = new HighScore(camera, this);
+		menuScreen = new MenuScreen(camera, this);
 
+		setMenuScreen();
 		//setHighScoreScreen();
-		setFarmScreen();
+		//setFarmScreen();
 	}
 
 	public Locale langCheck () {
@@ -77,7 +78,6 @@ public class GasChaosMain extends Game {
 
 		// Deletes save and exits the game, user has to re-open the game.
 		gameData.resetSave();
-		Gdx.app.exit();
 
 	}
 
@@ -118,6 +118,7 @@ public class GasChaosMain extends Game {
 
 	public void setMenuScreen () {
 		setScreen(menuScreen);
+		gameData.menu = true;
 	}
 
 	public void setBarnScreen () {
@@ -154,5 +155,10 @@ public class GasChaosMain extends Game {
 
 	public void setGameData(GameData data) {
 		this.gameData = data;
+	}
+
+	public void quitGame() {
+		gameData.saveGame();
+		Gdx.app.exit();
 	}
 }

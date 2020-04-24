@@ -141,6 +141,8 @@ public class GameData {
     private boolean tractorGasBought;
     private boolean gasGeneratorBought;
 
+    boolean menu = true;
+
     /**
      * Tutorial dialog triggers
      */
@@ -388,7 +390,7 @@ public class GameData {
 
         //noinspection ConstantConditions
         actionsAvailable = actionsDone < MAX_ACTIONS;
-        //loadGame();
+        loadGame();
     }
 
     public int getActionsDone() {

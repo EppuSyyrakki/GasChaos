@@ -40,20 +40,18 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
     private TextField nameField;
     final Texture textCursor;
     final Texture background;
-    SpriteBatch scoreBatch;
 
     private Table content;
 
-    public HighScore(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
+    public HighScore(OrthographicCamera camera, GasChaosMain game) {
         this.game = game;
         camera.setToOrtho(false, 9, 16);
         this.camera = camera;
-        SpriteBatch scoreBatch = batch;
         HighScoreServer.readConfig("highscore.config");
         HighScoreServer.setVerbose(true);
         HighScoreServer.fetchHighScores(this);
         userInterface = new UserInterface(game.myBundle);
-        background = new Texture("ui/menu2.png");
+        background = new Texture("ui/highScore.png");
         textCursor = new Texture("props/cursor.png");
         NinePatch patchUp = new NinePatch(new Texture(Gdx.files.internal("props/buttonUp.png")),
                 5, 5, 5, 5);
@@ -97,14 +95,12 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.getBatch().setProjectionMatrix(camera.combined);
-        // Enable if score background gets created
-        if (false) {
-            stage.getBatch().begin();
-            stage.getBatch().draw(background, 0, 0, 9f, 16f);
-            stage.getBatch().end();
-        }
-        stage.draw();
 
+        stage.getBatch().begin();
+        stage.getBatch().draw(background, 0, 0, 9f, 16f);
+        stage.getBatch().end();
+
+        stage.draw();
     }
 
     @Override
@@ -257,10 +253,13 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
 
     @Override
     public void dispose () {
+        background.dispose();
         skin.dispose();
+        stage.dispose();
     }
 
     public void exitScore() {
         game.setHomeScreen();
+        dispose();
     }
 }
