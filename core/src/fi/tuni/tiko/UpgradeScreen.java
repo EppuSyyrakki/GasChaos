@@ -49,7 +49,7 @@ public class UpgradeScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
-        if (!game.gameData.isUpgradeVisited()) {
+        if (!game.gameData.isUpgradeVisited() && !userInterface.dialogFocus) {
             upgradeTutorial();
         }
 
@@ -661,12 +661,14 @@ public class UpgradeScreen extends Location implements Screen {
     }
 
     private void upgradeTutorial() {
+        userInterface.dialogFocus = true;
         // uiText = game.myBundle.get("tutorialUpgrade"); TODO add text to myBundle
         uiText = "upgrade tutorial";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;
                 if (result) {
+                    game.gameData.setUpgradeVisited(true);
                     userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();

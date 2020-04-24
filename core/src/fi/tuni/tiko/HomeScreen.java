@@ -87,7 +87,7 @@ public class HomeScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
-        if (!game.gameData.isHomeVisited()) {
+        if (!game.gameData.isHomeVisited() && !userInterface.dialogFocus) {
             homeTutorial();
         }
 
@@ -132,12 +132,14 @@ public class HomeScreen extends Location implements Screen {
     }
 
     private void homeTutorial() {
+        userInterface.dialogFocus = true;
         // uiText = game.myBundle.get("tutorialHome"); TODO add text to myBundle
         uiText = "home tutorial";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;
                 if (result) {
+                    game.gameData.setHomeVisited(true);
                     userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();

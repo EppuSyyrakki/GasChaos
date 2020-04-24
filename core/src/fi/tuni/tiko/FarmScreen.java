@@ -105,7 +105,7 @@ public class FarmScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
-        if (!game.gameData.isFarmVisited()) {
+        if (!game.gameData.isFarmVisited() && !userInterface.dialogFocus) {
             farmTutorial();
         }
 
@@ -138,12 +138,14 @@ public class FarmScreen extends Location implements Screen {
     }
 
     private void farmTutorial() {
+        userInterface.dialogFocus = true;
         // uiText = game.myBundle.get("tutorialFarm"); TODO add text to myBundle
         uiText = "farm tutorial";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;
                 if (result) {
+                    game.gameData.setFarmVisited(true);
                     userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();

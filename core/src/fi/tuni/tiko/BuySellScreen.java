@@ -56,7 +56,7 @@ public class BuySellScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
-        if (!game.gameData.isBuySellVisited()) {
+        if (!game.gameData.isBuySellVisited() && !userInterface.dialogFocus) {
             buySellTutorial();
         }
 
@@ -702,12 +702,14 @@ public class BuySellScreen extends Location implements Screen {
     }
 
     private void buySellTutorial() {
+        userInterface.dialogFocus = true;
         // uiText = game.myBundle.get("tutorialBuySell"); TODO add text to myBundle
         uiText = "buy/sell tutorial";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;
                 if (result) {
+                    game.gameData.setBuySellVisited(true);
                     userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();

@@ -49,7 +49,7 @@ public class ComputerScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
-        if (!game.gameData.isComputerVisited()) {
+        if (!game.gameData.isComputerVisited() && !userInterface.dialogFocus) {
             computerTutorial();
         }
 
@@ -185,12 +185,14 @@ public class ComputerScreen extends Location implements Screen {
     }
 
     private void computerTutorial() {
+        userInterface.dialogFocus = true;
         // uiText = game.myBundle.get("tutorialComputer"); TODO add text to myBundle
         uiText = "computer tutorial";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;
                 if (result) {
+                    game.gameData.setComputerVisited(true);
                     userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();

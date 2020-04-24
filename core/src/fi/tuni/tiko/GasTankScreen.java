@@ -52,7 +52,7 @@ public class GasTankScreen extends Location implements Screen {
 
         userInterface.render(game.gameData);
 
-        if (!game.gameData.isGasTankVisited()) {
+        if (!game.gameData.isGasTankVisited() && !userInterface.dialogFocus) {
             gasTankTutorial();
         }
 
@@ -93,12 +93,14 @@ public class GasTankScreen extends Location implements Screen {
     }
 
     private void gasTankTutorial() {
+        userInterface.dialogFocus = true;
         // uiText = game.myBundle.get("tutorialGasTank"); TODO add text to myBundle
         uiText = "gasTank tutorial";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;
                 if (result) {
+                    game.gameData.setGasTankVisited(true);
                     userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();

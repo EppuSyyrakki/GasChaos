@@ -190,12 +190,13 @@ public class UserInterface {
         dialog.setSize(width * 0.75f, height * 0.3f* uiScale);
         dialog.setPosition(width / 2 - dialog.getWidth() / 2, height / 2 - dialog.getHeight());
         label.setWidth(dialog.getWidth() * 0.8f);
+        // TODO make grandmother image visible
         dialog.getContentTable().addActor(grandmother);
         dialog.getContentTable().row();
         dialog.getContentTable().add(label).width(dialog.getWidth() - 30f);
         dialog.button(confirmButton, true);
         dialog.pad(20f, 20f, 20f, 20f);
-        dialog.pack();
+        // dialog.pack();
         dialog.show(stage);
     }
 }

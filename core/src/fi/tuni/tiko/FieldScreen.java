@@ -80,7 +80,7 @@ public class FieldScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
-        if (!game.gameData.isFieldVisited()) {
+        if (!game.gameData.isFieldVisited() && !userInterface.dialogFocus) {
             fieldTutorial();
         }
 
@@ -507,12 +507,14 @@ public class FieldScreen extends Location implements Screen {
     }
 
     private void fieldTutorial() {
+        userInterface.dialogFocus = true;
         // uiText = game.myBundle.get("tutorialField"); TODO add text to myBundle
         uiText = "field tutorial";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;
                 if (result) {
+                    game.gameData.setFieldVisited(true);
                     userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();
