@@ -103,6 +103,7 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (game.gameData.menu) {
+                    game.gameData.newGame();
                     game.setFarmScreen();
                     game.gameData.menu = false;
                     //game.reset();

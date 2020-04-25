@@ -1371,4 +1371,97 @@ public class GameData {
 
         prefs.flush();
     }
+
+    public void newGame() {
+
+        barnVisited = false;
+        buySellVisited = false;
+        computerVisited = false;
+        farmVisited = false;
+        fieldVisited = false;
+        gardenVisited = false;
+        gasTankVisited = false;
+        homeVisited = false;
+        upgradeVisited = false;
+        fields = new ArrayList<>();
+        for (int i = 0; i < MAX_FIELDS; i++) {
+            if (i < OWNED_FIELDS) {
+                fields.add(new Field(true, false));
+            } else {
+                fields.add(new Field(false, false));
+            }
+        }
+        cowList = new ArrayList<>();
+        cowList.add(new Cow());
+        cowsBought = new ArrayList<>();
+
+        //noinspection ConstantConditions
+        actionsAvailable = actionsDone < MAX_ACTIONS;
+
+        /**
+         * Tracks game progression.
+         */
+        currentTurn = 1;
+        actionsDone = 0;
+        fieldPenalty = false;
+
+        /**
+         * Resource amounts and limits
+         */
+        money = 2000;       // money available for purchases
+        manure = 0;         // amount of manure in manure pit
+        manureInBarn = 0;   // amount of manure produced on previous turn
+        manureInBarnMax = 300;  // maximum amount of manure on barn floor
+        manureMax = 2500;   // size of manure pit
+        methane = 0;        // amount of methane in gas tank
+        methaneMax = 15000; // size of methane tank
+        debt = 10000;       // total amount of debt, reduced by debtPayment
+        grain = 100;        // total amount of grain on farm
+        grainInBarn = 30;   // amount of feed (grain) for cows in barn
+        grainMax = 9000;    // maximum amount of grain
+        fertilizerN = 35;   // Nitrogen fertilizer storage
+        fertilizerNMax = 500;
+        fertilizerP = 6;    // Phosphorous fertilizer storage
+        fertilizerPMax = 100;
+
+        interest = 0.03f; // 3% interest rate to calculate debt payments
+
+        /**
+         * Device levels. 0 = no device, Used in updateResource calculations and to draw correct
+         * graphics.
+         */
+        solarPanelLevel = 0;
+        gasCollectorLevel = 1;
+        milkingMachineLevel = 1;
+        tractorLevel = 1;
+        gasGeneratorLevel = 0;
+
+        /**
+         * Expenditures per turn
+         */
+        debtPayment = 200;  // debt and money reduced by this amount (plus interest rate)
+        electricity = 100;  // affected by solarPanelLevel and gasGeneratorLevel
+        petrol = 20;        // affected by tractorLevel
+        // also rent of fields is an expense. Calculated by number of fields != 0 in updateResources.
+
+        /**
+         * Array to represent manure slowly composting into fertilizerN and fertilizerP. Change is done
+         * in updateResources. Full change takes 3+1 turns.
+         */
+        compost = new int[3];
+
+        /**
+         * Keep state of garden.
+         */
+        weedsAmount = 0;    // bigger reduces gardenGrowth
+        gardenGrowth = 5;
+        gardenAmount = 0;   // increased by gardenGrowth every turn in less than gardenMax;
+        gardenMax = 50;
+
+        fieldsRented = new int[MAX_FIELDS - OWNED_FIELDS];   // -2 since first 2 owned, no rent
+
+        saveGame();
+        loadGame();
+
+    }
 }
