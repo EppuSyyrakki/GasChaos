@@ -74,13 +74,6 @@ public class GasChaosMain extends Game {
 		return locale;
 	}
 
-	public void reset() {
-
-		// Deletes save and exits the game, user has to re-open the game.
-		gameData.resetSave();
-
-	}
-
 	@Override
 	public void render () {
 		super.render();
