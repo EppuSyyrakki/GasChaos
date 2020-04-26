@@ -1306,7 +1306,7 @@ public class GameData {
         manureMax = 2500;   // size of manure pit
         methane = 0;        // amount of methane in gas tank
         methaneMax = 15000; // size of methane tank
-        debt = 10;       // total amount of debt, reduced by debtPayment
+        debt = 10000;       // total amount of debt, reduced by debtPayment
         grain = 100;        // total amount of grain on farm
         grainInBarn = 30;   // amount of feed (grain) for cows in barn
         grainMax = 9000;    // maximum amount of grain
