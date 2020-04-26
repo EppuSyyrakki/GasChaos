@@ -426,7 +426,7 @@ public class Player extends Sprite{
         return future;
     }
 
-    private Rectangle scaleRect(Rectangle r, float scale) {
+    private Rectangle scaleRect(Rectangle r, @SuppressWarnings("SameParameterValue") float scale) {
         Rectangle rectangleScale = new Rectangle();
         rectangleScale.x      = r.x * scale;
         rectangleScale.y      = r.y * scale;
@@ -435,6 +435,7 @@ public class Player extends Sprite{
         return rectangleScale;
     }
 
+    @SuppressWarnings("SameParameterValue")
     private TextureRegion[] transformTo1D(TextureRegion[][] tmp, int rows, int cols) {
         TextureRegion [] walkFrames
                 = new TextureRegion[cols * rows];

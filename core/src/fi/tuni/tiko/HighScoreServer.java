@@ -53,7 +53,6 @@ public class HighScoreServer {
         Net.HttpRequest request = new Net.HttpRequest(HttpMethods.GET);
         request.setUrl(url);
         Gdx.net.sendHttpRequest(request, new Net.HttpResponseListener() {
-            @SuppressWarnings("unchecked")
             @Override
             public void handleHttpResponse (Net.HttpResponse httpResponse) {
                 String r = httpResponse.getResultAsString();

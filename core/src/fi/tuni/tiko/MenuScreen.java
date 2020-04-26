@@ -18,23 +18,21 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import java.util.ArrayList;
-
 public class MenuScreen extends ApplicationAdapter implements Screen {
     final GasChaosMain game;
     final Texture background;
     private Stage stage;
     private Table content;
-    OrthographicCamera camera;
-    UserInterface userInterface;
+    final OrthographicCamera camera;
+    final UserInterface userInterface;
     Skin skin;
-    Label.LabelStyle labelStyle;
-    TextButton.TextButtonStyle buttonStyle;
+    final Label.LabelStyle labelStyle;
+    final TextButton.TextButtonStyle buttonStyle;
     ImageButton.ImageButtonStyle imgStyle;
-    Texture audioOn;
-    Texture audioOff;
-    Drawable audioOnDrawable;
-    Drawable audioOffDrawable;
+    final Texture audioOn;
+    final Texture audioOff;
+    final Drawable audioOnDrawable;
+    final Drawable audioOffDrawable;
 
     public MenuScreen(OrthographicCamera camera, GasChaosMain game) {
         this.game = game;
@@ -59,7 +57,6 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
         buttonStyle.up = new NinePatchDrawable(patchUp);
         buttonStyle.down = new NinePatchDrawable(patchDown);
 
-        updateAudioKey();
         otherSetup();
 
     }
@@ -141,13 +138,9 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
                 if (game.gameData.menu) {
                     toggleAudioImg.setChecked(!toggleAudioImg.isChecked());
                     game.gameData.toggleAudio();
-                    if (toggleAudioImg.isChecked()) {
-                        game.gameData.audio = true;
-                    } else {
-                        game.gameData.audio = false;
-                    }
+                    game.gameData.audio = toggleAudioImg.isChecked();
                     toggleAudioImg.toggle();
-                    System.out.println("audio:" + game.gameData.audio);
+                    System.out.println("audio: " + game.gameData.audio);
                 }
             }
         });
@@ -204,18 +197,6 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
         content.add(toggleAudioImg).colspan(2)
                 .prefHeight(Gdx.graphics.getHeight() / 18f)
                 .prefWidth(Gdx.graphics.getWidth() / 3.5f);
-    }
-
-    private String updateAudioKey() {
-        String key;
-
-        if (game.gameData.audio) {
-            key = "audioOn";
-        } else {
-            key = "audioOff";
-        }
-
-        return key;
     }
 
     @Override

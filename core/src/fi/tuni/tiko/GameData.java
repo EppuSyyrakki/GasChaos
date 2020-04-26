@@ -969,14 +969,6 @@ public class GameData {
         this.fields = fields;
     }
 
-    public boolean isAudio() {
-        return audio;
-    }
-
-    public void setAudio(boolean audio) {
-        this.audio = audio;
-    }
-
     public void toggleAudio() {
         audio=!audio;
     }
@@ -1076,6 +1068,10 @@ public class GameData {
         //System.out.println("json: " + jsonField);
         String jsonCowList = json.toJson(cowList);
         prefs.putString("cowList", jsonCowList);
+        //System.out.println("json: " + jsonCowList);
+
+        String jsonCowsBought = json.toJson(cowsBought);
+        prefs.putString("cowsBought", jsonCowsBought);
         //System.out.println("json: " + jsonCowList);
 
         prefs.putInteger("fieldRent0", fieldsRented[0]);
@@ -1219,6 +1215,10 @@ public class GameData {
         //System.out.println("cowString: " + cowString);
         cowList = json.fromJson(ArrayList.class, cowString);
 
+        String cowsBoughtString = prefs.getString("cowsBought");
+        //System.out.println("cowString: " + cowString);
+        cowsBought = json.fromJson(ArrayList.class, cowsBoughtString);
+
         /**
          * int array fieldsRented.
          */
@@ -1276,7 +1276,6 @@ public class GameData {
         cowList.add(new Cow());
         cowsBought = new ArrayList<>();
 
-        //noinspection ConstantConditions
         actionsAvailable = actionsDone < MAX_ACTIONS;
 
         /**

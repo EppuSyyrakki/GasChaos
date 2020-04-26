@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -17,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 
@@ -97,14 +95,14 @@ public class UserInterface {
         topTable.setPosition(0,height - height / 28);
         topTable.setBackground(bgDrawable);
         topTable.add(topMoneyLabel).width(width / 3).align(Align.center);
-        topTable.add(topCowsLabel).width(width / 3).align(Align.center);;
-        topTable.add(topActionsLabel).width(width / 3).align(Align.center);;
+        topTable.add(topCowsLabel).width(width / 3).align(Align.center);
+        topTable.add(topActionsLabel).width(width / 3).align(Align.center);
 
         topTable2.setSize(width, height / 28);
         topTable2.setPosition(0,height - height / 14);
         topTable2.setBackground(bgDrawable);
-        topTable2.add(topGrainLabel).width(width / 3).align(Align.center);;
-        topTable2.add(topFertilizersLabel).align(Align.center);;
+        topTable2.add(topGrainLabel).width(width / 3).align(Align.center);
+        topTable2.add(topFertilizersLabel).align(Align.center);
 
         // set to true when dialog on screen, prevents player movement.
         dialogFocus = false;

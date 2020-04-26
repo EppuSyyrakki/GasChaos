@@ -365,28 +365,31 @@ public class GardenScreen extends Location implements Screen {
     public Texture growthRender() {
         int progress = growthProgress();
         if (progress == 0) {
-            if (type.equals("potato")) {
-                return growthP1;
-            } else if (type.equals("tomato")) {
-                return growthT1;
-            } else if (type.equals("flower")) {
-                return growthF1;
+            switch (type) {
+                case "potato":
+                    return growthP1;
+                case "tomato":
+                    return growthT1;
+                case "flower":
+                    return growthF1;
             }
         } else if (progress == 1) {
-            if (type.equals("potato")) {
-                return growthP2;
-            } else if (type.equals("tomato")) {
-                return growthT2;
-            } else if (type.equals("flower")) {
-                return growthF2;
+            switch (type) {
+                case "potato":
+                    return growthP2;
+                case "tomato":
+                    return growthT2;
+                case "flower":
+                    return growthF2;
             }
         } else if (progress == 2) {
-            if (type.equals("potato")) {
-                return growthP3;
-            } else if (type.equals("tomato")) {
-                return growthT3;
-            } else if (type.equals("flower")) {
-                return growthF3;
+            switch (type) {
+                case "potato":
+                    return growthP3;
+                case "tomato":
+                    return growthT3;
+                case "flower":
+                    return growthF3;
             }
         } else {
             return growthP1;

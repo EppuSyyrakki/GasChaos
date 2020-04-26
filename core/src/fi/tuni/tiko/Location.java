@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -22,7 +21,7 @@ public class Location implements InputProcessor {
     final float WORLD_HEIGHT = 16f;
     final float WORLD_SCALE = 1 / 120f;
     float blackness;
-    float sunsetTransparency = 0.2f;
+    final float sunsetTransparency = 0.2f;
     float fadeSpeed = 2f;
     boolean fadeIn;
     boolean actionInputActive = true;

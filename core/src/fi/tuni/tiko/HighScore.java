@@ -29,14 +29,14 @@ import java.util.List;
  * MainClass is just for demo purposes in this project.
  */
 public class HighScore extends ApplicationAdapter implements HighScoreListener, Screen {
-    OrthographicCamera camera;
+    final OrthographicCamera camera;
     private Stage stage;
     private Skin skin;
     final GasChaosMain game;
-    Label.LabelStyle labelStyle;
-    TextButton.TextButtonStyle buttonStyle;
+    final Label.LabelStyle labelStyle;
+    final TextButton.TextButtonStyle buttonStyle;
     TextField.TextFieldStyle textFieldStyle;
-    UserInterface userInterface;
+    final UserInterface userInterface;
     private TextField nameField;
     final Texture textCursor;
     final Texture background;
@@ -70,14 +70,6 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
 
     @Override
     public void create () {
-        HighScoreServer.readConfig("highscore.config");
-        HighScoreServer.setVerbose(true);
-        HighScoreServer.fetchHighScores(this);
-
-        otherSetup();
-    }
-
-    public void HighScore (SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         HighScoreServer.readConfig("highscore.config");
         HighScoreServer.setVerbose(true);
         HighScoreServer.fetchHighScores(this);
