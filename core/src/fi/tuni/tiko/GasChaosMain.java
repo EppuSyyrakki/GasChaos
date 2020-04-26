@@ -26,6 +26,7 @@ public class GasChaosMain extends Game {
 	UpgradeScreen upgradeScreen;
 	BuySellScreen buySellScreen;
 	HighScore highScoreScreen;
+	LoseScreen loseScreen;
 	I18NBundle myBundle;
 	Locale locale;
 
@@ -51,6 +52,7 @@ public class GasChaosMain extends Game {
 		upgradeScreen = new UpgradeScreen(batch, camera, this);
 		buySellScreen = new BuySellScreen(batch, camera, this);
 		highScoreScreen = new HighScore(camera, this);
+		loseScreen = new LoseScreen(camera, this);
 		menuScreen = new MenuScreen(camera, this);
 
 		setMenuScreen();
@@ -93,7 +95,7 @@ public class GasChaosMain extends Game {
 	}
 
 	public void setNewTurn() {
-		gameData.updateResources();
+
 		farmScreen.player.setRX(2);
 		farmScreen.player.setRY(5);
 		farmScreen.player.matchX(2);
@@ -104,10 +106,15 @@ public class GasChaosMain extends Game {
 			gameData.setDebtPayment(0);
 			gameData.victory = true;
 			setHighScoreScreen();
+		} else if (gameData.getMoney() < 0) {
+			setLoseScreen();
+			gameData.defeatMenu = true;
+			gameData.defeat = true;
 		} else {
 			homeScreen.resetInputProcessor();
 			setScreen(homeScreen);
 		}
+		gameData.updateResources();
 
 		gameData.saveGame();
 
@@ -152,6 +159,10 @@ public class GasChaosMain extends Game {
 
 	public void setHighScoreScreen() {
 		setScreen(highScoreScreen);
+	}
+
+	public void setLoseScreen() {
+		setScreen(loseScreen);
 	}
 
 	public void setGameData(GameData data) {

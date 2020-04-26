@@ -144,6 +144,8 @@ public class GameData {
     public boolean menu = true;
     public boolean audio = true;
     public boolean victory = false;
+    public boolean defeat = false;
+    public boolean defeatMenu = false;
 
     /**
      * Tutorial dialog triggers
@@ -1354,6 +1356,11 @@ public class GameData {
 
         saveGame();
         loadGame();
+
+    }
+
+    public boolean savedMoney() {
+        return prefs.getInteger("money", getPetrol()) >= 0;
 
     }
 }
