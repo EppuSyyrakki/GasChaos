@@ -700,7 +700,10 @@ public class UpgradeScreen extends Location implements Screen {
 
     @Override
     public void dispose() {
-        background.dispose();
+        tiledMap.dispose();
+        userInterface.dispose();
+        blackTexture.dispose();
+        sunsetTexture.dispose();
     }
 
     private void resetInputProcessor() {

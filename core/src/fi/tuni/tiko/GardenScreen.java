@@ -341,7 +341,19 @@ public class GardenScreen extends Location implements Screen {
 
     @Override
     public void dispose() {
-        background.dispose();
+        blackTexture.dispose();
+        sunsetTexture.dispose();
+        userInterface.dispose();
+        tiledMap.dispose();
+        growthT1.dispose();
+        growthT2.dispose();
+        growthT3.dispose();
+        growthP1.dispose();
+        growthP2.dispose();
+        growthP3.dispose();
+        growthF1.dispose();
+        growthF2.dispose();
+        growthF3.dispose();
     }
 
     private void resetInputProcessor() {

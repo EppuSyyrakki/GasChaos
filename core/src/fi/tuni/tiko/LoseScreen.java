@@ -25,7 +25,6 @@ public class LoseScreen extends ApplicationAdapter implements Screen {
     Skin skin;
     final Label.LabelStyle labelStyle;
     final TextButton.TextButtonStyle buttonStyle;
-    ImageButton.ImageButtonStyle imgStyle;
 
     public LoseScreen(OrthographicCamera camera, GasChaosMain game) {
         this.game = game;
@@ -168,5 +167,8 @@ public class LoseScreen extends ApplicationAdapter implements Screen {
         skin.dispose();
         background.dispose();
         stage.dispose();
+        skin.dispose();
+        userInterface.dispose();
+
     }
 }

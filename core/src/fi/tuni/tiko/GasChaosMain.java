@@ -84,6 +84,18 @@ public class GasChaosMain extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		farmScreen.dispose();
+		fieldScreen.dispose();
+		gardenScreen.dispose();
+		gasTankScreen.dispose();
+		grandmotherScreen.dispose();
+		//highScoreScreen.dispose();
+		homeScreen.dispose();
+		loseScreen.dispose();
+		upgradeScreen.dispose();
+		buySellScreen.dispose();
+		menuScreen.dispose();
+
 	}
 
 	public void setFarmScreen() {

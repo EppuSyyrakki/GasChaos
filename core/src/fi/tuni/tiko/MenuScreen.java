@@ -228,5 +228,9 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
         skin.dispose();
         background.dispose();
         stage.dispose();
+        skin.dispose();
+        audioOn.dispose();
+        audioOff.dispose();
+        userInterface.dispose();
     }
 }

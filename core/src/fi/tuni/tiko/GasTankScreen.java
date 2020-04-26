@@ -138,7 +138,12 @@ public class GasTankScreen extends Location implements Screen {
 
     @Override
     public void dispose() {
-        background.dispose();
+        userInterface.dispose();
+        tiledMap.dispose();
+        sunset.dispose();
+        generatorBackground.dispose();
+        sunsetTexture.dispose();
+        blackTexture.dispose();
     }
 
     private void resetInputProcessor() {

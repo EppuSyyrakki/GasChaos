@@ -231,6 +231,19 @@ public class FarmScreen extends Location implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+        backgroundSolar.dispose();
+        backgroundSolar2.dispose();
+        blackTexture.dispose();
+        sunsetTexture.dispose();
+        sunset.dispose();
+        userInterface.dispose();
+        tiledMap.dispose();
+        tractor1.dispose();
+        tractor2.dispose();
+        tractor3.dispose();
+        sun.dispose();
+        cloud1.dispose();
+        player.dispose();
     }
 
     @SuppressWarnings("RedundantCast")

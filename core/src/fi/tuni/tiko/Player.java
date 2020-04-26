@@ -104,6 +104,13 @@ public class Player extends Sprite{
         walkDownAnimation = new Animation(12 / 60f, (Object[]) framesDown);
     }
 
+    public void dispose() {
+        textureRight.dispose();
+        textureDown.dispose();
+        textureUp.dispose();
+        textureStand.dispose();
+    }
+
     public float getLastX() {
         return lastX;
     }
@@ -485,4 +492,6 @@ public class Player extends Sprite{
             currentFrame = walkStandAnimation.getKeyFrame(stateTime, true);
         }
     }
+
+
 }

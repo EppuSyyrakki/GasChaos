@@ -75,6 +75,7 @@ public class UserInterface {
                     new TextureRegion(fontTextureLarge), false);
             uiScale = 1.5f;
         }
+
         buttonStyle.font = font;
         confirmButton = new TextButton(" " + myBundle.get("confirm") + "     ", buttonStyle);
         cancelButton = new TextButton(" " + myBundle.get("cancel") + " ", buttonStyle);
@@ -128,6 +129,17 @@ public class UserInterface {
         topFertilizersLabel.setText(myBundle.get("fertilizers")
                 + data.getFertilizerN() + "/" + data.getFertilizerP());
         stage.draw();
+    }
+
+    public void dispose() {
+        skin.dispose();
+        stage.dispose();
+        fontTextureLarge.dispose();
+        fontTextureNormal.dispose();
+        barBgTexture.dispose();
+        font.dispose();
+        buttonDownBackground.dispose();
+        buttonUpBackground.dispose();
     }
 
     public void createDialog(Dialog dialog, String text, boolean preDialog) {

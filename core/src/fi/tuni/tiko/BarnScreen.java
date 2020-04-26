@@ -441,6 +441,18 @@ public class BarnScreen extends Location implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+        cow1.dispose();
+        cow2.dispose();
+        cow3.dispose();
+        cowBrown1.dispose();
+        cowBrown2.dispose();
+        cowBrown3.dispose();
+        hay1.dispose();
+        hay2.dispose();
+        manure.dispose();
+        tiledMap.dispose();
+        batch.dispose();
+        player.dispose();
     }
 
     @SuppressWarnings("RedundantCast")

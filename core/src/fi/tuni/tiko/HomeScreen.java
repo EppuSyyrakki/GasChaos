@@ -184,6 +184,11 @@ public class HomeScreen extends Location implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+        player.dispose();
+        tiledMap.dispose();
+        userInterface.dispose();
+        sunsetTexture.dispose();
+        blackTexture.dispose();
     }
 
     @SuppressWarnings("RedundantCast")

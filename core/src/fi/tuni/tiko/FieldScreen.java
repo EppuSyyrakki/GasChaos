@@ -552,7 +552,6 @@ public class FieldScreen extends Location implements Screen {
 
     @Override
     public void dispose() {
-        background.dispose();
         growth1.dispose();
         growth2.dispose();
         growth3.dispose();
@@ -562,6 +561,11 @@ public class FieldScreen extends Location implements Screen {
         river2.dispose();
         river3.dispose();
         tiledMap.dispose();
+        sunsetTexture.dispose();
+        blackTexture.dispose();
+        userInterface.dispose();
+        sunset.dispose();
+        cloud1.dispose();
     }
 
     /**

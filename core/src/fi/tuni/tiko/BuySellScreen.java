@@ -742,6 +742,10 @@ public class BuySellScreen extends Location implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+        blackTexture.dispose();
+        sunsetTexture.dispose();
+        userInterface.dispose();
+        tiledMap.dispose();
     }
 
     private void resetInputProcessor() {

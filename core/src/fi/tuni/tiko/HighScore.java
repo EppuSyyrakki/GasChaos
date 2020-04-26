@@ -247,6 +247,8 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         background.dispose();
         skin.dispose();
         stage.dispose();
+        userInterface.dispose();
+        textCursor.dispose();
     }
 
     public void exitScore() {

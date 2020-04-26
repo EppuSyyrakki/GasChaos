@@ -74,6 +74,9 @@ public class GrandmotherScreen extends Location implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+        sunsetTexture.dispose();
+        blackTexture.dispose();
+        userInterface.dispose();
     }
 
 }

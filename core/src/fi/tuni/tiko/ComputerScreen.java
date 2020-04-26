@@ -234,6 +234,11 @@ public class ComputerScreen extends Location implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+        batch.dispose();
+        sunsetTexture.dispose();
+        blackTexture.dispose();
+        userInterface.dispose();
+        tiledMap.dispose();
     }
 
     private void resetInputProcessor() {
