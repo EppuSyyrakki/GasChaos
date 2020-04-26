@@ -142,6 +142,9 @@ public class ComputerScreen extends Location implements Screen {
                     + game.gameData.getDebtPayment();
             debtPaymentThisTurn = (int)floatPayment;
         }
+        if (debtPaymentThisTurn > game.gameData.getDebt()) {
+            debtPaymentThisTurn = game.gameData.getDebt();
+        }
         return debtPaymentThisTurn;
     }
 

@@ -223,6 +223,13 @@ public class GameData {
         }
 
         if (currentTurn % 2 == 0) { // debt is paid on every other turn.
+            if (debt > debtPayment) {
+                debtPayment = debt;
+            } else if (debt <= 0) {
+                debtPayment = 0;
+                interest = 0f;
+            }
+            debt = debt - debtPayment;
             float floatPayment = (float)debt * interest + debtPayment;
             debtPaymentThisTurn = (int)floatPayment;
         }
@@ -1299,7 +1306,7 @@ public class GameData {
         manureMax = 2500;   // size of manure pit
         methane = 0;        // amount of methane in gas tank
         methaneMax = 15000; // size of methane tank
-        debt = 10000;       // total amount of debt, reduced by debtPayment
+        debt = 10;       // total amount of debt, reduced by debtPayment
         grain = 100;        // total amount of grain on farm
         grainInBarn = 30;   // amount of feed (grain) for cows in barn
         grainMax = 9000;    // maximum amount of grain
