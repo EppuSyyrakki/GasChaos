@@ -223,14 +223,14 @@ public class GameData {
         }
 
         if (currentTurn % 2 == 0) { // debt is paid on every other turn.
-            if (debt > debtPayment) {
+            if (debt < debtPayment) {
                 debtPayment = debt;
             } else if (debt <= 0) {
                 debtPayment = 0;
                 interest = 0f;
             }
-            debt = debt - debtPayment;
             float floatPayment = (float)debt * interest + debtPayment;
+            debt = debt - debtPayment;
             debtPaymentThisTurn = (int)floatPayment;
         }
 

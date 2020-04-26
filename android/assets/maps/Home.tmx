@@ -28,9 +28,9 @@
   <object id="4" x="-4" y="1910" width="1138" height="130"/>
   <object id="6" x="1072" y="-98" width="116" height="2144"/>
   <object id="7" x="-144" y="-102" width="1334" height="509.418"/>
-  <object id="15" x="24.3759" y="1184.18" width="319.338" height="212.686"/>
+  <object id="15" x="24.3759" y="1184.18" width="353.985" height="284.866"/>
   <object id="22" x="423.663" y="328.05" width="232.438" height="148.622"/>
-  <object id="24" x="789.347" y="1635.51" width="176.538" height="162.334"/>
+  <object id="24" x="893.287" y="1635.51" width="72.5982" height="162.334"/>
  </objectgroup>
  <objectgroup id="9" name="RectangleExit">
   <object id="16" x="11.033" y="308.465" width="374.973" height="558.628"/>
@@ -38,7 +38,7 @@
  <objectgroup id="6" name="RectangleBed">
   <object id="11" x="719.98" y="598.162" width="345.05" height="540.375"/>
  </objectgroup>
- <objectgroup id="7" name="RectanglePhone">
+ <objectgroup id="7" name="RectanglePhone" visible="0">
   <object id="12" x="660.749" y="1466.92" width="415.879" height="445.15"/>
  </objectgroup>
  <objectgroup id="8" name="RectanglePC" visible="0">
