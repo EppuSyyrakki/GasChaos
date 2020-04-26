@@ -103,7 +103,6 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
                     game.gameData.newGame();
                     game.setFarmScreen();
                     game.gameData.menu = false;
-                    //game.reset();
                 }
             }
         });
@@ -114,7 +113,11 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (game.gameData.menu) {
-                    game.gameData.loadGame();
+                    if (game.gameData.getCowList() != null) {
+                        game.gameData.loadGame();
+                    } else {
+                        game.gameData.newGame();
+                    }
                     game.setFarmScreen();
                     game.gameData.menu = false;
                 }
