@@ -56,6 +56,8 @@ public class HomeScreen extends Location implements Screen {
             player.matchX(player.getRX());
             player.matchY(player.getRY());
             uiText = createMorningText();
+            player.setInputActive(false);
+            setActionInputActive(false);
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean) object;
@@ -63,6 +65,7 @@ public class HomeScreen extends Location implements Screen {
                         resetInputProcessor();
                         newTurn = false;
                         remove();
+                        setActionInputActive(true);
                     }
                 }
             };

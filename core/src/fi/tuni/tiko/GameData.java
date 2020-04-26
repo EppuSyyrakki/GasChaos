@@ -143,6 +143,7 @@ public class GameData {
 
     public boolean menu = true;
     public boolean audio = true;
+    public boolean victory = false;
 
     /**
      * Tutorial dialog triggers
@@ -377,6 +378,7 @@ public class GameData {
         gasTankVisited = false;
         homeVisited = false;
         upgradeVisited = false;
+        victory = false;
         fields = new ArrayList<>();
         for (int i = 0; i < MAX_FIELDS; i++) {
             if (i < OWNED_FIELDS) {
@@ -986,6 +988,7 @@ public class GameData {
         prefs.putInteger("actionsDone", getActionsDone());
         prefs.putBoolean("actionsAvailable", isActionsAvailable());
         prefs.putBoolean("fieldPenalty", isFieldPenalty());
+        prefs.putBoolean("victory", victory);
 
         /**
          * Resource amounts.
@@ -1124,6 +1127,7 @@ public class GameData {
         setActionsDone(prefs.getInteger("actionsDone", getActionsDone()));
         setActionsAvailable(prefs.getBoolean("actionsAvailable"));
         setFieldPenalty(prefs.getBoolean("fieldPenalty"));
+        victory=prefs.getBoolean("victory", victory);
 
         /**
          * Resource amounts.
@@ -1305,6 +1309,7 @@ public class GameData {
         fertilizerPMax = 100;
 
         interest = 0.03f; // 3% interest rate to calculate debt payments
+        victory = false;
 
         /**
          * Device levels. 0 = no device, Used in updateResource calculations and to draw correct

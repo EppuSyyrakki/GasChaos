@@ -64,7 +64,7 @@ public class GasChaosMain extends Game {
 		String lang;
 		// Gets current language from android.
 		lang = java.util.Locale.getDefault().toString();
-		lang = "fi_FI";
+		//lang = "fi_FI";
 
 		if (lang.equals("fi_FI")) {
 			locale = new Locale("fi", "FI");
@@ -99,8 +99,16 @@ public class GasChaosMain extends Game {
 		farmScreen.player.matchX(2);
 		farmScreen.player.matchY(5);
 		homeScreen.setNewTurn(true);
-		homeScreen.resetInputProcessor();
-		setScreen(homeScreen);
+		if (gameData.getDebt() <= 0 && !gameData.victory) {
+			gameData.setInterest(0f);
+			gameData.setDebtPayment(0);
+			gameData.victory = true;
+			setHighScoreScreen();
+		} else {
+			homeScreen.resetInputProcessor();
+			setScreen(homeScreen);
+		}
+
 		gameData.saveGame();
 
 	}

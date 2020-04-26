@@ -78,6 +78,7 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
 
     }
 
@@ -136,7 +137,6 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
                 1, 1, 1, 1);
         textFieldStyle.cursor = new TextureRegionDrawable(new TextureRegion(textCursor));
         textFieldStyle.background = new NinePatchDrawable(patchText);
-        Gdx.input.setInputProcessor(stage);
         content = new Table();
         createTable();
         stage.addActor(content);

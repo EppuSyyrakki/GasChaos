@@ -37,7 +37,6 @@ public class Location implements InputProcessor {
     I18NBundle myBundle;
     TiledMap tiledMap;
     TiledMapRenderer tiledMapRenderer;
-    boolean victory = false;
 
     public Location(GasChaosMain game) {
         this.game = game;
@@ -187,15 +186,4 @@ public class Location implements InputProcessor {
             batch.draw(sunsetForeground, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         }
     }
-
-    public void noDebt() {
-        if (game.gameData.getDebt() <= 0 && !victory) {
-            game.gameData.setInterest(0f);
-            game.gameData.setDebtPayment(0);
-            victory = true;
-            game.setHighScoreScreen();
-        }
-    }
-
-
 }
