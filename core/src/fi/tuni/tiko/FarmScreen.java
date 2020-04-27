@@ -283,6 +283,11 @@ public class FarmScreen extends Location implements Screen {
         sun.dispose();
         cloud1.dispose();
         player.dispose();
+        chickenS.dispose();
+        bird1S.dispose();
+        bird2S.dispose();
+        forest.dispose();
+        noise.dispose();
     }
 
     @SuppressWarnings("RedundantCast")

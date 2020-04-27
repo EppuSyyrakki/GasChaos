@@ -199,6 +199,7 @@ public class HomeScreen extends Location implements Screen {
         userInterface.dispose();
         sunsetTexture.dispose();
         blackTexture.dispose();
+        roosterS.dispose();
     }
 
     @SuppressWarnings("RedundantCast")
