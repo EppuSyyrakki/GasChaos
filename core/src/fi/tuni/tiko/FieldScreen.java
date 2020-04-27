@@ -3,6 +3,7 @@ package fi.tuni.tiko;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -31,8 +32,8 @@ public class FieldScreen extends Location implements Screen {
     final float cloudSpeed;
     final float riverSpeed;
     final Texture sunset;
-    final Sound river1S = Gdx.audio.newSound(Gdx.files.internal("audio/river1.mp3"));
-    final Sound river2S = Gdx.audio.newSound(Gdx.files.internal("audio/river2.mp3"));
+    final Music river1S = Gdx.audio.newMusic(Gdx.files.internal("audio/river1.mp3"));
+    final Music river2S = Gdx.audio.newMusic(Gdx.files.internal("audio/river2.mp3"));
 
     public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
@@ -69,6 +70,14 @@ public class FieldScreen extends Location implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
+
+        if (game.gameData.audio) {
+            river1S.setVolume(0.07f);
+            river2S.setVolume(0.025f);
+        } else {
+            river1S.setVolume(0f);
+            river2S.setVolume(0f);
+        }
 
         if (fadeIn) {
             fadeFromBlack();
@@ -531,8 +540,10 @@ public class FieldScreen extends Location implements Screen {
     public void show() {
         blackness = 1;
         fadeIn = true;
-        river1S.loop(0.085f);
-        river2S.loop(0.025f);
+        river1S.setLooping(true);
+        river2S.setLooping(true);
+        river1S.play();
+        river2S.play();
     }
 
     @Override

@@ -27,6 +27,8 @@ public class GardenScreen extends Location implements Screen {
     final Texture growthF3;
     String type;
     int fillerNoise;
+    float birdVolume = 0.1f;
+    float chickenVolume = 0.07f;
 
     public GardenScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
@@ -58,6 +60,18 @@ public class GardenScreen extends Location implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
+
+        if (game.gameData.audio) {
+            forest.setVolume(0.06f);
+            noise.setVolume(0.09f);
+            birdVolume = 0.1f;
+            chickenVolume = 0.07f;
+        } else {
+            forest.setVolume(0f);
+            noise.setVolume(0f);
+            birdVolume = 0f;
+            chickenVolume = 0f;
+        }
 
         if (fadeIn) {
             fadeFromBlack();
@@ -332,11 +346,11 @@ public class GardenScreen extends Location implements Screen {
                     fillerNoise = random.nextInt(3);
                 }
                 if (fillerNoise == 0) {
-                    bird1S.play(0.1f);
+                    bird1S.play(birdVolume);
                 } else if (fillerNoise == 1) {
-                    bird2S.play(0.1f);
+                    bird2S.play(birdVolume);
                 } else if (fillerNoise == 2) {
-                    chickenS.play(0.07f);
+                    chickenS.play(chickenVolume);
                 }
                 noise.play();
             }

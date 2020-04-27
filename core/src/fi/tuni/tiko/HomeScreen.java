@@ -23,6 +23,7 @@ public class HomeScreen extends Location implements Screen {
     @SuppressWarnings("UnusedAssignment")
     boolean newTurn = false;
     final Sound roosterS = Gdx.audio.newSound(Gdx.files.internal("audio/rooster.mp3"));
+    float roosterVolume = 0.1f;
 
     public HomeScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
@@ -52,8 +53,14 @@ public class HomeScreen extends Location implements Screen {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
+        if (game.gameData.audio) {
+            roosterVolume = 0.1f;
+        } else {
+            roosterVolume = 0f;
+        }
+
         if (newTurn) {
-            roosterS.play(0.15f);
+            roosterS.play(roosterVolume);
             player.setRX(4);
             player.setRY(6);
             player.matchX(player.getRX());

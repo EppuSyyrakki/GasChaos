@@ -43,6 +43,7 @@ public class BarnScreen extends Location implements Screen {
     float timer = 0;
     int timerReset = 10;
     int cowSound = random.nextInt(3);
+    float cowVolume = 0.1f;
 
     public BarnScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
@@ -78,16 +79,22 @@ public class BarnScreen extends Location implements Screen {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
+        if (game.gameData.audio) {
+            cowVolume = 0.1f;
+        } else {
+            cowVolume = 0f;
+        }
+
 
         timer = timer + Gdx.graphics.getDeltaTime();
         if (timer > timerReset) {
             timer = 0;
             if (cowSound == 0) {
-                cow1S.play(0.1f);
+                cow1S.play(cowVolume);
             } else if (cowSound == 1) {
-                cow2S.play(0.1f);
+                cow2S.play(cowVolume);
             } else if (cowSound == 2) {
-                cow3S.play(0.1f);
+                cow3S.play(cowVolume);
             }
             timerReset = random.nextInt(7) + 10;
             int lastCowSound = cowSound;
