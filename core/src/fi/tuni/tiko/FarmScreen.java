@@ -7,7 +7,9 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -27,6 +29,7 @@ public class FarmScreen extends Location implements Screen {
     final Texture tractor3;
     final Texture sun;
     final Texture cloud1;
+    final Texture dog;
     float cloudX1;
     final float cloudSpeed;
     float sunX;
@@ -36,6 +39,11 @@ public class FarmScreen extends Location implements Screen {
     int fillerNoise;
     float birdVolume = 0.1f;
     float chickenVolume = 0.07f;
+    int dogRows = 1;
+    int dogCols = 2;
+    float stateTime = 1f;
+    Animation<TextureRegion> dogAnimation;
+    TextureRegion currentDogFrame;
 
     public FarmScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
@@ -50,6 +58,7 @@ public class FarmScreen extends Location implements Screen {
         tractor3 = new Texture("props/tractor1.png");
         sun = new Texture("props/sun.png");
         cloud1 = new Texture("props/cloud1.png");
+        dog = new Texture("props/dog.png");
         tractorX = 0.75f;
         tractorY = 8.6f;
         cloudX1 = 1f;
@@ -69,6 +78,15 @@ public class FarmScreen extends Location implements Screen {
         player.matchY(player.getRY());
         game.gameData.saveGame();
         game.gameData.loadGame();
+
+        TextureRegion[][] tmpDog = TextureRegion.split(
+                dog,
+                dog.getWidth() / dogCols,
+                dog.getHeight() / dogRows);
+
+        TextureRegion[] dogFrames = transformTo1D(tmpDog, dogRows, dogCols);
+
+        dogAnimation = new Animation(90 / 60f, (Object[]) dogFrames);
     }
 
     @Override
@@ -78,6 +96,9 @@ public class FarmScreen extends Location implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
+
+        stateTime += Gdx.graphics.getDeltaTime();
+        currentDogFrame = dogAnimation.getKeyFrame(stateTime, true);
 
         if (game.gameData.audio) {
             forest.setVolume(0.06f);
@@ -108,6 +129,9 @@ public class FarmScreen extends Location implements Screen {
 
         batch.begin();
         batch.draw(tractorTex(), tractorX,tractorY, 2f, 1.5f);
+
+        batch.draw(currentDogFrame, 0.30f, 1.65f,
+                dog.getWidth() / 2f / 230f, dog.getHeight() / 230f);
         player.draw(batch);
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
         // Check what level of solar panels and set foreground accordingly.
@@ -135,6 +159,19 @@ public class FarmScreen extends Location implements Screen {
         cloudX1 = cloudX1 + cloudSpeed * Gdx.graphics.getDeltaTime();
         if (cloudX1 > 9.5f) {cloudX1 = -4.2f;}
         batch.draw(cloud1, cloudX1,13.83f, 37f / 9f, 16f / 9f);
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private TextureRegion[] transformTo1D(TextureRegion[][] tmp, int rows, int cols) {
+        TextureRegion [] walkFrames
+                = new TextureRegion[cols * rows];
+        int index = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                walkFrames[index++] = tmp[i][j];
+            }
+        }
+        return walkFrames;
     }
 
     public void checkActionRectangles() {
@@ -288,6 +325,7 @@ public class FarmScreen extends Location implements Screen {
         bird2S.dispose();
         forest.dispose();
         noise.dispose();
+        dog.dispose();
     }
 
     @SuppressWarnings("RedundantCast")
