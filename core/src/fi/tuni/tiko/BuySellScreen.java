@@ -571,6 +571,7 @@ public class BuySellScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, false);
+
         } else {
             // Not enough methane to sell UI message
             uiText = game.myBundle.get("sellGasNotEnough");

@@ -100,7 +100,7 @@ public class ComputerScreen extends Location implements Screen {
         int totalIncome = milkMoney + grainMoney + methaneMoney + manureMoney + gardenMoney
                 + fertilizerMoney;
         int totalExpenses = 0 - calculateDebtPayment() - calculateElectricity()
-                - calculateElectricity() - calculateFieldRent() - calculatePetrol();
+                - calculateFieldRent() - calculatePetrol();
         String text = game.myBundle.format("balance", game.gameData.getMoney())  + "\n";
         text += game.myBundle.format("debt", game.gameData.getDebt()) + "\n\n";
         text += game.myBundle.get("income") + "\n";
@@ -124,10 +124,11 @@ public class ComputerScreen extends Location implements Screen {
 
     private int moneyFromMilk() {
         int milkSold = 0;
+        int milkFromCow;
         ArrayList<Cow> tmpCowList = game.gameData.getCowList();
         for (Cow cow : tmpCowList) {
-            if (cow.isEatenThisTurn()) {  // if cow not eaten, no milk, manure and methane produced
-                int milkFromCow = cow.getMilk(game.gameData.getMilkingMachineLevel());
+            if (cow.isEatenThisTurn()) {  // if cow not eaten, no milk
+                milkFromCow = cow.getMilk(game.gameData.getMilkingMachineLevel());
                 if (game.gameData.getManureInBarn() > game.gameData.MANURE_DANGER) {
                     milkFromCow -= (milkFromCow / 3);
                 }

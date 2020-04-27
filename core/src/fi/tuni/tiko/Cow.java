@@ -33,6 +33,7 @@ public class Cow {
             eatenThisTurn = true;
             return newFeed;
         } else {
+            eatenThisTurn = false;
             return 0;
         }
     }

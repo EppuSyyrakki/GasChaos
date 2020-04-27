@@ -14,7 +14,7 @@ public class GameData {
     /**
      * Prices of resources and upgrades. Money gained is per 1 unit.
      */
-    final int MONEY_FROM_MILK = 4;
+    final int MONEY_FROM_MILK = 2;
     final float MONEY_FROM_MANURE = 0.5f;
     final int MONEY_FROM_GRAIN = 2;
     final float MONEY_FROM_METHANE = 1.5f;
@@ -24,13 +24,13 @@ public class GameData {
     final int PRICE_OF_COW = 800;
     final int PRICE_OF_GRAIN = 2;
     final int PRICE_OF_SOLAR = 1000;
-    final int PRICE_OF_COLLECTOR = 900;
-    final int PRICE_OF_MILKING = 750;
-    final int PRICE_OF_TRACTOR = 1000;
-    final int PRICE_OF_GENERATOR = 850;
+    final int PRICE_OF_COLLECTOR = 1400;
+    final int PRICE_OF_MILKING = 900;
+    final int PRICE_OF_TRACTOR = 1200;
+    final int PRICE_OF_GENERATOR = 70;
     final int PRICE_OF_FIELD = 10;
     final int PRICE_OF_N = 3;
-    final int PRICE_OF_P = 8;
+    final int PRICE_OF_P = 7;
     final int PENALTY_PAYMENT = 100;
 
     /**
