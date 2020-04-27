@@ -40,7 +40,7 @@ public class Field {
             if (reductionCounter == 0) {
                 fertilizerP -= 1;
                 fertilizerN -= 3;
-                reductionCounter = 3;
+                reductionCounter = 4;
 
                 if (fertilizerN < 0) {
                     fertilizerN = 0;

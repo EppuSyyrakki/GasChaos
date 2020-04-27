@@ -34,10 +34,10 @@
   <object id="16" x="-4.94548" y="850.648" width="534.427" height="1087.99"/>
  </objectgroup>
  <objectgroup id="9" name="ActionFeedCows">
-  <object id="20" x="22.1276" y="220.193" width="117.434" height="474.746"/>
+  <object id="20" x="219.128" y="255.193" width="117.434" height="437.746"/>
  </objectgroup>
- <objectgroup id="10" name="ActionShovelManure">
-  <object id="24" x="236" y="254" width="108" height="438"/>
+ <objectgroup id="10" name="ActionShovelManure" locked="1">
+  <object id="24" x="30" y="259" width="108" height="438"/>
  </objectgroup>
  <objectgroup id="11" name="ActionCollectMethane">
   <object id="22" x="793.806" y="1539.21" width="264.141" height="364.415"/>
