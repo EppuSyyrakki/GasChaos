@@ -90,8 +90,10 @@ public class ComputerScreen extends Location implements Screen {
     private String getBankDialogText() {
         int milkMoney = moneyFromMilk();
         int grainMoney = game.gameData.getGrainSold() * game.gameData.MONEY_FROM_GRAIN;
-        int methaneMoney = game.gameData.getMethaneSold() * game.gameData.MONEY_FROM_METHANE;
-        int manureMoney = game.gameData.getManureSold() * game.gameData.MONEY_FROM_MANURE;
+        float floatMethaneMoney = game.gameData.getMethaneSold() * game.gameData.MONEY_FROM_METHANE;
+        int methaneMoney = (int)floatMethaneMoney;
+        float floatManureMoney = game.gameData.getManureSold() * game.gameData.MONEY_FROM_MANURE;
+        int manureMoney = (int)floatManureMoney;
         int gardenMoney = game.gameData.getGardenSold() * game.gameData.MONEY_FROM_GARDEN;
         int fertilizerMoney = (game.gameData.getNSold() * game.gameData.MONEY_FROM_N)
                 + (game.gameData.getPSold() * game.gameData.MONEY_FROM_P);

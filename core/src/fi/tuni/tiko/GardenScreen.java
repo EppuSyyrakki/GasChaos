@@ -119,9 +119,9 @@ public class GardenScreen extends Location implements Screen {
             String gardenInfo = "";
             int weedsAmount = game.gameData.getWeedsAmount();
 
-            if (weedsAmount == 0) {
+            if (weedsAmount == 0 || weedsAmount == 1) {
                 gardenInfo = game.myBundle.get("noWeeds");
-            } else if (weedsAmount > 0 && weedsAmount < 4) {
+            } else if (weedsAmount == 2 || weedsAmount == 3) {
                 gardenInfo = game.myBundle.get("someWeeds");
             } else if (weedsAmount >= 4) {
                 gardenInfo = game.myBundle.get("manyWeeds");
