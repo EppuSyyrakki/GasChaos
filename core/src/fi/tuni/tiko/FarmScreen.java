@@ -54,8 +54,8 @@ public class FarmScreen extends Location implements Screen {
         background = new Texture("ground/farmForeground.png");
         sunset = new Texture("ground/farmSunset.png");
         tractor1 = new Texture("props/tractor1.png");
-        tractor2 = new Texture("props/tractor1.png");
-        tractor3 = new Texture("props/tractor1.png");
+        tractor2 = new Texture("props/tractor2.png");
+        tractor3 = new Texture("props/tractor3.png");
         sun = new Texture("props/sun.png");
         cloud1 = new Texture("props/cloud1.png");
         dog = new Texture("props/dog.png");
