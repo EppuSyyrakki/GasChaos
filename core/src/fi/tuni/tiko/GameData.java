@@ -1328,19 +1328,19 @@ public class GameData {
          * Resource amounts and limits
          */
         money = 3000;       // money available for purchases
-        manure = 0;         // amount of manure in manure pit
+        manure = 100;         // amount of manure in manure pit
         manureInBarn = 0;   // amount of manure produced on previous turn
         manureInBarnMax = 300;  // maximum amount of manure on barn floor
         manureMax = 2500;   // size of manure pit
         methane = 0;        // amount of methane in gas tank
         methaneMax = 15000; // size of methane tank
         debt = 10000;       // total amount of debt, reduced by debtPayment
-        grain = 100;        // total amount of grain on farm
-        grainInBarn = 30;   // amount of feed (grain) for cows in barn
+        grain = 200;        // total amount of grain on farm
+        grainInBarn = 60;   // amount of feed (grain) for cows in barn
         grainMax = 9000;    // maximum amount of grain
-        fertilizerN = 35;   // Nitrogen fertilizer storage
+        fertilizerN = 70;   // Nitrogen fertilizer storage
         fertilizerNMax = 500;
-        fertilizerP = 6;    // Phosphorous fertilizer storage
+        fertilizerP = 12;    // Phosphorous fertilizer storage
         fertilizerPMax = 100;
 
         interest = 0.02f; // 3% interest rate to calculate debt payments
