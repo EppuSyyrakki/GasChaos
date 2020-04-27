@@ -349,7 +349,7 @@ public class GameData {
         fertilizerN += compost[2] * 5;
         fertilizerP += compost[2];
         compost[2] = compost[1];
-        compost[1] = compost[2];
+        compost[1] = compost[0];
         compost[0] = toCompost;
         manure -= toCompost;
     }
