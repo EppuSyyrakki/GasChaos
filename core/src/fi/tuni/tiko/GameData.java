@@ -24,11 +24,11 @@ public class GameData {
     final int PRICE_OF_COW = 800;
     final int PRICE_OF_GRAIN = 2;
     final int PRICE_OF_SOLAR = 1000;
-    final int PRICE_OF_COLLECTOR = 1000;
-    final int PRICE_OF_MILKING = 1000;
+    final int PRICE_OF_COLLECTOR = 900;
+    final int PRICE_OF_MILKING = 750;
     final int PRICE_OF_TRACTOR = 1000;
-    final int PRICE_OF_GENERATOR = 1000;
-    final int PRICE_OF_FIELD = 20;
+    final int PRICE_OF_GENERATOR = 850;
+    final int PRICE_OF_FIELD = 10;
     final int PRICE_OF_N = 3;
     final int PRICE_OF_P = 8;
 
@@ -44,23 +44,23 @@ public class GameData {
     /**
      * Resource amounts and limits
      */
-    private int money = 2000;       // money available for purchases
-    private int manure = 0;         // amount of manure in manure pit
-    private int manureInBarn = 0;   // amount of manure produced on previous turn
-    private int manureInBarnMax = 300;  // maximum amount of manure on barn floor
-    private int manureMax = 2500;   // size of manure pit
-    private int methane = 0;        // amount of methane in gas tank
-    private int methaneMax = 15000; // size of methane tank
-    private int debt = 10000;       // total amount of debt, reduced by debtPayment
-    private int grain = 100;        // total amount of grain on farm
-    private int grainInBarn = 30;   // amount of feed (grain) for cows in barn
-    private int grainMax = 9000;    // maximum amount of grain
-    private int fertilizerN = 35;   // Nitrogen fertilizer storage
-    private int fertilizerNMax = 500;
-    private int fertilizerP = 6;    // Phosphorous fertilizer storage
-    private int fertilizerPMax = 100;
+    private int money;       // money available for purchases
+    private int manure;         // amount of manure in manure pit
+    private int manureInBarn;   // amount of manure produced on previous turn
+    private int manureInBarnMax;  // maximum amount of manure on barn floor
+    private int manureMax;   // size of manure pit
+    private int methane;        // amount of methane in gas tank
+    private int methaneMax; // size of methane tank
+    private int debt;       // total amount of debt, reduced by debtPayment
+    private int grain;        // total amount of grain on farm
+    private int grainInBarn;   // amount of feed (grain) for cows in barn
+    private int grainMax;    // maximum amount of grain
+    private int fertilizerN;   // Nitrogen fertilizer storage
+    private int fertilizerNMax;
+    private int fertilizerP;    // Phosphorous fertilizer storage
+    private int fertilizerPMax;
+    private float interest; // 3% interest rate to calculate debt payments
 
-    private float interest = 0.03f; // 3% interest rate to calculate debt payments
     final int MAX_FIELDS = 6;       // maximum number of fields
     final int OWNED_FIELDS = 2;     // owned fields at start (no rent)
     final int MAX_COWS = 6;         // maximum number of cows
@@ -114,10 +114,10 @@ public class GameData {
     /**
      * Keep state of garden.
      */
-    private int weedsAmount = 0;    // bigger reduces gardenGrowth
-    private int gardenGrowth = 5;
-    private int gardenAmount = 0;   // increased by gardenGrowth every turn in less than gardenMax;
-    private int gardenMax = 50;
+    private int weedsAmount;    // bigger reduces gardenGrowth
+    private int gardenGrowth;
+    private int gardenAmount;   // increased by gardenGrowth every turn in less than gardenMax;
+    private int gardenMax;
 
     /**
      * All cows in the barn and chickens in the coop.
@@ -141,6 +141,9 @@ public class GameData {
     private boolean tractorGasBought;
     private boolean gasGeneratorBought;
 
+    /**
+     * general booleans for game operations
+     */
     public boolean menu = true;
     public boolean audio = true;
     public boolean victory = false;
@@ -164,6 +167,38 @@ public class GameData {
      * save game file My Preferences.xml.
      */
     Preferences prefs = Gdx.app.getPreferences("GasPreferences");
+
+    /**
+     * default constructor
+     */
+    public GameData() {
+        barnVisited = false;
+        buySellVisited = false;
+        computerVisited = false;
+        farmVisited = false;
+        fieldVisited = false;
+        gardenVisited = false;
+        gasTankVisited = false;
+        homeVisited = false;
+        upgradeVisited = false;
+        victory = false;
+        fields = new ArrayList<>();
+        for (int i = 0; i < MAX_FIELDS; i++) {
+            if (i < OWNED_FIELDS) {
+                fields.add(new Field(true, false));
+            } else {
+                fields.add(new Field(false, false));
+            }
+        }
+        cowList = new ArrayList<>();
+        cowList.add(new Cow());
+        cowsBought = new ArrayList<>();
+
+        //noinspection ConstantConditions
+        actionsAvailable = actionsDone < MAX_ACTIONS;
+        loadGame();
+    }
+
     /**
      * Update variables. Use at end of turn.
      */
@@ -348,6 +383,7 @@ public class GameData {
         int toCompost = (cowList.get(0).getManure() * cowList.size()) / 10;  // 1..9
         fertilizerN += compost[2] * 5;
         fertilizerP += compost[2];
+        methane += compost[2] * 10;
         compost[2] = compost[1];
         compost[1] = compost[0];
         compost[0] = toCompost;
@@ -375,34 +411,6 @@ public class GameData {
             cow.setEatenThisTurn(false);
         }
         saveGame();
-    }
-
-    public GameData() {
-        barnVisited = false;
-        buySellVisited = false;
-        computerVisited = false;
-        farmVisited = false;
-        fieldVisited = false;
-        gardenVisited = false;
-        gasTankVisited = false;
-        homeVisited = false;
-        upgradeVisited = false;
-        victory = false;
-        fields = new ArrayList<>();
-        for (int i = 0; i < MAX_FIELDS; i++) {
-            if (i < OWNED_FIELDS) {
-                fields.add(new Field(true, false));
-            } else {
-                fields.add(new Field(false, false));
-            }
-        }
-        cowList = new ArrayList<>();
-        cowList.add(new Cow());
-        cowsBought = new ArrayList<>();
-
-        //noinspection ConstantConditions
-        actionsAvailable = actionsDone < MAX_ACTIONS;
-        loadGame();
     }
 
     public int getActionsDone() {
@@ -968,6 +976,24 @@ public class GameData {
         setUpgradeVisited(visited);
     }
 
+    public int getCowConsumption() {
+        return cowList.get(0).getFeed() * cowList.size();
+    }
+
+    public int getCowMethaneProduction() {
+        int amount = cowList.get(0).getMethane() * cowList.size();
+
+        if (gasCollectorLevel == 2) {
+            float tmpAmount = (float)amount * 1.5f;
+            amount = (int)tmpAmount;
+        }
+        return amount;
+    }
+
+    public int getCowManureProduction() {
+        return cowList.get(0).getManure() * cowList.size();
+    }
+
     public boolean isFieldPenalty() {
         return fieldPenalty;
     }
@@ -1268,15 +1294,7 @@ public class GameData {
 
     public void newGame() {
 
-        barnVisited = false;
-        buySellVisited = false;
-        computerVisited = false;
-        farmVisited = false;
-        fieldVisited = false;
-        gardenVisited = false;
-        gasTankVisited = false;
-        homeVisited = false;
-        upgradeVisited = false;
+        setAllVisited(false);
         fields = new ArrayList<>();
         for (int i = 0; i < MAX_FIELDS; i++) {
             if (i < OWNED_FIELDS) {
@@ -1301,7 +1319,7 @@ public class GameData {
         /**
          * Resource amounts and limits
          */
-        money = 2000;       // money available for purchases
+        money = 3000;       // money available for purchases
         manure = 0;         // amount of manure in manure pit
         manureInBarn = 0;   // amount of manure produced on previous turn
         manureInBarnMax = 300;  // maximum amount of manure on barn floor
@@ -1333,7 +1351,7 @@ public class GameData {
         /**
          * Expenditures per turn
          */
-        debtPayment = 200;  // debt and money reduced by this amount (plus interest rate)
+        debtPayment = 400;  // debt and money reduced by this amount (plus interest rate)
         electricity = 100;  // affected by solarPanelLevel and gasGeneratorLevel
         petrol = 20;        // affected by tractorLevel
         // also rent of fields is an expense. Calculated by number of fields != 0 in updateResources.

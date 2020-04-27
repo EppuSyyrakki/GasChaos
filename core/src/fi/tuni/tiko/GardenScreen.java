@@ -301,8 +301,7 @@ public class GardenScreen extends Location implements Screen {
 
     private void gardenTutorial() {
         userInterface.dialogFocus = true;
-        // uiText = game.myBundle.get("tutorialGarden"); TODO add text to myBundle
-        uiText = "garden tutorial";
+        uiText = game.myBundle.get("tutorialGarden") + "\n";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;

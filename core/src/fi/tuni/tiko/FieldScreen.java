@@ -511,8 +511,7 @@ public class FieldScreen extends Location implements Screen {
 
     private void fieldTutorial() {
         userInterface.dialogFocus = true;
-        // uiText = game.myBundle.get("tutorialField"); TODO add text to myBundle
-        uiText = "field tutorial";
+        uiText = game.myBundle.get("tutorialField") + game.myBundle.get("tutorialField2") + "\n";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;

@@ -139,8 +139,7 @@ public class HomeScreen extends Location implements Screen {
 
     private void homeTutorial() {
         userInterface.dialogFocus = true;
-        // uiText = game.myBundle.get("tutorialHome"); TODO add text to myBundle
-        uiText = "home tutorial";
+        uiText = game.myBundle.get("tutorialHome") + game.myBundle.get("tutorialHome2")+ "\n";
         player.setInputActive(false);
         setActionInputActive(false);
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {

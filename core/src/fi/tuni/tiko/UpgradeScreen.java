@@ -662,8 +662,7 @@ public class UpgradeScreen extends Location implements Screen {
 
     private void upgradeTutorial() {
         userInterface.dialogFocus = true;
-        // uiText = game.myBundle.get("tutorialUpgrade"); TODO add text to myBundle
-        uiText = "upgrade tutorial";
+        uiText = game.myBundle.get("tutorialUpgrade") + game.myBundle.get("tutorialUpgrade2")+ "\n";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;

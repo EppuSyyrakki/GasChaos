@@ -101,6 +101,10 @@ public class Cow {
         this.eatenThisTurn = eatenThisTurn;
     }
 
+    public int getMethane() {
+        return methane;
+    }
+
     // Do not remove, crashes the game on loadGame()
     public Cow() {
     }

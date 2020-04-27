@@ -56,52 +56,71 @@ public class GasTankScreen extends Location implements Screen {
         black.draw(batch, blackness);
         batch.end();
 
-        userInterface.render(game.gameData);
-
         if (!game.gameData.isGasTankVisited() && !userInterface.dialogFocus) {
             gasTankTutorial();
         }
 
+        userInterface.render(game.gameData);
+        checkActionRectangles();
+    }
+
+    private void checkActionRectangles() {
         if ((Gdx.input.isKeyJustPressed(Input.Keys.BACK) || getUIRec("RectangleExit"))
                 && !userInterface.dialogFocus) {
             game.setFarmScreen();
             game.farmScreen.player.match();
         }
 
-        if (false) {    // condition open emergency valve
-            game.gameData = actionOpenEmergencyValve(game.gameData);
+        if (getUIRec("RectangleResources") && !userInterface.dialogFocus) {
+            uiText = getResourceDialogText();
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        game.gameData.saveGame();
+                    }
+                    resetInputProcessor();
+                    remove();
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
         }
     }
 
-    /**
-     * Decrease data.methane by half.
-     */
-    public GameData actionOpenEmergencyValve(GameData data) {
-        data.setMethane(data.getMethane() / 2);
-        // TODO methane tank depressurized UI message
-        data.setActionsDone(data.getActionsDone() + 1);
-        return data;
-    }
-
-    /**
-     * Increase data.methaneSold by data.methane. data.methane reduction handled in GameData update.
-     */
-    public GameData actionSellGas(GameData data) {
-        if (data.getMethane() > 0) {
-            data.setMethaneSold(data.getMethane());
-            data.setActionsDone(data.getActionsDone() + 1);
-            // TODO methane sold UI message
-        } else {
-            // TODO no methane to sell UI message
-        }
-
-        return data;
+    private String getResourceDialogText() {
+        String text = game.myBundle.get("resourceView") + "\n\n";
+        text += game.myBundle.format("resourceGrain",
+                game.gameData.getGrain(),
+                game.gameData.getGrainMax()) + "\n";
+        text += game.myBundle.format("resourceCows",
+                game.gameData.getCowAmount(),
+                game.gameData.MAX_COWS) + "\n";
+        text += game.myBundle.format("resourceGrainInBarn",
+                game.gameData.getGrainInBarn()) + "\n";
+        text += game.myBundle.format("resourceCowsEat",
+                game.gameData.getCowConsumption()) + "\n";
+        text += game.myBundle.format("resourceGas",
+                game.gameData.getMethane(),
+                game.gameData.getMethaneMax()) + "\n";
+        text += game.myBundle.format("resourceGasProduction",
+                game.gameData.getCowMethaneProduction()) + "\n";
+        text += game.myBundle.format("resourceManure",
+                game.gameData.getManure(),
+                game.gameData.getManureMax()) + "\n";
+        text += game.myBundle.format("resourceManureProduction",
+                game.gameData.getCowManureProduction()) + "\n";
+        text += game.myBundle.format("resourceN",
+                game.gameData.getFertilizerN(),
+                game.gameData.getFertilizerNMax()) + "\n";
+        text += game.myBundle.format("resourceP",
+                game.gameData.getFertilizerP(),
+                game.gameData.getFertilizerPMax()) + "\n";
+        return text;
     }
 
     private void gasTankTutorial() {
         userInterface.dialogFocus = true;
-        // uiText = game.myBundle.get("tutorialGasTank"); TODO add text to myBundle
-        uiText = "gasTank tutorial";
+        uiText = game.myBundle.get("tutorialGasTank") + "\n";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;
