@@ -161,6 +161,7 @@ public class FieldScreen extends Location implements Screen {
             boolean[] actions = availableActions(fieldNumber);
             Field field = game.gameData.getFields().get(fieldNumber);
             uiText = getUIText(actions, field);
+            System.out.println("this field yield amount:" + field.getAmount());
 
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
@@ -257,6 +258,7 @@ public class FieldScreen extends Location implements Screen {
     private void drawFields() {
         for (int i = 0; i < game.gameData.MAX_FIELDS; i++) {
             int growth = game.gameData.getFields().get(i).getAmount();
+            int max = game.gameData.getFields().get(i).getMAX_GROWTH();
 
             if (i == 0 && growth > 0) {
                 batch.draw(getFieldTexture(growth), 0.75f, 7.2f, 3.5f, 2.2f);
@@ -275,7 +277,7 @@ public class FieldScreen extends Location implements Screen {
     }
 
     private Texture getFieldTexture(int growth) {
-        if (growth > 20 && growth < 50) {
+        if (growth > 10 && growth < 50) {
             return growth2;
         } else if (growth >= 51 && growth < 100) {
             return growth3;

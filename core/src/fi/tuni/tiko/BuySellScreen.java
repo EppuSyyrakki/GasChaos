@@ -152,7 +152,8 @@ public class BuySellScreen extends Location implements Screen {
                 && game.gameData.isActionsAvailable()) {    // sell manure
             userInterface.dialogFocus = true;
             final int amount = game.gameData.getManure() / 2;
-            final int price = amount * game.gameData.MONEY_FROM_MANURE;
+            final float floatPrice = (float)amount * game.gameData.MONEY_FROM_MANURE;
+            final int price = (int)floatPrice;
             uiText = game.myBundle.format("askSellManure", amount, price);
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
@@ -190,7 +191,8 @@ public class BuySellScreen extends Location implements Screen {
                 && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
             final int amount = game.gameData.getMethane() / 2;
-            final int price = amount * game.gameData.MONEY_FROM_METHANE;
+            final float floatPrice = (float)amount * game.gameData.MONEY_FROM_METHANE;
+            final int price = (int)floatPrice;
             uiText = game.myBundle.format("askSellGas", amount, price);
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {

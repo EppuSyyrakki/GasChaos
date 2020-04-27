@@ -15,9 +15,9 @@ public class GameData {
      * Prices of resources and upgrades. Money gained is per 1 unit.
      */
     final int MONEY_FROM_MILK = 4;
-    final int MONEY_FROM_MANURE = 1;
+    final float MONEY_FROM_MANURE = 0.5f;
     final int MONEY_FROM_GRAIN = 2;
-    final int MONEY_FROM_METHANE = 2;
+    final float MONEY_FROM_METHANE = 1.5f;
     final int MONEY_FROM_GARDEN = 8;
     final int MONEY_FROM_N = 2;
     final int MONEY_FROM_P = 6;
@@ -86,9 +86,9 @@ public class GameData {
     /**
      * Expenditures per turn
      */
-    private int debtPayment = 500;  // debt and money reduced by this amount (plus interest rate)
-    private int electricity = 100;  // affected by solarPanelLevel and gasGeneratorLevel
-    private int petrol = 20;        // affected by tractorLevel
+    private int debtPayment;  // debt and money reduced by this amount (plus interest rate)
+    private int electricity;  // affected by solarPanelLevel and gasGeneratorLevel
+    private int petrol;        // affected by tractorLevel
     // also rent of fields is an expense. Calculated by number of fields != 0 in updateResources.
 
     /**
@@ -1355,7 +1355,7 @@ public class GameData {
         /**
          * Expenditures per turn
          */
-        debtPayment = 400;  // debt and money reduced by this amount (plus interest rate)
+        debtPayment = 500;  // debt and money reduced by this amount (plus interest rate)
         electricity = 100;  // affected by solarPanelLevel and gasGeneratorLevel
         petrol = 20;        // affected by tractorLevel
         // also rent of fields is an expense. Calculated by number of fields != 0 in updateResources.

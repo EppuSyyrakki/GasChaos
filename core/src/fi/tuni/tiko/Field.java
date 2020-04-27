@@ -18,7 +18,7 @@ public class Field {
     }
 
     public void grow() {
-        if (amount == 1) {
+        if (amount > 0) {
             if (fertilizerN >= 50 && fertilizerP >= 7) {
                 // perfect growth N >= 50 and P >= 7
                 growth = 20;
