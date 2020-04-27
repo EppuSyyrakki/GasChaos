@@ -3,6 +3,7 @@ package fi.tuni.tiko;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,6 +22,7 @@ public class HomeScreen extends Location implements Screen {
     Player player;
     @SuppressWarnings("UnusedAssignment")
     boolean newTurn = false;
+    final Sound roosterS = Gdx.audio.newSound(Gdx.files.internal("audio/rooster.mp3"));
 
     public HomeScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
@@ -51,6 +53,7 @@ public class HomeScreen extends Location implements Screen {
         tiledMapRenderer.render();
 
         if (newTurn) {
+            roosterS.play(0.15f);
             player.setRX(4);
             player.setRY(6);
             player.matchX(player.getRX());

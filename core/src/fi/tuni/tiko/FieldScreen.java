@@ -33,7 +33,6 @@ public class FieldScreen extends Location implements Screen {
     final Texture sunset;
     final Sound river1S = Gdx.audio.newSound(Gdx.files.internal("audio/river1.mp3"));
     final Sound river2S = Gdx.audio.newSound(Gdx.files.internal("audio/river2.mp3"));
-    final Sound river3S = Gdx.audio.newSound(Gdx.files.internal("audio/river3.mp3"));
 
     public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);

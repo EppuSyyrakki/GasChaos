@@ -3,6 +3,7 @@ package fi.tuni.tiko;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+
+import static com.badlogic.gdx.math.MathUtils.random;
 
 public class FarmScreen extends Location implements Screen {
     @SuppressWarnings("CanBeFinal")
@@ -30,9 +33,12 @@ public class FarmScreen extends Location implements Screen {
     float sunY;
     final float tractorX;
     final float tractorY;
+    int fillerNoise;
 
     public FarmScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
+        forest.setVolume(0.06f);
+        noise.setVolume(0.09f);
 
         // Check what level of solar panels and set foreground accordingly.
         backgroundSolar = new Texture("ground/farmForegroundSolar.png");
@@ -206,11 +212,32 @@ public class FarmScreen extends Location implements Screen {
     public void show() {
         blackness = 1;
         fadeIn = true;
+        forest.setLooping(true);
+        forest.play();
+        noise.play();
+        noise.setOnCompletionListener(new Music.OnCompletionListener() {
+            @Override
+            public void onCompletion(Music noise) {
+                int lastFillerNoise = fillerNoise;
+                while (fillerNoise == lastFillerNoise) {
+                    fillerNoise = random.nextInt(3);
+                }
+                if (fillerNoise == 0) {
+                    bird1S.play(0.1f);
+                } else if (fillerNoise == 1) {
+                    bird2S.play(0.1f);
+                } else if (fillerNoise == 2) {
+                    chickenS.play(0.07f);
+                }
+                noise.play();
+            }
+        });
     }
 
     @Override
     public void hide() {
-
+        noise.stop();
+        forest.stop();
     }
 
     @Override

@@ -3,6 +3,7 @@ package fi.tuni.tiko;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,12 +12,17 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
+import static com.badlogic.gdx.math.MathUtils.random;
+
 public class GasTankScreen extends Location implements Screen {
     final Texture sunset;
     final Texture generatorBackground;
+    int fillerNoise;
 
     public GasTankScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
+        forest.setVolume(0.06f);
+        noise.setVolume(0.09f);
         sunset = new Texture("ground/gasSunset.png");
         generatorBackground = new Texture("ground/gasGenBackground.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
@@ -114,6 +120,26 @@ public class GasTankScreen extends Location implements Screen {
     public void show() {
         blackness = 1;
         fadeIn = true;
+        forest.setLooping(true);
+        forest.play();
+        noise.play();
+        noise.setOnCompletionListener(new Music.OnCompletionListener() {
+            @Override
+            public void onCompletion(Music noise) {
+                int lastFillerNoise = fillerNoise;
+                while (fillerNoise == lastFillerNoise) {
+                    fillerNoise = random.nextInt(3);
+                }
+                if (fillerNoise == 0) {
+                    bird1S.play(0.1f);
+                } else if (fillerNoise == 1) {
+                    bird2S.play(0.1f);
+                } else if (fillerNoise == 2) {
+                    chickenS.play(0.07f);
+                }
+                noise.play();
+            }
+        });
     }
 
     @Override
@@ -133,6 +159,8 @@ public class GasTankScreen extends Location implements Screen {
 
     @Override
     public void hide() {
+        noise.stop();
+        forest.stop();
 
     }
 

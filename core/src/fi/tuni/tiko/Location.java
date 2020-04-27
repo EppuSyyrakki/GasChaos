@@ -1,6 +1,7 @@
 package fi.tuni.tiko;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -38,6 +39,11 @@ public class Location implements InputProcessor {
     I18NBundle myBundle;
     TiledMap tiledMap;
     TiledMapRenderer tiledMapRenderer;
+    final Sound chickenS = Gdx.audio.newSound(Gdx.files.internal("audio/chicken.mp3"));
+    final Sound bird1S = Gdx.audio.newSound(Gdx.files.internal("audio/nightBird.mp3"));
+    final Sound bird2S = Gdx.audio.newSound(Gdx.files.internal("audio/blackBird.mp3"));
+    final Music noise = Gdx.audio.newMusic(Gdx.files.internal("audio/noise.mp3"));
+    final Music forest = Gdx.audio.newMusic(Gdx.files.internal("audio/forest.mp3"));
 
     public Location(GasChaosMain game) {
         this.game = game;

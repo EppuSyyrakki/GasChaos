@@ -3,6 +3,7 @@ package fi.tuni.tiko;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,9 +26,12 @@ public class GardenScreen extends Location implements Screen {
     final Texture growthF2;
     final Texture growthF3;
     String type;
+    int fillerNoise;
 
     public GardenScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
+        forest.setVolume(0.06f);
+        noise.setVolume(0.09f);
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         growthP1 = new Texture("growth/potato1.png");
         growthP2 = new Texture("growth/potato2.png");
@@ -317,6 +321,26 @@ public class GardenScreen extends Location implements Screen {
     public void show() {
         blackness = 1;
         fadeIn = true;
+        forest.setLooping(true);
+        forest.play();
+        noise.play();
+        noise.setOnCompletionListener(new Music.OnCompletionListener() {
+            @Override
+            public void onCompletion(Music noise) {
+                int lastFillerNoise = fillerNoise;
+                while (fillerNoise == lastFillerNoise) {
+                    fillerNoise = random.nextInt(3);
+                }
+                if (fillerNoise == 0) {
+                    bird1S.play(0.1f);
+                } else if (fillerNoise == 1) {
+                    bird2S.play(0.1f);
+                } else if (fillerNoise == 2) {
+                    chickenS.play(0.07f);
+                }
+                noise.play();
+            }
+        });
     }
 
     @Override
@@ -336,6 +360,8 @@ public class GardenScreen extends Location implements Screen {
 
     @Override
     public void hide() {
+        noise.stop();
+        forest.stop();
 
     }
 
