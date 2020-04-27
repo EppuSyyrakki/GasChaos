@@ -31,6 +31,7 @@ public class GameData {
     final int PRICE_OF_FIELD = 10;
     final int PRICE_OF_N = 3;
     final int PRICE_OF_P = 8;
+    final int PENALTY_PAYMENT = 100;
 
     /**
      * Tracks game progression.
@@ -38,6 +39,7 @@ public class GameData {
     private int currentTurn = 1;
     private int actionsDone = 0;
     final int MAX_ACTIONS = 3;  // actions per turn
+    final int TURNS_BETWEEN_PAYMENTS = 5;
     private boolean actionsAvailable;
     private boolean fieldPenalty = false;
 
@@ -84,7 +86,7 @@ public class GameData {
     /**
      * Expenditures per turn
      */
-    private int debtPayment = 200;  // debt and money reduced by this amount (plus interest rate)
+    private int debtPayment = 500;  // debt and money reduced by this amount (plus interest rate)
     private int electricity = 100;  // affected by solarPanelLevel and gasGeneratorLevel
     private int petrol = 20;        // affected by tractorLevel
     // also rent of fields is an expense. Calculated by number of fields != 0 in updateResources.
@@ -217,6 +219,7 @@ public class GameData {
         int moneyThisTurn = 0;
         int fieldsRentThisTurn = 0;
         int debtPaymentThisTurn = 0;
+        int penaltyPaymentThisTurn = 0;
         int petrolThisTurn = petrol;
         int electricityThisTurn = electricity;                      // default total 100
 
@@ -259,7 +262,7 @@ public class GameData {
             }
         }
 
-        if (currentTurn % 2 == 0) { // debt is paid on every other turn.
+        if (currentTurn % TURNS_BETWEEN_PAYMENTS == 0) { // debt is paid on every other turn.
             if (debt < debtPayment) {
                 debtPayment = debt;
             } else if (debt <= 0) {
@@ -269,6 +272,10 @@ public class GameData {
             float floatPayment = (float)debt * interest + debtPayment;
             debt = debt - debtPayment;
             debtPaymentThisTurn = (int)floatPayment;
+
+            if (fieldPenalty) {
+                penaltyPaymentThisTurn = -PENALTY_PAYMENT;
+            }
         }
 
         moneyThisTurn += grainSold * MONEY_FROM_GRAIN;
@@ -279,6 +286,7 @@ public class GameData {
         moneyThisTurn += NSold * MONEY_FROM_N;
         moneyThisTurn += PSold * MONEY_FROM_P;
         moneyThisTurn -= debtPaymentThisTurn;
+        moneyThisTurn -= penaltyPaymentThisTurn;
         moneyThisTurn -= electricityThisTurn;
         moneyThisTurn -= petrolThisTurn;
         moneyThisTurn -= fieldsRentThisTurn;
@@ -1331,7 +1339,7 @@ public class GameData {
         fertilizerP = 6;    // Phosphorous fertilizer storage
         fertilizerPMax = 100;
 
-        interest = 0.03f; // 3% interest rate to calculate debt payments
+        interest = 0.02f; // 3% interest rate to calculate debt payments
         victory = false;
 
         /**

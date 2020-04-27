@@ -86,13 +86,11 @@ public class GasTankScreen extends Location implements Screen {
         }
 
         if (getUIRec("RectangleResources") && !userInterface.dialogFocus) {
+            userInterface.dialogFocus = true;
             uiText = getResourceDialogText();
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
-                    boolean result = (boolean) object;
-                    if (result) {
-                        game.gameData.saveGame();
-                    }
+                    game.gameData.saveGame();
                     resetInputProcessor();
                     remove();
                 }
@@ -140,7 +138,6 @@ public class GasTankScreen extends Location implements Screen {
                 boolean result = (boolean) object;
                 if (result) {
                     game.gameData.setGasTankVisited(true);
-                    userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();
                 }
