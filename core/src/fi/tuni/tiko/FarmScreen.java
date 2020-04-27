@@ -199,13 +199,11 @@ public class FarmScreen extends Location implements Screen {
             protected void result(Object object) {
                 boolean result = (boolean) object;
                 if (result) {
-                    userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();
                     farmTutorial2();
                 } else {
                     game.gameData.setAllVisited(true);
-                    userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();
                 }
@@ -222,13 +220,11 @@ public class FarmScreen extends Location implements Screen {
             protected void result(Object object) {
                 boolean result = (boolean) object;
                 if (result) {
-                    userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();
                     farmTutorial3();
                 } else {
                     game.gameData.setAllVisited(true);
-                    userInterface.dialogFocus = false;
                     resetInputProcessor();
                     remove();
                 }
@@ -249,7 +245,6 @@ public class FarmScreen extends Location implements Screen {
                 } else {
                     game.gameData.setAllVisited(true);
                 }
-                userInterface.dialogFocus = false;
                 resetInputProcessor();
                 remove();
             }

@@ -337,7 +337,7 @@ public class BarnScreen extends Location implements Screen {
                 };
                 userInterface.createDialog(d, uiText, false);
             } else if (game.gameData.getGrain() <= addAmount) {
-                // cows fed but feed storage empty
+                // cows partially fed but feed storage empty
                 addAmount = game.gameData.getGrain();
                 game.gameData.setGrainInBarn(game.gameData.getGrainInBarn() + addAmount);
                 game.gameData.setGrain(0);
@@ -515,10 +515,11 @@ public class BarnScreen extends Location implements Screen {
                 boolean result = (boolean) object;
                 if (result) {
                     game.gameData.setBarnVisited(true);
-                    userInterface.dialogFocus = false;
-                    resetInputProcessor();
-                    remove();
+                } else {
+                    game.gameData.setAllVisited(true);
                 }
+                resetInputProcessor();
+                remove();
             }
         };
         userInterface.showTutorial(d, uiText);

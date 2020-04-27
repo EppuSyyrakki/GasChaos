@@ -528,10 +528,11 @@ public class FieldScreen extends Location implements Screen {
                 boolean result = (boolean) object;
                 if (result) {
                     game.gameData.setFieldVisited(true);
-                    userInterface.dialogFocus = false;
-                    resetInputProcessor();
-                    remove();
+                } else {
+                    game.gameData.setAllVisited(true);
                 }
+                resetInputProcessor();
+                remove();
             }
         };
         userInterface.showTutorial(d, uiText);

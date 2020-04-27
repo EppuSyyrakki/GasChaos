@@ -99,8 +99,19 @@ public class ComputerScreen extends Location implements Screen {
                 + (game.gameData.getPSold() * game.gameData.MONEY_FROM_P);
         int totalIncome = milkMoney + grainMoney + methaneMoney + manureMoney + gardenMoney
                 + fertilizerMoney;
-        int totalExpenses = 0 - calculateDebtPayment() - calculateElectricity()
-                - calculateFieldRent() - calculatePetrol();
+        int fieldPenalty = 0;
+        int debtPayment = 0;
+        int interest = 0;
+        if (game.gameData.getCurrentTurn() % game.gameData.TURNS_BETWEEN_PAYMENTS == 0) {
+            if (game.gameData.isFieldPenalty()) {
+                fieldPenalty = game.gameData.PENALTY_PAYMENT;
+            }
+            debtPayment = game.gameData.getDebtPayment();
+            interest = calculateDebtInterest();
+        }
+
+        int totalExpenses = calculateDebtInterest() + calculateElectricity()
+                + calculateFieldRent() + calculatePetrol() + interest + debtPayment;
         String text = game.myBundle.format("balance", game.gameData.getMoney())  + "\n";
         text += game.myBundle.format("debt", game.gameData.getDebt()) + "\n\n";
         text += game.myBundle.get("income") + "\n";
@@ -111,24 +122,31 @@ public class ComputerScreen extends Location implements Screen {
         text += game.myBundle.format("gardenSold", gardenMoney) + "\n";
         text += game.myBundle.format("fertilizersSold", fertilizerMoney) + "\n\n";
         text += game.myBundle.get("expenses") + "\n";
-        text += game.myBundle.format("debtPayment", calculateDebtPayment()) + "\n";
+        text += game.myBundle.format("debtPayment", debtPayment) + "\n";
+        text += game.myBundle.format("interest", interest) + "\n";
         text += game.myBundle.format("electricity", calculateElectricity()) + "\n";
         text += game.myBundle.format("fieldRent", calculateFieldRent()) + "\n";
         text += game.myBundle.format("petrol", calculatePetrol()) + "\n\n";
+
+        if (fieldPenalty != 0) {
+            text += game.myBundle.format("fieldPenalty", fieldPenalty) + "\n";
+        }
+
         text += game.myBundle.format("incomeProject",
-                (totalIncome + totalExpenses)) + "\n";
+                (totalIncome - totalExpenses)) + "\n";
         text += game.myBundle.format("balanceProject",
-                (game.gameData.getMoney() + (totalIncome + totalExpenses))) + "\n";
+                (game.gameData.getMoney() + (totalIncome - totalExpenses))) + "\n";
         return text;
     }
 
     private int moneyFromMilk() {
         int milkSold = 0;
-        int milkFromCow;
         ArrayList<Cow> tmpCowList = game.gameData.getCowList();
+
         for (Cow cow : tmpCowList) {
             if (cow.isEatenThisTurn()) {  // if cow not eaten, no milk
-                milkFromCow = cow.getMilk(game.gameData.getMilkingMachineLevel());
+                int milkFromCow = cow.getMilk(game.gameData.getMilkingMachineLevel());
+
                 if (game.gameData.getManureInBarn() > game.gameData.MANURE_DANGER) {
                     milkFromCow -= (milkFromCow / 3);
                 }
@@ -138,17 +156,9 @@ public class ComputerScreen extends Location implements Screen {
         return milkSold * game.gameData.MONEY_FROM_MILK;
     }
 
-    private int calculateDebtPayment() {
-        int debtPaymentThisTurn = 0;
-        if (game.gameData.getCurrentTurn() % 2 == 0) { // debt is paid on every other turn.
-            float floatPayment = (float)game.gameData.getDebt() * game.gameData.getInterest()
-                    + game.gameData.getDebtPayment();
-            debtPaymentThisTurn = (int)floatPayment;
-        }
-        if (debtPaymentThisTurn > game.gameData.getDebt()) {
-            debtPaymentThisTurn = game.gameData.getDebt();
-        }
-        return debtPaymentThisTurn;
+    private int calculateDebtInterest() {
+        float floatInterest = (float)game.gameData.getDebt() * game.gameData.getInterest();;
+        return (int)floatInterest;
     }
 
     private int calculateElectricity() {
@@ -198,9 +208,11 @@ public class ComputerScreen extends Location implements Screen {
                 boolean result = (boolean) object;
                 if (result) {
                     game.gameData.setComputerVisited(true);
-                    resetInputProcessor();
-                    remove();
+                } else {
+                    game.gameData.setAllVisited(true);
                 }
+                resetInputProcessor();
+                remove();
             }
         };
         userInterface.showTutorial(d, uiText);

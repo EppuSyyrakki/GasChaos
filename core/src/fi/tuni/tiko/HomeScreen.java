@@ -154,11 +154,12 @@ public class HomeScreen extends Location implements Screen {
                 boolean result = (boolean) object;
                 if (result) {
                     game.gameData.setHomeVisited(true);
-                    userInterface.dialogFocus = false;
-                    resetInputProcessor();
-                    setActionInputActive(true);
-                    remove();
+                } else {
+                    game.gameData.setAllVisited(true);
                 }
+                resetInputProcessor();
+                setActionInputActive(true);
+                remove();
             }
         };
         userInterface.showTutorial(d, uiText);

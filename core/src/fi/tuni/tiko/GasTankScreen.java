@@ -138,9 +138,11 @@ public class GasTankScreen extends Location implements Screen {
                 boolean result = (boolean) object;
                 if (result) {
                     game.gameData.setGasTankVisited(true);
-                    resetInputProcessor();
-                    remove();
+                } else {
+                    game.gameData.setAllVisited(true);
                 }
+                resetInputProcessor();
+                remove();
             }
         };
         userInterface.showTutorial(d, uiText);

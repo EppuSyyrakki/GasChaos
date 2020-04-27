@@ -713,10 +713,11 @@ public class BuySellScreen extends Location implements Screen {
                 boolean result = (boolean) object;
                 if (result) {
                     game.gameData.setBuySellVisited(true);
-                    userInterface.dialogFocus = false;
-                    resetInputProcessor();
-                    remove();
+                } else {
+                    game.gameData.setAllVisited(true);
                 }
+                resetInputProcessor();
+                remove();
             }
         };
         userInterface.showTutorial(d, uiText);
