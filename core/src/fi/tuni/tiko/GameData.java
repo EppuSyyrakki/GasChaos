@@ -1111,14 +1111,12 @@ public class GameData {
 
         String jsonField = json.toJson(fields);
         prefs.putString("fields", jsonField);
-        //System.out.println("json: " + jsonField);
+
         String jsonCowList = json.toJson(cowList);
         prefs.putString("cowList", jsonCowList);
-        //System.out.println("json: " + jsonCowList);
 
         String jsonCowsBought = json.toJson(cowsBought);
         prefs.putString("cowsBought", jsonCowsBought);
-        //System.out.println("json: " + jsonCowList);
 
         prefs.putInteger("fieldRent0", fieldsRented[0]);
         prefs.putInteger("fieldRent1", fieldsRented[1]);
@@ -1126,7 +1124,6 @@ public class GameData {
         prefs.putInteger("fieldRent3", fieldsRented[3]);
         //String jsonFieldsRented = json.toJson(fieldsRented);
         //prefs.putString("fieldsRented", jsonFieldsRented);
-        //System.out.println("json: " + jsonFieldsRented);
 
         /**
          * Array to represent manure slowly composting into fertilizerN and fertilizerP. Change is done
@@ -1151,7 +1148,6 @@ public class GameData {
 
         prefs.flush();
         //int i = prefs.getInteger("currentTurn");
-        //System.out.println(i);
 
         // bulk update your preferences
 
@@ -1248,22 +1244,22 @@ public class GameData {
          * Field ArrayList load
          */
         String fieldString = prefs.getString("fields");
-        //System.out.println("fieldString: " + fieldString);
+
         fields = json.fromJson(ArrayList.class, fieldString);
 
         //int i = prefs.getInteger("currentTurn");
-        //System.out.println(i);
+
 
         /**
          * Cow ArrayList load
          */
 
         String cowString = prefs.getString("cowList");
-        //System.out.println("cowString: " + cowString);
+
         cowList = json.fromJson(ArrayList.class, cowString);
 
         String cowsBoughtString = prefs.getString("cowsBought");
-        //System.out.println("cowString: " + cowString);
+
         cowsBought = json.fromJson(ArrayList.class, cowsBoughtString);
 
         /**
@@ -1276,7 +1272,7 @@ public class GameData {
         fieldsRented[3] = prefs.getInteger("fieldRent3", fieldsRented[3]);
 
         //String fieldsRentedString = prefs.getString("fieldsRented");
-        //System.out.println("fieldsRentedString: " + fieldsRentedString);
+
 
         /**
          * Array to represent manure slowly composting into fertilizerN and fertilizerP. Change is done
