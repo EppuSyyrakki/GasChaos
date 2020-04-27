@@ -7,7 +7,9 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -44,6 +46,21 @@ public class BarnScreen extends Location implements Screen {
     int timerReset = 10;
     int cowSound = random.nextInt(3);
     float cowVolume = 0.1f;
+    int cowRows = 1;
+    int cowCols = 2;
+    float stateTime = 1.0f;
+    Animation<TextureRegion> C1Animation;
+    Animation<TextureRegion> C2Animation;
+    Animation<TextureRegion> C3Animation;
+    Animation<TextureRegion> CB1Animation;
+    Animation<TextureRegion> CB2Animation;
+    Animation<TextureRegion> CB3Animation;
+    TextureRegion C1CurrentFrame;
+    TextureRegion C2CurrentFrame;
+    TextureRegion C3CurrentFrame;
+    TextureRegion CB1CurrentFrame;
+    TextureRegion CB2CurrentFrame;
+    TextureRegion CB3CurrentFrame;
 
     public BarnScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
@@ -69,10 +86,59 @@ public class BarnScreen extends Location implements Screen {
             hayX[i] = (float)Math.random() * 0.5f + 3.8f;
             hayY[i] = 6.4f - ((float)i * 0.8f) + (float)Math.random();
         }
+
+        // Create texture regions for cows.
+        TextureRegion[][] tmpC1 = TextureRegion.split(
+                cow1,
+                cow1.getWidth() / cowCols,
+                cow1.getHeight() / cowRows);
+        TextureRegion[][] tmpC2 = TextureRegion.split(
+                cow2,
+                cow2.getWidth() / cowCols,
+                cow2.getHeight() / cowRows);
+        TextureRegion[][] tmpC3 = TextureRegion.split(
+                cow3,
+                cow3.getWidth() / cowCols,
+                cow3.getHeight() / cowRows);
+        TextureRegion[][] tmpCB1 = TextureRegion.split(
+                cowBrown1,
+                cowBrown1.getWidth() / cowCols,
+                cowBrown1.getHeight() / cowRows);
+        TextureRegion[][] tmpCB2 = TextureRegion.split(
+                cowBrown2,
+                cowBrown2.getWidth() / cowCols,
+                cowBrown2.getHeight() / cowRows);
+        TextureRegion[][] tmpCB3 = TextureRegion.split(
+                cowBrown3,
+                cowBrown3.getWidth() / cowCols,
+                cowBrown3.getHeight() / cowRows);
+
+        TextureRegion[] C1 = transformTo1D(tmpC1, cowRows, cowCols);
+        TextureRegion[] C2 = transformTo1D(tmpC2, cowRows, cowCols);
+        TextureRegion[] C3 = transformTo1D(tmpC3, cowRows, cowCols);
+        TextureRegion[] CB1 = transformTo1D(tmpCB1, cowRows, cowCols);
+        TextureRegion[] CB2 = transformTo1D(tmpCB2, cowRows, cowCols);
+        TextureRegion[] CB3 = transformTo1D(tmpCB3, cowRows, cowCols);
+
+        C1Animation = new Animation(16 / 60f, (Object[]) C1);
+        C2Animation = new Animation(25 / 60f, (Object[]) C2);
+        C3Animation = new Animation(20 / 60f, (Object[]) C3);
+        CB1Animation = new Animation(22 / 60f, (Object[]) CB1);
+        CB2Animation = new Animation(31 / 60f, (Object[]) CB2);
+        CB3Animation = new Animation(18 / 60f, (Object[]) CB3);
     }
 
     @Override
     public void render(float delta) {
+
+        stateTime += Gdx.graphics.getDeltaTime();
+        C1CurrentFrame = C1Animation.getKeyFrame(stateTime, true);
+        C2CurrentFrame = C2Animation.getKeyFrame(stateTime, true);
+        C3CurrentFrame = C3Animation.getKeyFrame(stateTime, true);
+        CB1CurrentFrame = CB1Animation.getKeyFrame(stateTime, true);
+        CB2CurrentFrame = CB2Animation.getKeyFrame(stateTime, true);
+        CB3CurrentFrame = CB3Animation.getKeyFrame(stateTime, true);
+
         batch.setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -131,6 +197,19 @@ public class BarnScreen extends Location implements Screen {
 
         userInterface.render(game.gameData);
         checkActionRectangles();
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private TextureRegion[] transformTo1D(TextureRegion[][] tmp, int rows, int cols) {
+        TextureRegion [] walkFrames
+                = new TextureRegion[cols * rows];
+        int index = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                walkFrames[index++] = tmp[i][j];
+            }
+        }
+        return walkFrames;
     }
 
     public void checkActionRectangles() {
@@ -498,44 +577,47 @@ public class BarnScreen extends Location implements Screen {
         return player.getRectangle().overlaps(r) && action;
     }
 
-    public void cowRender(Texture cow, Rectangle spawn) {
-        spawn.width = cow.getWidth()/cowSize;
-        spawn.height = cow.getHeight()/cowSize;
+    public void cowRender(TextureRegion cow, Rectangle spawn) {
+        spawn.width = cow1.getWidth()/cowSize / cowCols;
+        spawn.height = cow1.getHeight()/cowSize / cowRows;
         batch.draw(cow, spawn.x, spawn.y, spawn.width, spawn.height);
 
     }
 
     public void cowSpawn(int cowCount) {
+        //Can be uncommented to render every cow.
+        //cowCount = 6;
         spawn = new Rectangle(0.0f, 0.0f, cowSize, cowSize);
         spawn.x = 2.2f;
         spawn.y = 8.1f;
         if (cowCount == 6) {
-            cowRender(cow1, spawn);
+            cowRender(C1CurrentFrame, spawn);
+
             spawn.y = spawn.y -1.5f;
             cowCount--;
         }
         if (cowCount == 5) {
-            cowRender(cow2, spawn);
+            cowRender(C2CurrentFrame, spawn);
             spawn.y = spawn.y -1.5f;
             cowCount--;
         }
         if (cowCount == 4) {
-            cowRender(cow3, spawn);
+            cowRender(C3CurrentFrame, spawn);
             spawn.y = spawn.y -1.5f;
             cowCount--;
         }
         if (cowCount == 3) {
-            cowRender(cowBrown1, spawn);
+            cowRender(CB1CurrentFrame, spawn);
             spawn.y = spawn.y -1.5f;
             cowCount--;
         }
         if (cowCount == 2) {
-            cowRender(cowBrown2, spawn);
+            cowRender(CB2CurrentFrame, spawn);
             spawn.y = spawn.y -1.5f;
             cowCount--;
         }
         if (cowCount == 1) {
-            cowRender(cowBrown3, spawn);
+            cowRender(CB3CurrentFrame, spawn);
             spawn.y = spawn.y -1.5f;
             //noinspection UnusedAssignment
             cowCount--;
