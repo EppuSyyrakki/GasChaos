@@ -145,7 +145,6 @@ public class MenuScreen extends ApplicationAdapter implements Screen {
                     game.gameData.toggleAudio();
                     game.gameData.audio = toggleAudioImg.isChecked();
                     toggleAudioImg.toggle();
-                    System.out.println("audio: " + game.gameData.audio);
                 }
             }
         });

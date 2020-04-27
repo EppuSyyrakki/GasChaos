@@ -374,7 +374,6 @@ public class Player extends Sprite{
             Rectangle rectangle = scaleRect(tmp, 1 / 120f);
 
             if (getRectangle().overlaps(rectangle)) {
-                System.out.println("collision detected");
             }
         }
 
