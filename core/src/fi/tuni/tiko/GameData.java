@@ -1343,7 +1343,7 @@ public class GameData {
         fertilizerP = 6;    // Phosphorous fertilizer storage
         fertilizerPMax = 100;
 
-        interest = 0.03f; // 3% interest rate to calculate debt payments
+        interest = 0.02f; // 3% interest rate to calculate debt payments
         victory = false;
 
         /**
