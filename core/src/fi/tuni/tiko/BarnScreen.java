@@ -3,6 +3,7 @@ package fi.tuni.tiko;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,6 +15,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 import java.util.ArrayList;
+
+import static com.badlogic.gdx.math.MathUtils.random;
 
 @SuppressWarnings("CanBeFinal")
 public class BarnScreen extends Location implements Screen {
@@ -28,12 +31,18 @@ public class BarnScreen extends Location implements Screen {
     final Texture hay1 = new Texture("props/hay1.png");
     final Texture hay2 = new Texture("props/hay2.png");
     final Texture manure = new Texture("props/manure.png");
+    final Sound cow1S = Gdx.audio.newSound(Gdx.files.internal("audio/cow1.mp3"));
+    final Sound cow2S = Gdx.audio.newSound(Gdx.files.internal("audio/cow2.mp3"));
+    final Sound cow3S = Gdx.audio.newSound(Gdx.files.internal("audio/cow3.mp3"));
     Rectangle spawn;
     final float cowSize = 150f;
     float[] manureX = new float[11];
     float[] manureY = new float[11];
     float[] hayX = new float[11];
     float[] hayY = new float[11];
+    float timer = 0;
+    int timerReset = 10;
+    int cowSound = random.nextInt(3);
 
     public BarnScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
@@ -68,6 +77,24 @@ public class BarnScreen extends Location implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
+
+
+        timer = timer + Gdx.graphics.getDeltaTime();
+        if (timer > timerReset) {
+            timer = 0;
+            if (cowSound == 0) {
+                cow1S.play(0.1f);
+            } else if (cowSound == 1) {
+                cow2S.play(0.1f);
+            } else if (cowSound == 2) {
+                cow3S.play(0.1f);
+            }
+            timerReset = random.nextInt(7) + 10;
+            int lastCowSound = cowSound;
+            while (lastCowSound == cowSound) {
+                cowSound = random.nextInt(3);
+            }
+        }
 
         if (fadeIn) {
             fadeFromBlack();
@@ -453,6 +480,9 @@ public class BarnScreen extends Location implements Screen {
         tiledMap.dispose();
         batch.dispose();
         player.dispose();
+        cow1S.dispose();
+        cow2S.dispose();
+        cow3S.dispose();
     }
 
     @SuppressWarnings("RedundantCast")

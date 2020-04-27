@@ -3,6 +3,7 @@ package fi.tuni.tiko;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,6 +31,9 @@ public class FieldScreen extends Location implements Screen {
     final float cloudSpeed;
     final float riverSpeed;
     final Texture sunset;
+    final Sound river1S = Gdx.audio.newSound(Gdx.files.internal("audio/river1.mp3"));
+    final Sound river2S = Gdx.audio.newSound(Gdx.files.internal("audio/river2.mp3"));
+    final Sound river3S = Gdx.audio.newSound(Gdx.files.internal("audio/river3.mp3"));
 
     public FieldScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
@@ -528,6 +532,8 @@ public class FieldScreen extends Location implements Screen {
     public void show() {
         blackness = 1;
         fadeIn = true;
+        river1S.loop(0.085f);
+        river2S.loop(0.025f);
     }
 
     @Override
@@ -547,7 +553,8 @@ public class FieldScreen extends Location implements Screen {
 
     @Override
     public void hide() {
-
+        river1S.stop();
+        river2S.stop();
     }
 
     @Override
