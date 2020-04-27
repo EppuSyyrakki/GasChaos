@@ -157,7 +157,7 @@ public class FarmScreen extends Location implements Screen {
 
     private void farmTutorial1() {
         userInterface.dialogFocus = true;
-        uiText = game.myBundle.get("G1");
+        uiText = game.myBundle.get("G1") + "\n";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;
@@ -180,7 +180,7 @@ public class FarmScreen extends Location implements Screen {
 
     private void farmTutorial2() {
         userInterface.dialogFocus = true;
-        uiText = game.myBundle.get("G2");
+        uiText = game.myBundle.get("G2") + "\n";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;
@@ -203,7 +203,7 @@ public class FarmScreen extends Location implements Screen {
 
     private void farmTutorial3() {
         userInterface.dialogFocus = true;
-        uiText = game.myBundle.get("G3");
+        uiText = game.myBundle.get("tutorialFarm") + game.myBundle.get("tutorialFarm2") + "\n";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;

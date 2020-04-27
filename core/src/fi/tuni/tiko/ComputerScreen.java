@@ -189,8 +189,7 @@ public class ComputerScreen extends Location implements Screen {
 
     private void computerTutorial() {
         userInterface.dialogFocus = true;
-        // uiText = game.myBundle.get("tutorialComputer"); TODO add text to myBundle
-        uiText = "computer tutorial";
+        uiText = game.myBundle.get("tutorialComputer") + "\n";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;

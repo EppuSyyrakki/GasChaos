@@ -438,7 +438,7 @@ public class BuySellScreen extends Location implements Screen {
             };
             userInterface.createDialog(d, uiText, false);
         } else {
-            game.gameData.setFertilizerN(game.gameData.getFertilizerN() + amount);
+            game.gameData.setnBought(game.gameData.getnBought() + amount);
             game.gameData.setMoney(game.gameData.getMoney() - price);
             game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
             // N bought UI message
@@ -491,7 +491,7 @@ public class BuySellScreen extends Location implements Screen {
             };
             userInterface.createDialog(d, uiText, false);
         } else {
-            game.gameData.setFertilizerP(game.gameData.getFertilizerP() + amount);
+            game.gameData.setpBought(game.gameData.getpBought() + amount);
             game.gameData.setMoney(game.gameData.getMoney() - price);
             game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
             // N bought UI message
@@ -703,8 +703,8 @@ public class BuySellScreen extends Location implements Screen {
 
     private void buySellTutorial() {
         userInterface.dialogFocus = true;
-        // uiText = game.myBundle.get("tutorialBuySell"); TODO add text to myBundle
-        uiText = "buy/sell tutorial";
+        uiText = game.myBundle.get("tutorialBuySell")
+                + game.myBundle.get("tutorialBuySell2") + "\n";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;

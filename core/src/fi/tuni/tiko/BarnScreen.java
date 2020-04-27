@@ -430,8 +430,7 @@ public class BarnScreen extends Location implements Screen {
 
     private void barnTutorial() {
         userInterface.dialogFocus = true;
-        // uiText = game.myBundle.get("tutorialBarn"); TODO add text to myBundle
-        uiText = "barn tutorial";
+        uiText = game.myBundle.get("tutorialBarn") + "\n";
         Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
             protected void result(Object object) {
                 boolean result = (boolean) object;
