@@ -102,27 +102,24 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
 
     @Override
     public void receiveHighScore(List<HighScoreEntry> highScores) {
-        Gdx.app.log("HighScore", "Received new high scores successfully");
+        //Gdx.app.log("HighScore", "Received new high scores successfully");
         updateScores(highScores);
     }
 
     @Override
     public void receiveSendReply(Net.HttpResponse httpResponse) {
-        Gdx.app.log("HighScore", "Received response from server: "
-                + httpResponse.getStatus().getStatusCode());
+        //Gdx.app.log("HighScore", "Received response from server: " + httpResponse.getStatus().getStatusCode());
         HighScoreServer.fetchHighScores(this);
     }
 
     @Override
     public void failedToRetrieveHighScores(Throwable t) {
-        Gdx.app.error("HighScore",
-                "Something went wrong while getting high scores", t);
+        //Gdx.app.error("HighScore", "Something went wrong while getting high scores", t);
     }
 
     @Override
     public void failedToSendHighScore(Throwable t) {
-        Gdx.app.error("HighScore",
-                "Something went wrong while sending a high scoreField entry", t);
+        //Gdx.app.error("HighScore", "Something went wrong while sending a high scoreField entry", t);
     }
 
     private void otherSetup() {
@@ -190,7 +187,7 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         content.add(new Label("", labelStyle)).colspan(2);
         content.row();
         content.add(new Label(game.myBundle.format("paidDebt",
-                game.gameData.getCurrentTurn()), labelStyle)).colspan(2);
+                scoreCount()), labelStyle)).colspan(2);
         content.row();
         content.add(new Label((game.myBundle.format("submitScoreText")), labelStyle)).colspan(2);
         content.row();
@@ -227,9 +224,43 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         HighScoreServer.fetchHighScores(this);
     }
 
+    private int scoreCount() {
+        int score = game.gameData.getMoney();
+
+        // Add value of bought upgrades to score.
+        if (game.gameData.getTractorLevel() == 2) {
+            score = score + game.gameData.PRICE_OF_TRACTOR;
+        } else if (game.gameData.getTractorLevel() == 3) {
+            score = score + game.gameData.PRICE_OF_TRACTOR * 2;
+        }
+
+        if (game.gameData.getGasGeneratorLevel() == 1) {
+            score = score + game.gameData.PRICE_OF_GENERATOR;
+        }
+
+        if (game.gameData.getMilkingMachineLevel() == 2) {
+            score = score + game.gameData.PRICE_OF_MILKING;
+        }
+
+        if (game.gameData.getSolarPanelLevel() == 1) {
+            score = score + game.gameData.PRICE_OF_SOLAR;
+        } else if (game.gameData.getSolarPanelLevel() == 2) {
+            score = score + game.gameData.PRICE_OF_SOLAR * 2;
+        }
+
+        if (game.gameData.getGasCollectorLevel() == 2) {
+            score = score + game.gameData.PRICE_OF_COLLECTOR;
+        }
+
+        score = score + (game.gameData.PRICE_OF_COW * game.gameData.getCowAmount());
+
+        return score;
+    }
+
     private void createNewScore() {
         String name = nameField.getText();
-        int score = game.gameData.getCurrentTurn();
+        int score = scoreCount();
+
         HighScoreEntry scoreEntry = new HighScoreEntry(name, score);
         HighScoreServer.sendNewHighScore(scoreEntry, this);
     }

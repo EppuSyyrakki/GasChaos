@@ -587,7 +587,7 @@ public class BarnScreen extends Location implements Screen {
 
     public void cowSpawn(int cowCount) {
         //Can be uncommented to render every cow.
-        cowCount = 6;
+        //cowCount = 6;
         spawn = new Rectangle(0.0f, 0.0f, cowSize, cowSize);
         spawn.x = 2.2f;
         spawn.y = 8.1f;
