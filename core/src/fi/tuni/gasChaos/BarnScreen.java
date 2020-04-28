@@ -312,18 +312,15 @@ public class BarnScreen extends Location implements Screen {
     public void actionFeedCows() {
         ArrayList<Cow> cowList = game.gameData.getCowList();
         int addAmount = cowList.size() * cowList.get(0).getFeed() * 2;  // enough food for 2 days
-        int maxAmount = cowList.size() * cowList.get(0).getFeed() * 3;  // max amount of food
+        int maxAmount = addAmount * game.gameData.MAX_COWS;  // max amount of food
 
-        if (game.gameData.getGrainInBarn() > maxAmount) {
+        if (game.gameData.getGrainInBarn() >= maxAmount) {
             // Action blocked, enough food already UI message
             uiText = game.myBundle.get("feedCowsFull");
             Dialog d = new Dialog(myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
-                    boolean result = (boolean)object;
-                    if (result) {
-                        resetInputProcessor();
-                        remove();
-                    }
+                    resetInputProcessor();
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, false);
@@ -333,11 +330,9 @@ public class BarnScreen extends Location implements Screen {
                 uiText = game.myBundle.get("feedCowsNoFeed");
                 Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                     protected void result(Object object) {
-                        boolean result = (boolean)object;
-                        if (result) {
-                            resetInputProcessor();
-                            remove();
-                        }
+                        resetInputProcessor();
+                        remove();
+
                     }
                 };
                 userInterface.createDialog(d, uiText, false);

@@ -28,7 +28,7 @@ public class Cow {
      * feed minus what this cow ate.
      */
     public int eat(int totalFeed) {
-        if (totalFeed > feed) {
+        if (totalFeed >= feed) {
             int newFeed = totalFeed - feed;
             eatenLastTurn = true;
             return newFeed;

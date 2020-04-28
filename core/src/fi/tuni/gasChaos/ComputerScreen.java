@@ -73,6 +73,7 @@ public class ComputerScreen extends Location implements Screen {
 
         if (getUIRec("RectangleFinances") && !userInterface.dialogFocus) {
             userInterface.dialogFocus = true;
+            setActionInputActive(false);
             uiText = getBankDialogText();
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
@@ -258,6 +259,7 @@ public class ComputerScreen extends Location implements Screen {
 
     private void resetInputProcessor() {
         userInterface.dialogFocus = false;
+        setActionInputActive(true);
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }

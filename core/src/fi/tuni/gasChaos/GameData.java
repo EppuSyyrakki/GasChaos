@@ -14,7 +14,7 @@ public class GameData {
     /**
      * Prices of resources and upgrades. Money gained is per 1 unit.
      */
-    final int MONEY_FROM_MILK = 3;
+    final int MONEY_FROM_MILK = 2;
     final float MONEY_FROM_MANURE = 0.5f;
     final int MONEY_FROM_GRAIN = 2;
     final float MONEY_FROM_METHANE = 0.75f;
@@ -222,6 +222,7 @@ public class GameData {
         int penaltyPaymentThisTurn = 0;
         int petrolThisTurn = petrol;
         int electricityThisTurn = electricity;                      // default total 100
+        ArrayList<Cow> tmpCowList = getCowList();
 
         if (solarPanelLevel == 1) {
             electricityThisTurn = electricity - (electricity / 3);  // 67
@@ -238,7 +239,7 @@ public class GameData {
             petrolThisTurn = 0;
         }
 
-        for (Cow cow : cowList) {
+        for (Cow cow : tmpCowList) {
             grainInBarn = cow.eat(grainInBarn);
 
             if (cow.isEatenLastTurn()) {  // if cow not eaten, no milk, manure and methane produced
@@ -251,6 +252,7 @@ public class GameData {
                 milkSold += milkFromCow;
             }
         }
+        setCowList(tmpCowList);
 
         if (manureInBarn > manureInBarnMax) {
             manureInBarn = manureInBarnMax;
@@ -1385,6 +1387,18 @@ public class GameData {
         currentTurn = 1;
         actionsDone = 0;
         fieldPenalty = false;
+
+        /**
+         * Bought and sold stuff
+         */
+        grainSold = 0;
+        manureSold = 0;
+        gardenSold = 0;
+        methaneSold = 0;
+        cowsBought.clear();
+        nBought = 0;
+        pBought = 0;
+        grainBought = 0;
 
         /**
          * Resource amounts and limits

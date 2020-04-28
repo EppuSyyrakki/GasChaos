@@ -340,7 +340,7 @@ public class HomeScreen extends Location implements Screen {
             text += "+ " + game.myBundle.get("outOfMoney") + "\n";
         }
 
-        if (game.gameData.getGrainInBarn() <= 0) {
+        if (game.gameData.getGrainInBarn() <= game.gameData.getCowConsumption()) {
             text += "+ " + game.myBundle.get("cowsStarving") + "\n";
         }
 
