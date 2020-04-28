@@ -27,7 +27,7 @@ public class GameData {
     final int PRICE_OF_COLLECTOR = 1400;
     final int PRICE_OF_MILKING = 900;
     final int PRICE_OF_TRACTOR = 1200;
-    final int PRICE_OF_GENERATOR = 70;
+    final int PRICE_OF_GENERATOR = 750;
     final int PRICE_OF_FIELD = 10;
     final int PRICE_OF_N = 3;
     final int PRICE_OF_P = 7;
