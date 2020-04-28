@@ -193,6 +193,50 @@ public class UserInterface {
         dialog.show(stage);
     }
 
+    public void grandmotherAsks(Dialog dialog) {
+        Gdx.input.setInputProcessor(stage);
+        Label label = new Label(myBundle.get("callGrandmother") + "\n", new Label.LabelStyle(font, Color.WHITE));
+        label.setWrap(true);
+        dialog.setMovable(false);
+        dialog.setSize(width * 0.75f, height * 0.3f* uiScale);
+        dialog.setPosition(width / 2 - dialog.getWidth() / 2, height / 2 - dialog.getHeight());
+        label.setWidth(dialog.getWidth() * 0.8f);
+        dialog.getContentTable().add(grandmother);
+        dialog.getContentTable().row();
+        dialog.getContentTable().add(label).width(dialog.getWidth() - 30f);
+        dialog.button(myBundle.get("barn"), "barn", buttonStyle);
+        dialog.button(myBundle.get("home"), "home", buttonStyle);
+        dialog.button(myBundle.get("field"), "field", buttonStyle);
+        dialog.getButtonTable().row();
+        dialog.button(myBundle.get("farm"), "farm", buttonStyle);
+        dialog.button(myBundle.get("garden"), "garden", buttonStyle);
+        dialog.button(myBundle.get("computer"), "computer", buttonStyle);
+        dialog.getButtonTable().row();
+        dialog.button(myBundle.get("gasTank"), "gasTank", buttonStyle);
+        dialog.button(myBundle.get("buySell"), "buySell", buttonStyle);
+        dialog.button(myBundle.get("upgrade"), "upgrade", buttonStyle);
+        dialog.getButtonTable().row();
+        dialog.button(cancelButton, "cancel");
+        dialog.pad(20f, 20f, 20f, 20f);
+        dialog.show(stage);
+    }
+
+    public void grandmotherTells(Dialog dialog, String text, Image image) {
+        Gdx.input.setInputProcessor(stage);
+        Label label = new Label(text + "\n", new Label.LabelStyle(font, Color.WHITE));
+        label.setWrap(true);
+        dialog.setMovable(false);
+        dialog.setSize(width * 0.75f, height * 0.3f* uiScale);
+        dialog.setPosition(width / 2 - dialog.getWidth() / 2, height / 2 - dialog.getHeight());
+        label.setWidth(dialog.getWidth() * 0.8f);
+        dialog.getContentTable().add(image);
+        dialog.getContentTable().row();
+        dialog.getContentTable().add(label).width(dialog.getWidth() - 30f);
+        dialog.button(confirmButton);
+        dialog.pad(20f, 20f, 20f, 20f);
+        dialog.show(stage);
+    }
+
     public void showTutorial(Dialog dialog, String text) {
         Gdx.input.setInputProcessor(stage);
         Label label = new Label(text, new Label.LabelStyle(font, Color.WHITE));

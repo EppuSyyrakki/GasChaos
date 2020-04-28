@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,25 @@ public class HomeScreen extends Location implements Screen {
     boolean newTurn = false;
     final Sound roosterS = Gdx.audio.newSound(Gdx.files.internal("audio/rooster.mp3"));
     float roosterVolume = 0.1f;
+    final Texture barnText = new Texture(Gdx.files.internal("screenshots/barnShot.png"));
+    final Image barnShot = new Image(barnText);
+    final Texture buySellText = new Texture(Gdx.files.internal("screenshots/buySellShot.png"));
+    final Image buySellShot = new Image(buySellText);
+    final Texture compText = new Texture(Gdx.files.internal("screenshots/computerShot.png"));
+    final Image computerShot = new Image(compText);
+    final Texture farmText = new Texture(Gdx.files.internal("screenshots/farmShot.png"));
+    final Image farmShot = new Image(farmText);
+    final Texture fieldText = new Texture(Gdx.files.internal("screenshots/fieldShot.png"));
+    final Image fieldShot = new Image(fieldText);
+    final Texture gardenText = new Texture(Gdx.files.internal("screenshots/gardenShot.png"));
+    final Image gardenShot = new Image(gardenText);
+    final Texture gasTankText = new Texture(Gdx.files.internal("screenshots/gasTankShot.png"));
+    final Image gasTankShot = new Image(gasTankText);
+    final Texture homeText = new Texture(Gdx.files.internal("screenshots/homeShot.png"));
+    final Image homeShot = new Image(homeText);
+    final Texture upgradeText = new Texture(Gdx.files.internal("screenshots/upgradeShot.png"));
+    final Image upgradeShot = new Image(upgradeText);
+    Image tutorialImage = new Image();
 
     public HomeScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
@@ -165,9 +185,76 @@ public class HomeScreen extends Location implements Screen {
         userInterface.showTutorial(d, uiText);
     }
 
-    private void callGrandmother() {
-
+    private Dialog oneButtonDialog() {
+        Dialog dialog = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                remove();
+                resetInputProcessor();
+            }
+        };
+        return dialog;
     }
+
+    private void callGrandmother() {
+        userInterface.dialogFocus = true;
+        player.setInputActive(false);
+        setActionInputActive(false);
+
+        Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+            protected void result(Object object) {
+                String result = (String)object;
+                if (result == "barn") {
+                    remove();
+                    uiText = game.myBundle.get("tutorialBarn");
+                    tutorialImage = barnShot;
+                } else if (result == "buySell"){
+                    remove();
+                    uiText = game.myBundle.get("tutorialBuySell");
+                    tutorialImage = buySellShot;
+                } else if (result == "computer"){
+                    remove();
+                    uiText = game.myBundle.get("tutorialComputer");
+                    tutorialImage = computerShot;
+                } else if (result == "farm"){
+                    remove();
+                    uiText = game.myBundle.get("tutorialFarm");
+                    tutorialImage = farmShot;
+                } else if (result == "field"){
+                    remove();
+                    uiText = game.myBundle.get("tutorialField");
+                    tutorialImage = fieldShot;
+                } else if (result == "garden"){
+                    remove();
+                    uiText = game.myBundle.get("tutorialGarden");
+                    tutorialImage = gardenShot;
+                } else if (result == "gasTank"){
+                    remove();
+                    uiText = game.myBundle.get("tutorialGasTank");
+                    tutorialImage = gasTankShot;
+                } else if (result == "home") {
+                    remove();
+                    uiText = game.myBundle.get("tutorialHome");
+                    tutorialImage = homeShot;
+                } else if (result == "upgrade"){
+                    remove();
+                    uiText = game.myBundle.get("tutorialUpgrade");
+                    tutorialImage = upgradeShot;
+                } else if (result == "cancel") {
+                    uiText = "default";
+                    resetInputProcessor();
+                    setActionInputActive(true);
+                    remove();
+                }
+
+                if (result != "cancel") {
+                    userInterface.grandmotherTells(oneButtonDialog(), uiText, tutorialImage);
+                }
+            }
+        };
+        userInterface.grandmotherAsks(d);
+    }
+
+
 
     @Override
     public void show() {
@@ -204,6 +291,15 @@ public class HomeScreen extends Location implements Screen {
         sunsetTexture.dispose();
         blackTexture.dispose();
         roosterS.dispose();
+        barnText.dispose();
+        buySellText.dispose();
+        compText.dispose();
+        farmText.dispose();
+        fieldText.dispose();
+        gardenText.dispose();
+        gasTankText.dispose();
+        homeText.dispose();
+        upgradeText.dispose();
     }
 
     @SuppressWarnings("RedundantCast")
@@ -214,6 +310,7 @@ public class HomeScreen extends Location implements Screen {
     }
 
     public void resetInputProcessor() {
+        setActionInputActive(true);
         userInterface.dialogFocus = false;
         player.setInputActive(true);
         Gdx.input.setInputProcessor(this);
