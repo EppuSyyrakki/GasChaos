@@ -37,8 +37,8 @@ public class Field {
             }
 
             if (reductionCounter == 0) {
-                fertilizerP -= 1;
-                fertilizerN -= 3;
+                fertilizerP -= 2;
+                fertilizerN -= 6;
                 reductionCounter = 4;
 
                 if (fertilizerN < 0) {

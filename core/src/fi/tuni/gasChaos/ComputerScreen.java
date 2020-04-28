@@ -72,15 +72,13 @@ public class ComputerScreen extends Location implements Screen {
         }
 
         if (getUIRec("RectangleFinances") && !userInterface.dialogFocus) {
+            userInterface.dialogFocus = true;
             uiText = getBankDialogText();
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
-                    boolean result = (boolean) object;
-                    if (result) {
-                        game.gameData.saveGame();
-                        resetInputProcessor();
-                        remove();
-                    }
+                    game.gameData.saveGame();
+                    resetInputProcessor();
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, false);
@@ -139,12 +137,11 @@ public class ComputerScreen extends Location implements Screen {
                 (totalIncome - totalExpenses)) + "\n";
         text += game.myBundle.format("balanceProject",
                 (game.gameData.getMoney() + (totalIncome - totalExpenses))) + "\n";
-        System.out.println("Milk money:" +moneyFromMilk());
         return text;
     }
 
     private int moneyFromMilk() {
-        int milkSold = 0;
+        int milkAmount = 0;
         ArrayList<Cow> tmpCowList = game.gameData.getCowList();
 
         for (Cow cow : tmpCowList) {
@@ -154,14 +151,10 @@ public class ComputerScreen extends Location implements Screen {
                 if (game.gameData.getManureInBarn() > game.gameData.MANURE_DANGER) {
                     milkFromCow -= (milkFromCow / 3);
                 }
-
-                if (game.gameData.getMilkingMachineLevel() == 2) {
-                    milkFromCow *= 1.5;
-                }
-                milkSold += milkFromCow;
+                milkAmount +=milkFromCow;
             }
         }
-        milkSold *= game.gameData.MONEY_FROM_MILK;
+        int milkSold = milkAmount * game.gameData.MONEY_FROM_MILK;
         return milkSold;
     }
 

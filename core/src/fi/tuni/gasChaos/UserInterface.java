@@ -40,7 +40,7 @@ public class UserInterface {
     Label topCowsLabel;
     Label topActionsLabel;
     Label topGrainLabel;
-    Label topFertilizersLabel;
+    Label topTurnLabel;
     I18NBundle myBundle;
     TextButton confirmButton;
     TextButton cancelButton;
@@ -89,7 +89,7 @@ public class UserInterface {
         topCowsLabel = new Label("", new Label.LabelStyle(font, Color.WHITE));
         topActionsLabel = new Label("", new Label.LabelStyle(font, Color.WHITE));
         topGrainLabel = new Label("", new Label.LabelStyle(font, Color.WHITE));
-        topFertilizersLabel = new Label("", new Label.LabelStyle(font, Color.WHITE));
+        topTurnLabel = new Label("", new Label.LabelStyle(font, Color.WHITE));
 
         // setup top bar of UI
         topTable.setSize(width, height / 28);
@@ -103,7 +103,7 @@ public class UserInterface {
         topTable2.setPosition(0,height - height / 14);
         topTable2.setBackground(bgDrawable);
         topTable2.add(topGrainLabel).width(width / 3).align(Align.center);
-        topTable2.add(topFertilizersLabel).align(Align.center);
+        topTable2.add(topTurnLabel).align(Align.center);
 
         // set to true when dialog on screen, prevents player movement.
         dialogFocus = false;
@@ -126,8 +126,8 @@ public class UserInterface {
         topActionsLabel.setText(myBundle.get("actions")
                 + (data.MAX_ACTIONS - data.getActionsDone()));
         topGrainLabel.setText(myBundle.get("grain") + data.getGrain());
-        topFertilizersLabel.setText(myBundle.get("fertilizers")
-                + data.getFertilizerN() + "/" + data.getFertilizerP());
+        topTurnLabel.setText(myBundle.get("currentTurn")
+                + data.getCurrentTurn());
         stage.draw();
     }
 

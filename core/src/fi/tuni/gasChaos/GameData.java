@@ -14,17 +14,17 @@ public class GameData {
     /**
      * Prices of resources and upgrades. Money gained is per 1 unit.
      */
-    final int MONEY_FROM_MILK = 2;
+    final int MONEY_FROM_MILK = 3;
     final float MONEY_FROM_MANURE = 0.5f;
     final int MONEY_FROM_GRAIN = 2;
-    final float MONEY_FROM_METHANE = 1.5f;
+    final float MONEY_FROM_METHANE = 0.75f;
     final int MONEY_FROM_GARDEN = 8;
     final int MONEY_FROM_N = 2;
-    final int MONEY_FROM_P = 6;
+    final int MONEY_FROM_P = 5;
     final int PRICE_OF_COW = 800;
     final int PRICE_OF_GRAIN = 2;
     final int PRICE_OF_SOLAR = 1000;
-    final int PRICE_OF_COLLECTOR = 1400;
+    final int PRICE_OF_COLLECTOR = 1100;
     final int PRICE_OF_MILKING = 900;
     final int PRICE_OF_TRACTOR = 1200;
     final int PRICE_OF_GENERATOR = 750;
@@ -66,7 +66,7 @@ public class GameData {
     final int MAX_FIELDS = 6;       // maximum number of fields
     final int OWNED_FIELDS = 2;     // owned fields at start (no rent)
     final int MAX_COWS = 6;         // maximum number of cows
-    final int MANURE_SHOVELED = 100;// how much manure removed from barn in single remove action
+    final int MANURE_SHOVELED = 150;// how much manure removed from barn in single remove action
     final int MAX_P_PER_FIELD = 13; // max phosphorous per field before penalty
     final int MAX_N_PER_FIELD = 80; // max nitrogen per field before penalty
     final int N_FERTILIZE = 35;     // how much fertilizers go into field when fertilizing
@@ -262,7 +262,7 @@ public class GameData {
             }
         }
 
-        if (currentTurn % TURNS_BETWEEN_PAYMENTS == 0) { // debt is paid on every other turn.
+        if (currentTurn % TURNS_BETWEEN_PAYMENTS == 0) {
             if (debt < debtPayment) {
                 debtPayment = debt;
             } else if (debt <= 0) {
@@ -274,7 +274,7 @@ public class GameData {
             debtPaymentThisTurn = (int)floatPayment;
 
             if (fieldPenalty) {
-                penaltyPaymentThisTurn = -PENALTY_PAYMENT;
+                penaltyPaymentThisTurn = PENALTY_PAYMENT;
             }
         }
 
@@ -360,6 +360,12 @@ public class GameData {
             if (field.isOwned() || field.isRented()) {
                 field.grow();
             }
+        }
+
+        if ((highestFieldsN() > MAX_N_PER_FIELD) || highestFieldsP() > MAX_P_PER_FIELD) {
+            fieldPenalty = true;
+        } else {
+            fieldPenalty = false;
         }
     }
 

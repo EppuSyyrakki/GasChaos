@@ -348,8 +348,10 @@ public class HomeScreen extends Location implements Screen {
             text += "+ " + game.myBundle.get("overrunByShit") + "\n";
         }
 
-        if (game.gameData.isFieldPenalty()) {
-            text += "+ " + game.myBundle.get("overFertilize") + "\n";
+        if (game.gameData.isFieldPenalty() &&
+                game.gameData.getCurrentTurn() % game.gameData.TURNS_BETWEEN_PAYMENTS == 0) {
+            text += "+ " + game.myBundle.format("overFertilize", game.gameData.PENALTY_PAYMENT)
+                    + "\n";
         }
 
         if (game.gameData.getGardenGrowth() == 1) {
