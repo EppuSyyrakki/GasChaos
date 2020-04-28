@@ -241,7 +241,7 @@ public class GameData {
         for (Cow cow : cowList) {
             grainInBarn = cow.eat(grainInBarn);
 
-            if (cow.isEatenThisTurn()) {  // if cow not eaten, no milk, manure and methane produced
+            if (cow.isEatenLastTurn()) {  // if cow not eaten, no milk, manure and methane produced
                 int milkFromCow = cow.getMilk(milkingMachineLevel);
                 cow.fart(gasCollectorLevel);
                 manureInBarn += cow.poop();
@@ -416,7 +416,7 @@ public class GameData {
         Arrays.fill(fieldsRented, 0);
 
         for (Cow cow : cowList) {
-            cow.setEatenThisTurn(false);
+            cow.setEatenLastTurn(false);
         }
         saveGame();
     }
@@ -1330,7 +1330,7 @@ public class GameData {
         manureMax = 2500;   // size of manure pit
         methane = 0;        // amount of methane in gas tank
         methaneMax = 15000; // size of methane tank
-        debt = 10000;       // total amount of debt, reduced by debtPayment
+        debt = 4000;       // total amount of debt, reduced by debtPayment
         grain = 200;        // total amount of grain on farm
         grainInBarn = 60;   // amount of feed (grain) for cows in barn
         grainMax = 9000;    // maximum amount of grain
