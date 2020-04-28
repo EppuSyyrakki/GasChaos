@@ -112,7 +112,7 @@ public class HomeScreen extends Location implements Screen {
         }
 
         if (getRec("RectanglePhone")) {    // condition call to grandmother
-            game.setGrandmotherScreen();
+            callGrandmother();
         }
 
         if (getRec("RectanglePC")) {    // condition go to computer
@@ -163,6 +163,10 @@ public class HomeScreen extends Location implements Screen {
             }
         };
         userInterface.showTutorial(d, uiText);
+    }
+
+    private void callGrandmother() {
+
     }
 
     @Override

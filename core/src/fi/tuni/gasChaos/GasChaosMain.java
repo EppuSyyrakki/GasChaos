@@ -21,7 +21,6 @@ public class GasChaosMain extends Game {
 	BarnScreen barnScreen;
 	GardenScreen gardenScreen;
 	GasTankScreen gasTankScreen;
-	GrandmotherScreen grandmotherScreen;
 	ComputerScreen computerScreen;
 	UpgradeScreen upgradeScreen;
 	BuySellScreen buySellScreen;
@@ -29,7 +28,6 @@ public class GasChaosMain extends Game {
 	LoseScreen loseScreen;
 	I18NBundle myBundle;
 	Locale locale;
-
 
 	@Override
 	public void create () {
@@ -47,7 +45,6 @@ public class GasChaosMain extends Game {
 		barnScreen = new BarnScreen(batch, camera, this);
 		gardenScreen = new GardenScreen(batch, camera, this);
 		gasTankScreen = new GasTankScreen(batch, camera, this);
-		grandmotherScreen = new GrandmotherScreen(batch, camera, this);
 		computerScreen = new ComputerScreen(batch, camera, this);
 		upgradeScreen = new UpgradeScreen(batch, camera, this);
 		buySellScreen = new BuySellScreen(batch, camera, this);
@@ -89,7 +86,6 @@ public class GasChaosMain extends Game {
 		fieldScreen.dispose();
 		gardenScreen.dispose();
 		gasTankScreen.dispose();
-		grandmotherScreen.dispose();
 		//highScoreScreen.dispose();
 		homeScreen.dispose();
 		loseScreen.dispose();
@@ -148,10 +144,6 @@ public class GasChaosMain extends Game {
 
 	public void setGardenScreen () {
 		setScreen(gardenScreen);
-	}
-
-	public void setGrandmotherScreen () {
-		setScreen(grandmotherScreen);
 	}
 
 	public void setFieldScreen () {

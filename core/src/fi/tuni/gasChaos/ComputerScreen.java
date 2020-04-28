@@ -110,8 +110,8 @@ public class ComputerScreen extends Location implements Screen {
             interest = calculateDebtInterest();
         }
 
-        int totalExpenses = calculateDebtInterest() + calculateElectricity()
-                + calculateFieldRent() + calculatePetrol() + interest + debtPayment;
+        int totalExpenses = calculateElectricity() + calculateFieldRent() + calculatePetrol()
+                + interest + debtPayment;
         String text = game.myBundle.format("balance", game.gameData.getMoney())  + "\n";
         text += game.myBundle.format("debt", game.gameData.getDebt()) + "\n\n";
         text += game.myBundle.get("income") + "\n";
@@ -122,11 +122,14 @@ public class ComputerScreen extends Location implements Screen {
         text += game.myBundle.format("gardenSold", gardenMoney) + "\n";
         text += game.myBundle.format("fertilizersSold", fertilizerMoney) + "\n\n";
         text += game.myBundle.get("expenses") + "\n";
-        text += game.myBundle.format("debtPayment", debtPayment) + "\n";
-        text += game.myBundle.format("interest", interest) + "\n";
         text += game.myBundle.format("electricity", calculateElectricity()) + "\n";
         text += game.myBundle.format("fieldRent", calculateFieldRent()) + "\n";
         text += game.myBundle.format("petrol", calculatePetrol()) + "\n\n";
+
+        if (debtPayment != 0) {
+            text += game.myBundle.format("debtPayment", debtPayment) + "\n";
+            text += game.myBundle.format("interest", interest) + "\n";
+        }
 
         if (fieldPenalty != 0) {
             text += game.myBundle.format("fieldPenalty", fieldPenalty) + "\n";
@@ -136,6 +139,7 @@ public class ComputerScreen extends Location implements Screen {
                 (totalIncome - totalExpenses)) + "\n";
         text += game.myBundle.format("balanceProject",
                 (game.gameData.getMoney() + (totalIncome - totalExpenses))) + "\n";
+        System.out.println("Milk money:" +moneyFromMilk());
         return text;
     }
 
@@ -144,16 +148,21 @@ public class ComputerScreen extends Location implements Screen {
         ArrayList<Cow> tmpCowList = game.gameData.getCowList();
 
         for (Cow cow : tmpCowList) {
-            if (cow.isEatenThisTurn()) {  // if cow not eaten, no milk
+            if (cow.isEatenLastTurn()) {  // if cow not eaten, no milk
                 int milkFromCow = cow.getMilk(game.gameData.getMilkingMachineLevel());
 
                 if (game.gameData.getManureInBarn() > game.gameData.MANURE_DANGER) {
                     milkFromCow -= (milkFromCow / 3);
                 }
+
+                if (game.gameData.getMilkingMachineLevel() == 2) {
+                    milkFromCow *= 1.5;
+                }
                 milkSold += milkFromCow;
             }
         }
-        return milkSold * game.gameData.MONEY_FROM_MILK;
+        milkSold *= game.gameData.MONEY_FROM_MILK;
+        return milkSold;
     }
 
     private int calculateDebtInterest() {

@@ -15,7 +15,7 @@ public class Cow {
      */
     private final int feed = 30;
 
-    private boolean eatenThisTurn = true;
+    private boolean eatenLastTurn = true;
 
     /**
      * Methane backpack storage.
@@ -28,13 +28,13 @@ public class Cow {
      * feed minus what this cow ate.
      */
     public int eat(int totalFeed) {
-        if (totalFeed > 0) {
+        if (totalFeed > feed) {
             int newFeed = totalFeed - feed;
-            eatenThisTurn = true;
+            eatenLastTurn = true;
             return newFeed;
         } else {
-            eatenThisTurn = false;
-            return 0;
+            eatenLastTurn = false;
+            return totalFeed;
         }
     }
 
@@ -94,12 +94,12 @@ public class Cow {
         }
     }
 
-    public boolean isEatenThisTurn() {
-        return eatenThisTurn;
+    public boolean isEatenLastTurn() {
+        return eatenLastTurn;
     }
 
-    public void setEatenThisTurn(boolean eatenThisTurn) {
-        this.eatenThisTurn = eatenThisTurn;
+    public void setEatenLastTurn(boolean eatenLastTurn) {
+        this.eatenLastTurn = eatenLastTurn;
     }
 
     public int getMethane() {
