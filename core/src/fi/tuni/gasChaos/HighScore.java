@@ -1,4 +1,4 @@
-package fi.tuni.tiko;
+package fi.tuni.gasChaos;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;

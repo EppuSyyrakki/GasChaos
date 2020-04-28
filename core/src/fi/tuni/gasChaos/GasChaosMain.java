@@ -1,4 +1,4 @@
-package fi.tuni.tiko;
+package fi.tuni.gasChaos;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -76,6 +76,7 @@ public class GasChaosMain extends Game {
 		return locale;
 	}
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void render () {
 		super.render();

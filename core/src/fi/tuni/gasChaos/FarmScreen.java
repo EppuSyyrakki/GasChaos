@@ -1,4 +1,4 @@
-package fi.tuni.tiko;
+package fi.tuni.gasChaos;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 
+@SuppressWarnings("unchecked")
 public class FarmScreen extends Location implements Screen {
     @SuppressWarnings("CanBeFinal")
     Player player;
@@ -39,8 +40,8 @@ public class FarmScreen extends Location implements Screen {
     int fillerNoise;
     float birdVolume = 0.1f;
     float chickenVolume = 0.07f;
-    int dogRows = 1;
-    int dogCols = 2;
+    final int dogRows = 1;
+    final int dogCols = 2;
     float stateTime = 1f;
     Animation<TextureRegion> dogAnimation;
     TextureRegion currentDogFrame;
@@ -86,6 +87,7 @@ public class FarmScreen extends Location implements Screen {
 
         TextureRegion[] dogFrames = transformTo1D(tmpDog, dogRows, dogCols);
 
+        //noinspection rawtypes,RedundantCast
         dogAnimation = new Animation(90 / 60f, (Object[]) dogFrames);
     }
 

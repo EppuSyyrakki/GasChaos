@@ -1,4 +1,4 @@
-package fi.tuni.tiko;
+package fi.tuni.gasChaos;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -20,20 +20,20 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 
 public class UserInterface {
-    private float width = Gdx.graphics.getWidth();
-    private float height = Gdx.graphics.getHeight();
+    private final float width = Gdx.graphics.getWidth();
+    private final float height = Gdx.graphics.getHeight();
     boolean dialogFocus;
     float uiScale;
     Stage stage = new Stage();
-    Texture fontTextureNormal = new Texture(Gdx.files.internal("ui/normal.png"));
-    Texture fontTextureLarge = new Texture(Gdx.files.internal("ui/large.png"));
-    Texture barBgTexture = new Texture(Gdx.files.internal("ui/uiBarBg.png"));
-    Texture grandmotherTexture = new Texture(Gdx.files.internal("props/grandma.png"));
-    Image grandmother = new Image(grandmotherTexture);
+    final Texture fontTextureNormal = new Texture(Gdx.files.internal("ui/normal.png"));
+    final Texture fontTextureLarge = new Texture(Gdx.files.internal("ui/large.png"));
+    final Texture barBgTexture = new Texture(Gdx.files.internal("ui/uiBarBg.png"));
+    final Texture grandmotherTexture = new Texture(Gdx.files.internal("props/grandma.png"));
+    final Image grandmother = new Image(grandmotherTexture);
     Sprite barBGSprite = new Sprite(barBgTexture);
     SpriteDrawable bgDrawable = new SpriteDrawable(barBGSprite);
     BitmapFont font;
-    Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+    final Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
     Table topTable = new Table();
     Table topTable2 = new Table();
     Label topMoneyLabel;

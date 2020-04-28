@@ -1,4 +1,4 @@
-package fi.tuni.tiko;
+package fi.tuni.gasChaos;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -261,15 +261,10 @@ public class Player extends Sprite{
 
                 setTargetX(touchPos.x);
                 setTargetY(touchPos.y);
-
-                // log
-                //Gdx.app.log("render", "x = " + touchPos.x);
-                //Gdx.app.log("render", "y = " + touchPos.y);
             }
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
     public void playerMovement (TiledMap tiledMap) {
 
         camera = new OrthographicCamera();
@@ -344,18 +339,6 @@ public class Player extends Sprite{
                 }
             }
         }
-
-
-        boolean moveDebug = false;
-
-        if (moveDebug) {
-            Gdx.app.log("render", "x = " + rectangle.x);
-            Gdx.app.log("render", "y = " + rectangle.y);
-            Gdx.app.log("render", "x target = " + targetX);
-            Gdx.app.log("render", "y target = " + targetY);
-            Gdx.app.log("render", "x speed = " + speedX);
-            Gdx.app.log("render", "y speed = " + speedY);
-        }
     }
 
     public void checkCollisions(TiledMap tiledMap) {
@@ -388,19 +371,15 @@ public class Player extends Sprite{
 
             if (getRectangleUp().overlaps(rectangle)) {
                 up = false;
-                //System.out.println("up false");
             }
             if (getRectangleDown().overlaps(rectangle)) {
                 down = false;
-                //System.out.println("down false");
             }
             if (getRectangleLeft().overlaps(rectangle)) {
                 left = false;
-                //System.out.println("left false");
             }
             if (getRectangleRight().overlaps(rectangle)) {
                 right = false;
-                //System.out.println("right false");
             }
         }
     }

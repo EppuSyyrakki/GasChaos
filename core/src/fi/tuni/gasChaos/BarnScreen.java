@@ -1,4 +1,4 @@
-package fi.tuni.tiko;
+package fi.tuni.gasChaos;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 
-@SuppressWarnings("CanBeFinal")
+@SuppressWarnings({"CanBeFinal", "unchecked", "rawtypes", "RedundantCast"})
 public class BarnScreen extends Location implements Screen {
     Player player;
 
@@ -587,38 +587,38 @@ public class BarnScreen extends Location implements Screen {
 
     public void cowSpawn(int cowCount) {
         //Can be uncommented to render every cow.
-        //cowCount = 6;
+        cowCount = 6;
         spawn = new Rectangle(0.0f, 0.0f, cowSize, cowSize);
         spawn.x = 2.2f;
         spawn.y = 8.1f;
         if (cowCount == 6) {
-            cowRender(C1CurrentFrame, spawn);
+            cowRender(C3CurrentFrame, spawn);
 
             spawn.y = spawn.y -1.5f;
             cowCount--;
         }
         if (cowCount == 5) {
-            cowRender(C2CurrentFrame, spawn);
+            cowRender(CB3CurrentFrame, spawn);
             spawn.y = spawn.y -1.5f;
             cowCount--;
         }
         if (cowCount == 4) {
-            cowRender(C3CurrentFrame, spawn);
+            cowRender(C1CurrentFrame, spawn);
             spawn.y = spawn.y -1.5f;
             cowCount--;
         }
         if (cowCount == 3) {
-            cowRender(CB1CurrentFrame, spawn);
-            spawn.y = spawn.y -1.5f;
-            cowCount--;
-        }
-        if (cowCount == 2) {
             cowRender(CB2CurrentFrame, spawn);
             spawn.y = spawn.y -1.5f;
             cowCount--;
         }
+        if (cowCount == 2) {
+            cowRender(CB1CurrentFrame, spawn);
+            spawn.y = spawn.y -1.5f;
+            cowCount--;
+        }
         if (cowCount == 1) {
-            cowRender(CB3CurrentFrame, spawn);
+            cowRender(C2CurrentFrame, spawn);
             spawn.y = spawn.y -1.5f;
             //noinspection UnusedAssignment
             cowCount--;

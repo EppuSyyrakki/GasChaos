@@ -1,4 +1,4 @@
-package fi.tuni.tiko;
+package fi.tuni.gasChaos;
 
 public class Field {
 
@@ -32,7 +32,6 @@ public class Field {
             }
             amount += growth;
 
-            //noinspection ConstantConditions
             if (amount > MAX_GROWTH) {
                 amount = MAX_GROWTH;
             }

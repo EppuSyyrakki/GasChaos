@@ -1,4 +1,4 @@
-package fi.tuni.tiko;
+package fi.tuni.gasChaos;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -166,7 +166,7 @@ public class ComputerScreen extends Location implements Screen {
     }
 
     private int calculateDebtInterest() {
-        float floatInterest = (float)game.gameData.getDebt() * game.gameData.getInterest();;
+        float floatInterest = (float)game.gameData.getDebt() * game.gameData.getInterest();
         return (int)floatInterest;
     }
 
