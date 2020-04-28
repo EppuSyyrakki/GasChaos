@@ -1,4 +1,4 @@
-package fi.tuni.tiko;
+package fi.tuni.gasChaos;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class Cow {

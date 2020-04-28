@@ -1,8 +1,8 @@
-package fi.tuni.tiko.desktop;
+package fi.tuni.gasChaos.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import fi.tuni.tiko.GasChaosMain;
+import fi.tuni.gasChaos.GasChaosMain;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
