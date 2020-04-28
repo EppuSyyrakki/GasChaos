@@ -550,6 +550,7 @@ public class BarnScreen extends Location implements Screen {
         cow1S.dispose();
         cow2S.dispose();
         cow3S.dispose();
+        milkingMachine.dispose();
     }
 
     @SuppressWarnings("RedundantCast")
