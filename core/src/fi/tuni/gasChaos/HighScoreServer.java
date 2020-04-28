@@ -158,7 +158,9 @@ public class HighScoreServer {
                 throw new FileNotFoundException("Config file '" + propFileName + "' not found.");
             }
         } catch (IOException e) {
-            Gdx.app.log("HighScoreServer", e.getMessage());
+            if (verbose) {
+                Gdx.app.log("HighScoreServer", e.getMessage());
+            }
         }
 
         user = prop.getProperty("user");

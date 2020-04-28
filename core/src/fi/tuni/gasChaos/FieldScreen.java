@@ -160,13 +160,11 @@ public class FieldScreen extends Location implements Screen {
             boolean[] actions = availableActions(fieldNumber);
             Field field = game.gameData.getFields().get(fieldNumber);
             uiText = getUIText(actions, field);
-            System.out.println("this field yield amount:" + field.getAmount());
 
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     int result = (int)object;
                     if (result == 0) {
-                        System.out.println("user cancel");
                         resetInputProcessor();
                         remove();
                     } else if (result == 1){

@@ -47,7 +47,7 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
         camera.setToOrtho(false, 9, 16);
         this.camera = camera;
         HighScoreServer.readConfig("highscore.config");
-        HighScoreServer.setVerbose(true);
+        HighScoreServer.setVerbose(false);
         HighScoreServer.fetchHighScores(this);
         userInterface = new UserInterface(game.myBundle);
         background = new Texture("ui/highScore.png");
@@ -70,7 +70,7 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
     @Override
     public void create () {
         HighScoreServer.readConfig("highscore.config");
-        HighScoreServer.setVerbose(true);
+        HighScoreServer.setVerbose(false);
         HighScoreServer.fetchHighScores(this);
 
         otherSetup();
