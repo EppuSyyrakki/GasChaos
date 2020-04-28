@@ -229,30 +229,41 @@ public class HighScore extends ApplicationAdapter implements HighScoreListener, 
 
         // Add value of bought upgrades to score.
         if (game.gameData.getTractorLevel() == 2) {
-            score = score + game.gameData.PRICE_OF_TRACTOR;
+            score = score + game.gameData.getPRICE_OF_TRACTOR();
         } else if (game.gameData.getTractorLevel() == 3) {
-            score = score + game.gameData.PRICE_OF_TRACTOR * 2;
+            score = score + game.gameData.getPRICE_OF_TRACTOR() * 2;
         }
 
         if (game.gameData.getGasGeneratorLevel() == 1) {
-            score = score + game.gameData.PRICE_OF_GENERATOR;
+            score = score + game.gameData.getPRICE_OF_GENERATOR();
         }
 
         if (game.gameData.getMilkingMachineLevel() == 2) {
-            score = score + game.gameData.PRICE_OF_MILKING;
+            score = score + game.gameData.getPRICE_OF_MILKING();
         }
 
         if (game.gameData.getSolarPanelLevel() == 1) {
-            score = score + game.gameData.PRICE_OF_SOLAR;
+            score = score + game.gameData.getPRICE_OF_SOLAR();
         } else if (game.gameData.getSolarPanelLevel() == 2) {
-            score = score + game.gameData.PRICE_OF_SOLAR * 2;
+            score = score + game.gameData.getPRICE_OF_SOLAR() * 2;
         }
 
         if (game.gameData.getGasCollectorLevel() == 2) {
-            score = score + game.gameData.PRICE_OF_COLLECTOR;
+            score = score + game.gameData.getPRICE_OF_COLLECTOR();
         }
 
-        score = score + (game.gameData.PRICE_OF_COW * game.gameData.getCowAmount());
+        score = score + (game.gameData.getPRICE_OF_COW() * game.gameData.getCowAmount());
+
+        score = score + (game.gameData.getMONEY_FROM_GRAIN() * game.gameData.getGrain());
+
+        score = score + (game.gameData.getMONEY_FROM_N() * game.gameData.getFertilizerN());
+        score = score + (game.gameData.getMONEY_FROM_P() * game.gameData.getFertilizerP());
+
+        score = score + (int)((float)game.gameData.getManure() * game.gameData.getMONEY_FROM_MANURE());
+
+        score = score + (game.gameData.getGardenAmount() * game.gameData.getMONEY_FROM_GARDEN());
+
+
 
         return score;
     }
