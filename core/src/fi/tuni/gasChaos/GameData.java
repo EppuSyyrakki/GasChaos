@@ -15,23 +15,24 @@ public class GameData {
      * Prices of resources and upgrades. Money gained is per 1 unit.
      */
     final int MONEY_FROM_MILK = 2;
-    final float MONEY_FROM_MANURE = 0.5f;
+    final float MONEY_FROM_MANURE = 0.2f;
     final int MONEY_FROM_GRAIN = 2;
-    final float MONEY_FROM_METHANE = 0.75f;
+    final float MONEY_FROM_METHANE = 0.5f;
     final int MONEY_FROM_GARDEN = 8;
     final int MONEY_FROM_N = 2;
     final int MONEY_FROM_P = 5;
     final int PRICE_OF_COW = 800;
     final int PRICE_OF_GRAIN = 2;
     final int PRICE_OF_SOLAR = 1000;
-    final int PRICE_OF_COLLECTOR = 1100;
+    final int PRICE_OF_COLLECTOR = 2000;
     final int PRICE_OF_MILKING = 900;
     final int PRICE_OF_TRACTOR = 1200;
-    final int PRICE_OF_GENERATOR = 750;
-    final int PRICE_OF_FIELD = 10;
+    final int PRICE_OF_TRACTOR2 = 2000;
+    final int PRICE_OF_GENERATOR = 950;
+    final int PRICE_OF_FIELD = 20;
     final int PRICE_OF_N = 3;
     final int PRICE_OF_P = 7;
-    final int PENALTY_PAYMENT = 100;
+    final int PENALTY_PAYMENT = 150;
 
     /**
      * Tracks game progression.
@@ -66,12 +67,12 @@ public class GameData {
     final int MAX_FIELDS = 6;       // maximum number of fields
     final int OWNED_FIELDS = 2;     // owned fields at start (no rent)
     final int MAX_COWS = 6;         // maximum number of cows
-    final int MANURE_SHOVELED = 150;// how much manure removed from barn in single remove action
+    final int MANURE_SHOVELED = 45;// how much manure removed from barn (per cow)
     final int MAX_P_PER_FIELD = 13; // max phosphorous per field before penalty
     final int MAX_N_PER_FIELD = 80; // max nitrogen per field before penalty
     final int N_FERTILIZE = 35;     // how much fertilizers go into field when fertilizing
     final int P_FERTILIZE = 6;
-    final int MANURE_DANGER = 200;  // when amount of manure will affect milk production.
+    final int MANURE_DANGER = 50;  // when amount of manure will affect milk production (per cow)
 
     /**
      * Device levels. 0 = no device, Used in updateResource calculations and to draw correct
@@ -198,6 +199,7 @@ public class GameData {
 
         //noinspection ConstantConditions
         actionsAvailable = actionsDone < MAX_ACTIONS;
+
         loadGame();
     }
 
@@ -225,12 +227,12 @@ public class GameData {
         ArrayList<Cow> tmpCowList = getCowList();
 
         if (solarPanelLevel == 1) {
-            electricityThisTurn = electricity - (electricity / 3);  // 67
+            electricityThisTurn -= (electricity / 3);  // 67
         } else if (solarPanelLevel == 2) {
-            electricityThisTurn = electricity - (electricity / 3) - (electricity / 3);  // 33
+            electricityThisTurn = electricity / 3;  // 33
         }
         if (gasGeneratorLevel == 1) {
-            electricityThisTurn = electricity - (electricity / 3);  // 0
+            electricityThisTurn -= (electricity / 3);  // 0 or 33 or 67
         }
 
         if (tractorLevel == 2) {
@@ -244,7 +246,7 @@ public class GameData {
                 int milkFromCow = cow.getMilk(milkingMachineLevel);
                 cow.fart(gasCollectorLevel);
                 manureInBarn += cow.poop();
-                if (manureInBarn > MANURE_DANGER) {   // if barn is filthy, 33% less milk
+                if (manureInBarn > MANURE_DANGER * cowList.size()) {
                     milkFromCow -= (milkFromCow / 3);
                 }
                 milkSold += milkFromCow;

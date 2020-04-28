@@ -8,7 +8,7 @@ public class Cow {
      */
     private final int manure = 15;
     private final int milk = 25;
-    private final int methane = 300;
+    private final int methane = 200;
 
     /**
      * Cow eats per turn. If not eaten this turn (out of feed) no milk produced in getMilk().
@@ -86,7 +86,6 @@ public class Cow {
             float tmpMethane = (float)methane * 1.5f;
             methaneToAdd = (int)tmpMethane;
         }
-
         methaneAmount += methaneToAdd;
 
         if (methaneAmount > methaneAmountMax) {

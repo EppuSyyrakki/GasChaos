@@ -142,7 +142,7 @@ public class HomeScreen extends Location implements Screen {
         if (getRec("RectangleBed") && !userInterface.dialogFocus) {  // condition end turn
             player.setInputActive(false);
             userInterface.dialogFocus = true;
-
+            setActionInputActive(false);
             if (!game.gameData.isActionsAvailable()) {
                 uiText = game.myBundle.get("askGoSleep");
             } else {
@@ -344,7 +344,8 @@ public class HomeScreen extends Location implements Screen {
             text += "+ " + game.myBundle.get("cowsStarving") + "\n";
         }
 
-        if (game.gameData.getManureInBarn() >= game.gameData.MANURE_DANGER) {
+        if (game.gameData.getManureInBarn() > game.gameData.MANURE_DANGER
+                * game.gameData.getCowList().size()) {
             text += "+ " + game.myBundle.get("overrunByShit") + "\n";
         }
 
@@ -354,6 +355,10 @@ public class HomeScreen extends Location implements Screen {
                 text += "+ " + game.myBundle.format("overFertilize", game.gameData.PENALTY_PAYMENT)
                         + "\n";
             }
+        }
+
+        if (game.gameData.getTotalMethaneInCows() == game.gameData.getTotalMaxMethaneInCows()) {
+            text += "+ " + game.myBundle.get("gasCollectorsFull") + "\n";
         }
 
         if (game.gameData.getGardenGrowth() == 1) {

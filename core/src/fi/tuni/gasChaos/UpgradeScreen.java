@@ -155,7 +155,7 @@ public class UpgradeScreen extends Location implements Screen {
                 && game.gameData.isActionsAvailable()) {
             userInterface.dialogFocus = true;
             uiText = game.myBundle.format("askBuyTractorGas",
-                    game.gameData.PRICE_OF_TRACTOR);
+                    game.gameData.PRICE_OF_TRACTOR2);
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
                     boolean result = (boolean)object;

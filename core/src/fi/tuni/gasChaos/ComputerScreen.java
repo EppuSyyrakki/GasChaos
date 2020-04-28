@@ -149,7 +149,8 @@ public class ComputerScreen extends Location implements Screen {
             if (cow.isEatenLastTurn()) {  // if cow not eaten, no milk
                 int milkFromCow = cow.getMilk(game.gameData.getMilkingMachineLevel());
 
-                if (game.gameData.getManureInBarn() > game.gameData.MANURE_DANGER) {
+                if (game.gameData.getManureInBarn() > game.gameData.MANURE_DANGER
+                        * game.gameData.getCowList().size()) {
                     milkFromCow -= (milkFromCow / 3);
                 }
                 milkAmount +=milkFromCow;
@@ -169,13 +170,17 @@ public class ComputerScreen extends Location implements Screen {
         int solarPanelLevel = game.gameData.getSolarPanelLevel();
         int gasGeneratorLevel = game.gameData.getGasGeneratorLevel();
         int electricityThisTurn = electricity;
+
         if (solarPanelLevel == 1) {
-            electricityThisTurn = electricity - (electricity / 3);  // 67
+            electricityThisTurn -= (electricity / 3);  // 67
         } else if (solarPanelLevel == 2) {
-            electricityThisTurn = electricity - (electricity / 3) - (electricity / 3);  // 33
+            electricityThisTurn = electricity / 3;  // 33
         }
         if (gasGeneratorLevel == 1) {
-            electricityThisTurn = electricity - (electricity / 3);  // 0
+            electricityThisTurn -= (electricity / 3);  // 0
+        }
+        if (electricityThisTurn < 0) {
+            electricityThisTurn = 0;
         }
         return electricityThisTurn;
     }
