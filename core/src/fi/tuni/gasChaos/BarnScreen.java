@@ -36,6 +36,7 @@ public class BarnScreen extends Location implements Screen {
     final Sound cow1S = Gdx.audio.newSound(Gdx.files.internal("audio/cow1.mp3"));
     final Sound cow2S = Gdx.audio.newSound(Gdx.files.internal("audio/cow2.mp3"));
     final Sound cow3S = Gdx.audio.newSound(Gdx.files.internal("audio/cow3.mp3"));
+    final Texture milkingMachine;
     Rectangle spawn;
     final float cowSize = 150f;
     float[] manureX = new float[11];
@@ -65,6 +66,7 @@ public class BarnScreen extends Location implements Screen {
     public BarnScreen(SpriteBatch batch, OrthographicCamera camera, GasChaosMain game) {
         super(game);
         background = new Texture("ground/barnForeground.png");
+        milkingMachine = new Texture("ground/milkingMachine.png");
         camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
         this.batch = batch;
         this.camera = camera;
@@ -186,6 +188,9 @@ public class BarnScreen extends Location implements Screen {
         haySpawn(game.gameData.getGrainInBarn());
         player.draw(batch);
         batch.draw(background, 0,0, WORLD_WIDTH, WORLD_HEIGHT);
+        if (game.gameData.getMilkingMachineLevel() == 2) {
+            batch.draw(milkingMachine, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+        }
         manureSpawn(game.gameData.getManureInBarn());
         cowSpawn(game.gameData.getCowAmount());
         black.draw(batch, blackness);
