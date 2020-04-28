@@ -24,7 +24,7 @@
   <image source="../ground/gasTankBackground.png" width="1080" height="1920"/>
  </imagelayer>
  <objectgroup id="3" name="RectangleExit">
-  <object id="16" x="387.571" y="1670.01" width="698.034" height="253.646"/>
+  <object id="16" x="20.9199" y="1670.01" width="1042.33" height="233.525"/>
  </objectgroup>
  <objectgroup id="4" name="RectangleCollision">
   <object id="3" x="-94" y="-40" width="102" height="2078"/>
@@ -32,6 +32,6 @@
   <object id="6" x="1072" y="-98" width="116" height="2144"/>
  </objectgroup>
  <objectgroup id="9" name="RectangleResources">
-  <object id="17" x="105.077" y="1015" width="963.577" height="348.766"/>
+  <object id="17" x="105.077" y="1015" width="829.436" height="308.524"/>
  </objectgroup>
 </map>

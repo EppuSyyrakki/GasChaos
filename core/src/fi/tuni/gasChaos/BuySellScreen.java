@@ -245,6 +245,25 @@ public class BuySellScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, true);
+        } else if (getUIRec("RectangleSellGarden") && !userInterface.dialogFocus
+                && game.gameData.isActionsAvailable()) {
+            userInterface.dialogFocus = true;
+            float price = (float) game.gameData.getGardenAmount()
+                    * (float) game.gameData.MONEY_FROM_GARDEN;
+            uiText = game.myBundle.format("askSellGarden", (int) price);
+            Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        actionSellGarden();
+                        game.gameData.saveGame();
+                    } else {
+                        resetInputProcessor();
+                    }
+                    remove();
+                }
+            };
+            userInterface.createDialog(d, uiText, true);
         } else if (!game.gameData.isActionsAvailable() && (
                 getUIRec("RectangleBuyCow") ||
                 getUIRec("RectangleBuyGrain") ||
@@ -254,7 +273,8 @@ public class BuySellScreen extends Location implements Screen {
                 getUIRec("RectangleSellGrain") ||
                 getUIRec("RectangleSellGas") ||
                 getUIRec("RectangleSellN") ||
-                getUIRec("RectangleSellP")) &&
+                getUIRec("RectangleSellP") ||
+                getUIRec("RectangleSellGarden")) &&
                 !userInterface.dialogFocus) {
             userInterface.dialogFocus = true;
             uiText = game.myBundle.get("askGoSleep");
@@ -334,21 +354,42 @@ public class BuySellScreen extends Location implements Screen {
     }
 
     /**
-     * UNUSED
+     * Increase data.gardenSold by data.gardenAmount and reduce data. gardenAmount to 0.
+     * Block if gardenAmount is not over 30 (garden is not ripe).
      */
-    public GameData actionSellCow(GameData data) {
-        ArrayList<Cow> tmpCowList = data.getCowList();
-
-        if (tmpCowList.size() > 1) {
-            tmpCowList.remove(tmpCowList.size() - 1);
-            data.setMoney(data.PRICE_OF_COW / 2 + data.getMoney());
-            data.setCowList(tmpCowList);
-            data.setActionsDone(data.getActionsDone() + 1);
-            // cow sold UI message
-        } else if (tmpCowList.size() == 1) {
-            // action blocked, can't sell last cow UI message
+    public void actionSellGarden() {
+        if (game.gameData.getGardenAmount() > 30) {
+            game.gameData.setGardenSold(game.gameData.getGardenAmount());
+            game.gameData.setGardenAmount(0);
+            game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
+            // garden produce sold UI message
+            uiText = game.myBundle.get("sellGardenComplete");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        game.gameData.saveGame();
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
+        } else {
+            // garden produce not ripe UI message
+            uiText = game.myBundle.get("sellGardenNotRipe");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean)object;
+                    if (result) {
+                        game.gameData.saveGame();
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
         }
-        return data;
     }
 
     /**

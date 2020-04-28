@@ -35,7 +35,7 @@
  <objectgroup id="20" name="RectangleSellGrain">
   <object id="28" x="73.3251" y="1269.94" width="425.749" height="152.387"/>
  </objectgroup>
- <objectgroup id="22" name="RectangleSellPotato">
+ <objectgroup id="22" name="RectangleSellGarden">
   <object id="31" x="70.8852" y="1435.84" width="425.311" height="148.364"/>
  </objectgroup>
  <objectgroup id="15" name="RectangleSellManure">
