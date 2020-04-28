@@ -76,6 +76,7 @@ public class GasChaosMain extends Game {
 		return locale;
 	}
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void render () {
 		super.render();

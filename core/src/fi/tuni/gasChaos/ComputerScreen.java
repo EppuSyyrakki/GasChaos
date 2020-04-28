@@ -157,7 +157,7 @@ public class ComputerScreen extends Location implements Screen {
     }
 
     private int calculateDebtInterest() {
-        float floatInterest = (float)game.gameData.getDebt() * game.gameData.getInterest();;
+        float floatInterest = (float)game.gameData.getDebt() * game.gameData.getInterest();
         return (int)floatInterest;
     }
 

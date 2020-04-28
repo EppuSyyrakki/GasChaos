@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 
-@SuppressWarnings("CanBeFinal")
+@SuppressWarnings({"CanBeFinal", "unchecked", "rawtypes", "RedundantCast"})
 public class BarnScreen extends Location implements Screen {
     Player player;
 
