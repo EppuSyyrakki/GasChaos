@@ -972,6 +972,66 @@ public class GameData {
         this.upgradeVisited = upgradeVisited;
     }
 
+    public int getMONEY_FROM_MILK() {
+        return MONEY_FROM_MILK;
+    }
+
+    public float getMONEY_FROM_MANURE() {
+        return MONEY_FROM_MANURE;
+    }
+
+    public float getMONEY_FROM_METHANE() {
+        return MONEY_FROM_METHANE;
+    }
+
+    public int getMONEY_FROM_GARDEN() {
+        return MONEY_FROM_GARDEN;
+    }
+
+    public int getMONEY_FROM_N() {
+        return MONEY_FROM_N;
+    }
+
+    public int getMONEY_FROM_P() {
+        return MONEY_FROM_P;
+    }
+
+    public int getPRICE_OF_COW() {
+        return PRICE_OF_COW;
+    }
+
+    public int getPRICE_OF_GRAIN() {
+        return PRICE_OF_GRAIN;
+    }
+
+    public int getPRICE_OF_SOLAR() {
+        return PRICE_OF_SOLAR;
+    }
+
+    public int getPRICE_OF_COLLECTOR() {
+        return PRICE_OF_COLLECTOR;
+    }
+
+    public int getPRICE_OF_MILKING() {
+        return PRICE_OF_MILKING;
+    }
+
+    public int getPRICE_OF_TRACTOR() {
+        return PRICE_OF_TRACTOR;
+    }
+
+    public int getPRICE_OF_GENERATOR() {
+        return PRICE_OF_GENERATOR;
+    }
+
+    public int getPRICE_OF_N() {
+        return PRICE_OF_N;
+    }
+
+    public int getPRICE_OF_P() {
+        return PRICE_OF_P;
+    }
+
     public void setAllVisited(Boolean visited) {
         setBarnVisited(visited);
         setBuySellVisited(visited);
@@ -1185,7 +1245,7 @@ public class GameData {
         setFertilizerP(prefs.getInteger("fertilizerP", getFertilizerP()));
         setFertilizerPMax(prefs.getInteger("fertilizerPMax", getFertilizerPMax()));
         setFertilizerN(prefs.getInteger("fertilizerN", getFertilizerN()));
-        setFertilizerPMax(prefs.getInteger("fertilizerNMax", getFertilizerNMax()));
+        setFertilizerNMax(prefs.getInteger("fertilizerNMax", getFertilizerNMax()));
         setInterest(prefs.getFloat("interest", getInterest()));
 
         /**
