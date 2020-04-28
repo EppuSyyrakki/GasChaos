@@ -225,11 +225,10 @@ public class BarnScreen extends Location implements Screen {
         } else if (getRec("ActionFeedCows") && !userInterface.dialogFocus
                 && game.gameData.isActionsAvailable()) {
             player.setInputActive(false);
-            int maxFeed = game.gameData.getCowList().size() *
-                    game.gameData.getCowList().get(0).getFeed() * 3;
+            int maxFeed = game.gameData.getCowList().get(0).getFeed() * 3 * game.gameData.MAX_COWS;
             uiText = game.myBundle.format("askFeedCows",
                     game.gameData.getGrainInBarn(),
-                    maxFeed);
+                    maxFeed, game.gameData.getCowConsumption());
             userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
@@ -312,7 +311,8 @@ public class BarnScreen extends Location implements Screen {
     public void actionFeedCows() {
         ArrayList<Cow> cowList = game.gameData.getCowList();
         int addAmount = cowList.size() * cowList.get(0).getFeed() * 2;  // enough food for 2 days
-        int maxAmount = addAmount * game.gameData.MAX_COWS;  // max amount of food
+        int maxAmount = cowList.size() * cowList.get(0).getFeed() * 3
+                * game.gameData.MAX_COWS;  // max amount of food
 
         if (game.gameData.getGrainInBarn() >= maxAmount) {
             // Action blocked, enough food already UI message
@@ -332,7 +332,6 @@ public class BarnScreen extends Location implements Screen {
                     protected void result(Object object) {
                         resetInputProcessor();
                         remove();
-
                     }
                 };
                 userInterface.createDialog(d, uiText, false);
@@ -345,11 +344,8 @@ public class BarnScreen extends Location implements Screen {
                 uiText = game.myBundle.get("feedCowsCompleteButEmpty");
                 Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                     protected void result(Object object) {
-                        boolean result = (boolean)object;
-                        if (result) {
-                            resetInputProcessor();
-                            remove();
-                        }
+                        resetInputProcessor();
+                        remove();
                     }
                 };
                 userInterface.createDialog(d, uiText, false);
@@ -361,11 +357,8 @@ public class BarnScreen extends Location implements Screen {
                 uiText = game.myBundle.format("feedCowsComplete", game.gameData.getGrain());
                 Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                     protected void result(Object object) {
-                        boolean result = (boolean)object;
-                        if (result) {
-                            resetInputProcessor();
-                            remove();
-                        }
+                        resetInputProcessor();
+                        remove();
                     }
                 };
                 userInterface.createDialog(d, uiText, false);
@@ -382,11 +375,8 @@ public class BarnScreen extends Location implements Screen {
             uiText = game.myBundle.get("shovelManureNoManure");
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
-                    boolean result = (boolean)object;
-                    if (result) {
-                        resetInputProcessor();
-                        remove();
-                    }
+                    resetInputProcessor();
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, false);
@@ -398,11 +388,8 @@ public class BarnScreen extends Location implements Screen {
             uiText = game.myBundle.get("shovelManureComplete");
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
-                    boolean result = (boolean)object;
-                    if (result) {
-                        resetInputProcessor();
-                        remove();
-                    }
+                    resetInputProcessor();
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, false);
@@ -415,11 +402,8 @@ public class BarnScreen extends Location implements Screen {
             uiText = game.myBundle.get("shovelManurePartial");
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
-                    boolean result = (boolean)object;
-                    if (result) {
-                        resetInputProcessor();
-                        remove();
-                    }
+                    resetInputProcessor();
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, false);
@@ -431,11 +415,8 @@ public class BarnScreen extends Location implements Screen {
             uiText = game.myBundle.get("checkManureMax");
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
-                    boolean result = (boolean)object;
-                    if (result) {
-                        resetInputProcessor();
-                        remove();
-                    }
+                    resetInputProcessor();
+                    remove();
                 }
             };
             userInterface.createDialog(d, uiText, false);

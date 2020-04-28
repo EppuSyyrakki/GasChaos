@@ -240,8 +240,6 @@ public class GameData {
         }
 
         for (Cow cow : tmpCowList) {
-            grainInBarn = cow.eat(grainInBarn);
-
             if (cow.isEatenLastTurn()) {  // if cow not eaten, no milk, manure and methane produced
                 int milkFromCow = cow.getMilk(milkingMachineLevel);
                 cow.fart(gasCollectorLevel);
@@ -251,6 +249,7 @@ public class GameData {
                 }
                 milkSold += milkFromCow;
             }
+            grainInBarn = cow.eat(grainInBarn);
         }
         setCowList(tmpCowList);
 
@@ -423,9 +422,6 @@ public class GameData {
         //for (int i = 0; i < fieldsRented.length; i++) {fieldsRented[i] = 0;}
         Arrays.fill(fieldsRented, 0);
 
-        for (Cow cow : cowList) {
-            cow.setEatenLastTurn(false);
-        }
         saveGame();
     }
 
