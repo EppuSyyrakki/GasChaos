@@ -1402,11 +1402,11 @@ public class GameData {
          * Resource amounts and limits
          */
         money = 3000;       // money available for purchases
-        manure = 100;         // amount of manure in manure pit
+        manure = 15;         // amount of manure in manure pit
         manureInBarn = 0;   // amount of manure produced on previous turn
         manureInBarnMax = 300;  // maximum amount of manure on barn floor
-        manureMax = 2500;   // size of manure pit
-        methane = 0;        // amount of methane in gas tank
+        manureMax = 3000;   // size of manure pit
+        methane = 200;        // amount of methane in gas tank
         methaneMax = 15000; // size of methane tank
         debt = 8000;       // total amount of debt, reduced by debtPayment
         grain = 200;        // total amount of grain on farm

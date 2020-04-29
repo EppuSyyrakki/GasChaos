@@ -409,19 +409,6 @@ public class BarnScreen extends Location implements Screen {
             };
             userInterface.createDialog(d, uiText, false);
         }
-
-        if (game.gameData.getManure() > game.gameData.getManureMax()) {
-            // manure pit full
-            game.gameData.setManure(game.gameData.getManureMax());
-            uiText = game.myBundle.get("checkManureMax");
-            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
-                protected void result(Object object) {
-                    resetInputProcessor();
-                    remove();
-                }
-            };
-            userInterface.createDialog(d, uiText, false);
-        }
     }
 
     /**

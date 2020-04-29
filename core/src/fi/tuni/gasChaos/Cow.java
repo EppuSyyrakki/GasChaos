@@ -13,7 +13,7 @@ public class Cow {
     /**
      * Cow eats per turn. If not eaten this turn (out of feed) no milk produced in getMilk().
      */
-    private final int feed = 30;
+    private final int feed = 25;
 
     private boolean eatenLastTurn = true;
 
