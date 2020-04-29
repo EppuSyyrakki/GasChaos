@@ -247,7 +247,7 @@ public class BarnScreen extends Location implements Screen {
             player.setInputActive(false);
             uiText = game.myBundle.format("askShovelManure",
                     game.gameData.getManureInBarn(),
-                    game.gameData.MANURE_DANGER);
+                    game.gameData.MANURE_DANGER * game.gameData.getCowList().size());
             userInterface.dialogFocus = true;
             Dialog d = new Dialog(game.myBundle.get("preDialogTitle"), userInterface.skin) {
                 protected void result(Object object) {
@@ -370,6 +370,8 @@ public class BarnScreen extends Location implements Screen {
      * Reduce manureInBarn and increase data.manure by same amount if less than data.manureMax
      */
     public void actionShovelManure() {
+        int removeAmount = game.gameData.MANURE_SHOVELED * game.gameData.getCowList().size();
+
         if (game.gameData.getManureInBarn() == 0) {
             // action blocked, no manure in barn
             uiText = game.myBundle.get("shovelManureNoManure");
@@ -380,7 +382,7 @@ public class BarnScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, false);
-        } else if (game.gameData.getManureInBarn() <= game.gameData.MANURE_SHOVELED) {
+        } else if (game.gameData.getManureInBarn() <= removeAmount) {
             // barn is clean after shoveling
             game.gameData.setManure(game.gameData.getManure() + game.gameData.getManureInBarn());
             game.gameData.setManureInBarn(0);
@@ -393,11 +395,10 @@ public class BarnScreen extends Location implements Screen {
                 }
             };
             userInterface.createDialog(d, uiText, false);
-        } else if (game.gameData.getManureInBarn() > game.gameData.MANURE_SHOVELED) {
+        } else if (game.gameData.getManureInBarn() > removeAmount) {
             // barn cleaned but still a bit dirty
-            game.gameData.setManure(game.gameData.getManure() + game.gameData.MANURE_SHOVELED);
-            game.gameData.setManureInBarn(game.gameData.getManureInBarn()
-                    - game.gameData.MANURE_SHOVELED);
+            game.gameData.setManure(game.gameData.getManure() + removeAmount);
+            game.gameData.setManureInBarn(game.gameData.getManureInBarn() - removeAmount);
             game.gameData.setActionsDone(game.gameData.getActionsDone() + 1);
             uiText = game.myBundle.get("shovelManurePartial");
             Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
