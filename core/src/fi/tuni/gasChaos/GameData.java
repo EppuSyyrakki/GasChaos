@@ -1409,7 +1409,7 @@ public class GameData {
         methane = 200;        // amount of methane in gas tank
         methaneMax = 15000; // size of methane tank
         debt = 8000;       // total amount of debt, reduced by debtPayment
-        grain = 200;        // total amount of grain on farm
+        grain = 500;        // total amount of grain on farm
         grainInBarn = 60;   // amount of feed (grain) for cows in barn
         grainMax = 9000;    // maximum amount of grain
         fertilizerN = 70;   // Nitrogen fertilizer storage
