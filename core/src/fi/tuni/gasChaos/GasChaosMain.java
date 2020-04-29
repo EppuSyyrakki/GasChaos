@@ -49,7 +49,6 @@ public class GasChaosMain extends Game {
 		computerScreen = new ComputerScreen(batch, camera, this);
 		upgradeScreen = new UpgradeScreen(batch, camera, this);
 		buySellScreen = new BuySellScreen(batch, camera, this);
-		highScoreScreen = new HighScore(camera, this);
 		loseScreen = new LoseScreen(camera, this);
 		menuScreen = new MenuScreen(camera, this);
 
@@ -123,6 +122,7 @@ public class GasChaosMain extends Game {
 			gameData.setInterest(0f);
 			gameData.setDebtPayment(0);
 			gameData.victory = true;
+			highScoreScreen = new HighScore(camera, this);
 			setHighScoreScreen();
 		} else if (gameData.getMoney() < 0 && !mercy) {
 			setLoseScreen();
