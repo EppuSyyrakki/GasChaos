@@ -12,6 +12,7 @@ import java.util.Locale;
 public class GasChaosMain extends Game {
 	SpriteBatch batch;
 	OrthographicCamera camera;
+	boolean mercy = true;
 
 	GameData gameData;
 	MenuScreen menuScreen;
@@ -110,18 +111,27 @@ public class GasChaosMain extends Game {
 		farmScreen.player.matchX(2);
 		farmScreen.player.matchY(5);
 		homeScreen.setNewTurn(true);
+		if ((gameData.getMoney() + gameData.getGrainSold() + gameData.getMethaneSold()
+				+ gameData.getManureSold() + gameData.getGardenSold()
+				+ gameData.getNSold() + gameData.getPSold()) >= 0) {
+			mercy = true;
+		} else {
+			mercy = false;
+		}
+
 		if (gameData.getDebt() <= 0 && !gameData.victory) {
 			gameData.setInterest(0f);
 			gameData.setDebtPayment(0);
 			gameData.victory = true;
 			setHighScoreScreen();
-		} else if (gameData.getMoney() < 0) {
+		} else if (gameData.getMoney() < 0 && !mercy) {
 			setLoseScreen();
 			gameData.defeatMenu = true;
 			gameData.defeat = true;
 		} else {
 			homeScreen.resetInputProcessor();
 			setScreen(homeScreen);
+			mercy = true;
 		}
 		gameData.updateResources();
 
