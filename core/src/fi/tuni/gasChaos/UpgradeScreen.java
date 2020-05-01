@@ -585,23 +585,23 @@ public class UpgradeScreen extends Location implements Screen {
                     }
                 };
                 userInterface.createDialog(d, uiText, false);
-            } else if (game.gameData.getGasGeneratorLevel() == 0 ||
-                    !game.gameData.isGasGeneratorBought()) {
-                // action blocked, requires gas generator UI message
-                uiText = game.myBundle.get("buyTractorGasNoGenerator");
-                Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
-                    protected void result(Object object) {
-                        boolean result = (boolean) object;
-                        if (result) {
-                            userInterface.dialogFocus = false;
-                            game.gameData.saveGame();
-                            resetInputProcessor();
-                            remove();
-                        }
-                    }
-                };
-                userInterface.createDialog(d, uiText, false);
             }
+        } else if (game.gameData.getGasGeneratorLevel() == 0 ||
+                !game.gameData.isGasGeneratorBought()) {
+            // action blocked, requires gas generator UI message
+            uiText = game.myBundle.get("buyTractorGasNoGenerator");
+            Dialog d = new Dialog(game.myBundle.get("postDialogTitle"), userInterface.skin) {
+                protected void result(Object object) {
+                    boolean result = (boolean) object;
+                    if (result) {
+                        userInterface.dialogFocus = false;
+                        game.gameData.saveGame();
+                        resetInputProcessor();
+                        remove();
+                    }
+                }
+            };
+            userInterface.createDialog(d, uiText, false);
         }
     }
 
